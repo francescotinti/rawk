@@ -92,3 +92,44 @@ fn test_type_coercion() {
         .success()
         .stdout(predicate::str::contains("15 1 0"));
 }
+
+// --- Official GNU Awk Manual Tests ---
+// These examples are directly sourced from the official GNU Awk User's Guide
+// Source: https://www.gnu.org/software/gawk/manual/html_node/Very-Simple.html
+
+#[test]
+fn test_gawk_manual_longest_line() {
+    // "Print the length of the longest input line."
+    let mut cmd = Command::cargo_bin("rawk").unwrap();
+    cmd.arg("{ if (length($0) > max) max = length($0) } END { print max }")
+        .write_stdin("short\nthis is a much longer line\ntiny")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("26"));
+}
+
+#[test]
+fn test_gawk_manual_seven_random_numbers() {
+    // "Print seven random numbers from 0 to 100."
+    let mut cmd = Command::cargo_bin("rawk").unwrap();
+    cmd.arg("BEGIN { for (i = 1; i <= 7; i++) print int(101 * rand()) }")
+        .assert()
+        .success()
+        .stdout(predicate::function(|s: &str| {
+            // It should output exactly 7 lines, each containing a number
+            let lines: Vec<&str> = s.trim().split('\n').collect();
+            lines.len() == 7 && lines.iter().all(|l| l.parse::<i32>().is_ok())
+        }));
+}
+
+// Source: https://www.gnu.org/software/gawk/manual/html_node/Two-Rules.html
+#[test]
+fn test_gawk_manual_two_rules() {
+    // "An Example with Two Rules"
+    let mut cmd = Command::cargo_bin("rawk").unwrap();
+    cmd.arg("/12/ { print $0 } /21/ { print $0 }")
+        .write_stdin("foo 12 bar\nbaz 21 qux\nno match")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("foo 12 bar\nbaz 21 qux"));
+}
