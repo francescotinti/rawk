@@ -11,3 +11,7 @@ pest = "2.8.6"
 pest_derive = "2.8.6"
 rand = "0.10.1"
 regex = "1.12.3"
+
+[dev-dependencies]
+assert_cmd = "2.2.1"
+predicates = "3.1.4"
