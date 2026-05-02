@@ -169,10 +169,48 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
         }
         Rule::for_in_stmt => {
             let mut inners = inner.into_inner();
-            let key = inners.next().unwrap().as_str().to_string();
+            let var = inners.next().unwrap().as_str().to_string();
             let arr = inners.next().unwrap().as_str().to_string();
-            let block = parse_block_or_stmt(inners.next().unwrap());
-            Statement::ForIn(key, arr, block)
+            let block = parse_statement(inners.next().unwrap());
+            Statement::ForIn(var, arr, vec![block])
+        }
+        Rule::for_stmt => {
+            let mut inners = inner.into_inner();
+            let mut init = None;
+            let mut cond = None;
+            let mut step = None;
+            let mut block = Vec::new();
+
+            for inner in inners {
+                match inner.as_rule() {
+                    Rule::for_init => {
+                        let node = inner.into_inner().next().unwrap();
+                        let s = if node.as_rule() == Rule::assign_stmt {
+                            parse_assign_stmt(node)
+                        } else {
+                            Statement::Expr(parse_expr(node))
+                        };
+                        init = Some(Box::new(s));
+                    }
+                    Rule::for_cond => {
+                        cond = Some(parse_expr(inner.into_inner().next().unwrap()));
+                    }
+                    Rule::for_step => {
+                        let node = inner.into_inner().next().unwrap();
+                        let s = if node.as_rule() == Rule::assign_stmt {
+                            parse_assign_stmt(node)
+                        } else {
+                            Statement::Expr(parse_expr(node))
+                        };
+                        step = Some(Box::new(s));
+                    }
+                    Rule::block_or_stmt => {
+                        block = parse_block_or_stmt(inner);
+                    }
+                    _ => {}
+                }
+            }
+            Statement::For(init, cond, step, block)
         }
         Rule::delete_stmt => {
             let mut inners = inner.into_inner();
@@ -223,63 +261,51 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
                 Statement::Print(exprs, redirect)
             }
         }
-        Rule::assign_stmt => {
-            let mut inners = inner.into_inner();
-            let target = inners.next().unwrap();
-            let op_str = inners.next().unwrap().as_str();
-            let mut expr = parse_expr(inners.next().unwrap());
-            
-            let target_inner = target.clone().into_inner().next().unwrap();
-            let target_expr = match target_inner.as_rule() {
-                Rule::ident => Expr::Variable(target_inner.as_str().to_string()),
-                Rule::array_access => {
-                    let mut a_inners = target_inner.clone().into_inner();
-                    let arr_name = a_inners.next().unwrap().as_str().to_string();
-                    let mut keys = Vec::new();
-                    for key_pair in a_inners.next().unwrap().into_inner() {
-                        keys.push(parse_expr(key_pair));
-                    }
-                    Expr::ArrayAccess(arr_name, keys)
-                }
-                _ => Expr::Variable("err".to_string()),
-            };
-
-            let op = match op_str {
-                "+=" => Some(BinaryOperator::Add),
-                "-=" => Some(BinaryOperator::Sub),
-                "*=" => Some(BinaryOperator::Mul),
-                "/=" => Some(BinaryOperator::Div),
-                _ => None,
-            };
-            
-            if let Some(bin_op) = op {
-                expr = Expr::BinaryOp(Box::new(target_expr), bin_op, Box::new(expr));
-            }
-            
-            match target_inner.as_rule() {
-                Rule::ident => {
-                    Statement::Assign(target_inner.as_str().to_string(), expr)
-                }
-                Rule::array_access => {
-                    let mut a_inners = target_inner.into_inner();
-                    let arr_name = a_inners.next().unwrap().as_str().to_string();
-                    let mut keys = Vec::new();
-                    for key_pair in a_inners.next().unwrap().into_inner() {
-                        keys.push(parse_expr(key_pair));
-                    }
-                    Statement::AssignArray(arr_name, keys, expr)
-                }
-                Rule::field => {
-                    Statement::Print(vec![Expr::StringLiteral("ASSIGN FIELD NOT IMPLEMENTED".to_string())], None)
-                }
-                _ => Statement::Assign("err".to_string(), expr),
-            }
-        }
+        Rule::assign_stmt => parse_assign_stmt(inner),
         Rule::expr_stmt => {
             let e = parse_expr(inner.into_inner().next().unwrap());
             Statement::Expr(e)
         }
         _ => unreachable!(),
+    }
+}
+
+fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
+    let mut inners = inner.into_inner();
+    let target = inners.next().unwrap();
+    let op_str = inners.next().unwrap().as_str();
+    let mut expr = parse_expr(inners.next().unwrap());
+    
+    let target_inner = target.clone().into_inner().next().unwrap();
+    let target_expr = match target_inner.as_rule() {
+        Rule::ident => Expr::Variable(target_inner.as_str().to_string()),
+        Rule::array_access => {
+            let mut a_inners = target_inner.clone().into_inner();
+            let arr_name = a_inners.next().unwrap().as_str().to_string();
+            let mut keys = Vec::new();
+            for key_pair in a_inners.next().unwrap().into_inner() {
+                keys.push(parse_expr(key_pair));
+            }
+            Expr::ArrayAccess(arr_name, keys)
+        }
+        _ => Expr::Variable("err".to_string()),
+    };
+
+    let op = match op_str {
+        "+=" => Some(BinaryOperator::Add),
+        "-=" => Some(BinaryOperator::Sub),
+        "*=" => Some(BinaryOperator::Mul),
+        "/=" => Some(BinaryOperator::Div),
+        _ => None,
+    };
+    if let Some(operator) = op {
+        expr = Expr::BinaryOp(Box::new(target_expr.clone()), operator, Box::new(expr));
+    }
+    
+    match target_expr {
+        Expr::Variable(name) => Statement::Assign(name, expr),
+        Expr::ArrayAccess(arr_name, keys) => Statement::AssignArray(arr_name, keys, expr),
+        _ => Statement::Assign("err".to_string(), expr),
     }
 }
 

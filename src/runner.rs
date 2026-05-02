@@ -611,6 +611,26 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     if let FlowControl::Exit(_) = fc { return fc; }
                 }
             }
+            Statement::For(init, cond, step, block) => {
+                if let Some(i) = init {
+                    execute_action(&[i.as_ref().clone()], context);
+                }
+                loop {
+                    if let Some(c) = cond {
+                        if !eval_expr(c, context).is_truthy() {
+                            break;
+                        }
+                    }
+                    let fc = execute_action(block, context);
+                    if fc == FlowControl::Break { break; }
+                    if matches!(fc, FlowControl::Return(_)) || fc == FlowControl::Next { return fc; }
+                    if let FlowControl::Exit(_) = fc { return fc; }
+                    // FlowControl::Continue just continues
+                    if let Some(s) = step {
+                        execute_action(&[s.as_ref().clone()], context);
+                    }
+                }
+            }
             Statement::IfElse(cond, true_branch, false_branch) => {
                 let cond_val = eval_expr(cond, context);
                 if cond_val.is_truthy() {

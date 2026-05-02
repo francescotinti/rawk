@@ -27,6 +27,7 @@ statement = {
     while_stmt |
     do_while_stmt |
     for_in_stmt |
+    for_stmt |
     print_stmt |
     printf_stmt |
     delete_stmt |
@@ -43,6 +44,10 @@ if_stmt = { "if" ~ "(" ~ expr ~ ")" ~ block_or_stmt ~ ("else" ~ block_or_stmt)? 
 while_stmt = { "while" ~ "(" ~ expr ~ ")" ~ block_or_stmt }
 do_while_stmt = { "do" ~ block_or_stmt ~ "while" ~ "(" ~ expr ~ ")" }
 for_in_stmt = { "for" ~ "(" ~ ident ~ "in" ~ ident ~ ")" ~ block_or_stmt }
+for_stmt = { "for" ~ "(" ~ for_init? ~ ";" ~ for_cond? ~ ";" ~ for_step? ~ ")" ~ block_or_stmt }
+for_init = { assign_stmt | expr }
+for_cond = { expr }
+for_step = { assign_stmt | expr }
 delete_stmt = { "delete" ~ ident ~ ("[" ~ expr_list ~ "]")? }
 print_stmt = { "print" ~ expr_list? ~ redirect? }
 printf_stmt = { "printf" ~ expr_list? ~ redirect? }

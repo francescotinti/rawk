@@ -37,7 +37,8 @@ pub enum Statement {
     AssignArray(String, Vec<Expr>, Expr), // a[key1, key2] = value
     Delete(String, Option<Vec<Expr>>), // delete a[key] or delete a
     IfElse(Expr, Vec<Statement>, Option<Vec<Statement>>),
-    ForIn(String, String, Vec<Statement>), // for (key in array) { ... }
+    ForIn(String, String, Vec<Statement>),
+    For(Option<Box<Statement>>, Option<Expr>, Option<Box<Statement>>, Vec<Statement>),
     While(Expr, Vec<Statement>),
     DoWhile(Vec<Statement>, Expr),
     Break,
