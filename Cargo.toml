@@ -1,0 +1,13 @@
+[package]
+name = "rawk"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.102"
+chrono = "0.4.44"
+clap = { version = "4.6.1", features = ["derive"] }
+pest = "2.8.6"
+pest_derive = "2.8.6"
+rand = "0.10.1"
+regex = "1.12.3"

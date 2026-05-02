@@ -1,0 +1,76 @@
+/*
+ * Project: rawk (Rust AWK)
+ * Authors: Francesco Tinti & Antigravity (Google Deepmind)
+ * Description: A high-fidelity port of the historic AWK language from C to Rust.
+ */
+
+#[derive(Debug, Clone)]
+pub enum BinaryOperator {
+    Add, Sub, Mul, Div,
+    Eq, Neq, Lt, Lte, Gt, Gte,
+    And, Or,
+    Match, NotMatch, In, Concat,
+}
+
+#[derive(Debug, Clone)]
+pub enum Expr {
+    Field(usize),
+    StringLiteral(String),
+    Variable(String),
+    ArrayAccess(String, Vec<Expr>), // a["key1", "key2"]
+    FunctionCall(String, Vec<Expr>), // length($1)
+    Getline(Option<String>, Option<Box<Expr>>), // getline var < file
+    BinaryOp(Box<Expr>, BinaryOperator, Box<Expr>),
+    Ternary(Box<Expr>, Box<Expr>, Box<Expr>), // cond ? true_expr : false_expr
+    PreInc(Box<Expr>),
+    PreDec(Box<Expr>),
+    PostInc(Box<Expr>),
+    PostDec(Box<Expr>),
+    Not(Box<Expr>), // !expr
+}
+
+#[derive(Debug, Clone)]
+pub enum Statement {
+    Print(Vec<Expr>, Option<(String, Expr)>),
+    Printf(Vec<Expr>, Option<(String, Expr)>),
+    Assign(String, Expr),
+    AssignArray(String, Vec<Expr>, Expr), // a[key1, key2] = value
+    Delete(String, Option<Vec<Expr>>), // delete a[key] or delete a
+    IfElse(Expr, Vec<Statement>, Option<Vec<Statement>>),
+    ForIn(String, String, Vec<Statement>), // for (key in array) { ... }
+    While(Expr, Vec<Statement>),
+    DoWhile(Vec<Statement>, Expr),
+    Break,
+    Continue,
+    Next,
+    Return(Option<Expr>),
+    Exit(Option<Expr>),
+    Expr(Expr),
+}
+
+
+#[derive(Debug, Clone)]
+pub struct FunctionDecl {
+    pub name: String,
+    pub params: Vec<String>,
+    pub body: Vec<Statement>,
+}
+
+#[derive(Debug, Clone)]
+pub enum Pattern {
+    Regex(String),
+    Begin,
+    End,
+}
+
+#[derive(Debug, Clone)]
+pub struct Rule {
+    pub pattern: Option<Pattern>,
+    pub action: Vec<Statement>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Program {
+    pub rules: Vec<Rule>,
+    pub functions: Vec<FunctionDecl>,
+}
