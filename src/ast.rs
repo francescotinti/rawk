@@ -14,7 +14,7 @@ pub enum BinaryOperator {
 
 #[derive(Debug, Clone)]
 pub enum Expr {
-    Field(usize),
+    Field(Box<Expr>),
     StringLiteral(String),
     Variable(String),
     ArrayAccess(String, Vec<Expr>), // a["key1", "key2"]

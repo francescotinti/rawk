@@ -188,7 +188,10 @@ fn process_lines<R: BufRead>(mut reader: R, context: &mut EvalContext, rules: &[
 
 fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
     match expr {
-        Expr::Field(n) => context.get_field(*n),
+        Expr::Field(e) => {
+            let idx = eval_expr(e, context).as_number() as usize;
+            context.get_field(idx)
+        }
         Expr::StringLiteral(s) => crate::types::AwkValue::String(s.clone()),
         Expr::Variable(v) => context.get_var(v),
         Expr::ArrayAccess(arr_name, key_exprs) => {
@@ -495,6 +498,11 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
             let new_val = val.sub(&crate::types::AwkValue::Number(1.0));
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val.clone());
+            } else if let Expr::ArrayAccess(arr, ks) = &**e {
+                let mut keys_str = Vec::new();
+                for k in ks { keys_str.push(eval_expr(k, context).as_string()); }
+                let key = keys_str.join(&context.get_var("SUBSEP").as_string());
+                context.set_array_var(arr, &key, new_val.clone());
             }
             new_val
         }
@@ -503,6 +511,11 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
             let new_val = val.sub(&crate::types::AwkValue::Number(1.0));
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val);
+            } else if let Expr::ArrayAccess(arr, ks) = &**e {
+                let mut keys_str = Vec::new();
+                for k in ks { keys_str.push(eval_expr(k, context).as_string()); }
+                let key = keys_str.join(&context.get_var("SUBSEP").as_string());
+                context.set_array_var(arr, &key, new_val);
             }
             val
         }

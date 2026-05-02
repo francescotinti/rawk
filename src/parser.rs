@@ -85,7 +85,7 @@ fn parse_rule(pair: Pair<Rule>) -> AstRule {
     
     // If no action block but we have a pattern, standard awk does print $0
     if action.is_empty() && pattern.is_some() {
-        action.push(Statement::Print(vec![Expr::Field(0)], None));
+        action.push(Statement::Print(vec![Expr::Field(Box::new(Expr::StringLiteral("0".to_string())))], None));
     }
     
     AstRule { pattern, action }
@@ -253,7 +253,7 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
                 }
             }
             if exprs.is_empty() && !is_printf {
-                exprs.push(Expr::Field(0));
+                exprs.push(Expr::Field(Box::new(Expr::StringLiteral("0".to_string()))));
             }
             if is_printf {
                 Statement::Printf(exprs, redirect)
@@ -323,95 +323,7 @@ fn parse_expr(pair: Pair<Rule>) -> Expr {
 
 fn parse_logical_expr(pair: Pair<Rule>) -> Expr {
     let pratt_parser = pratt();
-    pratt_parser.map_primary(|term| {
-        let mut term_inners = term.into_inner();
-        let mut primary_pair = term_inners.next().unwrap();
-        
-        let mut prefix = None;
-        if primary_pair.as_rule() != Rule::primary {
-            prefix = Some(primary_pair.as_rule());
-            primary_pair = term_inners.next().unwrap();
-        }
-
-        let inner = primary_pair.into_inner().next().unwrap();
-        let mut base_expr = match inner.as_rule() {
-            Rule::number => Expr::StringLiteral(inner.as_str().to_string()),
-            Rule::string_literal => Expr::StringLiteral(inner.into_inner().next().unwrap().as_str().to_string()),
-            Rule::regex_pattern => {
-                let re = inner.into_inner().next().unwrap().as_str();
-                Expr::BinaryOp(
-                    Box::new(Expr::Field(0)),
-                    BinaryOperator::Match,
-                    Box::new(Expr::StringLiteral(re.to_string()))
-                )
-            }
-            Rule::ident => Expr::Variable(inner.as_str().to_string()),
-            Rule::getline_expr => {
-                let mut inners = inner.into_inner();
-                let mut var_name = None;
-                let mut file_expr = None;
-                for p in inners {
-                    if p.as_rule() == Rule::ident {
-                        var_name = Some(p.as_str().to_string());
-                    } else if p.as_rule() == Rule::expr || p.as_rule() == Rule::logical_expr {
-                        file_expr = Some(Box::new(parse_expr(p)));
-                    }
-                }
-                Expr::Getline(var_name, file_expr)
-            }
-            Rule::field => {
-                let p = inner.into_inner().next().unwrap();
-                if let Rule::number = p.as_rule() {
-                    let n: usize = p.as_str().parse().unwrap_or(0);
-                    Expr::Field(n)
-                } else {
-                    Expr::Field(0) 
-                }
-            }
-            Rule::array_access => {
-                let mut inners = inner.into_inner();
-                let ident = inners.next().unwrap().as_str().to_string();
-                let mut keys = Vec::new();
-                for key_pair in inners.next().unwrap().into_inner() {
-                    keys.push(parse_expr(key_pair));
-                }
-                Expr::ArrayAccess(ident, keys)
-            }
-            Rule::func_call => {
-                let mut inners = inner.into_inner();
-                let ident = inners.next().unwrap().as_str().to_string();
-                let mut args = Vec::new();
-                if let Some(expr_list) = inners.next() {
-                    for e in expr_list.into_inner() {
-                        args.push(parse_expr(e));
-                    }
-                }
-                Expr::FunctionCall(ident, args)
-            }
-            Rule::expr => parse_expr(inner),
-            _ => Expr::StringLiteral("ERR".to_string()),
-        };
-        
-        if let Some(postfix_pair) = term_inners.next() {
-            if postfix_pair.as_rule() == Rule::op_inc {
-                base_expr = Expr::PostInc(Box::new(base_expr));
-            } else if postfix_pair.as_rule() == Rule::op_dec {
-                base_expr = Expr::PostDec(Box::new(base_expr));
-            }
-        }
-
-        if let Some(pref) = prefix {
-            base_expr = match pref {
-                Rule::op_inc => Expr::PreInc(Box::new(base_expr)),
-                Rule::op_dec => Expr::PreDec(Box::new(base_expr)),
-                Rule::op_not => Expr::Not(Box::new(base_expr)),
-                Rule::op_minus => Expr::BinaryOp(Box::new(Expr::StringLiteral("0".to_string())), BinaryOperator::Sub, Box::new(base_expr)),
-                _ => base_expr,
-            };
-        }
-
-        base_expr
-    })
+    pratt_parser.map_primary(parse_term)
     .map_infix(|lhs, op, rhs| {
         let op = match op.as_rule() {
             Rule::op_add => BinaryOperator::Add,
@@ -434,4 +346,93 @@ fn parse_logical_expr(pair: Pair<Rule>) -> Expr {
         Expr::BinaryOp(Box::new(lhs), op, Box::new(rhs))
     })
     .parse(pair.into_inner())
+}
+
+fn parse_term(term: Pair<Rule>) -> Expr {
+    let mut term_inners = term.into_inner();
+    let mut primary_pair = term_inners.next().unwrap();
+    
+    let mut prefix = None;
+    if primary_pair.as_rule() != Rule::primary {
+        prefix = Some(primary_pair.as_rule());
+        primary_pair = term_inners.next().unwrap();
+    }
+
+    let mut base_expr = parse_primary(primary_pair);
+
+    if let Some(postfix_pair) = term_inners.next() {
+        if postfix_pair.as_rule() == Rule::op_inc {
+            base_expr = Expr::PostInc(Box::new(base_expr));
+        } else if postfix_pair.as_rule() == Rule::op_dec {
+            base_expr = Expr::PostDec(Box::new(base_expr));
+        }
+    }
+
+    if let Some(pre) = prefix {
+        base_expr = match pre {
+            Rule::op_inc => Expr::PreInc(Box::new(base_expr)),
+            Rule::op_dec => Expr::PreDec(Box::new(base_expr)),
+            Rule::op_not => Expr::Not(Box::new(base_expr)),
+            Rule::op_minus => Expr::BinaryOp(Box::new(Expr::StringLiteral("0".to_string())), BinaryOperator::Sub, Box::new(base_expr)),
+            _ => base_expr,
+        };
+    }
+
+    base_expr
+}
+
+fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
+    let inner = primary_pair.into_inner().next().unwrap();
+    match inner.as_rule() {
+        Rule::number => Expr::StringLiteral(inner.as_str().to_string()),
+        Rule::string_literal => Expr::StringLiteral(inner.into_inner().next().unwrap().as_str().to_string()),
+        Rule::regex_pattern => {
+            let re = inner.into_inner().next().unwrap().as_str();
+            Expr::BinaryOp(
+                Box::new(Expr::Field(Box::new(Expr::StringLiteral("0".to_string())))),
+                BinaryOperator::Match,
+                Box::new(Expr::StringLiteral(re.to_string()))
+            )
+        }
+        Rule::ident => Expr::Variable(inner.as_str().to_string()),
+        Rule::getline_expr => {
+            let mut inners = inner.into_inner();
+            let mut var_name = None;
+            let mut file_expr = None;
+            for p in inners {
+                if p.as_rule() == Rule::ident {
+                    var_name = Some(p.as_str().to_string());
+                } else if p.as_rule() == Rule::expr || p.as_rule() == Rule::logical_expr {
+                    file_expr = Some(Box::new(parse_expr(p)));
+                }
+            }
+            Expr::Getline(var_name, file_expr)
+        }
+        Rule::field => {
+            let p = inner.into_inner().next().unwrap();
+            Expr::Field(Box::new(parse_primary(p)))
+        }
+        Rule::array_access => {
+            let mut inners = inner.into_inner();
+            let ident = inners.next().unwrap().as_str().to_string();
+            let mut keys = Vec::new();
+            for key_pair in inners.next().unwrap().into_inner() {
+                keys.push(parse_expr(key_pair));
+            }
+            Expr::ArrayAccess(ident, keys)
+        }
+        Rule::func_call => {
+            let mut inners = inner.into_inner();
+            let ident = inners.next().unwrap().as_str().to_string();
+            let mut args = Vec::new();
+            if let Some(expr_list) = inners.next() {
+                for e in expr_list.into_inner() {
+                    args.push(parse_expr(e));
+                }
+            }
+            Expr::FunctionCall(ident, args)
+        }
+        Rule::expr => parse_expr(inner),
+        _ => unreachable!("Unexpected primary inner: {:?}", inner.as_rule()),
+    }
 }

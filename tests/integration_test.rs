@@ -133,3 +133,35 @@ fn test_gawk_manual_two_rules() {
         .success()
         .stdout(predicate::str::contains("foo 12 bar\nbaz 21 qux"));
 }
+
+// Chapter 8: Arrays in awk
+#[test]
+fn test_gawk_manual_ch8_arrays() {
+    let mut cmd = Command::cargo_bin("rawk").unwrap();
+    cmd.arg("{ arr[$1] = $0 } END { print arr[\"1\"] }")
+        .write_stdin("2 two\n1 one\n3 three")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("1 one"));
+}
+
+// Chapter 9: Functions
+#[test]
+fn test_gawk_manual_ch9_functions() {
+    let mut cmd = Command::cargo_bin("rawk").unwrap();
+    cmd.arg("function my_max(a, b) { if (a > b) return a; else return b } BEGIN { print my_max(10, 20) }")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("20"));
+}
+
+// Part II: Problem Solving with awk
+#[test]
+fn test_gawk_manual_part2_deduplication() {
+    let mut cmd = Command::cargo_bin("rawk").unwrap();
+    cmd.arg("{ if (data[$0]++ == 0) lines[++count] = $0 } END { for (i = 1; i <= count; i++) print lines[i] }")
+        .write_stdin("foo\nbar\nfoo\nbaz\nbar")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("foo\nbar\nbaz"));
+}
