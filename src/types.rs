@@ -304,9 +304,18 @@ impl EvalContext {
         }
         match name {
             "NF" => {
-                self.nf = value.as_number() as usize;
-                // Posix AWK requires $0 to be rebuilt when NF is set. We can skip that logic for now,
-                // but at least we don't store it twice.
+                let new_nf = value.as_number() as usize;
+                if new_nf < self.fields.len() {
+                    self.fields.truncate(new_nf);
+                } else {
+                    while self.fields.len() < new_nf {
+                        self.fields.push(AwkValue::String(String::new()));
+                    }
+                }
+                self.nf = new_nf;
+                let ofs = self.vars.get("OFS").map(|v| v.as_string()).unwrap_or_else(|| " ".to_string());
+                let parts: Vec<String> = self.fields.iter().map(|f| f.as_string()).collect();
+                self.record = parts.join(&ofs);
             }
             "NR" => self.nr = value.as_number() as usize,
             "FNR" => self.fnr = value.as_number() as usize,

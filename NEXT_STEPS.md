@@ -1407,7 +1407,7 @@ line3]]></stdin>
 
 # Step 6 — Statement `nextfile`
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `b74e7e3` — 85 test verdi**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -1577,6 +1577,153 @@ Sul terzo testcase: `nextfile` da dentro una user function richiede che `FlowCon
 
 ---
 
+# Step 7 — NF assignment side-effects (POSIX field/record sync)
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+feat(step7): NF assignment side-effects
+
+IN-SCOPE:
+- set_var("NF", n) ora truncate/extend `fields` e ricostruisce $0 con OFS
+- Rebuild $0 immediato (eager, non lazy donefld/donerec)
+- $0 = "..." continua a re-splittare con FS corrente (già funzionante, regression-test)
+- $N = "..." con N > NF continua a estendere (già funzionante, regression-test)
+
+OUT-OF-SCOPE (debito esplicito):
+- Lazy rebuild via donefld/donerec flags (POSIX permette eager, scegliamo eager per semplicità)
+- Re-split di $0 alla modifica di FS (POSIX dice solo set_field(0) e getline triggerano re-split)
+- Estensione con valori AwkValue::Uninitialized vs String("") — usiamo String("") per consistenza con set_field
+
+Testcase aggiunti: 5. Totali: 90.
+```
+
+## Goal
+Fixare `set_var("NF", value)` in `EvalContext`. Oggi:
+```rust
+"NF" => {
+    self.nf = value.as_number() as usize;
+    // Posix AWK requires $0 to be rebuilt when NF is set. We can skip that logic for now,
+    // but at least we don't store it twice.
+}
+```
+Solo aggiorna `self.nf`. Conseguenze:
+- `NF = 3` su record con 5 fields → nf=3 ma fields ha ancora 5 elementi (desync).
+- `NF = 5` su record con 2 fields → nf=5 ma fields ha solo 2 elementi (desync, $4/$5 ritornano Uninitialized).
+- $0 (self.record) NON viene ricostruito → continua a contenere il record originale.
+
+POSIX richiede che `NF = n` causi una sincronizzazione completa: truncate o extend di `fields`, e rebuild di $0 con OFS.
+
+## Decisioni di design (NON riaprire)
+
+### D7.1 — Logica completa di `set_var("NF", value)`
+Sostituire il branch attuale con:
+```rust
+"NF" => {
+    let new_nf = value.as_number() as usize;
+    // Truncate o extend fields
+    if new_nf < self.fields.len() {
+        self.fields.truncate(new_nf);
+    } else {
+        while self.fields.len() < new_nf {
+            self.fields.push(AwkValue::String(String::new()));
+        }
+    }
+    self.nf = new_nf;
+    // Rebuild $0 con OFS
+    let ofs = self.vars.get("OFS").map(|v| v.as_string()).unwrap_or_else(|| " ".to_string());
+    let parts: Vec<String> = self.fields.iter().map(|f| f.as_string()).collect();
+    self.record = parts.join(&ofs);
+}
+```
+
+NOTA: usare `self.vars.get("OFS")` direttamente (senza `self.get_var`) per evitare borrow checker issues con `&mut self`. OFS è sempre in `self.vars`, non ha branch dedicato in `get_var`.
+
+### D7.2 — Edge case: `NF = 0`
+Quando `NF = 0`:
+- `fields.truncate(0)` → vec vuoto
+- `parts.join(&ofs)` su vec vuoto → empty string
+- `self.record = ""` ✓
+
+### D7.3 — Conferma comportamento esistente di `set_field(n, value)` per n > nf
+Già funziona correttamente:
+```rust
+while self.fields.len() < n {
+    self.fields.push(AwkValue::String(String::new()));
+}
+self.fields[n - 1] = value;
+self.nf = self.fields.len();
+// Rebuild $0 con OFS
+```
+Non toccare. Aggiungere solo testcase di regression per blindarlo.
+
+### D7.4 — Conferma comportamento esistente di `set_field(0, value)`
+`update_record(value)` re-splitta usando `self.fs`. Già corretto per POSIX. Non toccare. Aggiungere solo testcase.
+
+### D7.5 — Niente lazy rebuild
+Non implementare `donefld`/`donerec` flags. Il C-awk li usa per evitare ricostruzioni inutili (es. modifico $1, poi $2, poi $3 prima di leggere $0 — il C ricostruisce solo all'ultima lettura). Noi facciamo eager rebuild ad ogni set: codice semplice, performance leggermente peggiore, semantica identica. Se in futuro emerge un bottleneck, valutare lazy in uno step dedicato.
+
+## Testcase obbligatori (aggiungere a `tests/testsuite.xml` PRIMA del codice)
+
+```xml
+<testcase name="test_nf_truncate">
+    <awk><![CDATA[{ NF = 2; print }]]></awk>
+    <stdin><![CDATA[a b c d e]]></stdin>
+    <expected_stdout match="exact"><![CDATA[a b
+]]></expected_stdout>
+</testcase>
+<testcase name="test_nf_extend">
+    <awk><![CDATA[{ NF = 5; print "[" $0 "]"; print "$5=[" $5 "]" }]]></awk>
+    <stdin><![CDATA[a b c]]></stdin>
+    <expected_stdout match="exact"><![CDATA[[a b c  ]
+$5=[]
+]]></expected_stdout>
+</testcase>
+<testcase name="test_nf_zero_clears_record">
+    <awk><![CDATA[{ NF = 0; print "[" $0 "]" "NF=" NF }]]></awk>
+    <stdin><![CDATA[a b c]]></stdin>
+    <expected_stdout match="exact"><![CDATA[[]NF=0
+]]></expected_stdout>
+</testcase>
+<testcase name="test_field_assign_extend_nf_regression">
+    <awk><![CDATA[{ $5 = "x"; print NF; print $0 }]]></awk>
+    <stdin><![CDATA[a b]]></stdin>
+    <expected_stdout match="exact"><![CDATA[5
+a b   x
+]]></expected_stdout>
+</testcase>
+<testcase name="test_dollar0_assign_resplits">
+    <awk><![CDATA[BEGIN { FS=":" } { $0 = "p:q:r"; print NF; print $2 }]]></awk>
+    <stdin><![CDATA[ignored line]]></stdin>
+    <expected_stdout match="exact"><![CDATA[3
+q
+]]></expected_stdout>
+</testcase>
+```
+
+## File modificati attesi
+
+- `src/types.rs` (~10 righe modificate nel branch "NF" di `set_var`)
+- `tests/testsuite.xml` (+5 testcase)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, 85 + 5 = **90 testcase passano**
+- [ ] Tutti i testcase Step 1-6 ancora verdi
+- [ ] Il codice nel branch "NF" deve usare `self.vars.get("OFS")`, NON `self.get_var("OFS")` (borrow issue)
+
+## Anti-pattern specifici Step 7
+
+- ❌ Aggiungere flags `donefld`/`donerec` per lazy rebuild — fuori scope, esplicitamente.
+- ❌ Modificare `set_field()` esistente — già funziona; solo aggiungere testcase di regression.
+- ❌ Triggerare re-split di $0 alla modifica di FS — POSIX non lo richiede, e introdurrebbe complessità non necessaria. Se l'utente vuole, scrive `$0 = $0`.
+- ❌ Estendere `fields` con `Uninitialized` invece di `String("")` — incoerente con `set_field`, e può creare differenze di stampa sottili.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -1600,6 +1747,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 3 (escape `\xHH`/`\NNN`) | ✅ APPROVED | `cec7a9d` | 66/66 | D3.1-D3.4 applicate letteralmente. Implementazione di `decode_string_escapes` rifatta con `peek()` lookahead-based, hex e octal greedy-match, modulo 256 sull'octal overflow, fallback graceful per escape sconosciuti. 7 testcase con casi multibyte/zero/overflow/unknown. Process: by the book per il secondo step consecutivo. Backlog top → Step 4. |
 | 2026-05-03 | Step 4 (system/close/fflush) | ✅ APPROVED | `227c3e5` | 74/74 | D4.1-D4.6 applicate letteralmente. Refactor `out_files: HashMap<_, OutputStream>` con enum File/Pipe per tracciare Child, `wait()` correttamente su close di pipe, final shutdown drain in `run()`. Side-fix non in spec ma documentato in commit message: introdotto `print_expr_list` per risolvere ambiguità POSIX `print x > "file"` (redirect vs comparison). Comportamento corretto POSIX. Avrebbe dovuto essere SPEC-Q ma trasparenza nel commit lo ha mitigato. Minor: manca riga "Testcase aggiunti: N. Totali: M." nel commit message. Backlog top → Step 5. |
 | 2026-05-03 | Step 5 (RS paragraph + regex) | ✅ APPROVED | `ffbc0fe` | 82/82 | D5.1-D5.6 applicate letteralmente. Refactor `process_lines` in 3 funzioni (`process_single_byte`, `process_paragraph`, `process_regex_rs`) + dispatch top-level + helper `run_rules_on_record` estratto. Bonus sensato: default esplicito `RS="\n"` in `run()`. Commit message format perfettamente conforme (incluso "Testcase aggiunti: 8. Totali: 82.", che mancava in Step 4). 5° step consecutivo by-the-book. Backlog top → Step 6. |
+| 2026-05-03 | Step 6 (nextfile) | ✅ APPROVED | `b74e7e3` | 85/85 | D6.1-D6.7 applicate letteralmente. D6.8 (propagation through user function call) risolta out-of-spec con flag `nextfile_pending`/`exit_pending` su `EvalContext`: `eval_expr` non può propagare `FlowControl` via valore di ritorno (signature è `AwkValue`), quindi side-effect-based. Funziona, ma stato mutable nascosto. Da rivalutare in Step 11 (refactor stilistico) con possibile signature change `eval_expr -> Result<AwkValue, FlowControl>`. Commit message format conforme. Backlog top → Step 7. |
 
 ---
 
@@ -1611,7 +1759,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 2. ~~Builtin `system()` / `close()` / `fflush()`~~ → **promosso a Step 4** ✅ specced
 3. ~~Paragraph mode `RS=""` + RS regex multi-char~~ → **promosso a Step 5** ✅ specced
 4. ~~Statement `nextfile`~~ → **promosso a Step 6** ✅ specced
-5. **NF assignment side-effects (donefld/donerec)** — `NF = 3` deve troncare `fields`; `$5 = "x"` con NF=3 deve estendere e ricostruire `$0` lazy.
+5. ~~NF assignment side-effects (donefld/donerec)~~ → **promosso a Step 7** ✅ specced
 6. **`getline` da pipe (`"cmd" | getline`)** — oggi solo `getline < file`. Estendere grammatica + runner.
 7. **`printf`/`print` con `>>` append e `|` pipe** — già implementato in `handle_output`, ma testare edge case (file riaperti, append vs write, encoding).
 8. **CLI: `-v var=value` reale e separatore `--`** — il flag `-v` esiste in clap ma le assegnazioni non vengono parsate e iniettate in `EvalContext`.
