@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_rs_paragraph_multi_blank">
-        <awk>BEGIN { RS="" } { print NR }</awk>
-        <stdin>a
+    <awk>BEGIN { RS="" } { print NR }</awk>
+    <stdin>a
 
 
 b
@@ -9,9 +9,8 @@ b
 
 
 c</stdin>
-        <expected_stdout match="exact">1
+    <expected_stdout match="exact">1
 2
 3
 </expected_stdout>
-    </testcase>
-    
+</testcase>

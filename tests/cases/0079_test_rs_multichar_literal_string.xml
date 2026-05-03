@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_rs_multichar_literal_string">
-        <awk>BEGIN { RS="--" } { print NR ":" $0 }</awk>
-        <stdin>foo--bar--baz</stdin>
-        <expected_stdout match="exact">1:foo
+    <awk>BEGIN { RS="--" } { print NR ":" $0 }</awk>
+    <stdin>foo--bar--baz</stdin>
+    <expected_stdout match="exact">1:foo
 2:bar
 3:baz
 </expected_stdout>
-    </testcase>
-    
+</testcase>

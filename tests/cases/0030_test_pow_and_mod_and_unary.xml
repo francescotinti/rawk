@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_pow_and_mod_and_unary">
-        <awk> 
+    <awk> 
         BEGIN {
             print -1.5e-3
             print -(2+3)
@@ -10,13 +10,12 @@
             print 2^0.5
         }
         </awk>
-        <stdin />
-        <expected_stdout match="exact">-0.0015
+    <stdin />
+    <expected_stdout match="exact">-0.0015
 -5
 5
 1024
 2
 1.41421
 </expected_stdout>
-    </testcase>
-    
+</testcase>

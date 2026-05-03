@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_printf_string_align">
-        <awk>BEGIN { printf "[%-10s|%10s]\n", "hi", "hi" }</awk>
-        <expected_stdout match="exact">[hi        |        hi]
+    <awk>BEGIN { printf "[%-10s|%10s]\n", "hi", "hi" }</awk>
+    <expected_stdout match="exact">[hi        |        hi]
 </expected_stdout>
-    </testcase>
-    
+</testcase>

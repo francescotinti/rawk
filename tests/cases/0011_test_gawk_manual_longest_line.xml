@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_gawk_manual_longest_line">
-        <awk>{ if (length($0) &gt; max) max = length($0) } END { print max }</awk>
-        <stdin>short
+    <awk>{ if (length($0) &gt; max) max = length($0) } END { print max }</awk>
+    <stdin>short
 this is a much longer line
 tiny</stdin>
-        <expected_stdout match="exact">26
+    <expected_stdout match="exact">26
 </expected_stdout>
-    </testcase>
-    
+</testcase>

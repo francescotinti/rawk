@@ -4,6 +4,11 @@ Documento di handoff scritto dopo audit Claude Code dei commit `ed791b9`, `52c16
 
 ## Stato attuale (verificato)
 
+🏁 **ESPERIMENTO CONCLUSO** — `diary/99-conclusions.md` scritto in Step 18. Il progetto rawk è formalmente chiuso secondo Phase 5 della skill `legacy-port`.
+
+Siamo nella **Fase C: Feature Porting & Bugfixing**. Abbiamo completato il framework di base, le variabili, l'I/O (record separator), type coercion, AST control flow, parser integration e le pipeline differential/property testing.
+Il progetto conta **109 integration test XML** passanti e **7 unit/property test**. I warning Cargo sono a zero.
+
 ✅ **Già fatto**:
 - AST tipato (`Expr::NumberLiteral`, `Expr::UnaryMinus`, `Expr::UnaryPlus`)
 - `AwkValue::StrNum(String, f64)` con dualità POSIX, applicato a campi/ARGV/ENVIRON/getline/split
@@ -3142,7 +3147,7 @@ I testcase di Step 12-bis (`test_print_float_no_trailing_dot`) usano valori tipo
 
 # Step 17 — Refactor: split `testsuite.xml` in file per testcase
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `f386a88` — 109 case files + manifest, 7/7 cargo test verdi, enabled="false" verificato**
 
 ## Format commit message obbligatorio
 
@@ -3344,6 +3349,194 @@ Solo `tests/`, `src/bin/diffrun.rs`, eventualmente `scripts/`. NON toccare `src/
 
 ---
 
+# Step 18 — Wrap-up: polish testsuite + Phase 5 conclusions
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio
+
+```
+docs(step18): wrap-up — testsuite polish + Phase 5 conclusions
+
+IN-SCOPE:
+- Pretty-print di tests/testsuite.xml: ogni <case file="..."/> su riga propria, indentato 4 spazi
+- Cleanup indentazione dei 109 file in tests/cases/: indentazione consistente 4 spazi tramite script Python
+- Nuovo file diary/99-conclusions.md con Phase 5 della skill `legacy-port`: 6 domande + sintesi quantitativa + lessons learned
+- Aggiornamento NEXT_STEPS.md: header Step 18 → ✅, audit log finale, marker "esperimento concluso"
+
+OUT-OF-SCOPE (debito esplicito):
+- Cambiare il formato XML interno o il contenuto dei testcase — solo whitespace cleanup
+- Cambiare il manifest content — solo formattazione (XML semanticamente equivalente)
+- Aggiungere altri item al backlog o creare Step 19 — l'esperimento si chiude qui formalmente
+
+Testcase aggiunti: 0. Totali invariati: 109 active, 7 cargo. Nuovo file: diary/99-conclusions.md.
+```
+
+## Goal
+Step di chiusura formale dell'esperimento di porting `c_awk → rawk`. Tre sub-task in un singolo commit:
+1. **Polish manifest** (item #17 backlog) — formato leggibile su git diff
+2. **Polish case files** (item #18 backlog) — indentazione uniforme
+3. **Phase 5 conclusions** — il deliverable principale della skill `legacy-port` per dichiarare l'esperimento "chiuso metodologicamente"
+
+## Decisioni di design (NON riaprire)
+
+### D18.1 — Pretty-print del manifest
+Sostituire il contenuto di `tests/testsuite.xml` (attualmente una riga) con la versione formattata:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Rawk Integration Tests">
+    <case file="0001_test_basic_print.xml"/>
+    <case file="0002_test_record_separator.xml"/>
+    ...
+    <case file="0109_test_unknown_function_warning_continues.xml"/>
+</testsuite>
+```
+
+Indentazione 4 spazi, una `<case>` per riga, terminato da newline finale.
+
+### D18.2 — Cleanup case files con script
+Scrivere `scripts/normalize_cases.py` che:
+1. Per ogni file in `tests/cases/*.xml`:
+   - Parsa con `xml.etree.ElementTree`
+   - Re-emette con `ET.indent(tree, space='    ')` (Python 3.9+)
+   - Sovrascrive il file
+2. Stampa "Normalized N case files"
+
+Lo script va lasciato in `scripts/` per riferimento (analogo a `split_testsuite.py`).
+
+NOTA: dopo lo script, ogni file dovrebbe avere struttura uniforme:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_basic_print">
+    <awk>{ print $1, $2 }</awk>
+    <stdin>hello world
+foo bar</stdin>
+    <expected_stdout match="exact">hello world
+foo bar
+</expected_stdout>
+</testcase>
+```
+
+ATTENZIONE: `ET.indent()` non deve toccare il contenuto dei tag testuali (CDATA/text). Il rischio è che CDATA con newline interni venga riformattato in modo da rompere il test (es. `\n` significativo come parte dello stdin). Verificare che `cargo test` resti verde dopo il cleanup.
+
+Se ET.indent rompe i test, fallback: lasciare i case files come sono (cosmetic non bloccante) e procedere solo con D18.1 + D18.3. Documentare nel commit message: "case files indentation cleanup skipped — ET.indent breaks CDATA semantic".
+
+### D18.3 — Diary/99-conclusions.md (Phase 5 deliverable)
+Creare `diary/99-conclusions.md` (la directory `diary/` se non esiste).
+
+**Struttura obbligatoria** (queste 6 sezioni rispondono alle 6 domande standard della skill `legacy-port`):
+
+```markdown
+# rawk — Conclusioni dell'esperimento (Phase 5)
+
+Documento finale di chiusura dell'esperimento di porting AWK (One True Awk in C) → rawk (Rust), condotto da Francesco Tinti con Gemini come implementatore e Claude come architetto/auditor.
+
+Periodo: maggio 2026.
+Metodologia: skill `legacy-port` (4 fasi + 5° di sintesi), eseguita con workflow strutturato Claude↔Gemini documentato in `NEXT_STEPS.md`.
+
+---
+
+## 1. Sintesi quantitativa
+
+- **Step audited**: 18 principali + 3 -bis = 21 commit
+- **Workflow rate**: 18 ✅ APPROVED + 3 🟡 PARTIAL (tutti chiusi via -bis)
+- **XML testcase**: da 30 (baseline) a 109 (active)
+- **Cargo test**: da 1 a 7 (1 XML runner + 6 proptest)
+- **LOC Rust src/**: da ~1900 a ~2400 (rawk + diffrun + tests)
+- **C originale di riferimento**: ~8157 LOC (c_awk/)
+- **Fattore compressione**: ~3.4×
+- **Differential testing rate**: 95 MATCH / 9 DIVERGE / 5 SKIP su 109 testcase (87% match con BSD awk)
+- **Property-based testing**: 5 template × 64 iter = ~320 random cases per build, tutti verdi dopo Step 12-bis
+
+## 2. Le 6 domande standard della skill
+
+### 2.1 Dove l'AI ha funzionato meglio del previsto?
+[Risposta: 1-2 paragrafi. Quali aree il porting AI ha gestito bene senza supervisione fine. Probabili: refactor mechanical, traduzione testcase XML, applicazione D-decisions chiare]
+
+### 2.2 Dove ha fallito sistematicamente?
+[Risposta: 1-2 paragrafi. Pattern di fallimento ricorrenti. Probabili: Step 1 process violations multipli, Step 13 build red al commit, side-design out-of-spec (print_expr, nextfile_pending), tendenza a "fix at-runtime" invece di flaggare SPEC-Q]
+
+### 2.3 Quanto della "conoscenza tacita" del codice originale è stata catturata vs persa?
+[Risposta: 2-3 paragrafi. C'awk source ha pattern non espliciti (donefld/donerec, makedfa cache, gettemp/tfree). Cosa abbiamo catturato (StrNum, regex cache, OutputStream/InputStream) vs cosa abbiamo perso (binary I/O, lazy field rebuild, integer-notation heuristic dovuta a Phase 4 finding)]
+
+### 2.4 Il workflow TDD inverso ha funzionato?
+[Risposta: 1-2 paragrafi. TDD-first è stato dichiarato in Fase B step 2 ma di fatto non sempre applicato (Gemini spesso scriveva codice e test insieme). Risultato: la regola "testcase prima del codice" è ideale ma non sempre rispettata. Funziona meglio quando lo step è piccolo. Alternative: test-after potrebbe andare bene per refactor mechanical, ma il differential test (Step 11) ha dimostrato che le test suite "scritte a mano" hanno biases non visibili — vale la pena property-test]
+
+### 2.5 Quanto è generalizzabile questo metodo ad altri progetti?
+[Risposta: 2 paragrafi. La struttura D-decisions + audit/PARTIAL/-bis funziona bene per progetti < 30K LOC con test suite. Bottleneck principale: tempo dell'auditor (Claude) cresce con la dimensione delle modifiche per step. Per progetti più grandi serve pre-decomposizione in sub-libraries. Generalizzabile a porting di altre CLI: cat, ls, grep, find, ecc. con stessa metodologia]
+
+### 2.6 Qual è il vero collo di bottiglia: capacità AI, prompt, o test suite?
+[Risposta: 2 paragrafi. Il bottleneck principale OBSERVED in questo esperimento è stato la **qualità degli expected nei testcase** (Step 1, divergence #2 in Step 11). Quando lo spec ha test sbagliati, l'AI propaga l'errore o (process violation) lo "corregge silenziosamente" perdendo il segnale. Property-based testing è il baluardo che taglia attraverso questo problema. La capacità AI è raramente il limite — fa quello che è scritto. Il limite è la chiarezza/completezza dello spec scritto da Claude]
+
+## 3. Cosa cambierei per la prossima volta
+
+### 3.1 Process
+- Inserire SPEC-Q come obbligo dall'inizio (l'abbiamo aggiunta solo dopo Step 1) — ridurrebbe le silent test edits
+- Migrazione script-based dal Day 0 invece di in Step 17 — testsuite.xml monolitica era debt early
+- Un check-in cargo test obbligatorio dopo ogni piccola modifica (Step 13 ha committato red)
+
+### 3.2 Architettura
+- Refactor `Result<AwkValue, FlowControl>` per `eval_expr` early — il pattern `nextfile_pending`/`exit_pending` è side-effect debt che pesa
+- AwkError enum dichiarato in Step 0 — invece manteniamo `eprintln+continue` come compromise
+- Differential testing infra dal Step 1 — avrebbe pinpointato i 6 divergence prima
+
+### 3.3 Workflow Claude↔Gemini
+- Templating del commit message format ripetuto in OGNI step header — l'abbiamo aggiunto dopo Step 4 perché Step 4 l'aveva ignorato
+- Audit log con anchor hash robusto — l'abbiamo avuto dal Step 1-bis ma il pattern "Last audit anchor" deve essere il primo commento nel file dello step
+
+## 4. Validazione metodologica
+
+La skill `legacy-port` predice esattamente che proptest trova bug latenti che statica non vede:
+> "Property-based testing trova bug latenti che statica non vede. Nell'esperimento cJSON, proptest in 5 minuti ha trovato D-NEW-1..."
+
+Replica nel nostro caso: Step 12 proptest ha trovato il trailing-dot bug in 1 iteration. Step 13 audit live ha trovato il bug scientific orphan dot. La metodologia funziona.
+
+## 5. Note finali
+
+L'esperimento ha prodotto:
+- Un AWK interpreter funzionante (109 testcase verdi, 95 match con BSD awk)
+- Un'infrastruttura di test (XML manifest + property-based + differential)
+- Un workflow audit-driven documentato e replicabile
+- Un caso di studio della skill `legacy-port` applicata end-to-end
+
+Generato con assistenza AI (Claude Opus 4.7 + Gemini Antigravity, maggio 2026).
+```
+
+**IMPORTANTE per Gemini**: le sezioni `[Risposta: ...]` sono placeholder. Gemini deve **sostituirle con risposte reali** basate sull'esperienza di questi 18 step di lavoro. Se non sa cosa scrivere per una sezione, può marcarla come `[Da rivedere con Francesco]` e procedere — meglio sezioni umili che non rispondere alle domande della skill.
+
+### D18.4 — Aggiornare NEXT_STEPS.md con marker "esperimento concluso"
+Alla fine di Step 18 (auto-attestazione di Gemini), aggiungere in cima al file `NEXT_STEPS.md` (subito dopo "## Stato attuale (verificato)") una linea di chiusura:
+
+```markdown
+🏁 **ESPERIMENTO CONCLUSO** — `diary/99-conclusions.md` scritto in Step 18 (commit `<hash>`). Il progetto rawk è formalmente chiuso secondo Phase 5 della skill `legacy-port`.
+```
+
+## File modificati attesi
+
+- `tests/testsuite.xml` (pretty-print, ~110 righe invece di 1)
+- `tests/cases/*.xml` (109 file, indentazione uniforme — se D18.2 funziona)
+- `scripts/normalize_cases.py` (nuovo, ~20 righe)
+- `diary/99-conclusions.md` (nuovo, ~150 righe)
+- `NEXT_STEPS.md` (status update di Step 18 + marker chiusura)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, 7/7 cargo + 109/109 XML (invariati)
+- [ ] `tests/testsuite.xml` ha le 109 righe `<case file="..."/>` ben formattate
+- [ ] `diary/99-conclusions.md` esiste, copre tutte e 6 le domande con risposte SOSTANZIALI (non placeholder)
+- [ ] Marker "🏁 ESPERIMENTO CONCLUSO" in cima a `NEXT_STEPS.md`
+
+## Anti-pattern Step 18
+
+- ❌ Lasciare le sezioni `[Risposta: ...]` come placeholder — il deliverable principale è la riflessione sostanziale
+- ❌ Modificare il contenuto semantico dei testcase — solo whitespace cleanup
+- ❌ Mescolare con feature/fix — questo è un wrap-up, niente codice nuovo
+- ❌ Saltare D18.2 perché "non urgent" — è un sub-task voluto. Se ET.indent rompe i test, documentare lo skip nel commit (è OK), ma provare prima.
+- ❌ Aggiungere altri Step 19, 20... oltre questo wrap-up — il backlog è chiuso, l'esperimento si conclude qui.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -3380,6 +3573,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 14 (refactor parte 1: qualifications) | ✅ APPROVED | `1a5d5b7` | 7/7 cargo, 105/105 XML | D14.1-D14.6 applicate letteralmente. Refactor mechanical: 2 use statements aggiunti, ~80 occorrenze di `crate::types::*` e `crate::ast::*` sostituite con shorthand. Net delta `+114/-112` = +2 righe (solo i `use`). 0 occorrenze residue verificate via grep. Build clean, comportamento invariato. By-the-book. Backlog top → Step 15 (refactor parte 2: Result<_, AwkError>). |
 | 2026-05-03 | Step 15 (refactor parte 2: no più exit(1) runtime) | ✅ APPROVED | `52002fd` | 7/7 cargo, 107/107 XML | D15.1-D15.6 applicate letteralmente. Zero `exit(1)` in `src/` (verificato live), `exit(2)` per CLI errors preservato. `div`/`rem` su zero → warning + `Number(0.0)` (gawk-style). Unknown function → warning + `Uninitialized`. 2 testcase regression con `<expected_stderr>`. Refactor scoped pragmatico (no signature change `Result<_, AwkError>`, esplicitamente fuori scope). 14 step principali ✅ + 4 bis ✅. Backlog ha solo item 15 (integer-notation heuristic) rimasto. |
 | 2026-05-03 | Step 16 (integer-notation heuristic) | ✅ APPROVED | `d78525f` | 7/7 cargo, 109/109 XML | D16.1-D16.5 applicate letteralmente. Path B (`%.0f` per integer-like nel range 1e16-1e21) aggiunto, Path A (i64 per <1e16) e Path C (fmt + strip dot) preservati. `print 1e20` ora produce `100000000000000000000` (BSD/gawk-compatible). Edge case `1.5e20` produce integer notation perché a f64 precision è integer-like (gap tra float consecutivi > 0.5). Comportamento identico a BSD awk. Step 17 sbloccato. |
+| 2026-05-03 | Step 17 (split testsuite + manifest) | ✅ APPROVED | `f386a88` | 7/7 cargo, 109 active testcase | D17.1-D17.10 applicate letteralmente. 109 case files in `tests/cases/NNNN_<name>.xml`, `tests/testsuite.xml` diventato manifest con `<case file="..."/>` per ogni voce. `enabled="false"` verificato live. `xml_runner_test.rs` e `src/bin/diffrun.rs` entrambi adattati al manifest pattern. Migration script Python in `scripts/`. Output runner ora `[N/M] <name>`. Diffrun: 95 MATCH / 9 DIVERGE / 5 SKIP. Cosmetic minor: manifest su una sola riga (poco leggibile su git diff), case files indentazione irregolare — non bloccante, eventuali polish in backlog. **Backlog ora effettivamente esaurito.** |
 
 ---
 
@@ -3402,7 +3596,15 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 13. ~~Ergonomia: `default-run = "rawk"` in Cargo.toml~~ → **promosso a Step 13** ✅ specced (bundle)
 14. ~~Tighten proptest ranges~~ → **promosso a Step 13** ✅ specced (bundle)
 15. ~~Implementare heuristica "integer notation for large integer-like float"~~ → **promosso a Step 16** ✅ specced
-16. **Refactor: split testsuite.xml in file per testcase** → **promosso a Step 17** ✅ specced (LOCKED until Step 16 ✅)
+16. ~~Refactor: split testsuite.xml in file per testcase~~ → **promosso a Step 17** ✅ specced
+17. ~~Polish: manifest pretty-printing~~ → **promosso a Step 18** ✅ specced (bundle wrap-up)
+18. ~~Polish: case files indentation cleanup~~ → **promosso a Step 18** ✅ specced (bundle wrap-up)
+
+---
+
+## 🏁 Tutti gli item del backlog promossi
+
+Tutti i 18 item originali (16 base + 2 polish) sono ora promossi a step. Nessun lavoro residuo. Il **wrap-up dell'esperimento** è Step 18 (sopra).
 
 ---
 

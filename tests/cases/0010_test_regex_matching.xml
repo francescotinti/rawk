@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_regex_matching">
-        <awk>
+    <awk>
         $1 ~ /^[0-9]+$/ { print "number:", $1 }
         $1 !~ /^[0-9]+$/ { print "string:", $1 }
         </awk>
-        <stdin>123
+    <stdin>123
 abc
 456
 def</stdin>
-        <expected_stdout match="exact">number: 123
+    <expected_stdout match="exact">number: 123
 string: abc
 number: 456
 string: def
 </expected_stdout>
-    </testcase>
-
-    
-    
+</testcase>

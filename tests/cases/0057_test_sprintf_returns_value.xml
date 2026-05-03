@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_sprintf_returns_value">
-        <awk>BEGIN { s = sprintf("[%5d]", 7); print s }</awk>
-        <expected_stdout match="exact">[    7]
+    <awk>BEGIN { s = sprintf("[%5d]", 7); print s }</awk>
+    <expected_stdout match="exact">[    7]
 </expected_stdout>
-    </testcase>
-    
+</testcase>

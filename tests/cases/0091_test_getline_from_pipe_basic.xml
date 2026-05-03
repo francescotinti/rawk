@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_getline_from_pipe_basic">
-        <awk>BEGIN { "echo hello" | getline x; print "got:" x }</awk>
-        <expected_stdout match="exact">got:hello
+    <awk>BEGIN { "echo hello" | getline x; print "got:" x }</awk>
+    <expected_stdout match="exact">got:hello
 </expected_stdout>
-    </testcase>
-    
+</testcase>

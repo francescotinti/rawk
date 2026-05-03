@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_printf_float_width_precision">
-        <awk>BEGIN { printf "[%8.2f]\n", 3.14159 }</awk>
-        <expected_stdout match="exact">[    3.14]
+    <awk>BEGIN { printf "[%8.2f]\n", 3.14159 }</awk>
+    <expected_stdout match="exact">[    3.14]
 </expected_stdout>
-    </testcase>
-    
+</testcase>

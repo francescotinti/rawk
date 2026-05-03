@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_rs_singlechar_unchanged">
-        <awk>BEGIN { RS="|" } { print NR ":" $0 }</awk>
-        <stdin>A|B|C</stdin>
-        <expected_stdout match="exact">1:A
+    <awk>BEGIN { RS="|" } { print NR ":" $0 }</awk>
+    <stdin>A|B|C</stdin>
+    <expected_stdout match="exact">1:A
 2:B
 3:C
 </expected_stdout>
-    </testcase>
-    
+</testcase>

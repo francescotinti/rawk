@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_rs_multichar_regex">
-        <awk>BEGIN { RS="X+" } { print NR ":" $0 }</awk>
-        <stdin>aaaXbbbXXXcccXXdddX</stdin>
-        <expected_stdout match="exact">1:aaa
+    <awk>BEGIN { RS="X+" } { print NR ":" $0 }</awk>
+    <stdin>aaaXbbbXXXcccXXdddX</stdin>
+    <expected_stdout match="exact">1:aaa
 2:bbb
 3:ccc
 4:ddd
 </expected_stdout>
-    </testcase>
-    
+</testcase>

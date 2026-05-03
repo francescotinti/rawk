@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_concat_basic">
-        <awk>BEGIN { print "a" "b" "c" }</awk>
-        <expected_stdout match="exact">abc
+    <awk>BEGIN { print "a" "b" "c" }</awk>
+    <expected_stdout match="exact">abc
 </expected_stdout>
-    </testcase>
-    
+</testcase>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_basic_print">
-        <awk>{ print $1, $2 }</awk>
-        <stdin>hello world
+    <awk>{ print $1, $2 }</awk>
+    <stdin>hello world
 foo bar</stdin>
-        <expected_stdout match="exact">hello world
+    <expected_stdout match="exact">hello world
 foo bar
 </expected_stdout>
-    </testcase>
-    
+</testcase>

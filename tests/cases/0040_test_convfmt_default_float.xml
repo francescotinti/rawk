@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_convfmt_default_float">
-        <awk>BEGIN { x = 0.1 + 0.2; print "x=" x }</awk>
-        <expected_stdout match="exact">x=0.3
+    <awk>BEGIN { x = 0.1 + 0.2; print "x=" x }</awk>
+    <expected_stdout match="exact">x=0.3
 </expected_stdout>
-    </testcase>
-    
+</testcase>

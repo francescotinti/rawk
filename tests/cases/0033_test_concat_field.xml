@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_concat_field">
-        <awk>{ print $1 $2 "-" $3 }</awk>
-        <stdin>foo bar baz</stdin>
-        <expected_stdout match="exact">foobar-baz
+    <awk>{ print $1 $2 "-" $3 }</awk>
+    <stdin>foo bar baz</stdin>
+    <expected_stdout match="exact">foobar-baz
 </expected_stdout>
-    </testcase>
-    
+</testcase>

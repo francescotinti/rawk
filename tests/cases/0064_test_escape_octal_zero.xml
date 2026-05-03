@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_escape_octal_zero">
-        <awk>BEGIN { printf "[%d]\n", length("\0") }</awk>
-        <expected_stdout match="exact">[1]
+    <awk>BEGIN { printf "[%d]\n", length("\0") }</awk>
+    <expected_stdout match="exact">[1]
 </expected_stdout>
-    </testcase>
-    
+</testcase>

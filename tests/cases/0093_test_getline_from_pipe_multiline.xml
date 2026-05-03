@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_getline_from_pipe_multiline">
-        <awk>BEGIN {
+    <awk>BEGIN {
             cmd = "printf 'one\ntwo\nthree\n'"
             while ((cmd | getline line) &gt; 0) print "L:" line
         }</awk>
-        <expected_stdout match="exact">L:one
+    <expected_stdout match="exact">L:one
 L:two
 L:three
 </expected_stdout>
-    </testcase>
-    
+</testcase>

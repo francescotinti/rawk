@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_escape_hex_one_digit">
-        <awk>BEGIN { printf "[%d]\n", length("\x9") }</awk>
-        <expected_stdout match="exact">[1]
+    <awk>BEGIN { printf "[%d]\n", length("\x9") }</awk>
+    <expected_stdout match="exact">[1]
 </expected_stdout>
-    </testcase>
-    
+</testcase>

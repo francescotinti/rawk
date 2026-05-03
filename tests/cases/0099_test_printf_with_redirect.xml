@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_printf_with_redirect">
-        <awk>BEGIN {
+    <awk>BEGIN {
             printf "%d\n", 42 &gt; "/tmp/rawk_step9_d.txt"
             close("/tmp/rawk_step9_d.txt")
             getline x &lt; "/tmp/rawk_step9_d.txt"
             print "got:" x
         }</awk>
-        <expected_stdout match="exact">got:42
+    <expected_stdout match="exact">got:42
 </expected_stdout>
-    </testcase>
-    
+</testcase>

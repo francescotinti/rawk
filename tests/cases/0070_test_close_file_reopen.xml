@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_close_file_reopen">
-        <awk>BEGIN {
+    <awk>BEGIN {
             print "first" &gt; "/tmp/rawk_step4_close.txt"
             close("/tmp/rawk_step4_close.txt")
             print "second" &gt; "/tmp/rawk_step4_close.txt"
@@ -8,7 +8,6 @@
             getline line &lt; "/tmp/rawk_step4_close.txt"
             print line
         }</awk>
-        <expected_stdout match="exact">second
+    <expected_stdout match="exact">second
 </expected_stdout>
-    </testcase>
-    
+</testcase>

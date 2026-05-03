@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_medium_filter_height">
-        <awk> $4 &gt; 169 </awk>
-        <stdin>John Doe 30 180
+    <awk> $4 &gt; 169 </awk>
+    <stdin>John Doe 30 180
 Jane Smith 25 165
 Alice Johnson 28 170
 Bob Brown 35 175
 Charlie White 32 182</stdin>
-        <expected_stdout match="exact">John Doe 30 180
+    <expected_stdout match="exact">John Doe 30 180
 Alice Johnson 28 170
 Bob Brown 35 175
 Charlie White 32 182
 </expected_stdout>
-    </testcase>
-    
+</testcase>

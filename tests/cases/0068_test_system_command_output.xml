@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_system_command_output">
-        <awk>BEGIN { system("echo hello"); print "after" }</awk>
-        <expected_stdout match="exact">hello
+    <awk>BEGIN { system("echo hello"); print "after" }</awk>
+    <expected_stdout match="exact">hello
 after
 </expected_stdout>
-    </testcase>
-    
+</testcase>

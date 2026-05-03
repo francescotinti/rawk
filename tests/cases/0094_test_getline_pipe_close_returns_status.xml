@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_getline_pipe_close_returns_status">
-        <awk>BEGIN {
+    <awk>BEGIN {
             "echo hi" | getline x
             print x
             ret = close("echo hi")
             print "close=" ret
         }</awk>
-        <expected_stdout match="exact">hi
+    <expected_stdout match="exact">hi
 close=0
 </expected_stdout>
-    </testcase>
-    
+</testcase>

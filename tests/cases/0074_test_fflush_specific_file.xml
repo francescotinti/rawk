@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_fflush_specific_file">
-        <awk>BEGIN {
+    <awk>BEGIN {
             print "data" &gt; "/tmp/rawk_step4_fflush.txt"
             fflush("/tmp/rawk_step4_fflush.txt")
             getline line &lt; "/tmp/rawk_step4_fflush.txt"
             print "got: " line
             close("/tmp/rawk_step4_fflush.txt")
         }</awk>
-        <expected_stdout match="exact">got: data
+    <expected_stdout match="exact">got: data
 </expected_stdout>
-    </testcase>
-    
+</testcase>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_escape_unknown_preserved">
-        <awk>BEGIN { printf "%s\n", "a\zb" }</awk>
-        <expected_stdout match="exact">a\zb
+    <awk>BEGIN { printf "%s\n", "a\zb" }</awk>
+    <expected_stdout match="exact">a\zb
 </expected_stdout>
-    </testcase>
-    
+</testcase>

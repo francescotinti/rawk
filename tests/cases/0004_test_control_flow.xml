@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_control_flow">
-        <awk>BEGIN { sum = 0; i = 1; while(i&lt;=5) { sum = sum + i; i = i + 1 }; print sum }</awk>
-        <expected_stdout match="exact">15
+    <awk>BEGIN { sum = 0; i = 1; while(i&lt;=5) { sum = sum + i; i = i + 1 }; print sum }</awk>
+    <expected_stdout match="exact">15
 </expected_stdout>
-    </testcase>
-
-    
-    
+</testcase>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_print_int_at_threshold">
-        <awk>BEGIN { print 1e16 }</awk>
-        <expected_stdout match="exact">10000000000000000
+    <awk>BEGIN { print 1e16 }</awk>
+    <expected_stdout match="exact">10000000000000000
 </expected_stdout>
-    </testcase>
-    
+</testcase>

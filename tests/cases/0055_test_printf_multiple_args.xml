@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_printf_multiple_args">
-        <awk>BEGIN { printf "%s=%d (%.2f%%)\n", "rate", 75, 75.456 }</awk>
-        <expected_stdout match="exact">rate=75 (75.46%)
+    <awk>BEGIN { printf "%s=%d (%.2f%%)\n", "rate", 75, 75.456 }</awk>
+    <expected_stdout match="exact">rate=75 (75.46%)
 </expected_stdout>
-    </testcase>
-    
+</testcase>

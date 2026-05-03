@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_gawk_manual_gsub_replacement">
-        <awk> 
+    <awk> 
         BEGIN {
             pat = "apple"
             repl = "orange"
         }
         { gsub(pat, repl); print $0 }
         </awk>
-        <stdin>I like apple.
+    <stdin>I like apple.
 apple pie is good.</stdin>
-        <expected_stdout match="exact">I like orange.
+    <expected_stdout match="exact">I like orange.
 orange pie is good.
 </expected_stdout>
-    </testcase>
-    
-    
+</testcase>

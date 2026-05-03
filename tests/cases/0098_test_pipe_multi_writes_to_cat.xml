@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_pipe_multi_writes_to_cat">
-        <awk>BEGIN {
+    <awk>BEGIN {
             print "line1" | "cat"
             print "line2" | "cat"
             close("cat")
         }</awk>
-        <expected_stdout match="exact">line1
+    <expected_stdout match="exact">line1
 line2
 </expected_stdout>
-    </testcase>
-    
+</testcase>

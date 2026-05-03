@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_print_large_int_as_integer_notation">
-        <awk>BEGIN { print 1e20 }</awk>
-        <expected_stdout match="exact">100000000000000000000
+    <awk>BEGIN { print 1e20 }</awk>
+    <expected_stdout match="exact">100000000000000000000
 </expected_stdout>
-    </testcase>
-    
+</testcase>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_escape_mixed_hex_octal">
-        <awk>BEGIN { printf "%s\n", "\x48\x69\41" }</awk>
-        <expected_stdout match="exact">Hi!
+    <awk>BEGIN { printf "%s\n", "\x48\x69\41" }</awk>
+    <expected_stdout match="exact">Hi!
 </expected_stdout>
-    </testcase>
-    
+</testcase>
