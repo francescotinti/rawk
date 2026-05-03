@@ -6,11 +6,22 @@ use serde::Deserialize;
 // duplicato da tests/xml_runner_test.rs (DRY trade-off accettato)
 #[derive(Debug, Deserialize)]
 #[allow(dead_code)]
-struct TestSuite {
-    #[serde(rename = "@name")]
-    name: String,
-    #[serde(rename = "testcase")]
-    testcases: Vec<TestCase>,
+struct Manifest {
+    #[serde(rename = "case")]
+    cases: Vec<ManifestCase>,
+}
+
+#[derive(Debug, Deserialize)]
+#[allow(dead_code)]
+struct ManifestCase {
+    #[serde(rename = "@file")]
+    file: String,
+    #[serde(rename = "@enabled", default = "default_enabled")]
+    enabled: String,
+}
+
+fn default_enabled() -> String {
+    "true".to_string()
 }
 
 #[derive(Debug, Deserialize)]
@@ -102,18 +113,28 @@ fn main() {
     let mut xml_content = String::new();
     file.read_to_string(&mut xml_content).expect("Failed to read testsuite.xml");
 
-    let suite: TestSuite = quick_xml::de::from_str(&xml_content)
-        .expect("Failed to parse testsuite.xml");
+    let manifest: Manifest = quick_xml::de::from_str(&xml_content)
+        .expect("Failed to parse manifest");
+
+    let active: Vec<&ManifestCase> = manifest.cases.iter()
+        .filter(|c| c.enabled != "false")
+        .collect();
 
     println!("=== rawk differential test report ===");
     println!("Reference awk: /usr/bin/awk ({})", awk_version);
-    println!("Total testcase: {}", suite.testcases.len());
+    println!("Total testcase: {}", active.len());
 
     let mut match_count = 0;
     let mut diverge_cases = Vec::new();
     let mut skipped_cases = Vec::new();
 
-    for case in suite.testcases {
+    for mc in active {
+        let case_path = format!("tests/cases/{}", mc.file);
+        let case_xml = std::fs::read_to_string(&case_path)
+            .expect(&format!("Failed to read {}", case_path));
+        let case: TestCase = quick_xml::de::from_str(&case_xml)
+            .expect(&format!("Failed to parse {}", case_path));
+
         if let Some(reason) = is_skip(&case) {
             skipped_cases.push((case.name.clone(), reason));
             continue;

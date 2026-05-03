@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_printf_int_width_pad">
+        <awk>BEGIN { printf "[%5d]\n", 42 }</awk>
+        <expected_stdout match="exact">[   42]
+</expected_stdout>
+    </testcase>
+    

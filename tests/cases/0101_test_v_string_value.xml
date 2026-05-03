@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_v_string_value">
+        <args>-v</args>
+        <args>name=hello world</args>
+        <awk>BEGIN { print name }</awk>
+        <expected_stdout match="exact">hello world
+</expected_stdout>
+    </testcase>
+    

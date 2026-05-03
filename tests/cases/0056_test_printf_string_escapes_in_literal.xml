@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_printf_string_escapes_in_literal">
+        <awk>BEGIN { printf "a\tb\nc" }</awk>
+        <expected_stdout match="exact">a	b
+c</expected_stdout>
+    </testcase>
+    

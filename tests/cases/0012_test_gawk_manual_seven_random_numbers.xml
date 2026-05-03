@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_gawk_manual_seven_random_numbers">
+        <awk>BEGIN { srand(1); for (i = 1; i &lt;= 7; i++) print int(101 * rand()) }</awk>
+        <expected_stdout match="exact">98
+69
+43
+17
+25
+97
+39
+</expected_stdout>
+    </testcase>
+    

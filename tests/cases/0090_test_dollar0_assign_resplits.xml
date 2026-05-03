@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_dollar0_assign_resplits">
+        <awk>BEGIN { FS=":" } { $0 = "p:q:r"; print NF; print $2 }</awk>
+        <stdin>ignored line</stdin>
+        <expected_stdout match="exact">3
+q
+</expected_stdout>
+    </testcase>
+    

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_system_zero">
+        <awk>BEGIN { print system("true") }</awk>
+        <expected_stdout match="exact">0
+</expected_stdout>
+    </testcase>
+    

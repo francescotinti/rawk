@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_math_functions">
+        <awk>BEGIN { print sqrt(16), int(3.9) }</awk>
+        <expected_stdout match="exact">4 3
+</expected_stdout>
+    </testcase>
+    

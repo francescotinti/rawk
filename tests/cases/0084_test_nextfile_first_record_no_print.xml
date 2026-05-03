@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_nextfile_first_record_no_print">
+        <awk>NR == 1 { nextfile } { print NR ":" $0 } END { print "done" }</awk>
+        <stdin>a
+b
+c</stdin>
+        <expected_stdout match="exact">done
+</expected_stdout>
+    </testcase>
+    

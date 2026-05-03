@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_div_by_zero_warning_continues">
+        <awk>BEGIN { x = 5/0; print "after:" x }</awk>
+        <expected_stderr>rawk: warning: division by zero
+</expected_stderr>
+        <expected_stdout match="exact">after:0
+</expected_stdout>
+    </testcase>
+    

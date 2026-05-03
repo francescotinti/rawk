@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_printf_char_from_string">
+        <awk>BEGIN { printf "%c\n", "hello" }</awk>
+        <expected_stdout match="exact">h
+</expected_stdout>
+    </testcase>
+    

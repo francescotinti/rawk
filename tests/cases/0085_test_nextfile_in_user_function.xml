@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_nextfile_in_user_function">
+        <awk>
+        function skip() { nextfile }
+        NR == 2 { skip() }
+        { print NR ":" $0 }
+        END { print "END" }
+        </awk>
+        <stdin>a
+b
+c</stdin>
+        <expected_stdout match="exact">1:a
+END
+</expected_stdout>
+    </testcase>
+    

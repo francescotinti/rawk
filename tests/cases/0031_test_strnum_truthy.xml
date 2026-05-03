@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_strnum_truthy">
+        <awk> 
+        { if ($1) print "T"; else print "F" }
+        </awk>
+        <stdin>0
+1
+abc
+</stdin>
+        <expected_stdout match="exact">F
+T
+T
+</expected_stdout>
+    </testcase>
+    

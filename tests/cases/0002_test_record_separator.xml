@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_record_separator">
+        <awk>BEGIN { RS = "|" } { print $1 }</awk>
+        <stdin>A|B|C</stdin>
+        <expected_stdout match="exact">A
+B
+C
+</expected_stdout>
+    </testcase>
+    

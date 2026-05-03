@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_concat_paren">
+        <awk>BEGIN { print "a" ("b" "c") "d" }</awk>
+        <expected_stdout match="exact">abcd
+</expected_stdout>
+    </testcase>
+    

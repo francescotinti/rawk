@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_rs_paragraph_basic">
+        <awk>BEGIN { RS="" } { print NR ":" $0 }</awk>
+        <stdin>foo bar
+baz
+
+second paragraph
+line two
+
+third</stdin>
+        <expected_stdout match="exact">1:foo bar
+baz
+2:second paragraph
+line two
+3:third
+</expected_stdout>
+    </testcase>
+    

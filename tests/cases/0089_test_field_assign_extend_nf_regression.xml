@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_field_assign_extend_nf_regression">
+        <awk>{ $5 = "x"; print NF; print $0 }</awk>
+        <stdin>a b</stdin>
+        <expected_stdout match="exact">5
+a b   x
+</expected_stdout>
+    </testcase>
+    

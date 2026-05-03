@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_printf_percent_literal">
+        <awk>BEGIN { printf "100%%\n" }</awk>
+        <expected_stdout match="exact">100%
+</expected_stdout>
+    </testcase>
+    

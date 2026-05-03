@@ -4,11 +4,21 @@ use std::process::{Command, Stdio};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
-struct TestSuite {
-    #[serde(rename = "@name")]
-    name: String,
-    #[serde(rename = "testcase")]
-    testcases: Vec<TestCase>,
+struct Manifest {
+    #[serde(rename = "case")]
+    cases: Vec<ManifestCase>,
+}
+
+#[derive(Debug, Deserialize)]
+struct ManifestCase {
+    #[serde(rename = "@file")]
+    file: String,
+    #[serde(rename = "@enabled", default = "default_enabled")]
+    enabled: String,
+}
+
+fn default_enabled() -> String {
+    "true".to_string()
 }
 
 #[derive(Debug, Deserialize)]
@@ -42,15 +52,25 @@ fn run_xml_testsuite() {
     let mut xml_content = String::new();
     file.read_to_string(&mut xml_content).expect("Failed to read testsuite.xml");
 
-    let suite: TestSuite = quick_xml::de::from_str(&xml_content)
-        .expect("Failed to parse testsuite.xml");
+    let manifest: Manifest = quick_xml::de::from_str(&xml_content)
+        .expect("Failed to parse manifest");
 
-    println!("Running Test Suite: {}", suite.name);
+    let active: Vec<&ManifestCase> = manifest.cases.iter()
+        .filter(|c| c.enabled != "false")
+        .collect();
+    let total = active.len();
+    let skipped = manifest.cases.len() - total;
+
     let mut failed = 0;
-    let total = suite.testcases.len();
 
-    for case in suite.testcases {
-        println!("  Test Case: {}", case.name);
+    for (i, mc) in active.iter().enumerate() {
+        let case_path = format!("tests/cases/{}", mc.file);
+        let case_xml = std::fs::read_to_string(&case_path)
+            .expect(&format!("Failed to read {}", case_path));
+        let case: TestCase = quick_xml::de::from_str(&case_xml)
+            .expect(&format!("Failed to parse {}", case_path));
+
+        println!("  [{}/{}] {}", i+1, total, case.name);
 
         let mut cmd = Command::new(env!("CARGO_BIN_EXE_rawk"));
         for arg in &case.args {
@@ -119,14 +139,12 @@ fn run_xml_testsuite() {
 
         if case_failed {
             failed += 1;
-        } else {
-            println!("    [OK]");
         }
     }
 
+    println!("  Skipped: {}", skipped);
     if failed > 0 {
-        panic!("{} out of {} tests failed in suite '{}'", failed, total, suite.name);
-    } else {
-        println!("All {} tests passed in suite '{}'!", total, suite.name);
+        panic!("{} of {} active tests failed", failed, total);
     }
 }
+

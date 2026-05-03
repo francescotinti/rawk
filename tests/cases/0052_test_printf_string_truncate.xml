@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_printf_string_truncate">
+        <awk>BEGIN { printf "[%.3s]\n", "abcdef" }</awk>
+        <expected_stdout match="exact">[abc]
+</expected_stdout>
+    </testcase>
+    

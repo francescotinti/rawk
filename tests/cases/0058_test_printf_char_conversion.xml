@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_printf_char_conversion">
+        <awk>BEGIN { printf "%c%c%c\n", 65, 66, 67 }</awk>
+        <expected_stdout match="exact">ABC
+</expected_stdout>
+    </testcase>
+    

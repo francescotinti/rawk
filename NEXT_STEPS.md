@@ -3017,7 +3017,7 @@ NOTA: il test runner XML supporta `<expected_stderr>` (visto nel codice di `xml_
 
 # Step 16 — Integer-notation heuristic per large integer-like float
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `d78525f` — 7/7 cargo, 109/109 XML, comportamento BSD/gawk-compatible**
 
 ## Format commit message obbligatorio
 
@@ -3142,32 +3142,38 @@ I testcase di Step 12-bis (`test_print_float_no_trailing_dot`) usano valori tipo
 
 # Step 17 — Refactor: split `testsuite.xml` in file per testcase
 
-🔒 **LOCKED** — _attivare solo dopo ✅ di Step 16. La spec sotto è pronta._
+🚧 **FATTO — AUDIT PENDING**
 
 ## Format commit message obbligatorio
 
 ```
-refactor(step17): split testsuite.xml into one file per testcase
+refactor(step17): split testsuite.xml into one file per testcase + manifest
 
 IN-SCOPE:
-- Migrazione 109 testcase da `tests/testsuite.xml` a `tests/cases/NNNN_<name>.xml` (1 file ognuno)
-- Update `xml_runner_test.rs` per leggere glob `tests/cases/*.xml` invece di file unico
+- Migrazione 109 testcase da `tests/testsuite.xml` (file unico inline) a `tests/cases/NNNN_<name>.xml` (1 file ognuno)
+- `tests/testsuite.xml` DIVENTA un manifest che lista i case da eseguire (NON eliminato)
+- Manifest supporta `enabled="false"` per skip temporanei senza rimuovere file
+- Update `xml_runner_test.rs` per leggere il manifest, poi caricare i case da `tests/cases/`
 - Update `src/bin/diffrun.rs` allo stesso modo
-- Output del test runner ora mostra `[N/M] <name>` invece di `[OK]` (più tracciabile)
-- Rimozione di `tests/testsuite.xml` (sostituito completamente)
-- Numerazione 0001-0109 in ordine di apparizione del file originale, immutabile (nuovi test prendono numeri progressivi senza renumerare i precedenti)
+- Output del test runner ora mostra `[N/M] <name>` (più tracciabile)
+- Migration script `scripts/split_testsuite.py` (one-shot, lasciato per documentazione)
 
 OUT-OF-SCOPE (debito esplicito):
-- Cambiare il formato XML interno dei testcase — manteniamo lo stesso schema
+- Cambiare il formato XML interno dei singoli testcase — manteniamo lo stesso schema
 - Cambiare la logica di confronto (exact/contains) — invariata
-- Migration script committato come tool — facoltativo, può essere eseguito una volta e scartato
 - File JSON/TOML invece di XML — manteniamo XML per coerenza con esistente
+- Autodiscover dei file in tests/cases/ come fonte di verità — il manifest è autoritativo
 
-Testcase aggiunti: 0. Totali: 109 (invariati, ridistribuiti).
+Testcase aggiunti: 0. Totali: 109 (invariati, ridistribuiti, tutti enabled).
 ```
 
 ## Goal
-Rendere visibile il singolo testcase nel filesystem. Quando un test fallisce, il path del file lo identifica immediatamente. Numerazione zero-padded permette ordering deterministico e preserve l'ordering storico.
+Rendere visibile il singolo testcase nel filesystem. Quando un test fallisce, il path del file lo identifica immediatamente.
+
+`tests/testsuite.xml` cambia ruolo: da "file con tutti i testcase inline" a **manifest** che lista quali case eseguire. I case veri vivono in `tests/cases/NNNN_<name>.xml`. Vantaggi:
+- Aggiungere/rimuovere test = modifica manifest (i numeri possono avere "buchi" liberamente, non importa)
+- Skip temporaneo via `enabled="false"` senza rimuovere file
+- Manifest è la **single source of truth** — niente autodiscover che potrebbe eseguire test non voluti
 
 Migrazione: `testsuite.xml` (109 testcase) → 109 file `tests/cases/0001_test_basic_print.xml`, `0002_test_record_separator.xml`, ecc.
 
@@ -3175,11 +3181,13 @@ Migrazione: `testsuite.xml` (109 testcase) → 109 file `tests/cases/0001_test_b
 
 ### D17.1 — Naming convention
 `tests/cases/NNNN_<test_name>.xml` dove:
-- NNNN = 4-digit zero-padded (supporta fino a 9999 testcase)
+- NNNN = 4-digit zero-padded (per leggibilità su `ls`, supporta fino a 9999)
 - `<test_name>` = identico al `name=` attribute del testcase
 - Estensione `.xml`
 
 Esempio: `tests/cases/0001_test_basic_print.xml`
+
+**IMPORTANTE**: la numerazione non è autoritativa per l'ordine di esecuzione (vedi D17.4 manifest). I numeri servono solo a `ls` ordering e leggibilità. **Numeri possono avere "buchi" liberamente** — il manifest è l'unica verità.
 
 ### D17.2 — Format del file singolo
 Ogni file contiene UN solo `<testcase>` wrapped come root:
@@ -3194,64 +3202,104 @@ Ogni file contiene UN solo `<testcase>` wrapped come root:
 </testcase>
 ```
 
-NOTA: niente più `<testsuite>` wrapper. Il "suite" è implicito dalla cartella.
+NOTA: niente più `<testsuite>` wrapper dentro al singolo file.
 
 ### D17.3 — Migration script (one-shot)
 Scrivere uno script Python `scripts/split_testsuite.py` (o Rust binary `src/bin/split.rs`):
-1. Parsa `tests/testsuite.xml`
-2. Per ogni `<testcase>` con index i (1-based):
+1. Parsa `tests/testsuite.xml` (la versione legacy con tutti i 109 testcase inline)
+2. Per ogni `<testcase>` con index i (1-based, in ordine di apparizione):
    - Estrae `name` attribute
    - Crea file `tests/cases/{i:04d}_{name}.xml` con header XML + testcase content
-3. Stampa "Migrated 109 testcases to tests/cases/"
+3. Crea il NUOVO `tests/testsuite.xml` come **manifest** (vedi D17.4) listando i 109 file in ordine
+4. Stampa "Migrated 109 testcases to tests/cases/, manifest written to tests/testsuite.xml"
 
-Lo script può essere eliminato dopo la migrazione (commit script + commit removal possono essere lo stesso) OR lasciato in `scripts/` come riferimento. Scelgo: lasciare in `scripts/` per documentazione.
+Lo script va lasciato in `scripts/` per documentazione (one-shot ma utile come reference).
 
-### D17.4 — Update `xml_runner_test.rs`
+### D17.4 — `tests/testsuite.xml` DIVENTA un manifest
+Il file `testsuite.xml` non viene eliminato: cambia ruolo. Diventa il **manifest** che lista quali testcase eseguire e in che ordine.
+
+Nuovo formato (sostituisce completamente il contenuto attuale):
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Rawk Integration Tests">
+    <case file="0001_test_basic_print.xml"/>
+    <case file="0002_test_record_separator.xml"/>
+    <case file="0003_test_type_coercion.xml"/>
+    <!-- ... 106 altre voci ... -->
+</testsuite>
+```
+
+Vantaggio: per aggiungere/rimuovere/disabilitare un test, modifica il manifest. I file in `tests/cases/` possono restare come "biblioteca di test", ma solo quelli nel manifest vengono eseguiti.
+
+### D17.5 — `enabled="false"` per skip temporanei
+Il manifest supporta opzionalmente l'attributo `enabled="false"` su un `<case>` per saltare un test senza rimuovere il file:
+```xml
+<case file="0042_test_flaky.xml" enabled="false"/>
+```
+Il runner skippa silenziosamente questi case. Utile per test fragili in indagine.
+
+Default: `enabled="true"` (assumed se attributo assente).
+
+### D17.6 — Update `xml_runner_test.rs`
+Legge `tests/testsuite.xml` come manifest, poi carica i singoli file da `tests/cases/`:
 ```rust
+#[derive(Debug, Deserialize)]
+struct Manifest {
+    #[serde(rename = "case")]
+    cases: Vec<ManifestCase>,
+}
+
+#[derive(Debug, Deserialize)]
+struct ManifestCase {
+    #[serde(rename = "@file")]
+    file: String,
+    #[serde(rename = "@enabled", default = "default_enabled")]
+    enabled: String,  // "true" / "false"
+}
+
+fn default_enabled() -> String { "true".to_string() }
+
 fn run_xml_testsuite() {
-    let cases_dir = std::path::Path::new("tests/cases");
-    let mut entries: Vec<std::path::PathBuf> = std::fs::read_dir(cases_dir)
-        .expect("Failed to read tests/cases dir")
-        .filter_map(|e| e.ok())
-        .map(|e| e.path())
-        .filter(|p| p.extension().and_then(|s| s.to_str()) == Some("xml"))
+    let manifest_xml = std::fs::read_to_string("tests/testsuite.xml")
+        .expect("Failed to read manifest tests/testsuite.xml");
+    let manifest: Manifest = quick_xml::de::from_str(&manifest_xml)
+        .expect("Failed to parse manifest");
+
+    let active: Vec<&ManifestCase> = manifest.cases.iter()
+        .filter(|c| c.enabled != "false")
         .collect();
-    entries.sort();  // numeric/alphabetic order
-    
-    let total = entries.len();
+    let total = active.len();
+    let skipped = manifest.cases.len() - total;
+
     let mut failed = 0;
-    
-    for (i, path) in entries.iter().enumerate() {
-        let case: TestCase = quick_xml::de::from_str(
-            &std::fs::read_to_string(path).unwrap()
-        ).expect(&format!("Failed to parse {}", path.display()));
-        
-        let case_name = path.file_stem().unwrap().to_string_lossy();
-        println!("  [{}/{}] {}", i+1, total, case_name);
-        
+    for (i, mc) in active.iter().enumerate() {
+        let case_path = format!("tests/cases/{}", mc.file);
+        let case_xml = std::fs::read_to_string(&case_path)
+            .expect(&format!("Failed to read {}", case_path));
+        let case: TestCase = quick_xml::de::from_str(&case_xml)
+            .expect(&format!("Failed to parse {}", case_path));
+
+        println!("  [{}/{}] {}", i+1, total, case.name);
         // ... esecuzione invariata ...
-        
-        if case_failed {
-            failed += 1;
-        }
+        if case_failed { failed += 1; }
     }
-    
-    if failed > 0 { panic!("{} of {} tests failed", failed, total); }
+
+    println!("  Skipped: {}", skipped);
+    if failed > 0 { panic!("{} of {} active tests failed", failed, total); }
 }
 ```
 
-NOTA: rimuovere `TestSuite` struct, ora superfluo.
+NOTA: rimuovere il vecchio `TestSuite` struct (che inglobava i testcase inline). Sostituirlo con `Manifest` + `ManifestCase`. Mantenere `TestCase` struct (ora deserializzato da file singolo).
 
-### D17.5 — Update `src/bin/diffrun.rs`
-Stessa logica di lettura globbed: `tests/cases/*.xml` ordinati. Il resto invariato.
+### D17.7 — Update `src/bin/diffrun.rs`
+Stessa logica del manifest: legge `tests/testsuite.xml`, carica casi da `tests/cases/`, processa solo quelli con `enabled` non false. Mantieni la duplicazione delle struct (DRY-violation accettata, già documentata in Step 11).
 
-### D17.6 — Rimuovere `tests/testsuite.xml`
-Dopo la migrazione, eliminare il file tramite `git rm tests/testsuite.xml`. Storia git lo preserva.
+### D17.8 — Numerazione: progressiva ma libera dai buchi
+Per nuovi testcase: usa il prossimo numero progressivo (es. 0110, 0111, ...). Se un test viene rimosso (manifest + file), il numero NON deve essere riusato — il prossimo test usa il prossimo numero progressivo MAI usato.
 
-### D17.7 — Numerazione stabile (no renumber)
-Step futuri che aggiungono testcase usano il prossimo numero progressivo (0110, 0111, ...). Se un test viene rimosso, **NON renumerare** gli altri: lasciare il "buco" nella sequenza. Numeri stabili = git log leggibile.
+NOTA: i "buchi" nei numeri non sono un problema. Il manifest controlla l'ordine di esecuzione, non i numeri dei file. Semplicemente: il filename serve solo a identificare il test sul filesystem e per `ls` ordering.
 
-### D17.8 — Output formattato del test runner
+### D17.9 — Output formattato del test runner
 Cambiare l'output da:
 ```
   [OK]
@@ -3259,15 +3307,16 @@ Cambiare l'output da:
 a:
 ```
   [42/109] test_concat_basic
+  Skipped: 0
 ```
 Più tracciabile e indica chiaramente il progresso.
 
-### D17.9 — Niente touch al codice di rawk
+### D17.10 — Niente touch al codice di rawk
 Solo `tests/`, `src/bin/diffrun.rs`, eventualmente `scripts/`. NON toccare `src/runner.rs`, `src/types.rs`, `src/parser.rs`, ecc.
 
 ## File modificati attesi
 
-- `tests/testsuite.xml` → ELIMINATO (`git rm`)
+- `tests/testsuite.xml` → MODIFICATO (diventa manifest, perde i testcase inline)
 - `tests/cases/0001_*.xml` ... `tests/cases/0109_*.xml` → CREATI
 - `tests/xml_runner_test.rs` (~30 righe modificate)
 - `src/bin/diffrun.rs` (~10 righe modificate)
@@ -3276,20 +3325,22 @@ Solo `tests/`, `src/bin/diffrun.rs`, eventualmente `scripts/`. NON toccare `src/
 ## Acceptance criteria
 
 - [ ] `cargo build` clean (0 warning)
-- [ ] `cargo test` verde, 109 testcase tutti passano
-- [ ] `tests/testsuite.xml` non esiste più
+- [ ] `cargo test` verde, 109 testcase tutti passano (zero skip nel manifest iniziale)
+- [ ] `tests/testsuite.xml` ESISTE come manifest (NON eliminato), contiene 109 voci `<case file="..."/>`
 - [ ] `ls tests/cases/*.xml | wc -l` = 109
 - [ ] Tutti i file `tests/cases/*.xml` hanno prefisso 4-digit zero-padded
 - [ ] Output di `cargo test --test xml_runner_test -- --nocapture` mostra `[N/M] <name>` per ogni test
 - [ ] `cargo run --bin diffrun` continua a funzionare
+- [ ] (Bonus verifica) Aggiungere `enabled="false"` a una voce del manifest e verificare che il runner skippa silenziosamente quel test (poi rimuovere la modifica)
 
 ## Anti-pattern Step 17
 
-- ❌ Renumerare i test esistenti — i numeri sono stabili, no rinumerazione.
+- ❌ Considerare numeri "stabili come hard rule" — il manifest controlla l'ordine, i numeri sono solo cosmetic.
 - ❌ Toccare `src/runner.rs` o altri file di codice rawk — fuori scope.
 - ❌ Cambiare il formato XML del singolo testcase — manteniamo lo schema esistente.
 - ❌ Mescolare con altre feature/fix — questo è un refactor di tooling puro.
-- ❌ Tenere `testsuite.xml` come "backup" — git history è il backup, file rimane = duplicazione confusa.
+- ❌ Eliminare `tests/testsuite.xml` — diventa manifest, NON viene rimosso.
+- ❌ Far autodiscover dei file (glob `tests/cases/*.xml`) come fonte di verità invece del manifest — il manifest è autoritativo, autodiscover potrebbe portare a esecuzioni non volute di test in development.
 
 ---
 
@@ -3328,6 +3379,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 13-bis (restore green) | ✅ APPROVED | `e761252` | 7/7 cargo test, 105/105 XML | D13bis.1-D13bis.3 applicate letteralmente. Range di `template_add` revertito a `[-1e6, 1e6]`. Nuovo `template_scientific_no_orphan_dot` aggiunto: range `[1e16, 1e20]`, NON differential, controlla solo well-formedness output rawk (no `.e`/`.E` orphan). Documentazione divergence rawk-vs-BSD-awk nel commit message. Step 13 e 13-bis ora entrambi ✅. Backlog top → Step 14 (refactor stilistico). |
 | 2026-05-03 | Step 14 (refactor parte 1: qualifications) | ✅ APPROVED | `1a5d5b7` | 7/7 cargo, 105/105 XML | D14.1-D14.6 applicate letteralmente. Refactor mechanical: 2 use statements aggiunti, ~80 occorrenze di `crate::types::*` e `crate::ast::*` sostituite con shorthand. Net delta `+114/-112` = +2 righe (solo i `use`). 0 occorrenze residue verificate via grep. Build clean, comportamento invariato. By-the-book. Backlog top → Step 15 (refactor parte 2: Result<_, AwkError>). |
 | 2026-05-03 | Step 15 (refactor parte 2: no più exit(1) runtime) | ✅ APPROVED | `52002fd` | 7/7 cargo, 107/107 XML | D15.1-D15.6 applicate letteralmente. Zero `exit(1)` in `src/` (verificato live), `exit(2)` per CLI errors preservato. `div`/`rem` su zero → warning + `Number(0.0)` (gawk-style). Unknown function → warning + `Uninitialized`. 2 testcase regression con `<expected_stderr>`. Refactor scoped pragmatico (no signature change `Result<_, AwkError>`, esplicitamente fuori scope). 14 step principali ✅ + 4 bis ✅. Backlog ha solo item 15 (integer-notation heuristic) rimasto. |
+| 2026-05-03 | Step 16 (integer-notation heuristic) | ✅ APPROVED | `d78525f` | 7/7 cargo, 109/109 XML | D16.1-D16.5 applicate letteralmente. Path B (`%.0f` per integer-like nel range 1e16-1e21) aggiunto, Path A (i64 per <1e16) e Path C (fmt + strip dot) preservati. `print 1e20` ora produce `100000000000000000000` (BSD/gawk-compatible). Edge case `1.5e20` produce integer notation perché a f64 precision è integer-like (gap tra float consecutivi > 0.5). Comportamento identico a BSD awk. Step 17 sbloccato. |
 
 ---
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_arrays_and_delete">
+        <awk>BEGIN { a["key"] = 42; print a["key"]; delete a["key"]; print a["key"] }</awk>
+        <expected_stdout match="exact">42
+
+</expected_stdout>
+    </testcase>
+    

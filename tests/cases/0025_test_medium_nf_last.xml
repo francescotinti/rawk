@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_medium_nf_last">
+        <awk> { print "Fields:", NF, "| Last:", $NF } </awk>
+        <stdin>John Doe 30 180
+Jane Smith 25 165
+Alice Johnson 28 170
+Bob Brown 35 175
+Charlie White 32 182</stdin>
+        <expected_stdout match="exact">Fields: 4 | Last: 180
+Fields: 4 | Last: 165
+Fields: 4 | Last: 170
+Fields: 4 | Last: 175
+Fields: 4 | Last: 182
+</expected_stdout>
+    </testcase>
+    

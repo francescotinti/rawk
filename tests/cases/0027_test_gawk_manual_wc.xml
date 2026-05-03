@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_gawk_manual_wc">
+        <awk> 
+        {
+            chars += length($0) + 1  
+            words += NF
+        }
+        END { print NR, words, chars }
+        </awk>
+        <stdin>hello world
+this is a test</stdin>
+        <expected_stdout match="exact">2 6 27
+</expected_stdout>
+    </testcase>
+    

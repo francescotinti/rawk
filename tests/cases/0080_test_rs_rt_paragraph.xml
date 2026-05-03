@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_rs_rt_paragraph">
+        <awk>BEGIN { RS="" } { print NR ":" $0 ":[" RT "]" }</awk>
+        <stdin>a
+
+b
+
+
+c</stdin>
+        <expected_stdout match="exact">1:a:[
+
+]
+2:b:[
+
+
+]
+3:c:[]
+</expected_stdout>
+    </testcase>
+    

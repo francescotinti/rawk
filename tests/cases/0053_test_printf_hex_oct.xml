@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_printf_hex_oct">
+        <awk>BEGIN { printf "%x %X %o\n", 255, 255, 8 }</awk>
+        <expected_stdout match="exact">ff FF 10
+</expected_stdout>
+    </testcase>
+    

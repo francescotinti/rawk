@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_medium_sum_avg">
+        <awk> 
+        { sum += $4 }
+        END { print sum, sum/NR } 
+        </awk>
+        <stdin>John Doe 30 180
+Jane Smith 25 165
+Alice Johnson 28 170
+Bob Brown 35 175
+Charlie White 32 182</stdin>
+        <expected_stdout match="exact">872 174.4
+</expected_stdout>
+    </testcase>
+    

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_gawk_manual_part2_deduplication">
+        <awk>
+        {
+            if (data[$0]++ == 0)
+                lines[++count] = $0
+        }
+        END {
+            for (i = 1; i &lt;= count; i++)
+                print lines[i]
+        }
+        </awk>
+        <stdin>foo
+bar
+foo
+baz
+bar</stdin>
+        <expected_stdout match="exact">foo
+bar
+baz
+</expected_stdout>
+    </testcase>
+    

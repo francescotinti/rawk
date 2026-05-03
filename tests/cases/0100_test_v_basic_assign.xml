@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_v_basic_assign">
+        <args>-v</args>
+        <args>x=42</args>
+        <awk>BEGIN { print x }</awk>
+        <expected_stdout match="exact">42
+</expected_stdout>
+    </testcase>
+    

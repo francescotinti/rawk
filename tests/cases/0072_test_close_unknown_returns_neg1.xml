@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_close_unknown_returns_neg1">
+        <awk>BEGIN { print close("not_open") }</awk>
+        <expected_stdout match="exact">-1
+</expected_stdout>
+    </testcase>
+    

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_printf_int_negative">
+        <awk>BEGIN { printf "%+d %+d\n", 5, -5 }</awk>
+        <expected_stdout match="exact">+5 -5
+</expected_stdout>
+    </testcase>
+    

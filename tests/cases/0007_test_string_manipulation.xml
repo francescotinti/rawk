@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_string_manipulation">
+        <awk>BEGIN { s = "foo bar"; gsub("bar", "baz", s); print s, length(s), toupper(s) }</awk>
+        <expected_stdout match="exact">foo baz 7 FOO BAZ
+</expected_stdout>
+    </testcase>
+    

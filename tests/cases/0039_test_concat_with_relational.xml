@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_concat_with_relational">
+        <awk>BEGIN { if ("ab" "c" == "abc") print "ok" }</awk>
+        <expected_stdout match="exact">ok
+</expected_stdout>
+    </testcase>
+    

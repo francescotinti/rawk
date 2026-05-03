@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_gawk_manual_two_rules">
+        <awk>
+        /12/ { print $0 } 
+        /21/ { print $0 }
+        </awk>
+        <stdin>foo 12 bar
+baz 21 qux
+no match</stdin>
+        <expected_stdout match="exact">foo 12 bar
+baz 21 qux
+</expected_stdout>
+    </testcase>
+    
