@@ -16,6 +16,8 @@ pub enum CompiledPattern {
     Expr(Expr),
     Begin,
     End,
+    BeginFile,
+    EndFile,
 }
 
 pub struct CompiledRule {
@@ -74,6 +76,8 @@ pub fn run(config: Config) -> anyhow::Result<()> {
             Some(Pattern::Expr(e)) => Some(CompiledPattern::Expr(e.clone())),
             Some(Pattern::Begin) => Some(CompiledPattern::Begin),
             Some(Pattern::End) => Some(CompiledPattern::End),
+            Some(Pattern::BeginFile) => Some(CompiledPattern::BeginFile),
+            Some(Pattern::EndFile) => Some(CompiledPattern::EndFile),
             None => None,
         };
         compiled_rules.push(CompiledRule {
@@ -87,7 +91,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     }
 
     // Execute BEGIN blocks
-    let fc = execute_special_blocks(&compiled_rules, &mut context, true);
+    let fc = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::Begin);
     if let FlowControl::Exit(code) = fc {
         std::process::exit(code);
     }
@@ -106,14 +110,24 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     }
 
     if files_to_process.is_empty() {
+        context.set_var("FILENAME", crate::types::AwkValue::String("-".to_string()));
+        if let FlowControl::Exit(code) = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile) {
+            std::process::exit(code);
+        }
         let stdin = io::stdin();
         let reader = stdin.lock();
         if let FlowControl::Exit(code) = process_lines(reader, &mut context, &compiled_rules)? {
             std::process::exit(code);
         }
+        if let FlowControl::Exit(code) = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::EndFile) {
+            std::process::exit(code);
+        }
     } else {
         for filename in files_to_process {
             context.set_var("FILENAME", crate::types::AwkValue::String(filename.clone()));
+            if let FlowControl::Exit(code) = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile) {
+                std::process::exit(code);
+            }
             if filename == "-" {
                 let stdin = io::stdin();
                 let reader = stdin.lock();
@@ -127,12 +141,16 @@ pub fn run(config: Config) -> anyhow::Result<()> {
                     std::process::exit(code);
                 }
             }
+            if let FlowControl::Exit(code) = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::EndFile) {
+                std::process::exit(code);
+            }
+            context.fnr = 0;
             context.fnr = 0;
         }
     }
 
     // Execute END blocks
-    let fc = execute_special_blocks(&compiled_rules, &mut context, false);
+    let fc = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::End);
     if let FlowControl::Exit(code) = fc {
         std::process::exit(code);
     }
@@ -140,11 +158,21 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn execute_special_blocks(rules: &[CompiledRule], context: &mut EvalContext, is_begin: bool) -> FlowControl {
+#[derive(Debug, PartialEq, Eq)]
+pub enum SpecialBlock {
+    Begin,
+    End,
+    BeginFile,
+    EndFile,
+}
+
+fn execute_special_blocks(rules: &[CompiledRule], context: &mut EvalContext, block_type: SpecialBlock) -> FlowControl {
     for rule in rules {
         let is_match = match &rule.pattern {
-            Some(CompiledPattern::Begin) if is_begin => true,
-            Some(CompiledPattern::End) if !is_begin => true,
+            Some(CompiledPattern::Begin) if block_type == SpecialBlock::Begin => true,
+            Some(CompiledPattern::End) if block_type == SpecialBlock::End => true,
+            Some(CompiledPattern::BeginFile) if block_type == SpecialBlock::BeginFile => true,
+            Some(CompiledPattern::EndFile) if block_type == SpecialBlock::EndFile => true,
             _ => false,
         };
         
@@ -197,7 +225,7 @@ fn process_lines<R: BufRead>(mut reader: R, context: &mut EvalContext, rules: &[
         for rule in rules {
             let should_execute = match &rule.pattern {
                 Some(CompiledPattern::Expr(e)) => eval_expr(e, context).is_truthy(),
-                Some(CompiledPattern::Begin) | Some(CompiledPattern::End) => false,
+                Some(CompiledPattern::Begin) | Some(CompiledPattern::End) | Some(CompiledPattern::BeginFile) | Some(CompiledPattern::EndFile) => false,
                 None => true,
             };
             

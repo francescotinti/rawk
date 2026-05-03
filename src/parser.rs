@@ -97,6 +97,10 @@ fn parse_pattern(pair: Pair<Rule>) -> Pattern {
         return Pattern::Begin;
     } else if s == "END" {
         return Pattern::End;
+    } else if s == "BEGINFILE" {
+        return Pattern::BeginFile;
+    } else if s == "ENDFILE" {
+        return Pattern::EndFile;
     }
     
     let inner = pair.into_inner().next().unwrap();

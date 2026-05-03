@@ -18,7 +18,7 @@ action_block = { "{" ~ statement* ~ "}" }
 function_decl = { "function" ~ ident ~ "(" ~ ident_list? ~ ")" ~ action_block }
 ident_list = { ident ~ ("," ~ ident)* }
 
-pattern = { "BEGIN" | "END" | regex_pattern | expr }
+pattern = { "BEGINFILE" | "ENDFILE" | "BEGIN" | "END" | regex_pattern | expr }
 regex_pattern = ${ "/" ~ regex_inner ~ "/" }
 regex_inner = @{ (!"/" ~ ANY)* }
 

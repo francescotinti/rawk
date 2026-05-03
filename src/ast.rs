@@ -64,6 +64,8 @@ pub enum Pattern {
     Expr(Expr),
     Begin,
     End,
+    BeginFile,
+    EndFile,
 }
 
 #[derive(Debug, Clone)]
