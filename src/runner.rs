@@ -13,7 +13,7 @@ use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 
 pub enum CompiledPattern {
-    Regex(Regex),
+    Expr(Expr),
     Begin,
     End,
 }
@@ -71,7 +71,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     let mut compiled_rules = Vec::new();
     for rule in &program.rules {
         let pattern = match &rule.pattern {
-            Some(Pattern::Regex(re_str)) => Some(CompiledPattern::Regex(Regex::new(re_str).unwrap())),
+            Some(Pattern::Expr(e)) => Some(CompiledPattern::Expr(e.clone())),
             Some(Pattern::Begin) => Some(CompiledPattern::Begin),
             Some(Pattern::End) => Some(CompiledPattern::End),
             None => None,
@@ -166,7 +166,7 @@ fn process_lines<R: BufRead>(mut reader: R, context: &mut EvalContext, rules: &[
         // Execute rules
         for rule in rules {
             let should_execute = match &rule.pattern {
-                Some(CompiledPattern::Regex(re)) => re.is_match(&context.record),
+                Some(CompiledPattern::Expr(e)) => eval_expr(e, context).is_truthy(),
                 Some(CompiledPattern::Begin) | Some(CompiledPattern::End) => false,
                 None => true,
             };
@@ -570,7 +570,11 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                 BinaryOperator::And => crate::types::AwkValue::Number(if l_val.is_truthy() && r_val.is_truthy() { 1.0 } else { 0.0 }),
                 BinaryOperator::Or => crate::types::AwkValue::Number(if l_val.is_truthy() || r_val.is_truthy() { 1.0 } else { 0.0 }),
                 BinaryOperator::Match => {
-                    let re_str = r_val.as_string();
+                    let re_str = if let Expr::RegexLiteral(re) = &**rhs {
+                        re.clone()
+                    } else {
+                        r_val.as_string()
+                    };
                     if let Ok(re) = Regex::new(&re_str) {
                         crate::types::AwkValue::Number(if re.is_match(&l_val.as_string()) { 1.0 } else { 0.0 })
                     } else {
@@ -578,7 +582,11 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     }
                 }
                 BinaryOperator::NotMatch => {
-                    let re_str = r_val.as_string();
+                    let re_str = if let Expr::RegexLiteral(re) = &**rhs {
+                        re.clone()
+                    } else {
+                        r_val.as_string()
+                    };
                     if let Ok(re) = Regex::new(&re_str) {
                         crate::types::AwkValue::Number(if re.is_match(&l_val.as_string()) { 0.0 } else { 1.0 })
                     } else {

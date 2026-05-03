@@ -61,7 +61,7 @@ pub struct FunctionDecl {
 
 #[derive(Debug, Clone)]
 pub enum Pattern {
-    Regex(String),
+    Expr(Expr),
     Begin,
     End,
 }

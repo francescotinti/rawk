@@ -99,14 +99,13 @@ fn parse_pattern(pair: Pair<Rule>) -> Pattern {
         return Pattern::End;
     }
     
-    if let Some(inner) = pair.into_inner().next() {
-        if inner.as_rule() == Rule::regex_pattern {
-            let re = inner.into_inner().next().unwrap().as_str();
-            return Pattern::Regex(re.to_string());
-        }
+    let inner = pair.into_inner().next().unwrap();
+    if inner.as_rule() == Rule::regex_pattern {
+        let re = inner.into_inner().next().unwrap().as_str();
+        Pattern::Expr(Expr::RegexLiteral(re.to_string()))
+    } else {
+        Pattern::Expr(parse_expr(inner))
     }
-    
-    Pattern::Regex(s.to_string())
 }
 
 fn parse_action_block(pair: Pair<Rule>) -> Vec<Statement> {
