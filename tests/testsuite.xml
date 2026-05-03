@@ -891,4 +891,18 @@ line2
         <expected_stdout match="exact"><![CDATA[1e+20
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_div_by_zero_warning_continues">
+        <awk><![CDATA[BEGIN { x = 5/0; print "after:" x }]]></awk>
+        <expected_stderr>rawk: warning: division by zero
+</expected_stderr>
+        <expected_stdout match="exact"><![CDATA[after:0
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_unknown_function_warning_continues">
+        <awk><![CDATA[BEGIN { x = unknown_fn(42); print "after:" x }]]></awk>
+        <expected_stderr>rawk: warning: unknown function 'unknown_fn' (returning empty)
+</expected_stderr>
+        <expected_stdout match="exact"><![CDATA[after:
+]]></expected_stdout>
+    </testcase>
 </testsuite>

@@ -119,8 +119,8 @@ impl AwkValue {
     pub fn div(&self, other: &Self) -> Self {
         let divisor = other.as_number();
         if divisor == 0.0 {
-            eprintln!("awk: division by zero");
-            std::process::exit(1);
+            eprintln!("rawk: warning: division by zero");
+            return AwkValue::Number(0.0);
         }
         AwkValue::Number(self.as_number() / divisor)
     }
@@ -128,8 +128,8 @@ impl AwkValue {
     pub fn rem(&self, other: &Self) -> Self {
         let divisor = other.as_number();
         if divisor == 0.0 {
-            eprintln!("awk: division by zero in mod");
-            std::process::exit(1);
+            eprintln!("rawk: warning: division by zero in mod");
+            return AwkValue::Number(0.0);
         }
         AwkValue::Number(self.as_number() % divisor)
     }

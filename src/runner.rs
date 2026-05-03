@@ -748,8 +748,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                         }
                         AwkValue::Uninitialized
                     } else {
-                        eprintln!("awk: unknown function {}", name);
-                        std::process::exit(1);
+                        eprintln!("rawk: warning: unknown function '{}' (returning empty)", name);
+                        AwkValue::Uninitialized
                     }
                 }
             }

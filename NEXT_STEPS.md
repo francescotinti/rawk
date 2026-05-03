@@ -2796,7 +2796,7 @@ Il commit message deve esplicitamente documentare:
 
 # Step 14 — Refactor stilistico parte 1: rimozione qualificazioni AwkValue
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `1a5d5b7` — 7/7 cargo test, 105/105 XML, runner.rs +2 righe nette (solo i `use`)**
 
 ## Format commit message obbligatorio
 
@@ -2880,6 +2880,141 @@ Se trovi qualificazioni anche in `src/main.rs`, `src/cli.rs`, `src/parser.rs`, �
 
 ---
 
+# Step 15 — Refactor stilistico parte 2: eliminare `process::exit(1)` runtime
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio
+
+```
+refactor(step15): replace runtime process::exit(1) with warning+continue (gawk-style)
+
+IN-SCOPE:
+- AwkValue::div: division by zero → warning + return Number(0.0) (gawk-like)
+- AwkValue::rem: modulo by zero → warning + return Number(0.0)
+- eval_expr unknown function: warning + return Uninitialized (no più exit)
+- File open errors in run(): propagati via ? (signature è già anyhow::Result)
+- 2 testcase XML regression per div-by-zero e unknown-function
+
+OUT-OF-SCOPE (debito esplicito):
+- Refactor signature di eval_expr a Result<AwkValue, AwkError> — fuori scope, sarebbe Step 16. La signature attuale (AwkValue) viene mantenuta.
+- Definire enum AwkError — fuori scope. Manteniamo il pattern anyhow::Error per i punti che già lo usano.
+- Refactor di nextfile_pending/exit_pending — esplicitamente fuori scope (D6.8 design decision).
+
+Testcase aggiunti: 2 XML. Totali: 107 XML, 7 cargo.
+```
+
+## Goal
+Eliminare i 3 punti dove rawk fa `eprintln+std::process::exit(1)` durante runtime, sostituendoli con un comportamento "warning + continue" stile gawk. La signature di `eval_expr` resta invariata: questo non è un refactor architetturale, ma un fix di robustezza.
+
+Punti attuali con `process::exit(1)`:
+1. `src/types.rs::AwkValue::div` — division by zero
+2. `src/types.rs::AwkValue::rem` — modulo by zero
+3. `src/runner.rs::eval_expr` FunctionCall — unknown function
+
+Punti con `process::exit(2)` (CLI errors): mantenere — sono errori di parsing argomenti, non runtime errors. È giusto exit per quelli.
+
+## Decisioni di design (NON riaprire)
+
+### D15.1 — Niente `AwkError` enum, niente signature change
+Manteniamo `eval_expr` con signature `(...) -> AwkValue` e `execute_action` con `(...) -> FlowControl`. Il refactor a `Result<_, _>` è esplicitamente fuori scope. Per i 3 punti problematici, usiamo "warning + sentinel value" alla gawk.
+
+### D15.2 — `AwkValue::div` e `rem`: warning + Number(0.0)
+In `src/types.rs`:
+```rust
+pub fn div(&self, other: &Self) -> Self {
+    let divisor = other.as_number();
+    if divisor == 0.0 {
+        eprintln!("rawk: warning: division by zero");
+        return AwkValue::Number(0.0);
+    }
+    AwkValue::Number(self.as_number() / divisor)
+}
+
+pub fn rem(&self, other: &Self) -> Self {
+    let divisor = other.as_number();
+    if divisor == 0.0 {
+        eprintln!("rawk: warning: division by zero in mod");
+        return AwkValue::Number(0.0);
+    }
+    AwkValue::Number(self.as_number() % divisor)
+}
+```
+
+Comportamento gawk: `gawk 'BEGIN { print 5/0 }'` → prints "0" + warning. Match.
+
+### D15.3 — `eval_expr` unknown function: warning + Uninitialized
+In `src/runner.rs::eval_expr` per `Expr::FunctionCall`:
+```rust
+_ => {
+    if let Some((params, body)) = context.functions.get(name).cloned() {
+        // ... existing user function logic ...
+    } else {
+        eprintln!("rawk: warning: unknown function '{}' (returning empty)", name);
+        AwkValue::Uninitialized
+    }
+}
+```
+
+### D15.4 — File open errors in `run()`
+In `src/runner.rs::run()`, dove ora c'è `File::open(&filename)?` o `.unwrap()`, sostituire con `?` propagation. La signature è già `anyhow::Result<()>`. Verifica che non ci siano `.unwrap()` su file ops che andrebbero gestiti.
+
+NOTA: `getline < file` ha già il pattern "ignora errore, ritorna 0". Non toccarlo, è corretto.
+
+### D15.5 — Mantenere `process::exit(2)` per CLI errors
+In `runner::run`, il punto:
+```rust
+eprintln!("rawk: invalid -v assignment '{}': expected name=value", v);
+std::process::exit(2);
+```
+**Resta invariato**. È un errore di CLI, non di runtime. È giusto exit.
+
+### D15.6 — Testcase regression
+Aggiungere a `tests/testsuite.xml`:
+```xml
+<testcase name="test_div_by_zero_warning_continues">
+    <awk><![CDATA[BEGIN { x = 5/0; print "after:" x }]]></awk>
+    <expected_stderr>rawk: warning: division by zero
+</expected_stderr>
+    <expected_stdout match="exact"><![CDATA[after:0
+]]></expected_stdout>
+</testcase>
+<testcase name="test_unknown_function_warning_continues">
+    <awk><![CDATA[BEGIN { x = unknown_fn(42); print "after:" x }]]></awk>
+    <expected_stderr>rawk: warning: unknown function 'unknown_fn' (returning empty)
+</expected_stderr>
+    <expected_stdout match="exact"><![CDATA[after:
+]]></expected_stdout>
+</testcase>
+```
+
+NOTA: il test runner XML supporta `<expected_stderr>` (visto nel codice di `xml_runner_test.rs`). Verificare il formato esatto del confronto stderr (probabilmente trim).
+
+## File modificati attesi
+
+- `src/types.rs` (~10 righe modificate in `div` e `rem`)
+- `src/runner.rs` (~5 righe modificate per unknown function branch)
+- `tests/testsuite.xml` (+2 testcase)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, **7/7 cargo + 107/107 XML**
+- [ ] `grep -n "std::process::exit(1)" src/` → 0 (zero occorrenze residue)
+- [ ] `grep -n "std::process::exit(2)" src/runner.rs` → 1 (CLI -v invalid, OK)
+- [ ] `5/0` non termina più il programma
+- [ ] Funzione sconosciuta non termina più il programma
+
+## Anti-pattern Step 15
+
+- ❌ Cambiare signature di `eval_expr` o `execute_action` — è Step 16 separato.
+- ❌ Definire `AwkError` enum — fuori scope.
+- ❌ Modificare i `process::exit(2)` per CLI errors — quelli sono giusti.
+- ❌ Toccare `nextfile_pending`/`exit_pending` — esplicito out-of-scope.
+- ❌ Cambiare la semantica di `getline` su file errors — già corretta.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -2913,6 +3048,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 12-bis (fix trailing dot) | ✅ APPROVED | `5fdabb6` | 5/5 proptest, 104/104 XML | D12bis.1-D12bis.4 applicate letteralmente. Workaround in `format_number_awk`: 5 righe per strip trailing dot. Testcase regression XML `test_print_float_no_trailing_dot` aggiunto con il caso minimo trovato da proptest. Step 12 e 12-bis ora entrambi ✅. **Findings durante audit (non in scope di 12-bis, da catalogare in backlog)**: (A) bug residuo su scientific notation: `print 1e20` produce `1.e+20` invece di `1e+20` (dot orfano prima di `e+`); (B) ergonomia: `cargo run` ora ambiguo dopo Step 11, serve `default-run = "rawk"` in Cargo.toml. |
 | 2026-05-03 | Step 13 (bundle quick fixes) | 🟡 PARTIAL | `d643295` | 4/5 proptest, 105/105 XML | D13.1 (orphan dot scientific) + D13.2 (default-run) + D13.4 (testcase XML) applicate correttamente. **Process violation**: D13.3 (estendere range proptest a [-1e25, 1e25]) ha esposto un divergence nuovo (rawk produce scientific, BSD awk produce plain integer per valori magnitude > 1e16) NON in scope di Step 13. Gemini ha committato con `cargo test` rosso (4/5 proptest pass), violando l'anti-pattern "build green ad ogni commit". Step 13-bis aperto per ripristinare green con strategy revert range + nuovo template proptest mirato. |
 | 2026-05-03 | Step 13-bis (restore green) | ✅ APPROVED | `e761252` | 7/7 cargo test, 105/105 XML | D13bis.1-D13bis.3 applicate letteralmente. Range di `template_add` revertito a `[-1e6, 1e6]`. Nuovo `template_scientific_no_orphan_dot` aggiunto: range `[1e16, 1e20]`, NON differential, controlla solo well-formedness output rawk (no `.e`/`.E` orphan). Documentazione divergence rawk-vs-BSD-awk nel commit message. Step 13 e 13-bis ora entrambi ✅. Backlog top → Step 14 (refactor stilistico). |
+| 2026-05-03 | Step 14 (refactor parte 1: qualifications) | ✅ APPROVED | `1a5d5b7` | 7/7 cargo, 105/105 XML | D14.1-D14.6 applicate letteralmente. Refactor mechanical: 2 use statements aggiunti, ~80 occorrenze di `crate::types::*` e `crate::ast::*` sostituite con shorthand. Net delta `+114/-112` = +2 righe (solo i `use`). 0 occorrenze residue verificate via grep. Build clean, comportamento invariato. By-the-book. Backlog top → Step 15 (refactor parte 2: Result<_, AwkError>). |
 
 ---
 
