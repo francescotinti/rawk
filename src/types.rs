@@ -38,11 +38,15 @@ impl AwkValue {
     }
 
     pub fn as_string(&self) -> String {
+        self.as_string_convfmt("%.6g")
+    }
+
+    pub fn as_string_convfmt(&self, fmt: &str) -> String {
         match self {
             AwkValue::Uninitialized => String::new(),
-            AwkValue::Number(n) => n.to_string(), // In standard awk, CONVFMT is used, but for MVP we use default to_string()
             AwkValue::String(s) => s.clone(),
             AwkValue::StrNum(s, _) => s.clone(),
+            AwkValue::Number(n) => format_number_awk(*n, fmt),
         }
     }
     
@@ -141,6 +145,14 @@ impl fmt::Display for AwkValue {
     }
 }
 
+fn format_number_awk(n: f64, fmt: &str) -> String {
+    if n.is_finite() && n == n.trunc() && n.abs() < 1e16 {
+        format!("{}", n as i64)
+    } else {
+        sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string())
+    }
+}
+
 /// Represents the Evaluation Context (the state) for the current line.
 pub struct EvalContext {
     pub nr: usize,              // Number of Records read so far
@@ -157,6 +169,8 @@ pub struct EvalContext {
     pub local_scopes: Vec<HashMap<String, AwkValue>>,
     pub functions: HashMap<String, (Vec<String>, Vec<Statement>)>,
     pub regex_cache: HashMap<String, regex::Regex>,
+    pub convfmt: String,
+    pub ofmt: String,
 }
 
 impl EvalContext {
@@ -178,6 +192,8 @@ impl EvalContext {
             local_scopes: Vec::new(),
             functions: HashMap::new(),
             regex_cache: HashMap::new(),
+            convfmt: "%.6g".to_string(),
+            ofmt: "%.6g".to_string(),
         }
     }
 
@@ -254,6 +270,8 @@ impl EvalContext {
             "NR" => return AwkValue::Number(self.nr as f64),
             "FNR" => return AwkValue::Number(self.fnr as f64),
             "FS" => return AwkValue::String(self.fs.clone()),
+            "CONVFMT" => return AwkValue::String(self.convfmt.clone()),
+            "OFMT" => return AwkValue::String(self.ofmt.clone()),
             _ => {}
         }
         self.vars.get(name).cloned().unwrap_or(AwkValue::Uninitialized)
@@ -275,6 +293,8 @@ impl EvalContext {
             "NR" => self.nr = value.as_number() as usize,
             "FNR" => self.fnr = value.as_number() as usize,
             "FS" => self.fs = value.as_string(),
+            "CONVFMT" => self.convfmt = value.as_string(),
+            "OFMT" => self.ofmt = value.as_string(),
             _ => {
                 self.vars.insert(name.to_string(), value);
             }

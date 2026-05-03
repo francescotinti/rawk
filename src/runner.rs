@@ -251,6 +251,13 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
         }
         Expr::NumberLiteral(n) => crate::types::AwkValue::Number(*n),
         Expr::StringLiteral(s) => crate::types::AwkValue::String(s.clone()),
+        Expr::Concat(parts) => {
+            let convfmt = context.convfmt.clone();
+            let s: String = parts.iter()
+                .map(|e| eval_expr(e, context).as_string_convfmt(&convfmt))
+                .collect();
+            crate::types::AwkValue::String(s)
+        }
         Expr::RegexLiteral(re) => {
             let record = context.get_field(0).as_string();
             let regex = context.compile_or_get_regex(re);
@@ -755,7 +762,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
             Statement::Print(exprs, redirect) => {
                 let mut out = Vec::new();
                 for e in exprs {
-                    out.push(eval_expr(e, context).as_string());
+                    out.push(eval_expr(e, context).as_string_convfmt(&context.ofmt));
                 }
                 let ofs = context.get_var("OFS").as_string();
                 let ors = context.get_var("ORS").as_string();

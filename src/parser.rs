@@ -7,26 +7,13 @@
 use crate::ast::{BinaryOperator, Expr, FunctionDecl, Pattern, Program, Rule as AstRule, Statement};
 use pest::Parser;
 use pest::iterators::Pair;
-use pest::pratt_parser::{Assoc, Op, PrattParser};
 use pest_derive::Parser;
 
 #[derive(Parser)]
 #[grammar = "awk.pest"]
 pub struct AwkParser;
 
-fn pratt() -> PrattParser<Rule> {
-    use Rule::*;
-    use Assoc::*;
-    PrattParser::new()
-        .op(Op::infix(op_or, Left))
-        .op(Op::infix(op_and, Left))
-        .op(Op::infix(op_match, Left) | Op::infix(op_not_match, Left))
-        .op(Op::infix(op_in, Left))
-        .op(Op::infix(op_eq, Left) | Op::infix(op_neq, Left) | Op::infix(op_gt, Left) | Op::infix(op_ge, Left) | Op::infix(op_lt, Left) | Op::infix(op_le, Left))
-        .op(Op::infix(op_add, Left) | Op::infix(op_sub, Left))
-        .op(Op::infix(op_mul, Left) | Op::infix(op_div, Left) | Op::infix(op_mod, Left))
-        .op(Op::infix(op_pow, Right))
-}
+
 
 pub fn parse(input: &str) -> anyhow::Result<Program> {
     let mut parsed = AwkParser::parse(Rule::program, input)
@@ -320,44 +307,133 @@ fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
 }
 
 fn parse_expr(pair: Pair<Rule>) -> Expr {
+    parse_ternary_expr(pair.into_inner().next().unwrap())
+}
+
+fn parse_ternary_expr(pair: Pair<Rule>) -> Expr {
     let mut inners = pair.into_inner();
-    let logical_expr = parse_logical_expr(inners.next().unwrap());
-    
+    let logical_or = parse_logical_or(inners.next().unwrap());
     if let Some(true_expr_pair) = inners.next() {
         let false_expr_pair = inners.next().unwrap();
-        Expr::Ternary(Box::new(logical_expr), Box::new(parse_expr(true_expr_pair)), Box::new(parse_expr(false_expr_pair)))
+        Expr::Ternary(Box::new(logical_or), Box::new(parse_expr(true_expr_pair)), Box::new(parse_expr(false_expr_pair)))
     } else {
-        logical_expr
+        logical_or
     }
 }
 
-fn parse_logical_expr(pair: Pair<Rule>) -> Expr {
-    let pratt_parser = pratt();
-    pratt_parser.map_primary(parse_term)
-    .map_infix(|lhs, op, rhs| {
-        let op = match op.as_rule() {
-            Rule::op_add => BinaryOperator::Add,
-            Rule::op_sub => BinaryOperator::Sub,
-            Rule::op_mul => BinaryOperator::Mul,
-            Rule::op_div => BinaryOperator::Div,
-            Rule::op_mod => BinaryOperator::Mod,
-            Rule::op_pow => BinaryOperator::Pow,
+fn parse_logical_or(pair: Pair<Rule>) -> Expr {
+    let mut inners = pair.into_inner();
+    let mut lhs = parse_logical_and(inners.next().unwrap());
+    while let Some(_) = inners.next() { // op_or
+        let rhs = parse_logical_and(inners.next().unwrap());
+        lhs = Expr::BinaryOp(Box::new(lhs), BinaryOperator::Or, Box::new(rhs));
+    }
+    lhs
+}
+
+fn parse_logical_and(pair: Pair<Rule>) -> Expr {
+    let mut inners = pair.into_inner();
+    let mut lhs = parse_in_expr(inners.next().unwrap());
+    while let Some(_) = inners.next() { // op_and
+        let rhs = parse_in_expr(inners.next().unwrap());
+        lhs = Expr::BinaryOp(Box::new(lhs), BinaryOperator::And, Box::new(rhs));
+    }
+    lhs
+}
+
+fn parse_in_expr(pair: Pair<Rule>) -> Expr {
+    let mut inners = pair.into_inner();
+    let lhs = parse_match_expr(inners.next().unwrap());
+    if let Some(_) = inners.next() { // op_in
+        let rhs_ident = inners.next().unwrap();
+        Expr::BinaryOp(Box::new(lhs), BinaryOperator::In, Box::new(Expr::Variable(rhs_ident.as_str().to_string())))
+    } else {
+        lhs
+    }
+}
+
+fn parse_match_expr(pair: Pair<Rule>) -> Expr {
+    let mut inners = pair.into_inner();
+    let mut lhs = parse_rel_expr(inners.next().unwrap());
+    while let Some(op) = inners.next() {
+        let rhs = parse_rel_expr(inners.next().unwrap());
+        let bop = match op.as_rule() {
+            Rule::op_match => BinaryOperator::Match,
+            Rule::op_not_match => BinaryOperator::NotMatch,
+            _ => unreachable!(),
+        };
+        lhs = Expr::BinaryOp(Box::new(lhs), bop, Box::new(rhs));
+    }
+    lhs
+}
+
+fn parse_rel_expr(pair: Pair<Rule>) -> Expr {
+    let mut inners = pair.into_inner();
+    let mut lhs = parse_concat_expr(inners.next().unwrap());
+    while let Some(op) = inners.next() {
+        let rhs = parse_concat_expr(inners.next().unwrap());
+        let bop = match op.as_rule() {
             Rule::op_eq => BinaryOperator::Eq,
             Rule::op_neq => BinaryOperator::Neq,
             Rule::op_lt => BinaryOperator::Lt,
             Rule::op_le => BinaryOperator::Lte,
             Rule::op_gt => BinaryOperator::Gt,
             Rule::op_ge => BinaryOperator::Gte,
-            Rule::op_and => BinaryOperator::And,
-            Rule::op_or => BinaryOperator::Or,
-            Rule::op_match => BinaryOperator::Match,
-            Rule::op_not_match => BinaryOperator::NotMatch,
-            Rule::op_in => BinaryOperator::In,
             _ => unreachable!(),
         };
-        Expr::BinaryOp(Box::new(lhs), op, Box::new(rhs))
-    })
-    .parse(pair.into_inner())
+        lhs = Expr::BinaryOp(Box::new(lhs), bop, Box::new(rhs));
+    }
+    lhs
+}
+
+fn parse_concat_expr(pair: Pair<Rule>) -> Expr {
+    let parts: Vec<Expr> = pair.into_inner().map(parse_add_expr).collect();
+    if parts.len() == 1 {
+        parts.into_iter().next().unwrap()
+    } else {
+        Expr::Concat(parts)
+    }
+}
+
+fn parse_add_expr(pair: Pair<Rule>) -> Expr {
+    let mut inners = pair.into_inner();
+    let mut lhs = parse_mul_expr(inners.next().unwrap());
+    while let Some(op) = inners.next() {
+        let rhs = parse_mul_expr(inners.next().unwrap());
+        let bop = match op.as_rule() {
+            Rule::op_add => BinaryOperator::Add,
+            Rule::op_sub => BinaryOperator::Sub,
+            _ => unreachable!(),
+        };
+        lhs = Expr::BinaryOp(Box::new(lhs), bop, Box::new(rhs));
+    }
+    lhs
+}
+
+fn parse_mul_expr(pair: Pair<Rule>) -> Expr {
+    let mut inners = pair.into_inner();
+    let mut lhs = parse_pow_expr(inners.next().unwrap());
+    while let Some(op) = inners.next() {
+        let rhs = parse_pow_expr(inners.next().unwrap());
+        let bop = match op.as_rule() {
+            Rule::op_mul => BinaryOperator::Mul,
+            Rule::op_div => BinaryOperator::Div,
+            Rule::op_mod => BinaryOperator::Mod,
+            _ => unreachable!(),
+        };
+        lhs = Expr::BinaryOp(Box::new(lhs), bop, Box::new(rhs));
+    }
+    lhs
+}
+
+fn parse_pow_expr(pair: Pair<Rule>) -> Expr {
+    let mut inners = pair.into_inner();
+    let mut lhs = parse_term(inners.next().unwrap());
+    if let Some(_op) = inners.next() {
+        let rhs = parse_pow_expr(inners.next().unwrap());
+        lhs = Expr::BinaryOp(Box::new(lhs), BinaryOperator::Pow, Box::new(rhs));
+    }
+    lhs
 }
 
 fn parse_term(term: Pair<Rule>) -> Expr {
@@ -411,7 +487,7 @@ fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
             for p in inners {
                 if p.as_rule() == Rule::ident {
                     var_name = Some(p.as_str().to_string());
-                } else if p.as_rule() == Rule::expr || p.as_rule() == Rule::logical_expr {
+                } else if p.as_rule() == Rule::expr {
                     file_expr = Some(Box::new(parse_expr(p)));
                 }
             }
@@ -432,7 +508,8 @@ fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
         }
         Rule::func_call => {
             let mut inners = inner.into_inner();
-            let ident = inners.next().unwrap().as_str().to_string();
+            let func_name_str = inners.next().unwrap().as_str();
+            let ident = func_name_str[..func_name_str.len()-1].to_string();
             let mut args = Vec::new();
             if let Some(expr_list) = inners.next() {
                 for e in expr_list.into_inner() {

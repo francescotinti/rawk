@@ -2,21 +2,23 @@
 // Authors: Francesco Tinti & Antigravity (Google Deepmind)
 // Description: A high-fidelity port of the historic AWK language from C to Rust.
 
-WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
+WHITESPACE = _{ " " | "\t" | "\r" }
 COMMENT = _{ "#" ~ (!"\n" ~ ANY)* }
+nl = _{ "\n" }
+eos = _{ ";" | nl }
 
-program = { SOI ~ (function_decl | rule)* ~ EOI }
+program = { SOI ~ nl* ~ ( (function_decl | rule) ~ nl* )* ~ EOI }
 
 rule = { 
-    (pattern ~ action_block) |
+    (pattern ~ nl* ~ action_block) |
     pattern |
     action_block
 }
 
-action_block = { "{" ~ statement* ~ "}" }
+action_block = { "{" ~ nl* ~ (statement ~ nl*)* ~ "}" }
 
-function_decl = { "function" ~ ident ~ "(" ~ ident_list? ~ ")" ~ action_block }
-ident_list = { ident ~ ("," ~ ident)* }
+function_decl = { "function" ~ ident ~ "(" ~ nl* ~ ident_list? ~ nl* ~ ")" ~ nl* ~ action_block }
+ident_list = { ident ~ (nl* ~ "," ~ nl* ~ ident)* }
 
 pattern = { "BEGINFILE" | "ENDFILE" | "BEGIN" | "END" | regex_pattern | expr }
 regex_pattern = ${ "/" ~ regex_inner ~ "/" }
@@ -37,18 +39,18 @@ statement = {
     return_stmt |
     exit_stmt |
     assign_stmt |
-    expr_stmt) ~ ";"?
+    expr_stmt) ~ eos?
 }
 
-if_stmt = { "if" ~ "(" ~ expr ~ ")" ~ block_or_stmt ~ ("else" ~ block_or_stmt)? }
-while_stmt = { "while" ~ "(" ~ expr ~ ")" ~ block_or_stmt }
-do_while_stmt = { "do" ~ block_or_stmt ~ "while" ~ "(" ~ expr ~ ")" }
-for_in_stmt = { "for" ~ "(" ~ ident ~ "in" ~ ident ~ ")" ~ block_or_stmt }
-for_stmt = { "for" ~ "(" ~ for_init? ~ ";" ~ for_cond? ~ ";" ~ for_step? ~ ")" ~ block_or_stmt }
+if_stmt = { "if" ~ nl* ~ "(" ~ nl* ~ expr ~ nl* ~ ")" ~ nl* ~ block_or_stmt ~ (nl* ~ "else" ~ nl* ~ block_or_stmt)? }
+while_stmt = { "while" ~ nl* ~ "(" ~ nl* ~ expr ~ nl* ~ ")" ~ nl* ~ block_or_stmt }
+do_while_stmt = { "do" ~ nl* ~ block_or_stmt ~ nl* ~ "while" ~ nl* ~ "(" ~ nl* ~ expr ~ nl* ~ ")" }
+for_in_stmt = { "for" ~ nl* ~ "(" ~ nl* ~ ident ~ nl* ~ "in" ~ nl* ~ ident ~ nl* ~ ")" ~ nl* ~ block_or_stmt }
+for_stmt = { "for" ~ nl* ~ "(" ~ nl* ~ for_init? ~ nl* ~ ";" ~ nl* ~ for_cond? ~ nl* ~ ";" ~ nl* ~ for_step? ~ nl* ~ ")" ~ nl* ~ block_or_stmt }
 for_init = { assign_stmt | expr }
 for_cond = { expr }
 for_step = { assign_stmt | expr }
-delete_stmt = { "delete" ~ ident ~ ("[" ~ expr_list ~ "]")? }
+delete_stmt = { "delete" ~ ident ~ ("[" ~ nl* ~ expr_list ~ nl* ~ "]")? }
 print_stmt = { "print" ~ expr_list? ~ redirect? }
 printf_stmt = { "printf" ~ expr_list? ~ redirect? }
 break_stmt = { "break" }
@@ -57,31 +59,41 @@ next_stmt = { "next" }
 return_stmt = { "return" ~ expr? }
 exit_stmt = { "exit" ~ expr? }
 redirect = { (">>" | ">" | "|") ~ expr }
-assign_stmt = { assignable ~ assign_op ~ expr }
-assign_op = { "=" | "+=" | "-=" | "*=" | "/=" }
+assign_stmt = { assignable ~ assign_op ~ nl* ~ expr }
+assign_op = { "+=" | "-=" | "*=" | "/=" | "=" }
 expr_stmt = { expr }
 
 block_or_stmt = { action_block | statement }
 
 assignable = { array_access | field | ident }
 
-expr_list = { expr ~ ("," ~ expr)* }
+expr_list = { expr ~ (nl* ~ "," ~ nl* ~ expr)* }
 
-expr = { logical_expr ~ ("?" ~ expr ~ ":" ~ expr)? }
-logical_expr = { term ~ (infix_op ~ term)* }
-term = { prefix_op? ~ primary ~ postfix_op? }
+expr           = { ternary_expr }
+ternary_expr   = { logical_or ~ (nl* ~ "?" ~ nl* ~ expr ~ nl* ~ ":" ~ nl* ~ expr)? }
+logical_or     = { logical_and ~ (nl* ~ op_or ~ nl* ~ logical_and)* }
+logical_and    = { in_expr ~ (nl* ~ op_and ~ nl* ~ in_expr)* }
+in_expr        = { match_expr ~ (nl* ~ op_in ~ nl* ~ ident)? }
+match_expr     = { rel_expr ~ (nl* ~ (op_match | op_not_match) ~ nl* ~ rel_expr)* }
+rel_expr       = { concat_expr ~ (nl* ~ rel_op ~ nl* ~ concat_expr)* }
+rel_op         = _{ op_eq | op_neq | op_ge | op_le | op_gt | op_lt }
+concat_expr    = { add_expr ~ add_expr* }
+add_expr       = { mul_expr ~ (nl* ~ (op_add | op_sub) ~ nl* ~ mul_expr)* }
+mul_expr       = { pow_expr ~ (nl* ~ (op_mul | op_div | op_mod) ~ nl* ~ pow_expr)* }
+pow_expr       = { term ~ (nl* ~ op_pow ~ nl* ~ pow_expr)? }
+term           = { (prefix_op ~ nl*)? ~ primary ~ (nl* ~ postfix_op)? }
 
-primary = { getline_expr | field | func_call | array_access | number | string_literal | regex_pattern | ident | "(" ~ expr ~ ")" }
+primary = { getline_expr | field | func_call | array_access | number | string_literal | regex_pattern | ident | ("(" ~ nl* ~ expr ~ nl* ~ ")") }
 
-getline_expr = { "getline" ~ ident? ~ ("<" ~ expr)? }
+getline_expr = { "getline" ~ ident? ~ (nl* ~ "<" ~ nl* ~ expr)? }
 field = { "$" ~ primary }
-array_access = { ident ~ "[" ~ expr_list ~ "]" }
-func_call = { ident ~ "(" ~ expr_list? ~ ")" }
+array_access = { ident ~ "[" ~ nl* ~ expr_list ~ nl* ~ "]" }
+func_name = @{ ident ~ "(" }
+func_call = { func_name ~ nl* ~ expr_list? ~ nl* ~ ")" }
+ws_or_nl  = _{ " " | "\t" | "\r" | "\n" }
 
 prefix_op = _{ op_inc | op_dec | op_not | op_plus | op_minus }
 postfix_op = _{ op_inc | op_dec }
-
-infix_op = _{ op_and | op_or | op_match | op_not_match | op_in | op_eq | op_neq | op_ge | op_le | op_gt | op_lt | op_add | op_sub | op_pow | op_mul | op_div | op_mod }
 
 op_and = { "&&" }
 op_or  = { "||" }
