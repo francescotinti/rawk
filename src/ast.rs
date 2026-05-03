@@ -4,7 +4,7 @@
  * Description: A high-fidelity port of the historic AWK language from C to Rust.
  */
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum BinaryOperator {
     Add, Sub, Mul, Div, Mod, Pow,
     Eq, Neq, Lt, Lte, Gt, Gte,
@@ -12,7 +12,14 @@ pub enum BinaryOperator {
     Match, NotMatch, In,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
+pub enum GetlineSource {
+    Main,
+    File(Box<Expr>),
+    Pipe(Box<Expr>),
+}
+
+#[derive(Debug, Clone, PartialEq)]
 pub enum Expr {
     Field(Box<Expr>),
     NumberLiteral(f64),
@@ -21,7 +28,7 @@ pub enum Expr {
     Variable(String),
     ArrayAccess(String, Vec<Expr>), // a["key1", "key2"]
     FunctionCall(String, Vec<Expr>), // length($1)
-    Getline(Option<String>, Option<Box<Expr>>), // getline var < file
+    Getline(Option<String>, GetlineSource), // getline var < file / "cmd" | getline
     BinaryOp(Box<Expr>, BinaryOperator, Box<Expr>),
     Concat(Vec<Expr>),
     UnaryMinus(Box<Expr>),

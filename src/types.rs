@@ -7,7 +7,7 @@
 use crate::ast::Statement;
 use std::collections::HashMap;
 use std::fmt;
-use std::io::BufRead;
+
 use rand::rngs::StdRng;
 
 /// Represents an AWK dynamic value (number, string, or uninitialized).
@@ -167,6 +167,20 @@ impl OutputStream {
     }
 }
 
+pub enum InputStream {
+    File(Box<dyn std::io::BufRead>),
+    Pipe { stdout: Box<dyn std::io::BufRead>, child: std::process::Child },
+}
+
+impl InputStream {
+    pub fn reader(&mut self) -> &mut dyn std::io::BufRead {
+        match self {
+            InputStream::File(r) => r.as_mut(),
+            InputStream::Pipe { stdout, .. } => stdout.as_mut(),
+        }
+    }
+}
+
 /// Represents the Evaluation Context (the state) for the current line.
 pub struct EvalContext {
     pub nr: usize,              // Number of Records read so far
@@ -178,7 +192,7 @@ pub struct EvalContext {
     pub vars: HashMap<String, AwkValue>,
     pub arrays: HashMap<String, HashMap<String, AwkValue>>,
     pub out_files: HashMap<String, OutputStream>,
-    pub in_files: HashMap<String, Box<dyn BufRead>>,
+    pub in_files: HashMap<String, InputStream>,
     pub rng: StdRng,
     pub local_scopes: Vec<HashMap<String, AwkValue>>,
     pub functions: HashMap<String, (Vec<String>, Vec<Statement>)>,

@@ -46,7 +46,7 @@ Solo UN step alla volta è 🚧. I successivi sono 🔒 LOCKED finché lo step p
 2. Aggiunge **prima** i testcase XML in `tests/testsuite.xml`. Verifica che `cargo test` fallisca per il motivo atteso (TDD-first).
 3. Implementa il codice secondo le decisioni `D N.k`. Niente improvvisazioni.
 4. Verifica `cargo build` clean (0 warning) + `cargo test` verde.
-5. **Un singolo commit** con il message format obbligatorio (sotto).
+5. **Un singolo commit** con il message format obbligatorio (sotto). Il commit include `src/*` + `tests/testsuite.xml` + `Cargo.toml` (se modificato) + `NEXT_STEPS.md` (con le modifiche di Claude dell'audit precedente: audit log e spec dello step corrente — sono già nel working tree). **I commit li fa sempre Gemini, mai Claude**: Claude scrive su `NEXT_STEPS.md` ma non committa, le sue modifiche entrano nel prossimo commit di Gemini.
 6. Aggiorna l'header dello step in questo file: `🚧 PRONTO` → `🟢 FATTO — AUDIT PENDING`.
 
 Se incontra un'ambiguità non coperta dalle decisioni `D N.k`, **NON improvvisa**: lascia un commento `// DESIGN-Q: <domanda>` nel codice, committa l'avanzamento parziale taggato `🟡 BLOCKED — DESIGN-Q`, e Francesco lo segnala a Claude.
@@ -1579,7 +1579,7 @@ Sul terzo testcase: `nextfile` da dentro una user function richiede che `FlowCon
 
 # Step 7 — NF assignment side-effects (POSIX field/record sync)
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `05533e1` — 90 test verdi**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -1724,6 +1724,237 @@ q
 
 ---
 
+# Step 8 — `getline` da pipe (`"cmd" | getline [var]`)
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+feat(step8): getline from pipe
+
+IN-SCOPE:
+- Grammar: "primary | getline [var]" come forma di expression
+- AST: GetlineSource enum (Main/File/Pipe), Expr::Getline aggiornato
+- InputStream enum (File/Pipe), refactor `in_files` simmetrico a `out_files` (Step 4)
+- Pipe construction: spawn shell child, BufRead da stdout, cache per cmd string
+- close(cmd) wait() su Child anche per pipe input
+- Final shutdown: drain anche in_files con wait su pipe children
+
+OUT-OF-SCOPE (debito esplicito):
+- Forma `expr | getline` con `expr` complesso (concat, binary op): supportiamo solo `primary | getline`
+- getline da `/dev/stdin` o `-` come pipe (resta input file)
+- Coprocess `|&` (gawk extension non POSIX)
+
+Testcase aggiunti: 4. Totali: 94.
+```
+
+## Goal
+Implementare la forma `"cmd" | getline [var]` di POSIX awk. Esegue `cmd` via shell, cache il pipe handle, ogni invocazione legge una linea dallo stdout del child. Restituisce 1 (success), 0 (EOF), -1 (errore).
+
+Oggi `getline` supporta solo:
+- `getline` (main input)
+- `getline var`
+- `getline < file`
+- `getline var < file`
+
+Manca la forma pipe.
+
+## Decisioni di design (NON riaprire)
+
+### D8.1 — Grammar
+Aggiungere alternativa pipe a `getline_expr` come PRIMA opzione. Pest matcha il primo che riesce, quindi mettendo l'alternativa pipe prima evitiamo backtrack issues:
+
+```pest
+getline_expr = {
+    pipe_getline | plain_getline
+}
+pipe_getline = { primary ~ nl* ~ "|" ~ nl* ~ "getline" ~ ident? }
+plain_getline = { "getline" ~ ident? ~ (nl* ~ "<" ~ nl* ~ expr)? }
+```
+
+**Limitazione**: `primary` non include concat o binary ops. `"echo " var | getline x` non parserà come pipe — l'utente deve scrivere `(("echo " var)) | getline x` per forzare il parsing. Documentato in OUT-OF-SCOPE.
+
+### D8.2 — AST refactor
+Cambiare `Expr::Getline` da:
+```rust
+Getline(Option<String>, Option<Box<Expr>>),
+```
+a:
+```rust
+enum GetlineSource {
+    Main,
+    File(Box<Expr>),
+    Pipe(Box<Expr>),
+}
+Getline(Option<String>, GetlineSource),
+```
+
+Aggiornare tutti i call site nel parser e nel runner.
+
+### D8.3 — `InputStream` enum su `EvalContext`
+Simmetrico a `OutputStream` di Step 4. In `types.rs`:
+```rust
+pub enum InputStream {
+    File(Box<dyn std::io::BufRead>),
+    Pipe { stdout: Box<dyn std::io::BufRead>, child: std::process::Child },
+}
+
+impl InputStream {
+    pub fn reader(&mut self) -> &mut dyn std::io::BufRead {
+        match self {
+            InputStream::File(r) => r.as_mut(),
+            InputStream::Pipe { stdout, .. } => stdout.as_mut(),
+        }
+    }
+}
+```
+
+E in `EvalContext`:
+```rust
+pub in_files: HashMap<String, InputStream>,
+```
+(prima era `HashMap<String, Box<dyn BufRead>>`).
+
+### D8.4 — Logica del pipe getline in `eval_expr`
+In `eval_expr` per `Expr::Getline(var_opt, GetlineSource::Pipe(cmd_expr))`:
+
+```rust
+GetlineSource::Pipe(cmd_expr) => {
+    let cmd = eval_expr(cmd_expr, context).as_string();
+    if !context.in_files.contains_key(&cmd) {
+        use std::process::{Command, Stdio};
+        let mut child = match Command::new("sh")
+            .arg("-c")
+            .arg(&cmd)
+            .stdout(Stdio::piped())
+            .spawn()
+        {
+            Ok(c) => c,
+            Err(_) => return AwkValue::Number(-1.0),
+        };
+        let stdout = child.stdout.take().unwrap();
+        let reader = std::io::BufReader::new(stdout);
+        context.in_files.insert(cmd.clone(), InputStream::Pipe { stdout: Box::new(reader), child });
+    }
+    
+    let mut line = String::new();
+    let read_success = if let Some(stream) = context.in_files.get_mut(&cmd) {
+        match stream.reader().read_line(&mut line) {
+            Ok(0) => false,
+            Ok(_) => true,
+            Err(_) => return AwkValue::Number(-1.0),
+        }
+    } else { false };
+    
+    if read_success {
+        let line_str = line.trim_end_matches(&['\r', '\n'][..]).to_string();
+        if let Some(var) = var_opt {
+            context.set_var(var, AwkValue::from_str_num(line_str));
+        } else {
+            context.update_record(&line_str);
+        }
+        AwkValue::Number(1.0)
+    } else {
+        AwkValue::Number(0.0)
+    }
+}
+```
+
+Identica logica per `GetlineSource::File(...)` (già implementata, ma ora dentro un branch del match).
+
+### D8.5 — `close(cmd)` integrato con `InputStream::Pipe`
+In `runner.rs::close` builtin (Step 4), il branch `in_files.remove` oggi solo elimina dalla cache. Estendere per fare wait sul Child se è Pipe:
+
+```rust
+if let Some(stream) = context.in_files.remove(&target) {
+    found = true;
+    if let crate::types::InputStream::Pipe { stdout, mut child } = stream {
+        drop(stdout);
+        if let Ok(s) = child.wait() {
+            status = s.code().unwrap_or(-1);
+        }
+    }
+    // InputStream::File: drop chiude, status resta 0
+}
+```
+
+NOTA: questo va integrato dopo il branch out_files. Se la stessa cmd string è in entrambe le mappe (improbabile ma possibile), entrambe le chiusure avvengono.
+
+### D8.6 — Final shutdown in `run()`
+Estendere il drain finale per fare wait anche su pipe input children:
+```rust
+let in_streams: Vec<crate::types::InputStream> = context.in_files.drain().map(|(_,v)| v).collect();
+for stream in in_streams {
+    if let crate::types::InputStream::Pipe { stdout, mut child } = stream {
+        drop(stdout);
+        let _ = child.wait();
+    }
+}
+```
+
+## Testcase obbligatori (aggiungere a `tests/testsuite.xml` PRIMA del codice)
+
+```xml
+<testcase name="test_getline_from_pipe_basic">
+    <awk><![CDATA[BEGIN { "echo hello" | getline x; print "got:" x }]]></awk>
+    <expected_stdout match="exact"><![CDATA[got:hello
+]]></expected_stdout>
+</testcase>
+<testcase name="test_getline_from_pipe_no_var_updates_record">
+    <awk><![CDATA[BEGIN { "echo a b c" | getline; print NF; print $2 }]]></awk>
+    <expected_stdout match="exact"><![CDATA[3
+b
+]]></expected_stdout>
+</testcase>
+<testcase name="test_getline_from_pipe_multiline">
+    <awk><![CDATA[BEGIN {
+        cmd = "printf 'one\ntwo\nthree\n'"
+        while ((cmd | getline line) > 0) print "L:" line
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[L:one
+L:two
+L:three
+]]></expected_stdout>
+</testcase>
+<testcase name="test_getline_pipe_close_returns_status">
+    <awk><![CDATA[BEGIN {
+        "echo hi" | getline x
+        print x
+        ret = close("echo hi")
+        print "close=" ret
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[hi
+close=0
+]]></expected_stdout>
+</testcase>
+```
+
+## File modificati attesi
+
+- `src/awk.pest` (~5 righe per pipe_getline)
+- `src/ast.rs` (+enum GetlineSource, refactor variant Getline)
+- `src/parser.rs` (~15 righe per parsing pipe form + refactor plain form)
+- `src/types.rs` (+enum InputStream + helper, +use std::process::Child)
+- `src/runner.rs` (~40 righe nette: refactor Getline match + close extension + final shutdown)
+- `tests/testsuite.xml` (+4 testcase)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, 90 + 4 = **94 testcase passano**
+- [ ] Tutti i testcase Step 1-7 ancora verdi (in particolare `test_close_pipe` di Step 4 — il refactor di `in_files` deve mantenere la simmetria)
+- [ ] `getline` plain (no pipe) continua a funzionare via `GetlineSource::Main` e `GetlineSource::File`
+
+## Anti-pattern specifici Step 8
+
+- ❌ Allowing `expr | getline` per `expr` complesso senza limiti — apre buco di parsing ambiguo (pest greedy issues con `|` di output redirect). Restringere a `primary`.
+- ❌ Cache i pipe per stringhe diverse della stessa cmd (es. `"echo hi"` e `"echo  hi"` con spazi diversi) — è OK, sono cmd diverse dal punto di vista di sh.
+- ❌ Non fare wait su Child di pipe input — zombie process leak, identico al bug fixato in Step 4 per output pipe.
+- ❌ Refactor Getline AST mantenendo `Option<Box<Expr>>` con un flag side-channel "is_pipe" — usare l'enum strutturato.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -1748,6 +1979,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 4 (system/close/fflush) | ✅ APPROVED | `227c3e5` | 74/74 | D4.1-D4.6 applicate letteralmente. Refactor `out_files: HashMap<_, OutputStream>` con enum File/Pipe per tracciare Child, `wait()` correttamente su close di pipe, final shutdown drain in `run()`. Side-fix non in spec ma documentato in commit message: introdotto `print_expr_list` per risolvere ambiguità POSIX `print x > "file"` (redirect vs comparison). Comportamento corretto POSIX. Avrebbe dovuto essere SPEC-Q ma trasparenza nel commit lo ha mitigato. Minor: manca riga "Testcase aggiunti: N. Totali: M." nel commit message. Backlog top → Step 5. |
 | 2026-05-03 | Step 5 (RS paragraph + regex) | ✅ APPROVED | `ffbc0fe` | 82/82 | D5.1-D5.6 applicate letteralmente. Refactor `process_lines` in 3 funzioni (`process_single_byte`, `process_paragraph`, `process_regex_rs`) + dispatch top-level + helper `run_rules_on_record` estratto. Bonus sensato: default esplicito `RS="\n"` in `run()`. Commit message format perfettamente conforme (incluso "Testcase aggiunti: 8. Totali: 82.", che mancava in Step 4). 5° step consecutivo by-the-book. Backlog top → Step 6. |
 | 2026-05-03 | Step 6 (nextfile) | ✅ APPROVED | `b74e7e3` | 85/85 | D6.1-D6.7 applicate letteralmente. D6.8 (propagation through user function call) risolta out-of-spec con flag `nextfile_pending`/`exit_pending` su `EvalContext`: `eval_expr` non può propagare `FlowControl` via valore di ritorno (signature è `AwkValue`), quindi side-effect-based. Funziona, ma stato mutable nascosto. Da rivalutare in Step 11 (refactor stilistico) con possibile signature change `eval_expr -> Result<AwkValue, FlowControl>`. Commit message format conforme. Backlog top → Step 7. |
+| 2026-05-03 | Step 7 (NF side-effects) | ✅ APPROVED | `05533e1` | 90/90 | D7.1-D7.5 applicate letteralmente. `set_var("NF", ...)` ora truncate/extend `fields` + rebuild $0 con OFS. Edge case NF=0 gestito. `self.vars.get("OFS")` come prescritto per evitare borrow issue. 5 testcase: 3 nuovi comportamenti + 2 regression su set_field già funzionanti. NEXT_STEPS.md committato nel commit di Gemini (workflow chiarificato sui commit ora attivo). 7° step by-the-book. Backlog top → Step 8. |
 
 ---
 
@@ -1760,7 +1992,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 3. ~~Paragraph mode `RS=""` + RS regex multi-char~~ → **promosso a Step 5** ✅ specced
 4. ~~Statement `nextfile`~~ → **promosso a Step 6** ✅ specced
 5. ~~NF assignment side-effects (donefld/donerec)~~ → **promosso a Step 7** ✅ specced
-6. **`getline` da pipe (`"cmd" | getline`)** — oggi solo `getline < file`. Estendere grammatica + runner.
+6. ~~`getline` da pipe (`"cmd" | getline`)~~ → **promosso a Step 8** ✅ specced
 7. **`printf`/`print` con `>>` append e `|` pipe** — già implementato in `handle_output`, ma testare edge case (file riaperti, append vs write, encoding).
 8. **CLI: `-v var=value` reale e separatore `--`** — il flag `-v` esiste in clap ma le assegnazioni non vengono parsate e iniettate in `EvalContext`.
 9. **Differential testing infrastructure** (Fase 4a della skill `legacy-port`) — `build.rs` con feature flag `differential`, FFI verso `c_awk/` compilato come libreria statica.

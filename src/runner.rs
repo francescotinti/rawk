@@ -169,6 +169,14 @@ pub fn run(config: Config) -> anyhow::Result<()> {
             }
         }
     }
+    
+    let in_streams: Vec<crate::types::InputStream> = context.in_files.drain().map(|(_,v)| v).collect();
+    for stream in in_streams {
+        if let crate::types::InputStream::Pipe { stdout, mut child } = stream {
+            drop(stdout);
+            let _ = child.wait();
+        }
+    }
 
     Ok(())
 }
@@ -370,26 +378,53 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
             let key = keys_str.join(&subsep);
             context.get_array_var(arr_name, &key)
         }
-        Expr::Getline(var_opt, file_opt) => {
+        Expr::Getline(var_opt, source) => {
             let mut line = String::new();
             let mut read_success = false;
 
-            if let Some(file_expr) = file_opt {
-                let filename = eval_expr(file_expr, context).as_string();
-                if !context.in_files.contains_key(&filename) {
-                    if let Ok(file) = std::fs::File::open(&filename) {
-                        context.in_files.insert(filename.clone(), Box::new(std::io::BufReader::new(file)));
-                    }
-                }
-                
-                if let Some(reader) = context.in_files.get_mut(&filename) {
-                    if let Ok(n) = reader.read_line(&mut line) {
+            match source {
+                crate::ast::GetlineSource::Main => {
+                    if let Ok(n) = std::io::stdin().read_line(&mut line) {
                         if n > 0 { read_success = true; }
                     }
                 }
-            } else {
-                if let Ok(n) = std::io::stdin().read_line(&mut line) {
-                    if n > 0 { read_success = true; }
+                crate::ast::GetlineSource::File(file_expr) => {
+                    let filename = eval_expr(file_expr, context).as_string();
+                    if !context.in_files.contains_key(&filename) {
+                        if let Ok(file) = std::fs::File::open(&filename) {
+                            context.in_files.insert(filename.clone(), crate::types::InputStream::File(Box::new(std::io::BufReader::new(file))));
+                        }
+                    }
+                    if let Some(stream) = context.in_files.get_mut(&filename) {
+                        if let Ok(n) = stream.reader().read_line(&mut line) {
+                            if n > 0 { read_success = true; }
+                        }
+                    }
+                }
+                crate::ast::GetlineSource::Pipe(cmd_expr) => {
+                    let cmd = eval_expr(cmd_expr, context).as_string();
+                    if !context.in_files.contains_key(&cmd) {
+                        use std::process::{Command, Stdio};
+                        let child_res = Command::new("sh")
+                            .arg("-c")
+                            .arg(&cmd)
+                            .stdout(Stdio::piped())
+                            .spawn();
+                        if let Ok(mut child) = child_res {
+                            let stdout = child.stdout.take().unwrap();
+                            let reader = std::io::BufReader::new(stdout);
+                            context.in_files.insert(cmd.clone(), crate::types::InputStream::Pipe { stdout: Box::new(reader), child });
+                        } else {
+                            return crate::types::AwkValue::Number(-1.0);
+                        }
+                    }
+                    if let Some(stream) = context.in_files.get_mut(&cmd) {
+                        match stream.reader().read_line(&mut line) {
+                            Ok(0) => read_success = false,
+                            Ok(_) => read_success = true,
+                            Err(_) => return crate::types::AwkValue::Number(-1.0),
+                        }
+                    }
                 }
             }
 
@@ -547,8 +582,16 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         }
                     }
                     
-                    if context.in_files.remove(&target).is_some() {
+                    if let Some(stream) = context.in_files.remove(&target) {
                         found = true;
+                        if let crate::types::InputStream::Pipe { stdout, mut child } = stream {
+                            drop(stdout);
+                            if let Ok(s) = child.wait() {
+                                status = s.code().unwrap_or(-1);
+                            } else {
+                                status = -1;
+                            }
+                        }
                     }
                     
                     if found { crate::types::AwkValue::Number(status as f64) } else { crate::types::AwkValue::Number(-1.0) }

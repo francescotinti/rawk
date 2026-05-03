@@ -520,7 +520,14 @@ fn decode_string_escapes(raw: &str) -> String {
 }
 
 fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
-    let inner = primary_pair.into_inner().next().unwrap();
+    let mut inner = primary_pair.into_inner().next().unwrap();
+    if inner.as_rule() == Rule::non_getline_primary {
+        inner = inner.into_inner().next().unwrap();
+    }
+    parse_primary_inner(inner)
+}
+
+fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
     match inner.as_rule() {
         Rule::number => Expr::NumberLiteral(inner.as_str().parse::<f64>().unwrap_or(0.0)),
         Rule::string_literal => Expr::StringLiteral(decode_string_escapes(inner.into_inner().next().unwrap().as_str())),
@@ -530,17 +537,37 @@ fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
         }
         Rule::ident => Expr::Variable(inner.as_str().to_string()),
         Rule::getline_expr => {
-            let inners = inner.into_inner();
-            let mut var_name = None;
-            let mut file_expr = None;
-            for p in inners {
-                if p.as_rule() == Rule::ident {
-                    var_name = Some(p.as_str().to_string());
-                } else if p.as_rule() == Rule::expr {
-                    file_expr = Some(Box::new(parse_expr(p)));
+            let actual = inner.into_inner().next().unwrap();
+            if actual.as_rule() == Rule::plain_getline {
+                let inners = actual.into_inner();
+                let mut var_name = None;
+                let mut file_expr = None;
+                for p in inners {
+                    if p.as_rule() == Rule::ident {
+                        var_name = Some(p.as_str().to_string());
+                    } else if p.as_rule() == Rule::expr {
+                        file_expr = Some(Box::new(parse_expr(p)));
+                    }
                 }
+                let source = if let Some(fe) = file_expr {
+                    crate::ast::GetlineSource::File(fe)
+                } else {
+                    crate::ast::GetlineSource::Main
+                };
+                Expr::Getline(var_name, source)
+            } else { // pipe_getline
+                let mut inners = actual.into_inner();
+                let cmd_primary = inners.next().unwrap(); // non_getline_primary
+                let cmd_inner = cmd_primary.into_inner().next().unwrap();
+                let cmd_expr = parse_primary_inner(cmd_inner);
+                let mut var_name = None;
+                for p in inners {
+                    if p.as_rule() == Rule::ident {
+                        var_name = Some(p.as_str().to_string());
+                    }
+                }
+                Expr::Getline(var_name, crate::ast::GetlineSource::Pipe(Box::new(cmd_expr)))
             }
-            Expr::Getline(var_name, file_expr)
         }
         Rule::field => {
             let p = inner.into_inner().next().unwrap();

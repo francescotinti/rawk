@@ -95,9 +95,12 @@ mul_expr       = { pow_expr ~ (nl* ~ (op_mul | op_div | op_mod) ~ nl* ~ pow_expr
 pow_expr       = { term ~ (nl* ~ op_pow ~ nl* ~ pow_expr)? }
 term           = { (prefix_op ~ nl*)? ~ primary ~ (nl* ~ postfix_op)? }
 
-primary = { getline_expr | field | func_call | array_access | number | string_literal | regex_pattern | ident | ("(" ~ nl* ~ expr ~ nl* ~ ")") }
+non_getline_primary = { field | func_call | array_access | number | string_literal | regex_pattern | ident | ("(" ~ nl* ~ expr ~ nl* ~ ")") }
+primary = { getline_expr | non_getline_primary }
 
-getline_expr = { "getline" ~ ident? ~ (nl* ~ "<" ~ nl* ~ expr)? }
+getline_expr = { pipe_getline | plain_getline }
+pipe_getline = { non_getline_primary ~ nl* ~ "|" ~ nl* ~ "getline" ~ ident? }
+plain_getline = { "getline" ~ ident? ~ (nl* ~ "<" ~ nl* ~ expr)? }
 field = { "$" ~ primary }
 array_access = { ident ~ "[" ~ nl* ~ expr_list ~ nl* ~ "]" }
 func_name = @{ ident ~ "(" }

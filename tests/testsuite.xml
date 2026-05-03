@@ -763,4 +763,36 @@ a b   x
 q
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_getline_from_pipe_basic">
+        <awk><![CDATA[BEGIN { "echo hello" | getline x; print "got:" x }]]></awk>
+        <expected_stdout match="exact"><![CDATA[got:hello
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_getline_from_pipe_no_var_updates_record">
+        <awk><![CDATA[BEGIN { "echo a b c" | getline; print NF; print $2 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[3
+b
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_getline_from_pipe_multiline">
+        <awk><![CDATA[BEGIN {
+            cmd = "printf 'one\ntwo\nthree\n'"
+            while ((cmd | getline line) > 0) print "L:" line
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[L:one
+L:two
+L:three
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_getline_pipe_close_returns_status">
+        <awk><![CDATA[BEGIN {
+            "echo hi" | getline x
+            print x
+            ret = close("echo hi")
+            print "close=" ret
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[hi
+close=0
+]]></expected_stdout>
+    </testcase>
 </testsuite>
