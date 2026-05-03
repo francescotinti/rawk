@@ -16,6 +16,7 @@ pub enum BinaryOperator {
 pub enum Expr {
     Field(Box<Expr>),
     StringLiteral(String),
+    RegexLiteral(String),
     Variable(String),
     ArrayAccess(String, Vec<Expr>), // a["key1", "key2"]
     FunctionCall(String, Vec<Expr>), // length($1)
@@ -35,6 +36,7 @@ pub enum Statement {
     Printf(Vec<Expr>, Option<(String, Expr)>),
     Assign(String, Expr),
     AssignArray(String, Vec<Expr>, Expr), // a[key1, key2] = value
+    AssignField(Box<Expr>, Expr), // $i = value
     Delete(String, Option<Vec<Expr>>), // delete a[key] or delete a
     IfElse(Expr, Vec<Statement>, Option<Vec<Statement>>),
     ForIn(String, String, Vec<Statement>),

@@ -193,6 +193,11 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
             context.get_field(idx)
         }
         Expr::StringLiteral(s) => crate::types::AwkValue::String(s.clone()),
+        Expr::RegexLiteral(re) => {
+            let record = context.get_field(0).as_string();
+            let regex = Regex::new(re).unwrap_or(Regex::new("").unwrap());
+            crate::types::AwkValue::Number(if regex.is_match(&record) { 1.0 } else { 0.0 })
+        }
         Expr::Variable(v) => context.get_var(v),
         Expr::ArrayAccess(arr_name, key_exprs) => {
             let mut keys_str = Vec::new();
@@ -377,7 +382,11 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                 }
                 "match" => {
                     let s = eval_expr(&args[0], context).as_string();
-                    let re_str = eval_expr(&args[1], context).as_string();
+                    let re_str = if let Expr::RegexLiteral(re) = &args[1] {
+                        re.clone()
+                    } else {
+                        eval_expr(&args[1], context).as_string()
+                    };
                     if let Ok(re) = Regex::new(&re_str) {
                         if let Some(m) = re.find(&s) {
                             context.set_var("RSTART", crate::types::AwkValue::Number(m.start() as f64 + 1.0));
@@ -395,7 +404,13 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                 "split" => {
                     let s = eval_expr(&args[0], context).as_string();
                     let arr_name = if let Expr::Variable(v) = &args[1] { v.clone() } else { "err".to_string() };
-                    let fs = if args.len() > 2 { eval_expr(&args[2], context).as_string() } else { context.fs.clone() };
+                    let fs = if args.len() > 2 {
+                        if let Expr::RegexLiteral(re) = &args[2] {
+                            re.clone()
+                        } else {
+                            eval_expr(&args[2], context).as_string()
+                        }
+                    } else { context.fs.clone() };
                     let re = Regex::new(&fs).unwrap_or(Regex::new(" ").unwrap());
                     let parts: Vec<&str> = re.split(&s).filter(|x| !x.is_empty()).collect();
                     let count = parts.len();
@@ -406,7 +421,11 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     crate::types::AwkValue::Number(count as f64)
                 }
                 "sub" | "gsub" => {
-                    let r = eval_expr(&args[0], context).as_string();
+                    let r = if let Expr::RegexLiteral(re) = &args[0] {
+                        re.clone()
+                    } else {
+                        eval_expr(&args[0], context).as_string()
+                    };
                     let s = eval_expr(&args[1], context).as_string();
                     let is_gsub = name == "gsub";
                     
@@ -425,8 +444,19 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     };
 
                     if args.len() > 2 {
-                        if let Expr::Variable(v) = &args[2] {
-                            context.set_var(v, crate::types::AwkValue::String(new_val));
+                        match &args[2] {
+                            Expr::Variable(v) => context.set_var(v, crate::types::AwkValue::String(new_val)),
+                            Expr::Field(e) => {
+                                let f_idx = eval_expr(e, context).as_number() as usize;
+                                context.set_field(f_idx, crate::types::AwkValue::String(new_val));
+                            }
+                            Expr::ArrayAccess(arr, ks) => {
+                                let mut keys = Vec::new();
+                                for k in ks { keys.push(eval_expr(k, context).as_string()); }
+                                let key = keys.join(&context.get_var("SUBSEP").as_string());
+                                context.set_array_var(arr, &key, crate::types::AwkValue::String(new_val));
+                            }
+                            _ => {}
                         }
                     } else {
                         context.update_record(&new_val);
@@ -673,11 +703,16 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 context.set_var(var_name, val);
             }
             Statement::AssignArray(arr_name, key_exprs, val_expr) => {
-                let mut keys_str = Vec::new();
-                for k in key_exprs { keys_str.push(eval_expr(k, context).as_string()); }
-                let key = keys_str.join(&context.get_var("SUBSEP").as_string());
+                let mut keys = Vec::new();
+                for e in key_exprs { keys.push(eval_expr(e, context).as_string()); }
+                let key = keys.join(&context.get_var("SUBSEP").as_string());
                 let val = eval_expr(val_expr, context);
                 context.set_array_var(arr_name, &key, val);
+            }
+            Statement::AssignField(field_expr, val_expr) => {
+                let f_idx = eval_expr(field_expr, context).as_number() as usize;
+                let val = eval_expr(val_expr, context);
+                context.set_field(f_idx, val);
             }
             Statement::Delete(arr_name, keys_opt) => {
                 if let Some(keys) = keys_opt {

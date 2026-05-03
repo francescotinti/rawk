@@ -165,3 +165,25 @@ fn test_gawk_manual_part2_deduplication() {
         .success()
         .stdout(predicate::str::contains("foo\nbar\nbaz"));
 }
+
+// Part II: Word frequency counter
+#[test]
+fn test_gawk_manual_word_frequency() {
+    let mut cmd = Command::cargo_bin("rawk").unwrap();
+    cmd.arg("{
+        $0 = tolower($0)
+        gsub(/[^a-z0-9_ \t]/, \"\", $0)
+        for (i = 1; i <= NF; i++)
+            freq[$i]++
+    }
+    END {
+        for (word in freq)
+            print word, freq[word]
+    }")
+    .write_stdin("Hello world! Hello, AWK.")
+    .assert()
+    .success()
+    .stdout(predicate::str::contains("hello 2"))
+    .stdout(predicate::str::contains("world 1"))
+    .stdout(predicate::str::contains("awk 1"));
+}

@@ -127,7 +127,7 @@ fn parse_block_or_stmt(pair: Pair<Rule>) -> Vec<Statement> {
 }
 
 fn parse_statement(pair: Pair<Rule>) -> Statement {
-    let inner = pair.into_inner().next().unwrap();
+    let inner = pair.clone().into_inner().next().unwrap();
     match inner.as_rule() {
         Rule::if_stmt => {
             let mut inners = inner.into_inner();
@@ -171,8 +171,8 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
             let mut inners = inner.into_inner();
             let var = inners.next().unwrap().as_str().to_string();
             let arr = inners.next().unwrap().as_str().to_string();
-            let block = parse_statement(inners.next().unwrap());
-            Statement::ForIn(var, arr, vec![block])
+            let block = parse_block_or_stmt(inners.next().unwrap());
+            Statement::ForIn(var, arr, block)
         }
         Rule::for_stmt => {
             let mut inners = inner.into_inner();
@@ -266,7 +266,7 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
             let e = parse_expr(inner.into_inner().next().unwrap());
             Statement::Expr(e)
         }
-        _ => unreachable!(),
+        _ => unreachable!("Unhandled statement rule: pair={:?}, inner={:?}", pair.as_rule(), inner.as_rule()),
     }
 }
 
@@ -277,6 +277,14 @@ fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
     let mut expr = parse_expr(inners.next().unwrap());
     
     let target_inner = target.clone().into_inner().next().unwrap();
+    let op = match op_str {
+        "+=" => Some(BinaryOperator::Add),
+        "-=" => Some(BinaryOperator::Sub),
+        "*=" => Some(BinaryOperator::Mul),
+        "/=" => Some(BinaryOperator::Div),
+        _ => None,
+    };
+
     let target_expr = match target_inner.as_rule() {
         Rule::ident => Expr::Variable(target_inner.as_str().to_string()),
         Rule::array_access => {
@@ -288,24 +296,22 @@ fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
             }
             Expr::ArrayAccess(arr_name, keys)
         }
+        Rule::field => {
+            let p = target_inner.into_inner().next().unwrap();
+            Expr::Field(Box::new(parse_primary(p)))
+        }
         _ => Expr::Variable("err".to_string()),
     };
 
-    let op = match op_str {
-        "+=" => Some(BinaryOperator::Add),
-        "-=" => Some(BinaryOperator::Sub),
-        "*=" => Some(BinaryOperator::Mul),
-        "/=" => Some(BinaryOperator::Div),
-        _ => None,
-    };
-    if let Some(operator) = op {
-        expr = Expr::BinaryOp(Box::new(target_expr.clone()), operator, Box::new(expr));
+    if let Some(op) = op {
+        expr = Expr::BinaryOp(Box::new(target_expr.clone()), op, Box::new(expr));
     }
-    
+
     match target_expr {
-        Expr::Variable(name) => Statement::Assign(name, expr),
-        Expr::ArrayAccess(arr_name, keys) => Statement::AssignArray(arr_name, keys, expr),
-        _ => Statement::Assign("err".to_string(), expr),
+        Expr::Variable(v) => Statement::Assign(v, expr),
+        Expr::ArrayAccess(arr, ks) => Statement::AssignArray(arr, ks, expr),
+        Expr::Field(e) => Statement::AssignField(e, expr),
+        _ => Statement::Expr(expr),
     }
 }
 
@@ -355,7 +361,7 @@ fn parse_term(term: Pair<Rule>) -> Expr {
     let mut prefix = None;
     if primary_pair.as_rule() != Rule::primary {
         prefix = Some(primary_pair.as_rule());
-        primary_pair = term_inners.next().unwrap();
+        primary_pair = term_inners.next().unwrap_or_else(|| panic!("Expected primary after prefix {:?}, but got nothing", prefix.unwrap()));
     }
 
     let mut base_expr = parse_primary(primary_pair);
@@ -388,11 +394,7 @@ fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
         Rule::string_literal => Expr::StringLiteral(inner.into_inner().next().unwrap().as_str().to_string()),
         Rule::regex_pattern => {
             let re = inner.into_inner().next().unwrap().as_str();
-            Expr::BinaryOp(
-                Box::new(Expr::Field(Box::new(Expr::StringLiteral("0".to_string())))),
-                BinaryOperator::Match,
-                Box::new(Expr::StringLiteral(re.to_string()))
-            )
+            Expr::RegexLiteral(re.to_string())
         }
         Rule::ident => Expr::Variable(inner.as_str().to_string()),
         Rule::getline_expr => {

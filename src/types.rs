@@ -191,11 +191,38 @@ impl EvalContext {
         }
     }
     
+    pub fn set_field(&mut self, n: usize, value: AwkValue) {
+        if n == 0 {
+            self.update_record(&value.as_string());
+        } else {
+            while self.fields.len() < n {
+                self.fields.push(AwkValue::String(String::new()));
+            }
+            self.fields[n - 1] = value;
+            self.nf = self.fields.len();
+            
+            // Rebuild $0 using OFS
+            let ofs = self.get_var("OFS").as_string();
+            let mut parts = Vec::new();
+            for f in &self.fields {
+                parts.push(f.as_string());
+            }
+            self.record = parts.join(&ofs);
+        }
+    }
+    
     pub fn get_var(&self, name: &str) -> AwkValue {
         if let Some(scope) = self.local_scopes.last() {
             if let Some(val) = scope.get(name) {
                 return val.clone();
             }
+        }
+        match name {
+            "NF" => return AwkValue::Number(self.nf as f64),
+            "NR" => return AwkValue::Number(self.nr as f64),
+            "FNR" => return AwkValue::Number(self.fnr as f64),
+            "FS" => return AwkValue::String(self.fs.clone()),
+            _ => {}
         }
         self.vars.get(name).cloned().unwrap_or(AwkValue::Uninitialized)
     }
@@ -206,6 +233,13 @@ impl EvalContext {
                 scope.insert(name.to_string(), value);
                 return;
             }
+        }
+        match name {
+            "NF" => self.nf = value.as_number() as usize,
+            "NR" => self.nr = value.as_number() as usize,
+            "FNR" => self.fnr = value.as_number() as usize,
+            "FS" => self.fs = value.as_string(),
+            _ => {}
         }
         self.vars.insert(name.to_string(), value);
     }
