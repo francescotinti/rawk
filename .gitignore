@@ -5,7 +5,9 @@ src/scratch.rs
 src/debug.rs
 /scratch.rs
 /debug.rs
+/scratch
 pest_test.rs
+parse_test.rs
 out.txt
 dummy.txt
 f1.txt

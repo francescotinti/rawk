@@ -3351,7 +3351,7 @@ Solo `tests/`, `src/bin/diffrun.rs`, eventualmente `scripts/`. NON toccare `src/
 
 # Step 18 — Wrap-up: polish testsuite + Phase 5 conclusions
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `d2fe64b` — esperimento chiuso, diary/99-conclusions.md scritto, manifest e case files puliti**
 
 ## Format commit message obbligatorio
 
@@ -3574,6 +3574,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 15 (refactor parte 2: no più exit(1) runtime) | ✅ APPROVED | `52002fd` | 7/7 cargo, 107/107 XML | D15.1-D15.6 applicate letteralmente. Zero `exit(1)` in `src/` (verificato live), `exit(2)` per CLI errors preservato. `div`/`rem` su zero → warning + `Number(0.0)` (gawk-style). Unknown function → warning + `Uninitialized`. 2 testcase regression con `<expected_stderr>`. Refactor scoped pragmatico (no signature change `Result<_, AwkError>`, esplicitamente fuori scope). 14 step principali ✅ + 4 bis ✅. Backlog ha solo item 15 (integer-notation heuristic) rimasto. |
 | 2026-05-03 | Step 16 (integer-notation heuristic) | ✅ APPROVED | `d78525f` | 7/7 cargo, 109/109 XML | D16.1-D16.5 applicate letteralmente. Path B (`%.0f` per integer-like nel range 1e16-1e21) aggiunto, Path A (i64 per <1e16) e Path C (fmt + strip dot) preservati. `print 1e20` ora produce `100000000000000000000` (BSD/gawk-compatible). Edge case `1.5e20` produce integer notation perché a f64 precision è integer-like (gap tra float consecutivi > 0.5). Comportamento identico a BSD awk. Step 17 sbloccato. |
 | 2026-05-03 | Step 17 (split testsuite + manifest) | ✅ APPROVED | `f386a88` | 7/7 cargo, 109 active testcase | D17.1-D17.10 applicate letteralmente. 109 case files in `tests/cases/NNNN_<name>.xml`, `tests/testsuite.xml` diventato manifest con `<case file="..."/>` per ogni voce. `enabled="false"` verificato live. `xml_runner_test.rs` e `src/bin/diffrun.rs` entrambi adattati al manifest pattern. Migration script Python in `scripts/`. Output runner ora `[N/M] <name>`. Diffrun: 95 MATCH / 9 DIVERGE / 5 SKIP. Cosmetic minor: manifest su una sola riga (poco leggibile su git diff), case files indentazione irregolare — non bloccante, eventuali polish in backlog. **Backlog ora effettivamente esaurito.** |
+| 2026-05-03 | Step 18 (wrap-up + Phase 5) 🏁 | ✅ APPROVED | `d2fe64b` | 7/7 cargo, 109 active testcase | D18.1-D18.4 applicate letteralmente. Manifest pretty-printed (112 righe, 4-space indent). Case files normalizzati via `scripts/normalize_cases.py`. **`diary/99-conclusions.md` scritto con sostanza**: 75 righe, tutte e 6 le domande della skill `legacy-port` con risposte reali (no placeholder). Marker "🏁 ESPERIMENTO CONCLUSO" in cima a NEXT_STEPS.md. Gemini ha catturato la lesson più importante in 2.6: "il collo di bottiglia è la precisione e l'anticipazione nello Spec, non la capacità AI". **L'esperimento è ufficialmente chiuso secondo Phase 5 della skill.** |
 
 ---
 
