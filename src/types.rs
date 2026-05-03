@@ -16,11 +16,16 @@ pub enum AwkValue {
     Uninitialized,
     Number(f64),
     String(String),
+    StrNum(String, f64),
 }
 
 impl AwkValue {
-    pub fn from_string(s: String) -> Self {
-        AwkValue::String(s)
+    pub fn from_str_num(s: String) -> Self {
+        if let Ok(n) = s.trim().parse::<f64>() {
+            AwkValue::StrNum(s, n)
+        } else {
+            AwkValue::String(s)
+        }
     }
 
     pub fn as_number(&self) -> f64 {
@@ -28,6 +33,7 @@ impl AwkValue {
             AwkValue::Uninitialized => 0.0,
             AwkValue::Number(n) => *n,
             AwkValue::String(s) => s.trim().parse::<f64>().unwrap_or(0.0),
+            AwkValue::StrNum(_, n) => *n,
         }
     }
 
@@ -36,6 +42,7 @@ impl AwkValue {
             AwkValue::Uninitialized => String::new(),
             AwkValue::Number(n) => n.to_string(), // In standard awk, CONVFMT is used, but for MVP we use default to_string()
             AwkValue::String(s) => s.clone(),
+            AwkValue::StrNum(s, _) => s.clone(),
         }
     }
     
@@ -44,6 +51,7 @@ impl AwkValue {
             AwkValue::Uninitialized => false,
             AwkValue::Number(n) => *n != 0.0,
             AwkValue::String(s) => !s.is_empty(), // Standard awk: empty string is false, non-empty is true (even "0")
+            AwkValue::StrNum(s, _) => !s.is_empty(),
         }
     }
 
@@ -52,11 +60,13 @@ impl AwkValue {
         let l = match self {
             AwkValue::Number(n) => Some(*n),
             AwkValue::String(s) => s.trim().parse::<f64>().ok(),
+            AwkValue::StrNum(_, n) => Some(*n),
             AwkValue::Uninitialized => Some(0.0),
         };
         let r = match other {
             AwkValue::Number(n) => Some(*n),
             AwkValue::String(s) => s.trim().parse::<f64>().ok(),
+            AwkValue::StrNum(_, n) => Some(*n),
             AwkValue::Uninitialized => Some(0.0),
         };
         if let (Some(ln), Some(rn)) = (l, r) {
@@ -190,13 +200,13 @@ impl EvalContext {
         if self.fs == " " {
             self.fields = line
                 .split_whitespace()
-                .map(|s| AwkValue::from_string(s.to_string()))
+                .map(|s| AwkValue::from_str_num(s.to_string()))
                 .collect();
         } else {
             // Split by custom Field Separator
             self.fields = line
                 .split(&self.fs)
-                .map(|s| AwkValue::from_string(s.to_string()))
+                .map(|s| AwkValue::from_str_num(s.to_string()))
                 .collect();
         }
         self.nf = self.fields.len();
@@ -257,13 +267,18 @@ impl EvalContext {
             }
         }
         match name {
-            "NF" => self.nf = value.as_number() as usize,
+            "NF" => {
+                self.nf = value.as_number() as usize;
+                // Posix AWK requires $0 to be rebuilt when NF is set. We can skip that logic for now,
+                // but at least we don't store it twice.
+            }
             "NR" => self.nr = value.as_number() as usize,
             "FNR" => self.fnr = value.as_number() as usize,
             "FS" => self.fs = value.as_string(),
-            _ => {}
+            _ => {
+                self.vars.insert(name.to_string(), value);
+            }
         }
-        self.vars.insert(name.to_string(), value);
     }
     
     pub fn get_array_var(&self, array_name: &str, key: &str) -> AwkValue {

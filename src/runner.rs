@@ -145,7 +145,6 @@ pub fn run(config: Config) -> anyhow::Result<()> {
                 std::process::exit(code);
             }
             context.fnr = 0;
-            context.fnr = 0;
         }
     }
 
@@ -608,6 +607,14 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
         Expr::Not(e) => {
             let val = eval_expr(e, context);
             crate::types::AwkValue::Number(if val.is_truthy() { 0.0 } else { 1.0 })
+        }
+        Expr::UnaryMinus(e) => {
+            let val = eval_expr(e, context).as_number();
+            crate::types::AwkValue::Number(-val)
+        }
+        Expr::UnaryPlus(e) => {
+            let val = eval_expr(e, context).as_number();
+            crate::types::AwkValue::Number(val)
         }
         Expr::BinaryOp(lhs, op, rhs) => {
             let l_val = eval_expr(lhs, context);

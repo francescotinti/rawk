@@ -23,6 +23,8 @@ pub enum Expr {
     FunctionCall(String, Vec<Expr>), // length($1)
     Getline(Option<String>, Option<Box<Expr>>), // getline var < file
     BinaryOp(Box<Expr>, BinaryOperator, Box<Expr>),
+    UnaryMinus(Box<Expr>),
+    UnaryPlus(Box<Expr>),
     Ternary(Box<Expr>, Box<Expr>, Box<Expr>), // cond ? true_expr : false_expr
     PreInc(Box<Expr>),
     PreDec(Box<Expr>),

@@ -385,7 +385,8 @@ fn parse_term(term: Pair<Rule>) -> Expr {
             Rule::op_inc => Expr::PreInc(Box::new(base_expr)),
             Rule::op_dec => Expr::PreDec(Box::new(base_expr)),
             Rule::op_not => Expr::Not(Box::new(base_expr)),
-            Rule::op_minus => Expr::BinaryOp(Box::new(Expr::StringLiteral("0".to_string())), BinaryOperator::Sub, Box::new(base_expr)),
+            Rule::op_minus => Expr::UnaryMinus(Box::new(base_expr)),
+            Rule::op_plus => Expr::UnaryPlus(Box::new(base_expr)),
             _ => base_expr,
         };
     }
