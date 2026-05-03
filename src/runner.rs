@@ -92,14 +92,27 @@ pub fn run(config: Config) -> anyhow::Result<()> {
         std::process::exit(code);
     }
 
-    if config.input_files.is_empty() {
+    let argc_val = context.get_var("ARGC").as_number() as i64;
+    let mut files_to_process = Vec::new();
+    for i in 1..argc_val {
+        if let Some(arr) = context.arrays.get("ARGV") {
+            if let Some(val) = arr.get(&i.to_string()) {
+                let filename = val.as_string();
+                if !filename.is_empty() {
+                    files_to_process.push(filename);
+                }
+            }
+        }
+    }
+
+    if files_to_process.is_empty() {
         let stdin = io::stdin();
         let reader = stdin.lock();
         if let FlowControl::Exit(code) = process_lines(reader, &mut context, &compiled_rules)? {
             std::process::exit(code);
         }
     } else {
-        for filename in &config.input_files {
+        for filename in files_to_process {
             context.set_var("FILENAME", crate::types::AwkValue::String(filename.clone()));
             if filename == "-" {
                 let stdin = io::stdin();
@@ -108,7 +121,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
                     std::process::exit(code);
                 }
             } else {
-                let file = File::open(filename)?;
+                let file = File::open(&filename)?;
                 let reader = BufReader::new(file);
                 if let FlowControl::Exit(code) = process_lines(reader, &mut context, &compiled_rules)? {
                     std::process::exit(code);
@@ -159,8 +172,25 @@ fn process_lines<R: BufRead>(mut reader: R, context: &mut EvalContext, rules: &[
         }
 
         let line = String::from_utf8_lossy(&buffer);
-        let line_str = line.trim_end_matches(&[delim as char, '\r', '\n'][..]);
-        
+        let mut line_str = line.as_ref();
+        let mut rt_str = String::new();
+
+        if line_str.ends_with(delim as char) {
+            line_str = &line_str[..line_str.len() - 1];
+            rt_str = String::from_utf8_lossy(&[delim]).to_string();
+            if delim == b'\n' && line_str.ends_with('\r') {
+                line_str = &line_str[..line_str.len() - 1];
+                rt_str = "\r\n".to_string();
+            }
+        } else if delim == b'\n' && line_str.ends_with("\r\n") {
+            line_str = &line_str[..line_str.len() - 2];
+            rt_str = "\r\n".to_string();
+        } else if delim == b'\n' && line_str.ends_with('\n') {
+            line_str = &line_str[..line_str.len() - 1];
+            rt_str = "\n".to_string();
+        }
+
+        context.set_var("RT", crate::types::AwkValue::String(rt_str));
         context.update_record(line_str);
 
         // Execute rules

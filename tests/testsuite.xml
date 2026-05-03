@@ -319,4 +319,16 @@ apple pie is good.]]></stdin>
 orange pie is good.
 ]]></expected_stdout>
     </testcase>
+    <!-- Advanced GNU AWK features -->
+    <testcase name="test_record_terminator_rt">
+        <awk><![CDATA[ 
+        BEGIN { RS="A" } 
+        { print $0, "RT:", RT }
+        ]]></awk>
+        <stdin><![CDATA[1A2A3]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1 RT: A
+2 RT: A
+3 RT: 
+]]></expected_stdout>
+    </testcase>
 </testsuite>
