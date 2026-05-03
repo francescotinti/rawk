@@ -415,35 +415,10 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     crate::types::AwkValue::Number((v1 >> v2) as f64)
                 }
                 "sprintf" => {
-                    if args.is_empty() { return crate::types::AwkValue::String("".to_string()); }
-                    let format = eval_expr(&args[0], context).as_string();
-                    let mut result = String::new();
-                    let mut chars = format.chars().peekable();
-                    let mut arg_idx = 1;
-                    while let Some(c) = chars.next() {
-                        if c == '%' {
-                            if let Some(mut format_char) = chars.next() {
-                                while format_char.is_ascii_digit() || format_char == '.' || format_char == '-' {
-                                    format_char = chars.next().unwrap_or(' ');
-                                }
-                                let val = if arg_idx < args.len() { eval_expr(&args[arg_idx], context) } else { crate::types::AwkValue::String("".to_string()) };
-                                arg_idx += 1;
-                                result.push_str(&val.as_string());
-                            }
-                        } else if c == '\\' {
-                            if let Some(esc) = chars.next() {
-                                match esc {
-                                    'n' => result.push('\n'),
-                                    't' => result.push('\t'),
-                                    '\\' => result.push('\\'),
-                                    _ => { result.push('\\'); result.push(esc); }
-                                }
-                            }
-                        } else {
-                            result.push(c);
-                        }
-                    }
-                    crate::types::AwkValue::String(result)
+                    if args.is_empty() { return crate::types::AwkValue::String(String::new()); }
+                    let fmt = eval_expr(&args[0], context).as_string();
+                    let vals: Vec<crate::types::AwkValue> = args[1..].iter().map(|e| eval_expr(e, context)).collect();
+                    crate::types::AwkValue::String(awk_sprintf(&fmt, &vals))
                 }
                 "match" => {
                     let s = eval_expr(&args[0], context).as_string();
@@ -756,8 +731,12 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 }
             }
             Statement::Printf(exprs, redirect) => {
-                let formatted = eval_expr(&Expr::FunctionCall("sprintf".to_string(), exprs.clone()), context).as_string();
-                handle_output(&formatted, redirect, context);
+                if !exprs.is_empty() {
+                    let fmt = eval_expr(&exprs[0], context).as_string();
+                    let args: Vec<crate::types::AwkValue> = exprs[1..].iter().map(|e| eval_expr(e, context)).collect();
+                    let formatted = awk_sprintf(&fmt, &args);
+                    handle_output(&formatted, redirect, context);
+                }
             }
             Statement::Print(exprs, redirect) => {
                 let mut out = Vec::new();
@@ -829,5 +808,59 @@ fn handle_output(output: &str, redirect: &Option<(String, Expr)>, context: &mut 
         write!(file, "{}", output).unwrap();
     } else {
         print!("{}", output);
+    }
+}
+
+fn awk_sprintf(fmt: &str, args: &[crate::types::AwkValue]) -> String {
+    let mut out = String::new();
+    let mut chars = fmt.chars().peekable();
+    let mut arg_idx = 0;
+    while let Some(c) = chars.next() {
+        if c != '%' { out.push(c); continue; }
+        // Caso speciale %% senza arg
+        if chars.peek() == Some(&'%') {
+            chars.next();
+            out.push('%');
+            continue;
+        }
+        // Accumula spec: flags + width + .precision + conversion
+        let mut spec = String::from('%');
+        loop {
+            match chars.next() {
+                None => { out.push_str(&spec); return out; }
+                Some(ch) => {
+                    spec.push(ch);
+                    if "diouxXeEfgGcs".contains(ch) {
+                        let arg = args.get(arg_idx).cloned()
+                            .unwrap_or(crate::types::AwkValue::Uninitialized);
+                        arg_idx += 1;
+                        out.push_str(&format_one(&spec, &arg));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    out
+}
+
+fn format_one(spec: &str, arg: &crate::types::AwkValue) -> String {
+    let conv = spec.chars().last().unwrap();
+    match conv {
+        'd' | 'i' => sprintf::sprintf!(spec, arg.as_number() as i64).unwrap_or_default(),
+        'o' | 'x' | 'X' | 'u' => sprintf::sprintf!(spec, arg.as_number() as u64).unwrap_or_default(),
+        'c' => {
+            let ch: char = match arg {
+                crate::types::AwkValue::String(s) | crate::types::AwkValue::StrNum(s, _) if !s.is_empty() =>
+                    s.chars().next().unwrap(),
+                _ => char::from_u32(arg.as_number() as u32).unwrap_or('\0'),
+            };
+            let one_char = ch.to_string();
+            let spec_s = spec.replacen('c', "s", 1);
+            sprintf::sprintf!(&spec_s, one_char).unwrap_or_default()
+        }
+        'e' | 'E' | 'f' | 'g' | 'G' => sprintf::sprintf!(spec, arg.as_number()).unwrap_or_default(),
+        's' => sprintf::sprintf!(spec, arg.as_string()).unwrap_or_default(),
+        _ => spec.to_string(),
     }
 }

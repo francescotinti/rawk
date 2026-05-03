@@ -30,8 +30,8 @@ statement = {
     do_while_stmt |
     for_in_stmt |
     for_stmt |
-    print_stmt |
     printf_stmt |
+    print_stmt |
     delete_stmt |
     break_stmt |
     continue_stmt |

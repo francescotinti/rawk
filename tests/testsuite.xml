@@ -423,4 +423,89 @@ T
         <expected_stdout match="exact"><![CDATA[x=0.33
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_printf_int">
+        <awk><![CDATA[BEGIN { printf "%d\n", 42 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[42
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_int_width_pad">
+        <awk><![CDATA[BEGIN { printf "[%5d]\n", 42 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[   42]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_int_zeropad">
+        <awk><![CDATA[BEGIN { printf "[%05d]\n", 42 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[00042]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_int_left_align">
+        <awk><![CDATA[BEGIN { printf "[%-5d]\n", 42 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[42   ]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_int_negative">
+        <awk><![CDATA[BEGIN { printf "%+d %+d\n", 5, -5 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[+5 -5
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_float_default">
+        <awk><![CDATA[BEGIN { printf "%f\n", 3.14159 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[3.141590
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_float_precision">
+        <awk><![CDATA[BEGIN { printf "%.2f\n", 3.14159 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[3.14
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_float_width_precision">
+        <awk><![CDATA[BEGIN { printf "[%8.2f]\n", 3.14159 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[    3.14]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_string_align">
+        <awk><![CDATA[BEGIN { printf "[%-10s|%10s]\n", "hi", "hi" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[hi        |        hi]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_string_truncate">
+        <awk><![CDATA[BEGIN { printf "[%.3s]\n", "abcdef" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[abc]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_hex_oct">
+        <awk><![CDATA[BEGIN { printf "%x %X %o\n", 255, 255, 8 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[ff FF 10
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_percent_literal">
+        <awk><![CDATA[BEGIN { printf "100%%\n" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[100%
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_multiple_args">
+        <awk><![CDATA[BEGIN { printf "%s=%d (%.2f%%)\n", "rate", 75, 75.456 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[rate=75 (75.46%)
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_string_escapes_in_literal">
+        <awk><![CDATA[BEGIN { printf "a\tb\nc" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[a	b
+c]]></expected_stdout>
+    </testcase>
+    <testcase name="test_sprintf_returns_value">
+        <awk><![CDATA[BEGIN { s = sprintf("[%5d]", 7); print s }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[    7]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_char_conversion">
+        <awk><![CDATA[BEGIN { printf "%c%c%c\n", 65, 66, 67 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[ABC
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_char_from_string">
+        <awk><![CDATA[BEGIN { printf "%c\n", "hello" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[h
+]]></expected_stdout>
+    </testcase>
 </testsuite>

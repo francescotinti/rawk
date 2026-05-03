@@ -470,11 +470,35 @@ fn parse_term(term: Pair<Rule>) -> Expr {
     base_expr
 }
 
+fn decode_string_escapes(raw: &str) -> String {
+    let mut out = String::with_capacity(raw.len());
+    let mut chars = raw.chars().peekable();
+    while let Some(c) = chars.next() {
+        if c != '\\' { out.push(c); continue; }
+        match chars.next() {
+            Some('n')  => out.push('\n'),
+            Some('t')  => out.push('\t'),
+            Some('r')  => out.push('\r'),
+            Some('\\') => out.push('\\'),
+            Some('"')  => out.push('"'),
+            Some('/')  => out.push('/'),
+            Some('a')  => out.push('\x07'),
+            Some('b')  => out.push('\x08'),
+            Some('f')  => out.push('\x0c'),
+            Some('v')  => out.push('\x0b'),
+            Some('0') => out.push('\0'),
+            Some(other) => { out.push('\\'); out.push(other); }
+            None => out.push('\\'),
+        }
+    }
+    out
+}
+
 fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
     let inner = primary_pair.into_inner().next().unwrap();
     match inner.as_rule() {
         Rule::number => Expr::NumberLiteral(inner.as_str().parse::<f64>().unwrap_or(0.0)),
-        Rule::string_literal => Expr::StringLiteral(inner.into_inner().next().unwrap().as_str().to_string()),
+        Rule::string_literal => Expr::StringLiteral(decode_string_escapes(inner.into_inner().next().unwrap().as_str())),
         Rule::regex_pattern => {
             let re = inner.into_inner().next().unwrap().as_str();
             Expr::RegexLiteral(re.to_string())

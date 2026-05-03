@@ -51,6 +51,8 @@ Solo UN step alla volta è 🚧. I successivi sono 🔒 LOCKED finché lo step p
 
 Se incontra un'ambiguità non coperta dalle decisioni `D N.k`, **NON improvvisa**: lascia un commento `// DESIGN-Q: <domanda>` nel codice, committa l'avanzamento parziale taggato `🟡 BLOCKED — DESIGN-Q`, e Francesco lo segnala a Claude.
 
+**Variante SPEC-Q** (aggiunta dopo iter 1): se un testcase con `expected_stdout` definito da Claude sembra contraddire le decisioni `D N.k` o il comportamento POSIX corretto, **NON cambiare silenziosamente l'expected**. Aggiungi nel testcase un commento XML `<!-- SPEC-Q: <motivo> -->`, taggalo come `🟡 BLOCKED — SPEC-Q`, e segnalalo a Francesco. Lo spec di Claude può avere bug — sono da chiarire, non da correggere a mano.
+
 ### Format commit message obbligatorio
 
 ```
@@ -112,7 +114,7 @@ Gemini riceve il nuovo step (o fix) e si ricomincia da Fase B.
 
 # Step 1 — Concatenazione invisibile + CONVFMT/OFMT
 
-✅ **DONE — commit `3082b1a` (code) + 96ec87a (cleanup) — 42 test verdi**
+✅ **DONE — commit `3082b1a` (code) + 640462d (cleanup) — 42 test verdi**
 
 Vedi `Step 1-bis` sotto per i task obbligatori prima di Step 2.
 
@@ -320,7 +322,7 @@ Expr::Concat(parts) => {
 
 # Step 1-bis — Cleanup process di Step 1
 
-✅ DONE — commit 96ec87a
+✅ DONE — commit 640462d
 
 ## Goal
 Sanare le 4 process violations rilevate nell'audit di `3082b1a` senza toccare il codice funzionale (che è OK). Output: un commit pulito che porta Step 1 da 🟡 a ✅.
@@ -406,7 +408,35 @@ Testcase aggiunti: 0. Totali: 42.
 
 # Step 2 — Printf / sprintf con format specifiers reali
 
-🚧 PRONTO PER GEMINI — attivato 2026-05-03
+🟢 **FATTO — AUDIT PENDING**
+
+## ⚠️ T0 — Pre-cleanup obbligatorio (1 minuto)
+Prima di iniziare il lavoro funzionale, rimuovi 4 file zombie ancora tracciati (residuo di Step 1-bis per inaccuratezza dello spec Claude):
+```bash
+git rm --cached debug.rs dummy.txt out.txt scratch.rs
+```
+Aggiungi a `.gitignore`: `/debug.rs` e `/scratch.rs` (root paths, distinti dai pattern `src/...` esistenti).
+
+T0 va nello **stesso** commit di Step 2 (un solo commit per tutto), riportato nel IN-SCOPE come bullet finale.
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+feat(step2): Printf/sprintf con format specifiers reali
+
+IN-SCOPE:
+- awk_sprintf con full POSIX format parsing (D2.1-D2.7)
+- decode_string_escapes a parse-time
+- Pre-cleanup T0: rimossi debug.rs/dummy.txt/out.txt/scratch.rs dal tracking
+
+OUT-OF-SCOPE (debito esplicito):
+- Position arguments POSIX (%2$d)
+- Locale grouping flag (', _)
+- Long modifier (l, ll, h)
+- %a / %A (hex float)
+
+Testcase aggiunti: 17. Totali: 59.
+```
 
 ## Goal
 Sostituire lo scanner ingenuo attuale di `sprintf` (che ignora width/precision/conversion e usa solo `as_string()`) con un'implementazione POSIX-compliant.
@@ -699,7 +729,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 |---|---|---|---|---|---|
 | 2026-05-03 | (pre-Step 1) | — | `453987f` | 31/31 | Baseline auditata. Step di "Step 1, 3, 5" del piano originale completati cumulativamente nei 3 commit `ed791b9` → `52c1645` → `453987f`. Workflow formalizzato a partire da qui. |
 | 2026-05-03 | Step 1 (concat + CONVFMT) | 🟡 PARTIAL | `3082b1a` | 42/42 | Codice ✅: D1.1-D1.7 tutte applicate, build clean, test verdi. Process violations: commit message non conforme, file junk committati (.DS_Store, f1.txt, f2.txt, scratch.rs, pest_test.rs), header step non aggiornato, test `test_concat_func_call_disambig` silently amended (giustamente — era errore Claude — ma andava flaggato). Sblocco Step 2 condizionato a commit di cleanup. |
-| 2026-05-03 | Step 1-bis (cleanup) | ✅ APPROVED | 96ec87a | 42/42 | Junk files rimossi, .gitignore esteso. Step 1 ora ✅. Step 2 sbloccato. |
+| 2026-05-03 | Step 1-bis (cleanup) | ✅ APPROVED | `640462d` | 42/42 | Junk files committati rimossi (`.DS_Store, f1.txt, f2.txt, src/scratch.rs, pest_test.rs`); `.gitignore` esteso. Caveat: 4 file zombie ancora tracciati (`debug.rs, dummy.txt, out.txt, scratch.rs` alla root) per inaccuratezza dello spec Claude — assegnati a T0 di Step 2. Step 1 ora ✅, Step 2 sbloccato. |
 
 ---
 

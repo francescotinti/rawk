@@ -3,6 +3,8 @@
 *.txt
 src/scratch.rs
 src/debug.rs
+/scratch.rs
+/debug.rs
 pest_test.rs
 out.txt
 dummy.txt
