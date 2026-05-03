@@ -112,7 +112,9 @@ Gemini riceve il nuovo step (o fix) e si ricomincia da Fase B.
 
 # Step 1 — Concatenazione invisibile + CONVFMT/OFMT
 
-🚧 **PRONTO PER GEMINI** — _attivato 2026-05-03_
+✅ **DONE — commit `3082b1a` (code) + 96ec87a (cleanup) — 42 test verdi**
+
+Vedi `Step 1-bis` sotto per i task obbligatori prima di Step 2.
 
 ## Goal
 Implementare l'operatore di concatenazione AWK (giustapposizione: `print "a" "b"` → `ab`) con la giusta precedenza POSIX, e introdurre CONVFMT/OFMT per evitare bug di rappresentazione float.
@@ -316,9 +318,95 @@ Expr::Concat(parts) => {
 
 ---
 
+# Step 1-bis — Cleanup process di Step 1
+
+✅ DONE — commit 96ec87a
+
+## Goal
+Sanare le 4 process violations rilevate nell'audit di `3082b1a` senza toccare il codice funzionale (che è OK). Output: un commit pulito che porta Step 1 da 🟡 a ✅.
+
+## Tasks (eseguire in ordine, UN solo commit finale)
+
+### T1 — Estendi `.gitignore`
+Aggiungi:
+```
+/target
+.DS_Store
+*.txt
+src/scratch.rs
+src/debug.rs
+pest_test.rs
+out.txt
+dummy.txt
+f1.txt
+f2.txt
+```
+(Le `*.txt` sono inclusivi: nessun file `.txt` deve stare nel repo. Eccezione possibile in futuro: `LICENSE.txt`, ma adesso non c'è.)
+
+### T2 — Rimuovi i file junk dal repo
+```bash
+git rm --cached .DS_Store f1.txt f2.txt src/scratch.rs pest_test.rs
+# debug.rs, dummy.txt, out.txt non sono tracciati ma esistono su disco — il .gitignore li copre
+```
+Verifica con `git status` che siano gone dal tracking.
+
+### T3 — Aggiorna header Step 1 in `NEXT_STEPS.md`
+Cambia:
+```
+🟡 **PARTIAL — commit `3082b1a`, code OK ma cleanup pending**
+```
+in:
+```
+✅ **DONE — commit `3082b1a` (code) + <hash> (cleanup) — 42 test verdi**
+```
+(metti l'hash del commit di cleanup quando lo crei).
+
+### T4 — Aggiorna header Step 2 e Step 1-bis
+- Cambia Step 2 da `🔒 LOCKED` a `🚧 PRONTO PER GEMINI — attivato <data>`.
+- Cambia Step 1-bis (questa sezione) da `🚧 PRONTO PER GEMINI` a `✅ DONE — commit <hash>`.
+
+### T5 — Aggiorna `## Audit Log`
+Aggiungi riga:
+```
+| 2026-05-03 | Step 1-bis (cleanup) | ✅ APPROVED | <hash> | 42/42 | Junk files rimossi, .gitignore esteso. Step 1 ora ✅. Step 2 sbloccato. |
+```
+**Nota**: questa è auto-attestazione di Gemini. Claude la verificherà al prossimo `audita`.
+
+## Format commit message obbligatorio
+
+```
+chore(step1-bis): cleanup process violations
+
+IN-SCOPE:
+- Remove .DS_Store, f1.txt, f2.txt, src/scratch.rs, pest_test.rs from tracking
+- Extend .gitignore to prevent re-adding
+- Update NEXT_STEPS.md status tags
+- Update audit log
+
+OUT-OF-SCOPE:
+- Functional code changes (Step 1 code is correct, no edits needed)
+
+Testcase aggiunti: 0. Totali: 42.
+```
+
+## Acceptance criteria
+
+- [ ] `git status` clean dopo il commit
+- [ ] `cargo build` e `cargo test` ancora green (nessuna regressione: questo step non tocca `src/*.rs`)
+- [ ] `git ls-files | grep -E "\.DS_Store|^f[12]\.txt$|scratch\.rs|pest_test\.rs"` deve essere vuoto
+- [ ] `NEXT_STEPS.md` ha 3 header aggiornati e 1 nuova riga in Audit Log
+
+## Anti-pattern da evitare
+
+- ❌ Toccare `src/*.rs` (eccetto `src/scratch.rs` che va rimosso). Se senti il bisogno di "fixare anche X", non farlo: apri un task in backlog.
+- ❌ Usare `git filter-branch` o `git rebase` per "cancellare" il commit `3082b1a`. Lasciamolo nella storia. Solo cleanup forward.
+- ❌ Combinare questo cleanup con l'inizio di Step 2. Un commit per step.
+
+---
+
 # Step 2 — Printf / sprintf con format specifiers reali
 
-🔒 **LOCKED** — _attivare solo dopo audit ✅ di Step 1. La spec sotto è pronta ma può essere amendata se l'audit di Step 1 rivela vincoli nuovi._
+🚧 PRONTO PER GEMINI — attivato 2026-05-03
 
 ## Goal
 Sostituire lo scanner ingenuo attuale di `sprintf` (che ignora width/precision/conversion e usa solo `as_string()`) con un'implementazione POSIX-compliant.
@@ -610,6 +698,8 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | Data | Step | Verdetto | Commit | Test | Note |
 |---|---|---|---|---|---|
 | 2026-05-03 | (pre-Step 1) | — | `453987f` | 31/31 | Baseline auditata. Step di "Step 1, 3, 5" del piano originale completati cumulativamente nei 3 commit `ed791b9` → `52c1645` → `453987f`. Workflow formalizzato a partire da qui. |
+| 2026-05-03 | Step 1 (concat + CONVFMT) | 🟡 PARTIAL | `3082b1a` | 42/42 | Codice ✅: D1.1-D1.7 tutte applicate, build clean, test verdi. Process violations: commit message non conforme, file junk committati (.DS_Store, f1.txt, f2.txt, scratch.rs, pest_test.rs), header step non aggiornato, test `test_concat_func_call_disambig` silently amended (giustamente — era errore Claude — ma andava flaggato). Sblocco Step 2 condizionato a commit di cleanup. |
+| 2026-05-03 | Step 1-bis (cleanup) | ✅ APPROVED | 96ec87a | 42/42 | Junk files rimossi, .gitignore esteso. Step 1 ora ✅. Step 2 sbloccato. |
 
 ---
 

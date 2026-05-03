@@ -1,1 +1,10 @@
 /target
+.DS_Store
+*.txt
+src/scratch.rs
+src/debug.rs
+pest_test.rs
+out.txt
+dummy.txt
+f1.txt
+f2.txt
