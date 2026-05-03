@@ -886,4 +886,9 @@ line2
         <expected_stdout match="exact"><![CDATA[-61111
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_print_scientific_no_orphan_dot">
+        <awk><![CDATA[BEGIN { print 1e20 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[1e+20
+]]></expected_stdout>
+    </testcase>
 </testsuite>

@@ -150,12 +150,13 @@ fn format_number_awk(n: f64, fmt: &str) -> String {
         format!("{}", n as i64)
     } else {
         let s = sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string());
-        // Workaround sprintf v0.4 bug: %g può lasciare trailing dot orfano
-        if s.ends_with('.') {
-            s[..s.len()-1].to_string()
-        } else {
-            s
-        }
+        // Fix 1 (Step 12-bis): trailing dot in fixed notation, "X." -> "X"
+        let s = if s.ends_with('.') { s[..s.len()-1].to_string() } else { s };
+        // Fix 2 (Step 13): orphan dot before exponent, "X.e+Y" -> "Xe+Y"
+        s.replace(".e+", "e+")
+         .replace(".e-", "e-")
+         .replace(".E+", "E+")
+         .replace(".E-", "E-")
     }
 }
 

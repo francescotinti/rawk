@@ -2379,7 +2379,7 @@ Se un testcase fa timeout (>5s), marca come `TIMEOUT` invece di MATCH/DIVERGE.
 
 # Step 12 — Property-based testing via proptest (differential)
 
-✅ **DONE — commit `7ead3f6` (test) + pending-fix (fix divergence) — 5 proptest tutti verdi**
+✅ **DONE — commit `7ead3f6` (test) + `5fdabb6` (fix divergence) — 5 proptest tutti verdi**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -2513,7 +2513,7 @@ Se invece tutti i template passano: `✅ DONE — N proptest iter, all match`.
 
 # Step 12-bis — Fix proptest divergence: trailing dot in `%g` formatting
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `5fdabb6` — proptest tutti verdi, 104 XML test verdi**
 
 ## Format commit message obbligatorio
 
@@ -2605,6 +2605,104 @@ E **Step 12-bis** da `🚧 PRONTO` a `✅ DONE — commit <hash>`.
 
 ---
 
+# Step 13 — Quick fixes da audit Step 12-bis
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio
+
+```
+fix(step13): scientific notation dot + cargo run ergonomics + proptest range
+
+IN-SCOPE:
+- Fix orphan dot in scientific notation: "1.e+20" → "1e+20" (estende il workaround di Step 12-bis)
+- Add default-run = "rawk" a Cargo.toml [package]
+- Estendere range del proptest template_add da [-1e6, 1e6] a [-1e25, 1e25] per surface scientific notation bugs (preventiva: questo step già fixa, ma il proptest deve essere in grado di prenderlo se rigredisce)
+- 1 testcase XML regression per scientific notation
+
+OUT-OF-SCOPE (debito esplicito):
+- Refactor di format_number_awk per non usare sprintf — backlog item separato (Step 14 refactor stilistico)
+- Filing issue upstream alla crate sprintf — facoltativo
+
+Testcase aggiunti: 1 XML. Totali XML: 105. Totali cargo: 6.
+```
+
+## Goal
+Bundle di 3 micro-fix scoperti durante l'audit di Step 12-bis. Tutti minori, indipendenti, quindi raggruppabili in un singolo commit.
+
+## Decisioni di design
+
+### D13.1 — Fix scientific notation orphan dot
+In `src/types.rs::format_number_awk`, estendere il workaround di Step 12-bis per gestire anche il dot orfano prima dell'esponente. Pattern: `1.e+20` (rawk) → `1e+20` (corretto).
+
+```rust
+fn format_number_awk(n: f64, fmt: &str) -> String {
+    if n.is_finite() && n == n.trunc() && n.abs() < 1e16 {
+        format!("{}", n as i64)
+    } else {
+        let s = sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string());
+        // Fix 1 (Step 12-bis): trailing dot in fixed notation, "X." → "X"
+        let s = if s.ends_with('.') { s[..s.len()-1].to_string() } else { s };
+        // Fix 2 (Step 13): orphan dot before exponent, "X.e+Y" → "Xe+Y"
+        s.replace(".e+", "e+")
+         .replace(".e-", "e-")
+         .replace(".E+", "E+")
+         .replace(".E-", "E-")
+    }
+}
+```
+
+NOTA: `replace` su una stringa di output sprintf è safe: il pattern `.e+` (o varianti) può apparire solo nella posizione orfana — sprintf non genera mai `.e` come parte di mantissa valida (sarebbe sempre `1.5e+20` con digit dopo il dot, che NON matcha `.e+` perché c'è un `5` in mezzo).
+
+### D13.2 — `default-run` in Cargo.toml
+In `Cargo.toml`, sezione `[package]`, aggiungere:
+```toml
+default-run = "rawk"
+```
+Risolve l'ambiguità di `cargo run` (introdotta in Step 11 con `[[bin]] diffrun`).
+
+### D13.3 — Estendere range proptest template_add
+In `tests/proptest_diff.rs`, modificare la strategy di `template_add`:
+```rust
+fn template_add(n in -1e25f64..1e25f64, m in -1e25f64..1e25f64) {
+```
+(da `1e6` a `1e25`). Range più ampio per surface scientific notation. Se il fix D13.1 funziona, il proptest passa anche in questo range. Se rigredisse in futuro, proptest lo cattura.
+
+### D13.4 — Testcase XML regression
+Aggiungere a `tests/testsuite.xml`:
+```xml
+<testcase name="test_print_scientific_no_orphan_dot">
+    <awk><![CDATA[BEGIN { print 1e20 }]]></awk>
+    <expected_stdout match="exact"><![CDATA[1e+20
+]]></expected_stdout>
+</testcase>
+```
+
+NOTA: l'expected è `1e+20` non `1e20` perché `%.6g` produce sempre il segno esplicito dell'esponente.
+
+## File modificati attesi
+
+- `src/types.rs` (~5 righe per le 4 `replace`)
+- `Cargo.toml` (+1 riga `default-run`)
+- `tests/proptest_diff.rs` (~1 riga per range)
+- `tests/testsuite.xml` (+1 testcase)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo run` (senza `--bin`) ora esegue `rawk` (verifica: `cargo run -- 'BEGIN { print "ok" }'`)
+- [ ] `cargo test` verde, **6/6 tests**, inclusi tutti i 5 proptest con range esteso
+- [ ] 105 XML testcase passano
+- [ ] `print 1e20` produce `1e+20` (non `1.e+20`)
+
+## Anti-pattern Step 13
+
+- ❌ Estendere il fix oltre i 4 pattern `.e+/.e-/.E+/.E-` — il dominio è chiuso, non serve regex generale.
+- ❌ Toccare il refactor stilistico — fuori scope, è Step 14.
+- ❌ Rifattorizzare proptest oltre il range change — fuori scope.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -2635,6 +2733,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 10 (CLI -v var=value) | ✅ APPROVED | `03fb7f6` | 103/103 | D10.1-D10.6 applicate letteralmente. Parsing `-v name=value` in `run()` con exit(2) su invalid. `decode_string_escapes` pubblicizzata. Test infra estesa con `<args>` opzionali in XML schema. Ordering `-v` dopo OFS/ORS default verificato live (`-v OFS=:` produce `a:b:c`). 4 testcase tutti passano. 10° step by-the-book. Backlog top → Step 11. |
 | 2026-05-03 | Step 11 (differential vs system awk) | ✅ APPROVED | `c0fc48d` | 92 MATCH / 6 DIVERGE / 5 SKIP | D11.1-D11.6 applicate letteralmente. Binario `diffrun` separato in `src/bin/`. Skip euristico per gawk extensions. Run su macOS BSD awk: 89.3% match rate. **6 divergenze interessanti documentate**: (1) BSD awk error su `"abc"+0`; (2) iter order array (falso positivo: bug minore in diffrun su match=contains); (3) `f (x)` parsing diff; (4) `\0` byte: Rust String preserva, C string tronca; (5) escape sconosciuto: rawk preserva, BSD strip; (6) nextfile da function: BSD non supporta. Tutte interessanti come material di Fase 4 della skill `legacy-port`. Backlog top → Step 12. |
 | 2026-05-03 | Step 12 (proptest differential) | 🟡 PARTIAL | `7ead3f6` | 4/5 proptest pass, 103/103 XML | **Outcome ideale di property-based testing**: D12.1-D12.6 applicate letteralmente, infrastructure corretta. proptest ha trovato un divergence reale al primo run: `template_add` su `-449970.4 + 388859.4 = -61111.04...` produce `"-61111."` da rawk (trailing dot orfano) vs `"-61111"` da awk system. Bug nella crate `sprintf` v0.4 sul format `%.6g` quando arrotondamento dà integer-like. Gemini ha correttamente seguito D12.6 marcando 🟡 PARTIAL invece di sopprimere. Step 12-bis aperto per il fix. |
+| 2026-05-03 | Step 12-bis (fix trailing dot) | ✅ APPROVED | `5fdabb6` | 5/5 proptest, 104/104 XML | D12bis.1-D12bis.4 applicate letteralmente. Workaround in `format_number_awk`: 5 righe per strip trailing dot. Testcase regression XML `test_print_float_no_trailing_dot` aggiunto con il caso minimo trovato da proptest. Step 12 e 12-bis ora entrambi ✅. **Findings durante audit (non in scope di 12-bis, da catalogare in backlog)**: (A) bug residuo su scientific notation: `print 1e20` produce `1.e+20` invece di `1e+20` (dot orfano prima di `e+`); (B) ergonomia: `cargo run` ora ambiguo dopo Step 11, serve `default-run = "rawk"` in Cargo.toml. |
 
 ---
 
@@ -2653,6 +2752,9 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 9. ~~Differential testing infrastructure~~ → **promosso a Step 11** ✅ specced (scoped down: system awk via PATH, no FFI/cc/build.rs)
 10. ~~Property-based testing~~ → **promosso a Step 12** ✅ specced (5 template + proptest differential)
 11. **Refactor stilistico finale** — rimuovere tutti i `crate::types::AwkValue::...` qualificati, sostituire `eprintln+exit(1)` con `Result<_, AwkError>` propagato fino a `main`.
+12. ~~Bug residuo: orphan dot in scientific notation~~ → **promosso a Step 13** ✅ specced
+13. ~~Ergonomia: `default-run = "rawk"` in Cargo.toml~~ → **promosso a Step 13** ✅ specced (bundle)
+14. ~~Tighten proptest ranges~~ → **promosso a Step 13** ✅ specced (bundle)
 
 ---
 

@@ -29,7 +29,7 @@ proptest! {
     #![proptest_config(ProptestConfig::with_cases(64))]
 
     #[test]
-    fn template_add(n in -1e6f64..1e6f64, m in -1e6f64..1e6f64) {
+    fn template_add(n in -1e25f64..1e25f64, m in -1e25f64..1e25f64) {
         if !awk_available() {
             return Ok(());
         }
