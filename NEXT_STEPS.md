@@ -2607,7 +2607,7 @@ E **Step 12-bis** da `🚧 PRONTO` a `✅ DONE — commit <hash>`.
 
 # Step 13 — Quick fixes da audit Step 12-bis
 
-✅ **DONE — commit `d643295` (fixes) + pending-fix (restore green)**
+✅ **DONE — commit `d643295` (fixes) + `e761252` (restore green) — 7/7 cargo test, 105/105 XML**
 
 ## Format commit message obbligatorio
 
@@ -2705,7 +2705,7 @@ NOTA: l'expected è `1e+20` non `1e20` perché `%.6g` produce sempre il segno es
 
 # Step 13-bis — Restore green: revert proptest range, document large-int divergence
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `e761252` — 7/7 cargo test verdi**
 
 ## Format commit message obbligatorio
 
@@ -2794,6 +2794,92 @@ Il commit message deve esplicitamente documentare:
 
 ---
 
+# Step 14 — Refactor stilistico parte 1: rimozione qualificazioni AwkValue
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio
+
+```
+refactor(step14): use shorthand for AwkValue/InputStream/OutputStream
+
+IN-SCOPE:
+- Add `use crate::types::{AwkValue, AwkValue::*, InputStream, OutputStream}` (e similar) at top of runner.rs
+- Replace ~80 occurrences of `crate::types::AwkValue::Number(...)` with `AwkValue::Number(...)` o `Number(...)` dove non ambiguo
+- Replace `crate::types::InputStream::Pipe { ... }` con `InputStream::Pipe { ... }`
+- Replace `crate::types::OutputStream::File(...)` con `OutputStream::File(...)`
+- Replace `crate::ast::GetlineSource::Main` con `GetlineSource::Main` (etc) — già importato `crate::ast::*`, verificare
+
+OUT-OF-SCOPE (debito esplicito):
+- Refactor di eval_expr a Result<AwkValue, AwkError> — Step 15 separato
+- Sostituzione di eprintln+exit(1) con AwkError propagato — Step 15
+- Refactor del meccanismo nextfile_pending/exit_pending — Step 15
+- Touch a src/types.rs, src/parser.rs, src/ast.rs — solo runner.rs è in scope (ed eventualmente cli.rs/main.rs se trovi qualifications)
+
+Testcase aggiunti: 0. Totali invariati: 105 XML, 7 cargo. È un refactor mechanical, no comportamento change.
+```
+
+## Goal
+Pulire la verbosità accumulata in `runner.rs` dovuta a qualificazioni full-path `crate::types::AwkValue::*`. Il file ha ~80 occorrenze di questo pattern, scoraggiate da Rust idiom.
+
+Vincolo importante: questo è **Step 14 parte 1** — solo le qualificazioni. Il refactor più pesante (`Result<AwkValue, AwkError>` propagation, `eprintln+exit(1)` removal) è esplicitamente Step 15 (il backlog item 11 originale era bundle, lo splittiamo perché D14 è quasi mechanical, D15 è semantica).
+
+## Decisioni di design (NON riaprire)
+
+### D14.1 — Use statements al top di runner.rs
+In `src/runner.rs`, aggiungere in cima dopo i `use` esistenti:
+```rust
+use crate::types::{AwkValue, InputStream, OutputStream};
+use crate::ast::GetlineSource;
+```
+
+NOTA: NON usare `use crate::types::AwkValue::*;` — il glob import dei variant può causare conflitti ed è un anti-pattern. Usare `AwkValue::Number(x)` esplicito.
+
+### D14.2 — Mechanical replacement
+Replace tutte le occorrenze in `src/runner.rs`:
+- `crate::types::AwkValue` → `AwkValue`
+- `crate::types::InputStream` → `InputStream`
+- `crate::types::OutputStream` → `OutputStream`
+- `crate::ast::GetlineSource` → `GetlineSource`
+
+Usare `sed -i '' 's/crate::types::AwkValue/AwkValue/g' src/runner.rs` (su macOS) o equivalente. Verifica con `cargo build` clean dopo.
+
+### D14.3 — Verifica `crate::types::` residue
+Dopo il refactor, esegui `grep -n "crate::types::" src/runner.rs` per assicurarsi che non ci sia nulla residuo. Se c'è, decidere se è una qualificazione che non hai considerato (estendere `use`) o un caso che vale la pena tenere full-path (raro).
+
+### D14.4 — Pulizia via `cargo build`
+`cargo build` deve essere clean (0 warning). Se Rust segnala `unused_imports`, è normale: alcuni `use` potrebbero non essere richiesti. Adattare.
+
+### D14.5 — Niente cambio comportamentale
+Questo step **non deve** cambiare il comportamento di rawk. Tutti i 105 XML testcase + 7 cargo test devono passare invariati. Se anche un singolo test cambia, hai introdotto un bug nel refactor.
+
+### D14.6 — Niente touch oltre runner.rs (e main.rs se necessario)
+Se trovi qualificazioni anche in `src/main.rs`, `src/cli.rs`, `src/parser.rs`, è OK ridurle (ma probabilmente non ce ne sono). Non toccare `src/types.rs`, `src/ast.rs`: questi DEFINISCONO i tipi, sono ovvi senza shorthand.
+
+## File modificati attesi
+
+- `src/runner.rs` (~80 righe semplificate, +2 use)
+- (eventuale: `src/main.rs` o `src/cli.rs` se hanno qualifications)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, **7/7 cargo + 105/105 XML** (invariati)
+- [ ] `grep -c "crate::types::AwkValue" src/runner.rs` → **0** (zero occorrenze residue)
+- [ ] `grep -c "crate::types::InputStream\|crate::types::OutputStream" src/runner.rs` → 0
+- [ ] `grep -c "crate::ast::GetlineSource" src/runner.rs` → 0
+- [ ] LOC totali di `runner.rs` ridotti di ~80-100 righe (testimone di reduction)
+
+## Anti-pattern Step 14
+
+- ❌ Aggiungere `use AwkValue::*` (glob import dei variant) — può conflittare con simboli locali. Tieni `AwkValue::Number`, `AwkValue::String`, ecc. espliciti.
+- ❌ Toccare `src/types.rs` o `src/ast.rs` — fuori scope.
+- ❌ Mescolare con il refactor del Result<_, AwkError> — è esplicitamente Step 15.
+- ❌ Cambiare comportamento — è un refactor mechanical, deve essere "diff zero" nei test.
+- ❌ Renderizzare il file con un linter automatico (es. rustfmt forte) — può alterare cose oltre lo scope.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -2826,6 +2912,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 12 (proptest differential) | 🟡 PARTIAL | `7ead3f6` | 4/5 proptest pass, 103/103 XML | **Outcome ideale di property-based testing**: D12.1-D12.6 applicate letteralmente, infrastructure corretta. proptest ha trovato un divergence reale al primo run: `template_add` su `-449970.4 + 388859.4 = -61111.04...` produce `"-61111."` da rawk (trailing dot orfano) vs `"-61111"` da awk system. Bug nella crate `sprintf` v0.4 sul format `%.6g` quando arrotondamento dà integer-like. Gemini ha correttamente seguito D12.6 marcando 🟡 PARTIAL invece di sopprimere. Step 12-bis aperto per il fix. |
 | 2026-05-03 | Step 12-bis (fix trailing dot) | ✅ APPROVED | `5fdabb6` | 5/5 proptest, 104/104 XML | D12bis.1-D12bis.4 applicate letteralmente. Workaround in `format_number_awk`: 5 righe per strip trailing dot. Testcase regression XML `test_print_float_no_trailing_dot` aggiunto con il caso minimo trovato da proptest. Step 12 e 12-bis ora entrambi ✅. **Findings durante audit (non in scope di 12-bis, da catalogare in backlog)**: (A) bug residuo su scientific notation: `print 1e20` produce `1.e+20` invece di `1e+20` (dot orfano prima di `e+`); (B) ergonomia: `cargo run` ora ambiguo dopo Step 11, serve `default-run = "rawk"` in Cargo.toml. |
 | 2026-05-03 | Step 13 (bundle quick fixes) | 🟡 PARTIAL | `d643295` | 4/5 proptest, 105/105 XML | D13.1 (orphan dot scientific) + D13.2 (default-run) + D13.4 (testcase XML) applicate correttamente. **Process violation**: D13.3 (estendere range proptest a [-1e25, 1e25]) ha esposto un divergence nuovo (rawk produce scientific, BSD awk produce plain integer per valori magnitude > 1e16) NON in scope di Step 13. Gemini ha committato con `cargo test` rosso (4/5 proptest pass), violando l'anti-pattern "build green ad ogni commit". Step 13-bis aperto per ripristinare green con strategy revert range + nuovo template proptest mirato. |
+| 2026-05-03 | Step 13-bis (restore green) | ✅ APPROVED | `e761252` | 7/7 cargo test, 105/105 XML | D13bis.1-D13bis.3 applicate letteralmente. Range di `template_add` revertito a `[-1e6, 1e6]`. Nuovo `template_scientific_no_orphan_dot` aggiunto: range `[1e16, 1e20]`, NON differential, controlla solo well-formedness output rawk (no `.e`/`.E` orphan). Documentazione divergence rawk-vs-BSD-awk nel commit message. Step 13 e 13-bis ora entrambi ✅. Backlog top → Step 14 (refactor stilistico). |
 
 ---
 
@@ -2843,7 +2930,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 8. ~~CLI: `-v var=value` reale e separatore `--`~~ → **promosso a Step 10** ✅ specced
 9. ~~Differential testing infrastructure~~ → **promosso a Step 11** ✅ specced (scoped down: system awk via PATH, no FFI/cc/build.rs)
 10. ~~Property-based testing~~ → **promosso a Step 12** ✅ specced (5 template + proptest differential)
-11. **Refactor stilistico finale** — rimuovere tutti i `crate::types::AwkValue::...` qualificati, sostituire `eprintln+exit(1)` con `Result<_, AwkError>` propagato fino a `main`.
+11. ~~Refactor stilistico finale~~ → **splittato** in Step 14 (qualifications, ✅ specced) + Step 15 futuro (Result<_, AwkError> propagation)
 12. ~~Bug residuo: orphan dot in scientific notation~~ → **promosso a Step 13** ✅ specced
 13. ~~Ergonomia: `default-run = "rawk"` in Cargo.toml~~ → **promosso a Step 13** ✅ specced (bundle)
 14. ~~Tighten proptest ranges~~ → **promosso a Step 13** ✅ specced (bundle)

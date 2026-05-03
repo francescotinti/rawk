@@ -4,6 +4,8 @@
  * Description: A high-fidelity port of the historic AWK language from C to Rust.
  */
 
+use crate::types::{AwkValue, InputStream, OutputStream};
+use crate::ast::GetlineSource;
 use crate::ast::{BinaryOperator, Expr, Pattern, Statement};
 
 use crate::cli::Config;
@@ -32,7 +34,7 @@ pub enum FlowControl {
     Continue,
     Next,
     NextFile,
-    Return(crate::types::AwkValue),
+    Return(AwkValue),
     Exit(i32),
 }
 
@@ -47,17 +49,17 @@ pub fn run(config: Config) -> anyhow::Result<()> {
 
     let mut context = EvalContext::new(fs);
 
-    context.set_var("ARGC", crate::types::AwkValue::Number(config.input_files.len() as f64 + 1.0));
-    context.set_array_var("ARGV", "0", crate::types::AwkValue::from_str_num("rawk".to_string()));
+    context.set_var("ARGC", AwkValue::Number(config.input_files.len() as f64 + 1.0));
+    context.set_array_var("ARGV", "0", AwkValue::from_str_num("rawk".to_string()));
     for (i, file) in config.input_files.iter().enumerate() {
-        context.set_array_var("ARGV", &format!("{}", i + 1), crate::types::AwkValue::from_str_num(file.clone()));
+        context.set_array_var("ARGV", &format!("{}", i + 1), AwkValue::from_str_num(file.clone()));
     }
     for (key, val) in std::env::vars() {
-        context.set_array_var("ENVIRON", &key, crate::types::AwkValue::from_str_num(val));
+        context.set_array_var("ENVIRON", &key, AwkValue::from_str_num(val));
     }
-    context.set_var("OFS", crate::types::AwkValue::String(" ".to_string()));
-    context.set_var("ORS", crate::types::AwkValue::String("\n".to_string()));
-    context.set_var("RS", crate::types::AwkValue::String("\n".to_string()));
+    context.set_var("OFS", AwkValue::String(" ".to_string()));
+    context.set_var("ORS", AwkValue::String("\n".to_string()));
+    context.set_var("RS", AwkValue::String("\n".to_string()));
 
     let mut program_text = String::new();
     if !config.program_files.is_empty() {
@@ -97,7 +99,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
             let name = v[..eq_pos].to_string();
             let raw_value = &v[eq_pos+1..];
             let decoded = crate::parser::decode_string_escapes(raw_value);
-            context.set_var(&name, crate::types::AwkValue::from_str_num(decoded));
+            context.set_var(&name, AwkValue::from_str_num(decoded));
         } else {
             eprintln!("rawk: invalid -v assignment '{}': expected name=value", v);
             std::process::exit(2);
@@ -124,7 +126,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     }
 
     if files_to_process.is_empty() {
-        context.set_var("FILENAME", crate::types::AwkValue::String("-".to_string()));
+        context.set_var("FILENAME", AwkValue::String("-".to_string()));
         if let FlowControl::Exit(code) = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile) {
             std::process::exit(code);
         }
@@ -138,7 +140,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
         }
     } else {
         for filename in files_to_process {
-            context.set_var("FILENAME", crate::types::AwkValue::String(filename.clone()));
+            context.set_var("FILENAME", AwkValue::String(filename.clone()));
             if let FlowControl::Exit(code) = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile) {
                 std::process::exit(code);
             }
@@ -171,20 +173,20 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     // Final cleanup: flush tutto, wait() su pipe children
     use std::io::Write;
     let _ = std::io::stdout().flush();
-    let streams: Vec<crate::types::OutputStream> = context.out_files.drain().map(|(_,v)| v).collect();
+    let streams: Vec<OutputStream> = context.out_files.drain().map(|(_,v)| v).collect();
     for stream in streams {
         match stream {
-            crate::types::OutputStream::File(_) => {}
-            crate::types::OutputStream::Pipe { stdin, mut child } => {
+            OutputStream::File(_) => {}
+            OutputStream::Pipe { stdin, mut child } => {
                 drop(stdin);
                 let _ = child.wait();
             }
         }
     }
     
-    let in_streams: Vec<crate::types::InputStream> = context.in_files.drain().map(|(_,v)| v).collect();
+    let in_streams: Vec<InputStream> = context.in_files.drain().map(|(_,v)| v).collect();
     for stream in in_streams {
-        if let crate::types::InputStream::Pipe { stdout, mut child } = stream {
+        if let InputStream::Pipe { stdout, mut child } = stream {
             drop(stdout);
             let _ = child.wait();
         }
@@ -280,7 +282,7 @@ fn process_single_byte<R: BufRead>(mut reader: R, delim: u8, context: &mut EvalC
             rt_str = "\n".to_string();
         }
 
-        context.set_var("RT", crate::types::AwkValue::String(rt_str));
+        context.set_var("RT", AwkValue::String(rt_str));
         context.update_record(line_str);
 
         let fc = run_rules_on_record(rules, context);
@@ -300,7 +302,7 @@ fn process_paragraph<R: BufRead>(mut reader: R, context: &mut EvalContext, rules
     for mat in re.find_iter(trimmed) {
         let record = &trimmed[last_end..mat.start()];
         if !record.is_empty() {
-            context.set_var("RT", crate::types::AwkValue::String(mat.as_str().to_string()));
+            context.set_var("RT", AwkValue::String(mat.as_str().to_string()));
             context.update_record(record);
             let fc = run_rules_on_record(rules, context);
             if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
@@ -310,7 +312,7 @@ fn process_paragraph<R: BufRead>(mut reader: R, context: &mut EvalContext, rules
     }
     let last = trimmed[last_end..].trim_end_matches('\n');
     if !last.is_empty() {
-        context.set_var("RT", crate::types::AwkValue::String(String::new()));
+        context.set_var("RT", AwkValue::String(String::new()));
         context.update_record(last);
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
@@ -329,7 +331,7 @@ fn process_regex_rs<R: BufRead>(mut reader: R, rs: &str, context: &mut EvalConte
     let mut last_end = 0;
     for mat in re.find_iter(&all) {
         let record = &all[last_end..mat.start()];
-        context.set_var("RT", crate::types::AwkValue::String(mat.as_str().to_string()));
+        context.set_var("RT", AwkValue::String(mat.as_str().to_string()));
         context.update_record(record);
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
@@ -338,7 +340,7 @@ fn process_regex_rs<R: BufRead>(mut reader: R, rs: &str, context: &mut EvalConte
     }
     let last = &all[last_end..];
     if !last.is_empty() {
-        context.set_var("RT", crate::types::AwkValue::String(String::new()));
+        context.set_var("RT", AwkValue::String(String::new()));
         context.update_record(last);
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
@@ -360,25 +362,25 @@ fn process_lines<R: BufRead>(reader: R, context: &mut EvalContext, rules: &[Comp
     res
 }
 
-fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
+fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
     match expr {
         Expr::Field(e) => {
             let idx = eval_expr(e, context).as_number() as usize;
             context.get_field(idx)
         }
-        Expr::NumberLiteral(n) => crate::types::AwkValue::Number(*n),
-        Expr::StringLiteral(s) => crate::types::AwkValue::String(s.clone()),
+        Expr::NumberLiteral(n) => AwkValue::Number(*n),
+        Expr::StringLiteral(s) => AwkValue::String(s.clone()),
         Expr::Concat(parts) => {
             let convfmt = context.convfmt.clone();
             let s: String = parts.iter()
                 .map(|e| eval_expr(e, context).as_string_convfmt(&convfmt))
                 .collect();
-            crate::types::AwkValue::String(s)
+            AwkValue::String(s)
         }
         Expr::RegexLiteral(re) => {
             let record = context.get_field(0).as_string();
             let regex = context.compile_or_get_regex(re);
-            crate::types::AwkValue::Number(if regex.is_match(&record) { 1.0 } else { 0.0 })
+            AwkValue::Number(if regex.is_match(&record) { 1.0 } else { 0.0 })
         }
         Expr::Variable(v) => context.get_var(v),
         Expr::ArrayAccess(arr_name, key_exprs) => {
@@ -395,16 +397,16 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
             let mut read_success = false;
 
             match source {
-                crate::ast::GetlineSource::Main => {
+                GetlineSource::Main => {
                     if let Ok(n) = std::io::stdin().read_line(&mut line) {
                         if n > 0 { read_success = true; }
                     }
                 }
-                crate::ast::GetlineSource::File(file_expr) => {
+                GetlineSource::File(file_expr) => {
                     let filename = eval_expr(file_expr, context).as_string();
                     if !context.in_files.contains_key(&filename) {
                         if let Ok(file) = std::fs::File::open(&filename) {
-                            context.in_files.insert(filename.clone(), crate::types::InputStream::File(Box::new(std::io::BufReader::new(file))));
+                            context.in_files.insert(filename.clone(), InputStream::File(Box::new(std::io::BufReader::new(file))));
                         }
                     }
                     if let Some(stream) = context.in_files.get_mut(&filename) {
@@ -413,7 +415,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         }
                     }
                 }
-                crate::ast::GetlineSource::Pipe(cmd_expr) => {
+                GetlineSource::Pipe(cmd_expr) => {
                     let cmd = eval_expr(cmd_expr, context).as_string();
                     if !context.in_files.contains_key(&cmd) {
                         use std::process::{Command, Stdio};
@@ -425,16 +427,16 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         if let Ok(mut child) = child_res {
                             let stdout = child.stdout.take().unwrap();
                             let reader = std::io::BufReader::new(stdout);
-                            context.in_files.insert(cmd.clone(), crate::types::InputStream::Pipe { stdout: Box::new(reader), child });
+                            context.in_files.insert(cmd.clone(), InputStream::Pipe { stdout: Box::new(reader), child });
                         } else {
-                            return crate::types::AwkValue::Number(-1.0);
+                            return AwkValue::Number(-1.0);
                         }
                     }
                     if let Some(stream) = context.in_files.get_mut(&cmd) {
                         match stream.reader().read_line(&mut line) {
                             Ok(0) => read_success = false,
                             Ok(_) => read_success = true,
-                            Err(_) => return crate::types::AwkValue::Number(-1.0),
+                            Err(_) => return AwkValue::Number(-1.0),
                         }
                     }
                 }
@@ -443,13 +445,13 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
             if read_success {
                 let line_str = line.trim_end_matches(&['\r', '\n'][..]).to_string();
                 if let Some(var) = var_opt {
-                    context.set_var(var, crate::types::AwkValue::from_str_num(line_str));
+                    context.set_var(var, AwkValue::from_str_num(line_str));
                 } else {
                     context.update_record(&line_str);
                 }
-                crate::types::AwkValue::Number(1.0)
+                AwkValue::Number(1.0)
             } else {
-                crate::types::AwkValue::Number(0.0)
+                AwkValue::Number(0.0)
             }
         }
         Expr::FunctionCall(name, args) => {
@@ -460,15 +462,15 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     } else {
                         eval_expr(&args[0], context).as_string()
                     };
-                    crate::types::AwkValue::Number(s.len() as f64)
+                    AwkValue::Number(s.len() as f64)
                 }
                 "tolower" => {
                     let s = if args.is_empty() { String::new() } else { eval_expr(&args[0], context).as_string() };
-                    crate::types::AwkValue::String(s.to_lowercase())
+                    AwkValue::String(s.to_lowercase())
                 }
                 "toupper" => {
                     let s = if args.is_empty() { String::new() } else { eval_expr(&args[0], context).as_string() };
-                    crate::types::AwkValue::String(s.to_uppercase())
+                    AwkValue::String(s.to_uppercase())
                 }
                 "substr" => {
                     let s = eval_expr(&args[0], context).as_string();
@@ -480,29 +482,29 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     };
                     let start_idx = if start > 0 { start - 1 } else { 0 };
                     let sub = s.chars().skip(start_idx).take(len).collect();
-                    crate::types::AwkValue::String(sub)
+                    AwkValue::String(sub)
                 }
                 "index" => {
                     let s = eval_expr(&args[0], context).as_string();
                     let t = eval_expr(&args[1], context).as_string();
                     let idx = s.find(&t).map(|i| i + 1).unwrap_or(0);
-                    crate::types::AwkValue::Number(idx as f64)
+                    AwkValue::Number(idx as f64)
                 }
-                "sin" => crate::types::AwkValue::Number(eval_expr(&args[0], context).as_number().sin()),
-                "cos" => crate::types::AwkValue::Number(eval_expr(&args[0], context).as_number().cos()),
-                "exp" => crate::types::AwkValue::Number(eval_expr(&args[0], context).as_number().exp()),
-                "log" => crate::types::AwkValue::Number(eval_expr(&args[0], context).as_number().ln()),
-                "sqrt" => crate::types::AwkValue::Number(eval_expr(&args[0], context).as_number().sqrt()),
-                "int" => crate::types::AwkValue::Number(eval_expr(&args[0], context).as_number().trunc()),
+                "sin" => AwkValue::Number(eval_expr(&args[0], context).as_number().sin()),
+                "cos" => AwkValue::Number(eval_expr(&args[0], context).as_number().cos()),
+                "exp" => AwkValue::Number(eval_expr(&args[0], context).as_number().exp()),
+                "log" => AwkValue::Number(eval_expr(&args[0], context).as_number().ln()),
+                "sqrt" => AwkValue::Number(eval_expr(&args[0], context).as_number().sqrt()),
+                "int" => AwkValue::Number(eval_expr(&args[0], context).as_number().trunc()),
                 "atan2" => {
                     let y = eval_expr(&args[0], context).as_number();
                     let x = eval_expr(&args[1], context).as_number();
-                    crate::types::AwkValue::Number(y.atan2(x))
+                    AwkValue::Number(y.atan2(x))
                 }
                 "rand" => {
                     use rand::RngExt;
                     let r: f64 = context.rng.random();
-                    crate::types::AwkValue::Number(r)
+                    AwkValue::Number(r)
                 }
                 "srand" => {
                     use rand::SeedableRng;
@@ -513,12 +515,12 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         eval_expr(&args[0], context).as_number() as u64
                     };
                     context.rng = rand::rngs::StdRng::seed_from_u64(new_seed);
-                    context.set_var("RAND_SEED", crate::types::AwkValue::Number(new_seed as f64));
-                    crate::types::AwkValue::Number(prev_seed as f64)
+                    context.set_var("RAND_SEED", AwkValue::Number(new_seed as f64));
+                    AwkValue::Number(prev_seed as f64)
                 }
                 "systime" => {
                     let t = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs();
-                    crate::types::AwkValue::Number(t as f64)
+                    AwkValue::Number(t as f64)
                 }
                 "strftime" => {
                     let format = if args.is_empty() { "%Y-%m-%d %H:%M:%S".to_string() } else { eval_expr(&args[0], context).as_string() };
@@ -528,38 +530,38 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs() as i64
                     };
                     if let Some(dt) = chrono::DateTime::from_timestamp(timestamp, 0) {
-                        crate::types::AwkValue::String(dt.format(&format).to_string())
+                        AwkValue::String(dt.format(&format).to_string())
                     } else {
-                        crate::types::AwkValue::String("".to_string())
+                        AwkValue::String("".to_string())
                     }
                 }
                 "and" => {
                     let v1 = eval_expr(&args[0], context).as_number() as i64;
                     let v2 = eval_expr(&args[1], context).as_number() as i64;
-                    crate::types::AwkValue::Number((v1 & v2) as f64)
+                    AwkValue::Number((v1 & v2) as f64)
                 }
                 "or" => {
                     let v1 = eval_expr(&args[0], context).as_number() as i64;
                     let v2 = eval_expr(&args[1], context).as_number() as i64;
-                    crate::types::AwkValue::Number((v1 | v2) as f64)
+                    AwkValue::Number((v1 | v2) as f64)
                 }
                 "xor" => {
                     let v1 = eval_expr(&args[0], context).as_number() as i64;
                     let v2 = eval_expr(&args[1], context).as_number() as i64;
-                    crate::types::AwkValue::Number((v1 ^ v2) as f64)
+                    AwkValue::Number((v1 ^ v2) as f64)
                 }
                 "lshift" => {
                     let v1 = eval_expr(&args[0], context).as_number() as i64;
                     let v2 = eval_expr(&args[1], context).as_number() as i64;
-                    crate::types::AwkValue::Number((v1 << v2) as f64)
+                    AwkValue::Number((v1 << v2) as f64)
                 }
                 "rshift" => {
                     let v1 = eval_expr(&args[0], context).as_number() as i64;
                     let v2 = eval_expr(&args[1], context).as_number() as i64;
-                    crate::types::AwkValue::Number((v1 >> v2) as f64)
+                    AwkValue::Number((v1 >> v2) as f64)
                 }
                 "system" => {
-                    if args.is_empty() { return crate::types::AwkValue::Number(0.0); }
+                    if args.is_empty() { return AwkValue::Number(0.0); }
                     let cmd = eval_expr(&args[0], context).as_string();
                     use std::io::Write;
                     let _ = std::io::stdout().flush();
@@ -571,10 +573,10 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         Ok(s) => s.code().unwrap_or(-1),
                         Err(_) => -1,
                     };
-                    crate::types::AwkValue::Number(code as f64)
+                    AwkValue::Number(code as f64)
                 }
                 "close" => {
-                    if args.is_empty() { return crate::types::AwkValue::Number(-1.0); }
+                    if args.is_empty() { return AwkValue::Number(-1.0); }
                     let target = eval_expr(&args[0], context).as_string();
                     let mut status: i32 = 0;
                     let mut found = false;
@@ -582,8 +584,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     if let Some(stream) = context.out_files.remove(&target) {
                         found = true;
                         match stream {
-                            crate::types::OutputStream::File(_) => { }
-                            crate::types::OutputStream::Pipe { stdin, mut child } => {
+                            OutputStream::File(_) => { }
+                            OutputStream::Pipe { stdin, mut child } => {
                                 drop(stdin);
                                 if let Ok(s) = child.wait() {
                                     status = s.code().unwrap_or(-1);
@@ -596,7 +598,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     
                     if let Some(stream) = context.in_files.remove(&target) {
                         found = true;
-                        if let crate::types::InputStream::Pipe { stdout, mut child } = stream {
+                        if let InputStream::Pipe { stdout, mut child } = stream {
                             drop(stdout);
                             if let Ok(s) = child.wait() {
                                 status = s.code().unwrap_or(-1);
@@ -606,7 +608,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         }
                     }
                     
-                    if found { crate::types::AwkValue::Number(status as f64) } else { crate::types::AwkValue::Number(-1.0) }
+                    if found { AwkValue::Number(status as f64) } else { AwkValue::Number(-1.0) }
                 }
                 "fflush" => {
                     use std::io::Write;
@@ -621,22 +623,22 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         for stream in context.out_files.values_mut() {
                             if stream.writer().flush().is_err() { ok = false; }
                         }
-                        crate::types::AwkValue::Number(if ok { 0.0 } else { -1.0 })
+                        AwkValue::Number(if ok { 0.0 } else { -1.0 })
                     } else if target == "stdout" || target == "/dev/stdout" {
                         let r = std::io::stdout().flush();
-                        crate::types::AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
+                        AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
                     } else if let Some(stream) = context.out_files.get_mut(&target) {
                         let r = stream.writer().flush();
-                        crate::types::AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
+                        AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
                     } else {
-                        crate::types::AwkValue::Number(-1.0)
+                        AwkValue::Number(-1.0)
                     }
                 }
                 "sprintf" => {
-                    if args.is_empty() { return crate::types::AwkValue::String(String::new()); }
+                    if args.is_empty() { return AwkValue::String(String::new()); }
                     let fmt = eval_expr(&args[0], context).as_string();
-                    let vals: Vec<crate::types::AwkValue> = args[1..].iter().map(|e| eval_expr(e, context)).collect();
-                    crate::types::AwkValue::String(awk_sprintf(&fmt, &vals))
+                    let vals: Vec<AwkValue> = args[1..].iter().map(|e| eval_expr(e, context)).collect();
+                    AwkValue::String(awk_sprintf(&fmt, &vals))
                 }
                 "match" => {
                     let s = eval_expr(&args[0], context).as_string();
@@ -647,13 +649,13 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     };
                     let re = context.compile_or_get_regex(&re_str);
                     if let Some(m) = re.find(&s) {
-                        context.set_var("RSTART", crate::types::AwkValue::Number(m.start() as f64 + 1.0));
-                        context.set_var("RLENGTH", crate::types::AwkValue::Number(m.len() as f64));
-                        crate::types::AwkValue::Number(m.start() as f64 + 1.0)
+                        context.set_var("RSTART", AwkValue::Number(m.start() as f64 + 1.0));
+                        context.set_var("RLENGTH", AwkValue::Number(m.len() as f64));
+                        AwkValue::Number(m.start() as f64 + 1.0)
                     } else {
-                        context.set_var("RSTART", crate::types::AwkValue::Number(0.0));
-                        context.set_var("RLENGTH", crate::types::AwkValue::Number(-1.0));
-                        crate::types::AwkValue::Number(0.0)
+                        context.set_var("RSTART", AwkValue::Number(0.0));
+                        context.set_var("RLENGTH", AwkValue::Number(-1.0));
+                        AwkValue::Number(0.0)
                     }
                 }
                 "split" => {
@@ -671,9 +673,9 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     let count = parts.len();
                     for (i, p) in parts.iter().enumerate() {
                         let key = format!("{}", i + 1);
-                        context.set_array_var(&arr_name, &key, crate::types::AwkValue::from_str_num(p.to_string()));
+                        context.set_array_var(&arr_name, &key, AwkValue::from_str_num(p.to_string()));
                     }
-                    crate::types::AwkValue::Number(count as f64)
+                    AwkValue::Number(count as f64)
                 }
                 "sub" | "gsub" => {
                     let r = if let Expr::RegexLiteral(re) = &args[0] {
@@ -700,16 +702,16 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
 
                     if args.len() > 2 {
                         match &args[2] {
-                            Expr::Variable(v) => context.set_var(v, crate::types::AwkValue::String(new_val)),
+                            Expr::Variable(v) => context.set_var(v, AwkValue::String(new_val)),
                             Expr::Field(e) => {
                                 let f_idx = eval_expr(e, context).as_number() as usize;
-                                context.set_field(f_idx, crate::types::AwkValue::String(new_val));
+                                context.set_field(f_idx, AwkValue::String(new_val));
                             }
                             Expr::ArrayAccess(arr, ks) => {
                                 let mut keys = Vec::new();
                                 for k in ks { keys.push(eval_expr(k, context).as_string()); }
                                 let key = keys.join(&context.get_var("SUBSEP").as_string());
-                                context.set_array_var(arr, &key, crate::types::AwkValue::String(new_val));
+                                context.set_array_var(arr, &key, AwkValue::String(new_val));
                             }
                             _ => {}
                         }
@@ -717,7 +719,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         context.update_record(&new_val);
                     }
                     
-                    crate::types::AwkValue::Number(if changed { 1.0 } else { 0.0 })
+                    AwkValue::Number(if changed { 1.0 } else { 0.0 })
                 }
                 _ => {
                     // Check if it's a user-defined function
@@ -727,7 +729,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                             let arg_val = if i < args.len() {
                                 eval_expr(&args[i], context)
                             } else {
-                                crate::types::AwkValue::Uninitialized
+                                AwkValue::Uninitialized
                             };
                             local_scope.insert(param.clone(), arg_val);
                         }
@@ -744,7 +746,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                                 context.nextfile_pending = true;
                             }
                         }
-                        crate::types::AwkValue::Uninitialized
+                        AwkValue::Uninitialized
                     } else {
                         eprintln!("awk: unknown function {}", name);
                         std::process::exit(1);
@@ -761,7 +763,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
         }
         Expr::PreInc(e) => {
             let val = eval_expr(e, context);
-            let new_val = val.add(&crate::types::AwkValue::Number(1.0));
+            let new_val = val.add(&AwkValue::Number(1.0));
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val.clone());
             } else if let Expr::ArrayAccess(arr, ks) = &**e {
@@ -774,7 +776,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
         }
         Expr::PostInc(e) => {
             let val = eval_expr(e, context);
-            let new_val = val.add(&crate::types::AwkValue::Number(1.0));
+            let new_val = val.add(&AwkValue::Number(1.0));
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val);
             } else if let Expr::ArrayAccess(arr, ks) = &**e {
@@ -787,7 +789,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
         }
         Expr::PreDec(e) => {
             let val = eval_expr(e, context);
-            let new_val = val.sub(&crate::types::AwkValue::Number(1.0));
+            let new_val = val.sub(&AwkValue::Number(1.0));
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val.clone());
             } else if let Expr::ArrayAccess(arr, ks) = &**e {
@@ -800,7 +802,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
         }
         Expr::PostDec(e) => {
             let val = eval_expr(e, context);
-            let new_val = val.sub(&crate::types::AwkValue::Number(1.0));
+            let new_val = val.sub(&AwkValue::Number(1.0));
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val);
             } else if let Expr::ArrayAccess(arr, ks) = &**e {
@@ -813,15 +815,15 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
         }
         Expr::Not(e) => {
             let val = eval_expr(e, context);
-            crate::types::AwkValue::Number(if val.is_truthy() { 0.0 } else { 1.0 })
+            AwkValue::Number(if val.is_truthy() { 0.0 } else { 1.0 })
         }
         Expr::UnaryMinus(e) => {
             let val = eval_expr(e, context).as_number();
-            crate::types::AwkValue::Number(-val)
+            AwkValue::Number(-val)
         }
         Expr::UnaryPlus(e) => {
             let val = eval_expr(e, context).as_number();
-            crate::types::AwkValue::Number(val)
+            AwkValue::Number(val)
         }
         Expr::BinaryOp(lhs, op, rhs) => {
             let l_val = eval_expr(lhs, context);
@@ -834,13 +836,13 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                 BinaryOperator::Mod => l_val.rem(&r_val),
                 BinaryOperator::Pow => l_val.pow(&r_val),
                 BinaryOperator::Eq => l_val.is_eq(&r_val),
-                BinaryOperator::Neq => crate::types::AwkValue::Number(if l_val.is_eq(&r_val).as_number() == 1.0 { 0.0 } else { 1.0 }),
+                BinaryOperator::Neq => AwkValue::Number(if l_val.is_eq(&r_val).as_number() == 1.0 { 0.0 } else { 1.0 }),
                 BinaryOperator::Lt => l_val.is_lt(&r_val),
                 BinaryOperator::Gt => l_val.is_gt(&r_val),
-                BinaryOperator::Lte => crate::types::AwkValue::Number(if l_val.is_gt(&r_val).as_number() == 1.0 { 0.0 } else { 1.0 }),
-                BinaryOperator::Gte => crate::types::AwkValue::Number(if l_val.is_lt(&r_val).as_number() == 1.0 { 0.0 } else { 1.0 }),
-                BinaryOperator::And => crate::types::AwkValue::Number(if l_val.is_truthy() && r_val.is_truthy() { 1.0 } else { 0.0 }),
-                BinaryOperator::Or => crate::types::AwkValue::Number(if l_val.is_truthy() || r_val.is_truthy() { 1.0 } else { 0.0 }),
+                BinaryOperator::Lte => AwkValue::Number(if l_val.is_gt(&r_val).as_number() == 1.0 { 0.0 } else { 1.0 }),
+                BinaryOperator::Gte => AwkValue::Number(if l_val.is_lt(&r_val).as_number() == 1.0 { 0.0 } else { 1.0 }),
+                BinaryOperator::And => AwkValue::Number(if l_val.is_truthy() && r_val.is_truthy() { 1.0 } else { 0.0 }),
+                BinaryOperator::Or => AwkValue::Number(if l_val.is_truthy() || r_val.is_truthy() { 1.0 } else { 0.0 }),
                 BinaryOperator::Match => {
                     let re_str = if let Expr::RegexLiteral(re) = &**rhs {
                         re.clone()
@@ -848,7 +850,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         r_val.as_string()
                     };
                     let re = context.compile_or_get_regex(&re_str);
-                    crate::types::AwkValue::Number(if re.is_match(&l_val.as_string()) { 1.0 } else { 0.0 })
+                    AwkValue::Number(if re.is_match(&l_val.as_string()) { 1.0 } else { 0.0 })
                 }
                 BinaryOperator::NotMatch => {
                     let re_str = if let Expr::RegexLiteral(re) = &**rhs {
@@ -857,12 +859,12 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         r_val.as_string()
                     };
                     let re = context.compile_or_get_regex(&re_str);
-                    crate::types::AwkValue::Number(if re.is_match(&l_val.as_string()) { 0.0 } else { 1.0 })
+                    AwkValue::Number(if re.is_match(&l_val.as_string()) { 0.0 } else { 1.0 })
                 }
                 BinaryOperator::In => {
                     let key = l_val.as_string();
                     let arr_name = if let Expr::Variable(v) = &**rhs { v.clone() } else { "".to_string() };
-                    crate::types::AwkValue::Number(if context.arrays.get(&arr_name).map(|a| a.contains_key(&key)).unwrap_or(false) { 1.0 } else { 0.0 })
+                    AwkValue::Number(if context.arrays.get(&arr_name).map(|a| a.contains_key(&key)).unwrap_or(false) { 1.0 } else { 0.0 })
                 }
 
             }
@@ -884,7 +886,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 let val = if let Some(expr) = expr_opt {
                     eval_expr(expr, context)
                 } else {
-                    crate::types::AwkValue::Uninitialized
+                    AwkValue::Uninitialized
                 };
                 return FlowControl::Return(val);
             }
@@ -921,7 +923,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     .unwrap_or_default();
                     
                 for key in keys {
-                    context.set_var(key_name, crate::types::AwkValue::String(key));
+                    context.set_var(key_name, AwkValue::String(key));
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break { break; }
                     if fc == FlowControl::Continue { continue; }
@@ -962,7 +964,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
             Statement::Printf(exprs, redirect) => {
                 if !exprs.is_empty() {
                     let fmt = eval_expr(&exprs[0], context).as_string();
-                    let args: Vec<crate::types::AwkValue> = exprs[1..].iter().map(|e| eval_expr(e, context)).collect();
+                    let args: Vec<AwkValue> = exprs[1..].iter().map(|e| eval_expr(e, context)).collect();
                     let formatted = awk_sprintf(&fmt, &args);
                     handle_output(&formatted, redirect, context);
                 }
@@ -1019,7 +1021,7 @@ fn handle_output(output: &str, redirect: &Option<(String, Expr)>, context: &mut 
         use std::fs::OpenOptions;
         let stream = context.out_files.entry(filename.clone()).or_insert_with(|| {
             if op == ">>" {
-                crate::types::OutputStream::File(Box::new(OpenOptions::new().create(true).append(true).open(&filename).unwrap()))
+                OutputStream::File(Box::new(OpenOptions::new().create(true).append(true).open(&filename).unwrap()))
             } else if op == "|" {
                 use std::process::{Command, Stdio};
                 let mut child = Command::new("sh")
@@ -1029,9 +1031,9 @@ fn handle_output(output: &str, redirect: &Option<(String, Expr)>, context: &mut 
                     .spawn()
                     .unwrap();
                 let stdin = child.stdin.take().unwrap();
-                crate::types::OutputStream::Pipe { stdin: Box::new(stdin), child }
+                OutputStream::Pipe { stdin: Box::new(stdin), child }
             } else {
-                crate::types::OutputStream::File(Box::new(OpenOptions::new().create(true).write(true).truncate(true).open(&filename).unwrap()))
+                OutputStream::File(Box::new(OpenOptions::new().create(true).write(true).truncate(true).open(&filename).unwrap()))
             }
         });
         write!(stream.writer(), "{}", output).unwrap();
@@ -1040,7 +1042,7 @@ fn handle_output(output: &str, redirect: &Option<(String, Expr)>, context: &mut 
     }
 }
 
-fn awk_sprintf(fmt: &str, args: &[crate::types::AwkValue]) -> String {
+fn awk_sprintf(fmt: &str, args: &[AwkValue]) -> String {
     let mut out = String::new();
     let mut chars = fmt.chars().peekable();
     let mut arg_idx = 0;
@@ -1061,7 +1063,7 @@ fn awk_sprintf(fmt: &str, args: &[crate::types::AwkValue]) -> String {
                     spec.push(ch);
                     if "diouxXeEfgGcs".contains(ch) {
                         let arg = args.get(arg_idx).cloned()
-                            .unwrap_or(crate::types::AwkValue::Uninitialized);
+                            .unwrap_or(AwkValue::Uninitialized);
                         arg_idx += 1;
                         out.push_str(&format_one(&spec, &arg));
                         break;
@@ -1073,14 +1075,14 @@ fn awk_sprintf(fmt: &str, args: &[crate::types::AwkValue]) -> String {
     out
 }
 
-fn format_one(spec: &str, arg: &crate::types::AwkValue) -> String {
+fn format_one(spec: &str, arg: &AwkValue) -> String {
     let conv = spec.chars().last().unwrap();
     match conv {
         'd' | 'i' => sprintf::sprintf!(spec, arg.as_number() as i64).unwrap_or_default(),
         'o' | 'x' | 'X' | 'u' => sprintf::sprintf!(spec, arg.as_number() as u64).unwrap_or_default(),
         'c' => {
             let ch: char = match arg {
-                crate::types::AwkValue::String(s) | crate::types::AwkValue::StrNum(s, _) if !s.is_empty() =>
+                AwkValue::String(s) | AwkValue::StrNum(s, _) if !s.is_empty() =>
                     s.chars().next().unwrap(),
                 _ => char::from_u32(arg.as_number() as u32).unwrap_or('\0'),
             };
