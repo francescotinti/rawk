@@ -56,6 +56,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     }
     context.set_var("OFS", crate::types::AwkValue::String(" ".to_string()));
     context.set_var("ORS", crate::types::AwkValue::String("\n".to_string()));
+    context.set_var("RS", crate::types::AwkValue::String("\n".to_string()));
 
     let mut program_text = String::new();
     if !config.program_files.is_empty() {
@@ -199,14 +200,32 @@ fn execute_special_blocks(rules: &[CompiledRule], context: &mut EvalContext, blo
     FlowControl::None
 }
 
-fn process_lines<R: BufRead>(mut reader: R, context: &mut EvalContext, rules: &[CompiledRule]) -> anyhow::Result<FlowControl> {
+fn run_rules_on_record(rules: &[CompiledRule], context: &mut EvalContext) -> FlowControl {
+    for rule in rules {
+        let should_execute = match &rule.pattern {
+            Some(CompiledPattern::Expr(e)) => eval_expr(e, context).is_truthy(),
+            Some(CompiledPattern::Begin) | Some(CompiledPattern::End) | Some(CompiledPattern::BeginFile) | Some(CompiledPattern::EndFile) => false,
+            None => true,
+        };
+        
+        if should_execute {
+            let fc = execute_action(&rule.action, context);
+            if fc == FlowControl::Next {
+                break; // break the rule loop, process next line
+            }
+            if matches!(fc, FlowControl::Exit(_)) {
+                return fc;
+            }
+        }
+    }
+    FlowControl::None
+}
+
+fn process_single_byte<R: BufRead>(mut reader: R, delim: u8, context: &mut EvalContext, rules: &[CompiledRule]) -> anyhow::Result<FlowControl> {
     let mut buffer = Vec::new();
 
     loop {
         buffer.clear();
-        let rs_val = context.get_var("RS").as_string();
-        let delim = if rs_val.is_empty() { b'\n' } else { rs_val.as_bytes()[0] };
-        
         let bytes_read = reader.read_until(delim, &mut buffer)?;
         if bytes_read == 0 {
             break;
@@ -234,27 +253,74 @@ fn process_lines<R: BufRead>(mut reader: R, context: &mut EvalContext, rules: &[
         context.set_var("RT", crate::types::AwkValue::String(rt_str));
         context.update_record(line_str);
 
-        // Execute rules
-        for rule in rules {
-            let should_execute = match &rule.pattern {
-                Some(CompiledPattern::Expr(e)) => eval_expr(e, context).is_truthy(),
-                Some(CompiledPattern::Begin) | Some(CompiledPattern::End) | Some(CompiledPattern::BeginFile) | Some(CompiledPattern::EndFile) => false,
-                None => true,
-            };
-            
-            if should_execute {
-                let fc = execute_action(&rule.action, context);
-                if fc == FlowControl::Next {
-                    break; // break the rule loop, process next line
-                }
-                if let FlowControl::Exit(_) = fc {
-                    return Ok(fc);
-                }
-            }
-        }
+        let fc = run_rules_on_record(rules, context);
+        if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
     }
 
     Ok(FlowControl::None)
+}
+
+fn process_paragraph<R: BufRead>(mut reader: R, context: &mut EvalContext, rules: &[CompiledRule]) -> anyhow::Result<FlowControl> {
+    let mut all = String::new();
+    reader.read_to_string(&mut all)?;
+    let trimmed = all.trim_start_matches('\n');
+    let re = regex::Regex::new(r"\n\n+").unwrap();
+    let mut last_end = 0;
+    for mat in re.find_iter(trimmed) {
+        let record = &trimmed[last_end..mat.start()];
+        if !record.is_empty() {
+            context.set_var("RT", crate::types::AwkValue::String(mat.as_str().to_string()));
+            context.update_record(record);
+            let fc = run_rules_on_record(rules, context);
+            if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+        }
+        last_end = mat.end();
+    }
+    let last = trimmed[last_end..].trim_end_matches('\n');
+    if !last.is_empty() {
+        context.set_var("RT", crate::types::AwkValue::String(String::new()));
+        context.update_record(last);
+        let fc = run_rules_on_record(rules, context);
+        if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+    }
+    Ok(FlowControl::None)
+}
+
+fn process_regex_rs<R: BufRead>(mut reader: R, rs: &str, context: &mut EvalContext, rules: &[CompiledRule]) -> anyhow::Result<FlowControl> {
+    let mut all = String::new();
+    reader.read_to_string(&mut all)?;
+    let re = match regex::Regex::new(rs) {
+        Ok(r) => r,
+        Err(_) => return Ok(FlowControl::None),
+    };
+    let mut last_end = 0;
+    for mat in re.find_iter(&all) {
+        let record = &all[last_end..mat.start()];
+        context.set_var("RT", crate::types::AwkValue::String(mat.as_str().to_string()));
+        context.update_record(record);
+        let fc = run_rules_on_record(rules, context);
+        if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+        last_end = mat.end();
+    }
+    let last = &all[last_end..];
+    if !last.is_empty() {
+        context.set_var("RT", crate::types::AwkValue::String(String::new()));
+        context.update_record(last);
+        let fc = run_rules_on_record(rules, context);
+        if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+    }
+    Ok(FlowControl::None)
+}
+
+fn process_lines<R: BufRead>(reader: R, context: &mut EvalContext, rules: &[CompiledRule]) -> anyhow::Result<FlowControl> {
+    let rs_val = context.get_var("RS").as_string();
+    if rs_val.is_empty() {
+        process_paragraph(reader, context, rules)
+    } else if rs_val.chars().count() == 1 {
+        process_single_byte(reader, rs_val.as_bytes()[0], context, rules)
+    } else {
+        process_regex_rs(reader, &rs_val, context, rules)
+    }
 }
 
 fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {

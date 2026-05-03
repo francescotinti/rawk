@@ -865,7 +865,7 @@ NOTA: il vecchio case `Some('0') => out.push('\0')` va RIMOSSO. È coperto dal n
 
 # Step 4 — Builtin I/O: `system()`, `close()`, `fflush()`
 
-🟢 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `227c3e5` — 74 test verdi**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -1130,6 +1130,281 @@ after
 
 ---
 
+# Step 5 — Record Separator: paragraph mode + multi-char regex
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+feat(step5): RS paragraph mode and multi-char regex
+
+IN-SCOPE:
+- RS="" → paragraph mode (record separator = uno o più righe vuote)
+- RS multi-char (≥ 2 caratteri) → trattato come regex (gawk extension)
+- Refactor process_lines: lettura full-buffer poi split, anziché read_until streaming
+- RT aggiornato con il match effettivo del separator
+
+OUT-OF-SCOPE (debito esplicito):
+- Streaming input per RS regex (per ora read-all in memoria; rilevante solo per file molto grandi)
+- "cmd" | getline integrato con il nuovo modello (resta backlog #6)
+- FS auto-include "\n" in paragraph mode (sì lo gestiamo, ma documentato)
+
+Testcase aggiunti: 8. Totali: 82.
+```
+
+## Goal
+Fixare `process_lines` in `runner.rs`. Oggi:
+```rust
+let delim = if rs_val.is_empty() { b'\n' } else { rs_val.as_bytes()[0] };
+let bytes_read = reader.read_until(delim, &mut buffer)?;
+```
+Solo prende il primo byte di RS. Conseguenze:
+- `RS=""` (paragraph mode POSIX) → cade nel default `\n` (sbagliato)
+- `RS="ab"` → splita solo su `a` (sbagliato, gawk lo tratta come regex)
+- `RS="\n\n"` → splita su prima `\n` (sbagliato, dovrebbe essere paragraph)
+
+## Decisioni di design (NON riaprire)
+
+### D5.1 — Tre modalità di splitting
+- **Modalità A** (RS = 1 carattere): comportamento attuale. Streaming `read_until` byte-per-byte.
+- **Modalità B** (RS = "" stringa vuota): paragraph mode. Record separati da una o più righe completamente vuote (`/\n\n+/`). Inoltre FS implicitly include "\n" (POSIX: in paragraph mode, FS default diventa `[\t\n ]+` o regex equivalente).
+- **Modalità C** (RS ≥ 2 caratteri): treat as regex (compile + split). Default FS rimane.
+
+### D5.2 — Implementation strategy: read-all + split
+Per le modalità B e C, **non si può** usare `read_until` byte-per-byte. La via pragmatica:
+- Modalità A: mantenere il loop streaming attuale (efficiente per il caso comune).
+- Modalità B/C: leggere TUTTO l'input in una `String`, poi splittare.
+
+Modificare `process_lines` per dispatch su una di tre branch all'inizio del loop, in base al valore corrente di RS letto via `context.get_var("RS")`.
+
+### D5.3 — Branch B (paragraph mode)
+```rust
+fn process_paragraph<R: BufRead>(mut reader: R, context: &mut EvalContext, rules: &[CompiledRule]) -> anyhow::Result<FlowControl> {
+    let mut all = String::new();
+    reader.read_to_string(&mut all)?;
+    // POSIX: split on /\n\n+/ — uno o più newline blocks
+    // Trim leading newlines per non emettere record vuoto iniziale
+    let trimmed = all.trim_start_matches('\n');
+    let re = regex::Regex::new(r"\n\n+").unwrap();
+    let mut last_end = 0;
+    for mat in re.find_iter(trimmed) {
+        let record = &trimmed[last_end..mat.start()];
+        if !record.is_empty() {
+            // RT = il match effettivo
+            context.set_var("RT", AwkValue::String(mat.as_str().to_string()));
+            context.update_record(record);
+            // Esegui rules — usa lo stesso loop dei rules dello streaming
+            let fc = run_rules_on_record(rules, context);
+            if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+        }
+        last_end = mat.end();
+    }
+    // Ultimo paragrafo (senza trailing \n\n)
+    let last = trimmed[last_end..].trim_end_matches('\n');
+    if !last.is_empty() {
+        context.set_var("RT", AwkValue::String(String::new()));
+        context.update_record(last);
+        let fc = run_rules_on_record(rules, context);
+        if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+    }
+    Ok(FlowControl::None)
+}
+```
+
+In paragraph mode, anche FS deve splittare su `\n\t ` per separare i campi (POSIX). Modificare `update_record` o aggiungere un check su `EvalContext`: se è in paragraph mode (helper `is_paragraph_mode()`), splittare i campi anche su `\n` oltre che FS.
+
+Soluzione semplice: in `update_record`, se `self.fs == " "` E RS è vuoto, usare `split` regex `[ \t\n]+` invece di `split_whitespace()` (che già gestisce `\n`). In realtà `split_whitespace()` gestisce già `\n` come whitespace, quindi probabilmente basta lasciare la logica esistente. Verificare con un testcase.
+
+### D5.4 — Branch C (regex multi-char RS)
+```rust
+fn process_regex_rs<R: BufRead>(mut reader: R, rs: &str, context: &mut EvalContext, rules: &[CompiledRule]) -> anyhow::Result<FlowControl> {
+    let mut all = String::new();
+    reader.read_to_string(&mut all)?;
+    let re = match regex::Regex::new(rs) {
+        Ok(r) => r,
+        Err(_) => return Ok(FlowControl::None),  // RS regex invalido, ignora
+    };
+    let mut last_end = 0;
+    for mat in re.find_iter(&all) {
+        let record = &all[last_end..mat.start()];
+        context.set_var("RT", AwkValue::String(mat.as_str().to_string()));
+        context.update_record(record);
+        let fc = run_rules_on_record(rules, context);
+        if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+        last_end = mat.end();
+    }
+    // Resto finale (input dopo l'ultimo match)
+    let last = &all[last_end..];
+    if !last.is_empty() {
+        context.set_var("RT", AwkValue::String(String::new()));
+        context.update_record(last);
+        let fc = run_rules_on_record(rules, context);
+        if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+    }
+    Ok(FlowControl::None)
+}
+```
+
+### D5.5 — Helper `run_rules_on_record`
+Estrarre il loop dei rules da `process_lines` in una funzione condivisa:
+```rust
+fn run_rules_on_record(rules: &[CompiledRule], context: &mut EvalContext) -> FlowControl {
+    for rule in rules {
+        let should_execute = match &rule.pattern {
+            Some(CompiledPattern::Expr(e)) => eval_expr(e, context).is_truthy(),
+            Some(CompiledPattern::Begin) | Some(CompiledPattern::End) | Some(CompiledPattern::BeginFile) | Some(CompiledPattern::EndFile) => false,
+            None => true,
+        };
+        if should_execute {
+            let fc = execute_action(&rule.action, context);
+            if fc == FlowControl::Next { break; }
+            if matches!(fc, FlowControl::Exit(_)) { return fc; }
+        }
+    }
+    FlowControl::None
+}
+```
+Refactor: `process_lines` originale chiama `run_rules_on_record` invece del loop inline. `process_paragraph` e `process_regex_rs` la chiamano allo stesso modo.
+
+### D5.6 — Dispatch in `process_lines`
+Il punto di ingresso `process_lines` legge RS UNA VOLTA all'inizio (è invariante per il file in input — RS può cambiare nel BEGIN block ma non a metà file in modo realistico). Dispatch:
+
+```rust
+fn process_lines<R: BufRead>(reader: R, context: &mut EvalContext, rules: &[CompiledRule]) -> anyhow::Result<FlowControl> {
+    let rs_val = context.get_var("RS").as_string();
+    if rs_val.is_empty() {
+        process_paragraph(reader, context, rules)
+    } else if rs_val.chars().count() == 1 {
+        process_single_byte(reader, rs_val.as_bytes()[0], context, rules)
+    } else {
+        process_regex_rs(reader, &rs_val, context, rules)
+    }
+}
+```
+
+`process_single_byte` è il vecchio loop di `process_lines` (rinominato).
+
+## Testcase obbligatori (aggiungere a `tests/testsuite.xml` PRIMA del codice)
+
+```xml
+<testcase name="test_rs_paragraph_basic">
+    <awk><![CDATA[BEGIN { RS="" } { print NR ":" $0 }]]></awk>
+    <stdin><![CDATA[foo bar
+baz
+
+second paragraph
+line two
+
+third]]></stdin>
+    <expected_stdout match="exact"><![CDATA[1:foo bar
+baz
+2:second paragraph
+line two
+3:third
+]]></expected_stdout>
+</testcase>
+<testcase name="test_rs_paragraph_multi_blank">
+    <awk><![CDATA[BEGIN { RS="" } { print NR }]]></awk>
+    <stdin><![CDATA[a
+
+
+b
+
+
+
+c]]></stdin>
+    <expected_stdout match="exact"><![CDATA[1
+2
+3
+]]></expected_stdout>
+</testcase>
+<testcase name="test_rs_paragraph_field_split">
+    <awk><![CDATA[BEGIN { RS="" } { print NF }]]></awk>
+    <stdin><![CDATA[one two
+three four
+
+five six]]></stdin>
+    <expected_stdout match="exact"><![CDATA[4
+2
+]]></expected_stdout>
+</testcase>
+<testcase name="test_rs_multichar_regex">
+    <awk><![CDATA[BEGIN { RS="X+" } { print NR ":" $0 }]]></awk>
+    <stdin><![CDATA[aaaXbbbXXXcccXXdddX]]></stdin>
+    <expected_stdout match="exact"><![CDATA[1:aaa
+2:bbb
+3:ccc
+4:ddd
+]]></expected_stdout>
+</testcase>
+<testcase name="test_rs_multichar_literal_string">
+    <awk><![CDATA[BEGIN { RS="--" } { print NR ":" $0 }]]></awk>
+    <stdin><![CDATA[foo--bar--baz]]></stdin>
+    <expected_stdout match="exact"><![CDATA[1:foo
+2:bar
+3:baz
+]]></expected_stdout>
+</testcase>
+<testcase name="test_rs_rt_paragraph">
+    <awk><![CDATA[BEGIN { RS="" } { print NR ":" $0 ":[" RT "]" }]]></awk>
+    <stdin><![CDATA[a
+
+b
+
+
+c]]></stdin>
+    <expected_stdout match="exact"><![CDATA[1:a:[
+
+]
+2:b:[
+
+
+]
+3:c:[]
+]]></expected_stdout>
+</testcase>
+<testcase name="test_rs_singlechar_unchanged">
+    <awk><![CDATA[BEGIN { RS="|" } { print NR ":" $0 }]]></awk>
+    <stdin><![CDATA[A|B|C]]></stdin>
+    <expected_stdout match="exact"><![CDATA[1:A
+2:B
+3:C
+]]></expected_stdout>
+</testcase>
+<testcase name="test_rs_default_newline_unchanged">
+    <awk><![CDATA[{ print NR ":" $0 }]]></awk>
+    <stdin><![CDATA[line1
+line2
+line3]]></stdin>
+    <expected_stdout match="exact"><![CDATA[1:line1
+2:line2
+3:line3
+]]></expected_stdout>
+</testcase>
+```
+
+## File modificati attesi
+
+- `src/runner.rs` (~80 righe nette: dispatch + 2 nuove funzioni + estrazione `run_rules_on_record`)
+- `tests/testsuite.xml` (+8 testcase)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, 74 + 8 = **82 testcase passano**
+- [ ] Tutti i testcase Step 1-4 ancora verdi (regression check). In particolare il `test_record_separator` esistente (RS="|") deve continuare a passare.
+- [ ] Niente regressioni sul caso default RS="\n" (modalità A più usata)
+
+## Anti-pattern specifici Step 5
+
+- ❌ Implementare paragraph mode con `read_until('\n\n')` o pseudo-streaming — non si può, serve buffer completo o pre-look.
+- ❌ Trattare RS multi-char come "first byte then rest ignored" — è il bug che stiamo fixando.
+- ❌ Aggiungere `nextfile` o altri statement "perché tanto sto modificando il loop" — backlog separato (#4).
+- ❌ Modificare `update_record` per logica di FS paragraph-aware se non strettamente necessario (probabilmente non lo è — `split_whitespace()` gestisce già `\n`). Verificare con i testcase prima di toccarlo.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -1151,6 +1426,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 1-bis (cleanup) | ✅ APPROVED | `640462d` | 42/42 | Junk files committati rimossi (`.DS_Store, f1.txt, f2.txt, src/scratch.rs, pest_test.rs`); `.gitignore` esteso. Caveat: 4 file zombie ancora tracciati (`debug.rs, dummy.txt, out.txt, scratch.rs` alla root) per inaccuratezza dello spec Claude — assegnati a T0 di Step 2. Step 1 ora ✅, Step 2 sbloccato. |
 | 2026-05-03 | Step 2 (printf reale) | ✅ APPROVED | `510d2c3` | 59/59 | Tutte le D2.1-D2.7 applicate letteralmente (sprintf crate, awk_sprintf scanner, format_one mapping, decode_string_escapes a parse-time, integration in Statement::Printf e builtin). T0 cleanup completato: zombie files rimossi. Bonus fix non segnalato: swap `printf_stmt`/`print_stmt` in pest grammar per evitare greedy-match. Process: by the book. Backlog top → Step 3. |
 | 2026-05-03 | Step 3 (escape `\xHH`/`\NNN`) | ✅ APPROVED | `cec7a9d` | 66/66 | D3.1-D3.4 applicate letteralmente. Implementazione di `decode_string_escapes` rifatta con `peek()` lookahead-based, hex e octal greedy-match, modulo 256 sull'octal overflow, fallback graceful per escape sconosciuti. 7 testcase con casi multibyte/zero/overflow/unknown. Process: by the book per il secondo step consecutivo. Backlog top → Step 4. |
+| 2026-05-03 | Step 4 (system/close/fflush) | ✅ APPROVED | `227c3e5` | 74/74 | D4.1-D4.6 applicate letteralmente. Refactor `out_files: HashMap<_, OutputStream>` con enum File/Pipe per tracciare Child, `wait()` correttamente su close di pipe, final shutdown drain in `run()`. Side-fix non in spec ma documentato in commit message: introdotto `print_expr_list` per risolvere ambiguità POSIX `print x > "file"` (redirect vs comparison). Comportamento corretto POSIX. Avrebbe dovuto essere SPEC-Q ma trasparenza nel commit lo ha mitigato. Minor: manca riga "Testcase aggiunti: N. Totali: M." nel commit message. Backlog top → Step 5. |
 
 ---
 
@@ -1160,7 +1436,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 
 1. ~~String literal escape `\xHH` e `\NNN` (octal)~~ → **promosso a Step 3** ✅ specced
 2. ~~Builtin `system()` / `close()` / `fflush()`~~ → **promosso a Step 4** ✅ specced
-3. **Paragraph mode `RS=""` + RS regex multi-char** — fix critico in `process_lines`: oggi prende solo `rs_val.as_bytes()[0]`.
+3. ~~Paragraph mode `RS=""` + RS regex multi-char~~ → **promosso a Step 5** ✅ specced
 4. **Statement `nextfile`** — non in grammatica oggi. Aggiungere rule + AST + flusso.
 5. **NF assignment side-effects (donefld/donerec)** — `NF = 3` deve troncare `fields`; `$5 = "x"` con NF=3 deve estendere e ricostruire `$0` lazy.
 6. **`getline` da pipe (`"cmd" | getline`)** — oggi solo `getline < file`. Estendere grammatica + runner.

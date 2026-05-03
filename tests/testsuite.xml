@@ -603,4 +603,98 @@ after
         <expected_stdout match="exact"><![CDATA[got: data
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_rs_paragraph_basic">
+        <awk><![CDATA[BEGIN { RS="" } { print NR ":" $0 }]]></awk>
+        <stdin><![CDATA[foo bar
+baz
+
+second paragraph
+line two
+
+third]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1:foo bar
+baz
+2:second paragraph
+line two
+3:third
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_rs_paragraph_multi_blank">
+        <awk><![CDATA[BEGIN { RS="" } { print NR }]]></awk>
+        <stdin><![CDATA[a
+
+
+b
+
+
+
+c]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1
+2
+3
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_rs_paragraph_field_split">
+        <awk><![CDATA[BEGIN { RS="" } { print NF }]]></awk>
+        <stdin><![CDATA[one two
+three four
+
+five six]]></stdin>
+        <expected_stdout match="exact"><![CDATA[4
+2
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_rs_multichar_regex">
+        <awk><![CDATA[BEGIN { RS="X+" } { print NR ":" $0 }]]></awk>
+        <stdin><![CDATA[aaaXbbbXXXcccXXdddX]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1:aaa
+2:bbb
+3:ccc
+4:ddd
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_rs_multichar_literal_string">
+        <awk><![CDATA[BEGIN { RS="--" } { print NR ":" $0 }]]></awk>
+        <stdin><![CDATA[foo--bar--baz]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1:foo
+2:bar
+3:baz
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_rs_rt_paragraph">
+        <awk><![CDATA[BEGIN { RS="" } { print NR ":" $0 ":[" RT "]" }]]></awk>
+        <stdin><![CDATA[a
+
+b
+
+
+c]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1:a:[
+
+]
+2:b:[
+
+
+]
+3:c:[]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_rs_singlechar_unchanged">
+        <awk><![CDATA[BEGIN { RS="|" } { print NR ":" $0 }]]></awk>
+        <stdin><![CDATA[A|B|C]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1:A
+2:B
+3:C
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_rs_default_newline_unchanged">
+        <awk><![CDATA[{ print NR ":" $0 }]]></awk>
+        <stdin><![CDATA[line1
+line2
+line3]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1:line1
+2:line2
+3:line3
+]]></expected_stdout>
+    </testcase>
 </testsuite>
