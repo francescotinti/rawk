@@ -7,10 +7,8 @@
 use crate::ast::Statement;
 use std::collections::HashMap;
 use std::fmt;
-use std::fs::File;
 use std::io::{Write, BufRead};
 use rand::rngs::StdRng;
-use rand::SeedableRng;
 
 /// Represents an AWK dynamic value (number, string, or uninitialized).
 #[derive(Debug, Clone, PartialEq)]

@@ -6,7 +6,7 @@
 
 use crate::ast::{BinaryOperator, Expr, FunctionDecl, Pattern, Program, Rule as AstRule, Statement};
 use pest::Parser;
-use pest::iterators::{Pair, Pairs};
+use pest::iterators::Pair;
 use pest::pratt_parser::{Assoc, Op, PrattParser};
 use pest_derive::Parser;
 
@@ -174,7 +174,7 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
             Statement::ForIn(var, arr, block)
         }
         Rule::for_stmt => {
-            let mut inners = inner.into_inner();
+            let inners = inner.into_inner();
             let mut init = None;
             let mut cond = None;
             let mut step = None;
@@ -397,7 +397,7 @@ fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
         }
         Rule::ident => Expr::Variable(inner.as_str().to_string()),
         Rule::getline_expr => {
-            let mut inners = inner.into_inner();
+            let inners = inner.into_inner();
             let mut var_name = None;
             let mut file_expr = None;
             for p in inners {

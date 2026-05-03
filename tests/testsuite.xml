@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite name="Rawk Integration Tests">
+    <!-- Basic functionality -->
     <testcase name="test_basic_print">
         <awk><![CDATA[{ print $1, $2 }]]></awk>
         <stdin><![CDATA[hello world
@@ -8,12 +9,141 @@ foo bar]]></stdin>
 foo bar
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_record_separator">
+        <awk><![CDATA[BEGIN { RS = "|" } { print $1 }]]></awk>
+        <stdin><![CDATA[A|B|C]]></stdin>
+        <expected_stdout match="exact"><![CDATA[A
+B
+C
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_type_coercion">
+        <awk><![CDATA[BEGIN { print "10" + 5, "42" == 42, "abc" + 0 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[15 1 0
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_control_flow">
+        <awk><![CDATA[BEGIN { sum = 0; i = 1; while(i<=5) { sum = sum + i; i = i + 1 }; print sum }]]></awk>
+        <expected_stdout match="exact"><![CDATA[15
+]]></expected_stdout>
+    </testcase>
+
+    <!-- Expressions and Built-ins -->
+    <testcase name="test_math_functions">
+        <awk><![CDATA[BEGIN { print sqrt(16), int(3.9) }]]></awk>
+        <expected_stdout match="exact"><![CDATA[4 3
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_bitwise_and_time">
+        <awk><![CDATA[BEGIN { print and(5, 3), lshift(1, 2) }]]></awk>
+        <expected_stdout match="exact"><![CDATA[1 4
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_string_manipulation">
+        <awk><![CDATA[BEGIN { s = "foo bar"; gsub("bar", "baz", s); print s, length(s), toupper(s) }]]></awk>
+        <expected_stdout match="exact"><![CDATA[foo baz 7 FOO BAZ
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_arrays_and_delete">
+        <awk><![CDATA[BEGIN { a["key"] = 42; print a["key"]; delete a["key"]; print a["key"] }]]></awk>
+        <expected_stdout match="exact"><![CDATA[42
+
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_user_functions">
+        <awk><![CDATA[
+        function add(x, y) { return x + y } 
+        BEGIN { print add(5, 7) }
+        ]]></awk>
+        <expected_stdout match="exact"><![CDATA[12
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_regex_matching">
+        <awk><![CDATA[
+        $1 ~ /^[0-9]+$/ { print "number:", $1 }
+        $1 !~ /^[0-9]+$/ { print "string:", $1 }
+        ]]></awk>
+        <stdin><![CDATA[123
+abc
+456
+def]]></stdin>
+        <expected_stdout match="exact"><![CDATA[number: 123
+string: abc
+number: 456
+string: def
+]]></expected_stdout>
+    </testcase>
+
+    <!-- GNU AWK Manual Tests -->
     <testcase name="test_gawk_manual_longest_line">
         <awk><![CDATA[{ if (length($0) > max) max = length($0) } END { print max }]]></awk>
         <stdin><![CDATA[short
-this is a very long line indeed
-medium line]]></stdin>
-        <expected_stdout match="exact"><![CDATA[31
+this is a much longer line
+tiny]]></stdin>
+        <expected_stdout match="exact"><![CDATA[26
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_gawk_manual_seven_random_numbers">
+        <awk><![CDATA[BEGIN { srand(1); for (i = 1; i <= 7; i++) print int(101 * rand()) }]]></awk>
+        <expected_stdout match="exact"><![CDATA[98
+69
+43
+17
+25
+97
+39
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_gawk_manual_two_rules">
+        <awk><![CDATA[
+        /12/ { print $0 } 
+        /21/ { print $0 }
+        ]]></awk>
+        <stdin><![CDATA[foo 12 bar
+baz 21 qux
+no match]]></stdin>
+        <expected_stdout match="exact"><![CDATA[foo 12 bar
+baz 21 qux
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_gawk_manual_ch8_arrays">
+        <awk><![CDATA[{ arr[$1] = $0 } END { print arr["1"] }]]></awk>
+        <stdin><![CDATA[2 two
+1 one
+3 three]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1 one
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_gawk_manual_ch9_functions">
+        <awk><![CDATA[
+        function my_max(a, b) { 
+            if (a > b) return a; 
+            else return b 
+        } 
+        BEGIN { print my_max(10, 20) }
+        ]]></awk>
+        <expected_stdout match="exact"><![CDATA[20
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_gawk_manual_part2_deduplication">
+        <awk><![CDATA[
+        {
+            if (data[$0]++ == 0)
+                lines[++count] = $0
+        }
+        END {
+            for (i = 1; i <= count; i++)
+                print lines[i]
+        }
+        ]]></awk>
+        <stdin><![CDATA[foo
+bar
+foo
+baz
+bar]]></stdin>
+        <expected_stdout match="exact"><![CDATA[foo
+bar
+baz
 ]]></expected_stdout>
     </testcase>
     <testcase name="test_gawk_manual_word_frequency">
@@ -31,44 +161,6 @@ medium line]]></stdin>
         <expected_stdout match="contains"><![CDATA[world 1
 awk 1
 hello 2
-]]></expected_stdout>
-    </testcase>
-    <testcase name="test_gawk_manual_part2_deduplication">
-        <awk><![CDATA[
-        {
-            if (data[$0]++ == 0)
-                lines[++count] = $0
-        }
-        END {
-            for (i = 1; i <= count; i++)
-                print lines[i]
-        }
-        ]]></awk>
-        <stdin><![CDATA[apple
-banana
-apple
-cherry
-banana
-date]]></stdin>
-        <expected_stdout match="exact"><![CDATA[apple
-banana
-cherry
-date
-]]></expected_stdout>
-    </testcase>
-    <testcase name="test_regex_matching">
-        <awk><![CDATA[
-        $1 ~ /^[0-9]+$/ { print "number:", $1 }
-        $1 !~ /^[0-9]+$/ { print "string:", $1 }
-        ]]></awk>
-        <stdin><![CDATA[123
-abc
-456
-def]]></stdin>
-        <expected_stdout match="exact"><![CDATA[number: 123
-string: abc
-number: 456
-string: def
 ]]></expected_stdout>
     </testcase>
 </testsuite>

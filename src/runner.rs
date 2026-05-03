@@ -4,7 +4,7 @@
  * Description: A high-fidelity port of the historic AWK language from C to Rust.
  */
 
-use crate::ast::{BinaryOperator, Expr, Pattern, Program, Statement};
+use crate::ast::{BinaryOperator, Expr, Pattern, Statement};
 use regex::Regex;
 use crate::cli::Config;
 use crate::parser;
