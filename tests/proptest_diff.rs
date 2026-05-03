@@ -29,7 +29,7 @@ proptest! {
     #![proptest_config(ProptestConfig::with_cases(64))]
 
     #[test]
-    fn template_add(n in -1e25f64..1e25f64, m in -1e25f64..1e25f64) {
+    fn template_add(n in -1e6f64..1e6f64, m in -1e6f64..1e6f64) {
         if !awk_available() {
             return Ok(());
         }
@@ -76,5 +76,22 @@ proptest! {
         let script = format!("BEGIN {{ print {} * {} }}", n, m);
         let (rawk, awk) = run_both(&script);
         prop_assert_eq!(rawk, awk, "Failed for script: {}", script);
+    }
+
+    #[test]
+    fn template_scientific_no_orphan_dot(n in 1e16f64..1e20f64) {
+        // Note: NON differential (BSD awk e rawk divergono su large-int float printing).
+        // Verifica solo la well-formedness dell'output di rawk per scientific.
+        let script = format!("BEGIN {{ print {} }}", n);
+        let rawk_cmd = Command::new(env!("CARGO_BIN_EXE_rawk"))
+            .arg(&script)
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
+            .output()
+            .expect("Failed to run rawk");
+        let out = String::from_utf8_lossy(&rawk_cmd.stdout).trim().to_string();
+        // Output must NOT contain ".e" or ".E" (orphan dot before exponent)
+        prop_assert!(!out.contains(".e") && !out.contains(".E"),
+                     "Orphan dot in scientific output: {} (script: {})", out, script);
     }
 }

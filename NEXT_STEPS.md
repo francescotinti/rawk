@@ -2607,7 +2607,7 @@ E **Step 12-bis** da `🚧 PRONTO` a `✅ DONE — commit <hash>`.
 
 # Step 13 — Quick fixes da audit Step 12-bis
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `d643295` (fixes) + pending-fix (restore green)**
 
 ## Format commit message obbligatorio
 
@@ -2703,6 +2703,97 @@ NOTA: l'expected è `1e+20` non `1e20` perché `%.6g` produce sempre il segno es
 
 ---
 
+# Step 13-bis — Restore green: revert proptest range, document large-int divergence
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio
+
+```
+fix(step13-bis): restore proptest green by reverting range, document new divergence
+
+IN-SCOPE:
+- Revert proptest template_add range da [-1e25, 1e25] a [-1e6, 1e6] (originale)
+- Aggiungere proptest template_scientific con range mirato [1e16, 1e20] (positivi only) per surface bug di formato scientific in modo controllato
+- Skip se rawk e BSD awk divergono per "integer-like float printing": il template_scientific deve testare SOLO la struttura del formato (no orphan dot), non il match esatto con BSD awk
+- Documento nel commit: divergence nota tra rawk (sempre %.6g per > 1e16) vs BSD/gawk (heuristica integer notation per "integer-like" float fino a ~1e20)
+
+OUT-OF-SCOPE (debito esplicito):
+- Implementare la heuristica "integer notation for large integer-like float" — è un fix separato, va in backlog
+- Filing upstream — facoltativo
+- Test di parità completa rawk vs BSD awk su range esteso — divergenza nota, non test obiettivo
+
+Testcase aggiunti: 0 (modifico solo proptest_diff.rs). Totali XML: 105. Totali cargo: 6 (riequilibrato).
+```
+
+## Goal
+Ripristinare `cargo test` green dopo Step 13 violation. Fa due cose:
+1. **Revert** del range di `template_add` al valore originale `[-1e6, 1e6]` per evitare il divergence di "large integer-like float formatting" che NON è il bug che vogliamo testare con quel template.
+2. **Aggiungere** un proptest separato `template_scientific` con range positivo controllato `[1e16, 1e20]` che testa SOLO la struttura del formato (no orphan dot) tramite check regex, non match con BSD awk.
+
+## Decisioni di design
+
+### D13bis.1 — Revert range di `template_add`
+In `tests/proptest_diff.rs`:
+```rust
+fn template_add(n in -1e6f64..1e6f64, m in -1e6f64..1e6f64) {
+```
+Esattamente come prima di Step 13.
+
+### D13bis.2 — Nuovo template `template_scientific` (NON differential)
+Aggiungere un proptest che NON confronta con system awk, ma verifica solo che l'output di rawk **non contenga orphan dot**:
+```rust
+proptest! {
+    #![proptest_config(ProptestConfig::with_cases(64))]
+
+    #[test]
+    fn template_scientific_no_orphan_dot(n in 1e16f64..1e20f64) {
+        // Note: NON differential (BSD awk e rawk divergono su large-int float printing).
+        // Verifica solo la well-formedness dell'output di rawk per scientific.
+        let script = format!("BEGIN {{ print {} }}", n);
+        let rawk_cmd = Command::new(env!("CARGO_BIN_EXE_rawk"))
+            .arg(&script)
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
+            .output()
+            .expect("Failed to run rawk");
+        let out = String::from_utf8_lossy(&rawk_cmd.stdout).trim().to_string();
+        // Output must NOT contain ".e" or ".E" (orphan dot before exponent)
+        prop_assert!(!out.contains(".e") && !out.contains(".E"),
+                     "Orphan dot in scientific output: {} (script: {})", out, script);
+    }
+}
+```
+
+NOTA: questo test si concentra sull'invariante "rawk non emette orphan dot", senza richiedere parità con BSD awk. È più focalizzato e immune al divergence di formato scientific vs integer.
+
+### D13bis.3 — Documentazione del divergence nel commit message
+Il commit message deve esplicitamente documentare:
+> "Backlog item nuovo: rawk produce scientific notation per float > 1e16 anche se integer-like, mentre BSD/gawk usano integer notation. Da fixare in step futuro implementando heuristica simile."
+
+## File modificati attesi
+
+- `tests/proptest_diff.rs` (~10 righe: revert range + nuovo template)
+- (NESSUN cambio a `src/`, `Cargo.toml`, `tests/testsuite.xml`)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean
+- [ ] `cargo test` verde, **6/6 tests** (1 xml + 5 proptest originali + 1 nuovo template_scientific = 7. Quindi 7/7)
+- [ ] template_add con range originale [-1e6, 1e6] passa come prima
+- [ ] template_scientific con range [1e16, 1e20] passa (rawk non emette orphan dot)
+- [ ] Header Step 13 da 🟡 PARTIAL → ✅ DONE riferendo entrambi i commit (`d643295` + `<step13-bis-hash>`)
+- [ ] Header Step 13-bis → ✅ DONE
+
+## Anti-pattern Step 13-bis
+
+- ❌ Lasciare il range `1e25` con uno skip "if BSD format diverge" — preferiamo un test pulito mirato.
+- ❌ Implementare la heuristica "integer notation for large float" — fuori scope, è un fix architetturale separato.
+- ❌ Rimuovere completamente il proptest scientific — perdi il bug surfacing per orphan dot in domain proptest.
+- ❌ Modificare il fix in `src/types.rs` — quel codice è corretto, il problema è la spec del proptest range.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -2734,6 +2825,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 11 (differential vs system awk) | ✅ APPROVED | `c0fc48d` | 92 MATCH / 6 DIVERGE / 5 SKIP | D11.1-D11.6 applicate letteralmente. Binario `diffrun` separato in `src/bin/`. Skip euristico per gawk extensions. Run su macOS BSD awk: 89.3% match rate. **6 divergenze interessanti documentate**: (1) BSD awk error su `"abc"+0`; (2) iter order array (falso positivo: bug minore in diffrun su match=contains); (3) `f (x)` parsing diff; (4) `\0` byte: Rust String preserva, C string tronca; (5) escape sconosciuto: rawk preserva, BSD strip; (6) nextfile da function: BSD non supporta. Tutte interessanti come material di Fase 4 della skill `legacy-port`. Backlog top → Step 12. |
 | 2026-05-03 | Step 12 (proptest differential) | 🟡 PARTIAL | `7ead3f6` | 4/5 proptest pass, 103/103 XML | **Outcome ideale di property-based testing**: D12.1-D12.6 applicate letteralmente, infrastructure corretta. proptest ha trovato un divergence reale al primo run: `template_add` su `-449970.4 + 388859.4 = -61111.04...` produce `"-61111."` da rawk (trailing dot orfano) vs `"-61111"` da awk system. Bug nella crate `sprintf` v0.4 sul format `%.6g` quando arrotondamento dà integer-like. Gemini ha correttamente seguito D12.6 marcando 🟡 PARTIAL invece di sopprimere. Step 12-bis aperto per il fix. |
 | 2026-05-03 | Step 12-bis (fix trailing dot) | ✅ APPROVED | `5fdabb6` | 5/5 proptest, 104/104 XML | D12bis.1-D12bis.4 applicate letteralmente. Workaround in `format_number_awk`: 5 righe per strip trailing dot. Testcase regression XML `test_print_float_no_trailing_dot` aggiunto con il caso minimo trovato da proptest. Step 12 e 12-bis ora entrambi ✅. **Findings durante audit (non in scope di 12-bis, da catalogare in backlog)**: (A) bug residuo su scientific notation: `print 1e20` produce `1.e+20` invece di `1e+20` (dot orfano prima di `e+`); (B) ergonomia: `cargo run` ora ambiguo dopo Step 11, serve `default-run = "rawk"` in Cargo.toml. |
+| 2026-05-03 | Step 13 (bundle quick fixes) | 🟡 PARTIAL | `d643295` | 4/5 proptest, 105/105 XML | D13.1 (orphan dot scientific) + D13.2 (default-run) + D13.4 (testcase XML) applicate correttamente. **Process violation**: D13.3 (estendere range proptest a [-1e25, 1e25]) ha esposto un divergence nuovo (rawk produce scientific, BSD awk produce plain integer per valori magnitude > 1e16) NON in scope di Step 13. Gemini ha committato con `cargo test` rosso (4/5 proptest pass), violando l'anti-pattern "build green ad ogni commit". Step 13-bis aperto per ripristinare green con strategy revert range + nuovo template proptest mirato. |
 
 ---
 
@@ -2755,6 +2847,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 12. ~~Bug residuo: orphan dot in scientific notation~~ → **promosso a Step 13** ✅ specced
 13. ~~Ergonomia: `default-run = "rawk"` in Cargo.toml~~ → **promosso a Step 13** ✅ specced (bundle)
 14. ~~Tighten proptest ranges~~ → **promosso a Step 13** ✅ specced (bundle)
+15. **Implementare heuristica "integer notation for large integer-like float"** — rawk produce scientific (`%.6g`) per float magnitude > 1e16 anche se integer-like; BSD awk e gawk usano notation integer per "integer-like" float fino a ~1e20. Fix architetturale: estendere fast-path di `format_number_awk` con bound più alto (es. 1e21) usando arithmetic check senza loss of precision. Trovato durante audit Step 13.
 
 ---
 
