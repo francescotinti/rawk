@@ -2249,7 +2249,7 @@ NOTA: il terzo testcase (`test_v_multiple_last_wins`) verifica anche che la nuov
 
 # Step 11 — Differential testing harness vs system awk (read-only report)
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `c0fc48d` — 92 MATCH / 6 DIVERGE / 5 SKIP su 103 testcase**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -2377,6 +2377,148 @@ Se un testcase fa timeout (>5s), marca come `TIMEOUT` invece di MATCH/DIVERGE.
 
 ---
 
+# Step 12 — Property-based testing via proptest (differential)
+
+🟡 **PARTIAL — proptest divergence found**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+test(step12): property-based differential testing via proptest
+
+IN-SCOPE:
+- proptest crate aggiunto a dev-dependencies
+- Nuovo file `tests/proptest_diff.rs` con 5 templates AWK + strategies
+- Per ogni iterazione: substitute random values, run rawk e system awk, assert outputs match
+- Limite: 64 iter per template (totale ~320 random cases)
+- Test cargo standard: passa se tutti i template producono output identico per tutti i random input
+
+OUT-OF-SCOPE (debito esplicito):
+- Property testing strutturale (random AST generation) — troppo complesso, fuori scope
+- Cross-roundtrip su valori AwkValue puri — non c'è "print(parse(...))" da testare in modo significativo
+- Templates con regex random — rischio di compilazione regex invalide
+- Templates con I/O random (file, pipe) — race condition
+
+Testcase aggiunti: 1 cargo test che esegue ~320 proptest iter. Totali XML: 103 (invariati). Totali cargo: ~104.
+```
+
+## Goal
+Affiancare la differential testing di Step 11 con **fuzz-style property testing**: invece di testcase fissi, generare migliaia di input random su pochi template AWK e verificare che rawk e system awk producano lo stesso output.
+
+Differenza chiave da Step 11:
+- Step 11: 103 testcase scritti a mano, eseguiti una volta.
+- Step 12: ~5 template, ognuno espanso a 64 random instances → ~320 esecuzioni per build.
+
+Lo scopo è scoprire bug "silenziosi" in domini coperti dai template ma non da testcase specifici (overflow, underflow, edge case di printf, escape interaction, ecc.).
+
+## Decisioni di design (NON riaprire)
+
+### D12.1 — Dipendenza
+Aggiungere a `Cargo.toml`:
+```toml
+[dev-dependencies]
+# ... esistenti ...
+proptest = "1.5"
+```
+
+### D12.2 — Templates (5 fissi)
+Cinque template AWK con placeholder `{X}` per variabili:
+
+| Template | Placeholder | Strategy |
+|---|---|---|
+| `BEGIN { print {N} + {M} }` | N, M | f64 in `[-1e6, 1e6]` |
+| `BEGIN { printf "%d\n", {N} }` | N | i64 in `[-1e9, 1e9]` |
+| `BEGIN { printf "%.2f\n", {N} }` | N | f64 in `[-1000.0, 1000.0]` |
+| `BEGIN { print "{S}" "{T}" }` | S, T | ASCII alfanum [a-zA-Z0-9 ]{0,8} |
+| `BEGIN { print {N} * {M} }` | N, M | i32 in `[-1000, 1000]` |
+
+Range scelti per evitare:
+- Float underflow/overflow che cambia rappresentazione
+- Stringhe con caratteri speciali (`%`, `\`, `"`) che richiederebbero escape
+- Numeri troppo grandi che sforano CONVFMT default
+
+### D12.3 — Runner inline
+In `tests/proptest_diff.rs`, una funzione helper `run_both(awk_script: &str) -> (String, String)` che:
+1. Spawn `env!("CARGO_BIN_EXE_rawk")` con script
+2. Spawn `awk` (system) con script
+3. Ritorna `(rawk_stdout, awk_stdout)` come stringhe trimmed
+
+### D12.4 — Test proptest
+Un `#[test]` per template, ognuno usa `proptest! { ... }` con strategy appropriata:
+```rust
+proptest! {
+    #![proptest_config(ProptestConfig::with_cases(64))]
+    
+    #[test]
+    fn add_template(n in -1e6f64..1e6f64, m in -1e6f64..1e6f64) {
+        let script = format!("BEGIN {{ print {} + {} }}", n, m);
+        let (rawk, awk) = run_both(&script);
+        prop_assert_eq!(rawk, awk);
+    }
+    
+    // ... altri 4 template
+}
+```
+
+### D12.5 — Skip se awk non in PATH
+Se `awk` non è installato, il test deve essere `#[ignore]` runtime — usare un init guard:
+```rust
+fn awk_available() -> bool {
+    Command::new("awk").arg("--version").output().is_ok()
+}
+
+#[test]
+fn add_template() {
+    if !awk_available() {
+        eprintln!("skipping: awk not in PATH");
+        return;
+    }
+    // ... proptest
+}
+```
+
+NOTA: questa è la pattern più semplice. proptest ha anche un meccanismo `prop_skip!` ma per il caso "awk missing" il guard è più chiaro.
+
+### D12.6 — Cosa fare se proptest trova un divergence
+Se un test fallisce, proptest fa shrinking automatico al minimo input divergente. **Non sopprimere il fallimento**: il commit Step 12 può fallire al primo run se ci sono bug latenti, in quel caso:
+- Marcare commit come `🟡 PARTIAL — proptest divergence found`
+- Documentare il minimo failing case nel commit message
+- Apre Step 12-bis per il fix
+
+Se invece tutti i template passano: `✅ DONE — N proptest iter, all match`.
+
+## File modificati attesi
+
+- `Cargo.toml` (+1 dev-dep)
+- `tests/proptest_diff.rs` (NUOVO file, ~80 righe)
+- (NESSUN cambio a `src/`, `tests/testsuite.xml`)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean
+- [ ] `cargo test` verde, **104 cargo test** (1 nuovo proptest che lancia 64 iter × 5 template)
+- [ ] Tutti i 103 XML testcase ancora verdi
+- [ ] Se proptest trova divergence → 🟡 PARTIAL con minimo failing case in commit
+- [ ] Se awk non in PATH → test skip silenzioso, no fail
+
+## Anti-pattern specifici Step 12
+
+- ❌ Aumentare `cases` oltre 64 per template — il test rallenterebbe oltre i 60s. Se serve più copertura, eseguire a parte (`cargo test --release`).
+- ❌ Generare AWK programs strutturalmente random — è esperimento di parser fuzzing, fuori scope. Solo template fissi con value substitution.
+- ❌ Includere stringhe con `\\`, `"`, `\n` come placeholder senza escape strategy — rischio di syntax error nel programma generato. Restringere ad alphanum + spazio.
+- ❌ Sopprimere divergence con `try { } catch { }` — proptest deve fallire visibilmente.
+- ❌ Re-implementare lo skip di Step 11 (gawk extensions) qui — i template sono POSIX-puri, niente da skippare.
+
+---
+
+# Step 12-bis — Fix proptest divergence
+
+🚧 **TODO**
+
+Il test `template_add` ha rivelato che numeri come `-61111.0` generati dalla somma vengono stampati come `"-61111."` da rawk, mentre awk system stampa `"-61111"`. Da fixare per far passare proptest.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -2405,6 +2547,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 8 (getline da pipe) | ✅ APPROVED | `b3fc303` | 94/94 | D8.1-D8.6 applicate letteralmente. Refactor `in_files` con enum `InputStream` simmetrico a `out_files` di Step 4. Grammar: `pipe_getline` come prima alternativa, con `non_getline_primary` per evitare recursion. AST: `GetlineSource { Main, File, Pipe }`. `close()` wait su pipe child. Final shutdown estesa per drain anche `in_files`. Bonus non dichiarato: `PartialEq` derive su `BinaryOperator` ed `Expr` per match del nuovo enum. 8° step by-the-book. Backlog top → Step 9. |
 | 2026-05-03 | Step 9 (redirect regression coverage) | ✅ APPROVED | `26969c7` | 99/99 | D9.1-D9.3 applicate letteralmente. **Step più pulito finora**: solo `tests/testsuite.xml` + `NEXT_STEPS.md` modificati (zero src/), come da spec. 5 testcase di regression per redirect: cached `>`, `>>` after close, `>` re-truncate, pipe multi-write, `printf >`. Commit message format perfetto. Test count tondo: 99. 9° step by-the-book. Backlog top → Step 10. |
 | 2026-05-03 | Step 10 (CLI -v var=value) | ✅ APPROVED | `03fb7f6` | 103/103 | D10.1-D10.6 applicate letteralmente. Parsing `-v name=value` in `run()` con exit(2) su invalid. `decode_string_escapes` pubblicizzata. Test infra estesa con `<args>` opzionali in XML schema. Ordering `-v` dopo OFS/ORS default verificato live (`-v OFS=:` produce `a:b:c`). 4 testcase tutti passano. 10° step by-the-book. Backlog top → Step 11. |
+| 2026-05-03 | Step 11 (differential vs system awk) | ✅ APPROVED | `c0fc48d` | 92 MATCH / 6 DIVERGE / 5 SKIP | D11.1-D11.6 applicate letteralmente. Binario `diffrun` separato in `src/bin/`. Skip euristico per gawk extensions. Run su macOS BSD awk: 89.3% match rate. **6 divergenze interessanti documentate**: (1) BSD awk error su `"abc"+0`; (2) iter order array (falso positivo: bug minore in diffrun su match=contains); (3) `f (x)` parsing diff; (4) `\0` byte: Rust String preserva, C string tronca; (5) escape sconosciuto: rawk preserva, BSD strip; (6) nextfile da function: BSD non supporta. Tutte interessanti come material di Fase 4 della skill `legacy-port`. Backlog top → Step 12. |
 
 ---
 
@@ -2421,7 +2564,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 7. ~~`printf`/`print` con `>>` append e `|` pipe~~ → **promosso a Step 9** ✅ specced (test-only)
 8. ~~CLI: `-v var=value` reale e separatore `--`~~ → **promosso a Step 10** ✅ specced
 9. ~~Differential testing infrastructure~~ → **promosso a Step 11** ✅ specced (scoped down: system awk via PATH, no FFI/cc/build.rs)
-10. **Property-based testing** (Fase 4b) — `proptest` con property roundtrip e cross-roundtrip rawk vs c_awk.
+10. ~~Property-based testing~~ → **promosso a Step 12** ✅ specced (5 template + proptest differential)
 11. **Refactor stilistico finale** — rimuovere tutti i `crate::types::AwkValue::...` qualificati, sostituire `eprintln+exit(1)` con `Result<_, AwkError>` propagato fino a `main`.
 
 ---

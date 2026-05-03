@@ -16,6 +16,7 @@ quick-xml = { version = "0.39.2", features = ["serialize"] }
 serde = { version = "1.0.228", features = ["derive"] }
 
 [dev-dependencies]
+proptest = "1.5"
 
 [[bin]]
 name = "rawk"
