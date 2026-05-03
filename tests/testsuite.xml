@@ -163,4 +163,25 @@ awk 1
 hello 2
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_csv_parsing">
+        <awk><![CDATA[
+        BEGIN { FS="," }
+        NR > 1 {
+            sum += $3
+            print $2, "is", $3, "years old"
+        }
+        END {
+            print "Average age:", sum / (NR - 1)
+        }
+        ]]></awk>
+        <stdin><![CDATA[id,name,age,city
+1,Alice,30,New York
+2,Bob,25,Los Angeles
+3,Charlie,35,Chicago]]></stdin>
+        <expected_stdout match="exact"><![CDATA[Alice is 30 years old
+Bob is 25 years old
+Charlie is 35 years old
+Average age: 30
+]]></expected_stdout>
+    </testcase>
 </testsuite>
