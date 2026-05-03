@@ -886,9 +886,19 @@ line2
         <expected_stdout match="exact"><![CDATA[-61111
 ]]></expected_stdout>
     </testcase>
-    <testcase name="test_print_scientific_no_orphan_dot">
+    <testcase name="test_print_large_int_as_integer_notation">
         <awk><![CDATA[BEGIN { print 1e20 }]]></awk>
-        <expected_stdout match="exact"><![CDATA[1e+20
+        <expected_stdout match="exact"><![CDATA[100000000000000000000
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_print_int_at_threshold">
+        <awk><![CDATA[BEGIN { print 1e16 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[10000000000000000
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_print_huge_uses_scientific">
+        <awk><![CDATA[BEGIN { print 1e21 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[1e+21
 ]]></expected_stdout>
     </testcase>
     <testcase name="test_div_by_zero_warning_continues">

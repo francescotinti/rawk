@@ -146,18 +146,23 @@ impl fmt::Display for AwkValue {
 }
 
 fn format_number_awk(n: f64, fmt: &str) -> String {
+    // Path A: i64 fast-path per integer-like piccoli (esistente)
     if n.is_finite() && n == n.trunc() && n.abs() < 1e16 {
-        format!("{}", n as i64)
-    } else {
-        let s = sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string());
-        // Fix 1 (Step 12-bis): trailing dot in fixed notation, "X." -> "X"
-        let s = if s.ends_with('.') { s[..s.len()-1].to_string() } else { s };
-        // Fix 2 (Step 13): orphan dot before exponent, "X.e+Y" -> "Xe+Y"
-        s.replace(".e+", "e+")
-         .replace(".e-", "e-")
-         .replace(".E+", "E+")
-         .replace(".E-", "E-")
+        return format!("{}", n as i64);
     }
+    // Path B: %.0f per integer-like grandi entro f64 precision (NUOVO)
+    if n.is_finite() && n == n.trunc() && n.abs() < 1e21 {
+        return sprintf::sprintf!("%.0f", n).unwrap_or_else(|_| n.to_string());
+    }
+    // Path C: usa fmt richiesto, strip dot orfani (esistente)
+    let s = sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string());
+    // Fix 1 (Step 12-bis): trailing dot in fixed notation, "X." -> "X"
+    let s = if s.ends_with('.') { s[..s.len()-1].to_string() } else { s };
+    // Fix 2 (Step 13): orphan dot before exponent, "X.e+Y" -> "Xe+Y"
+    s.replace(".e+", "e+")
+     .replace(".e-", "e-")
+     .replace(".E+", "E+")
+     .replace(".E-", "E-")
 }
 
 pub enum OutputStream {

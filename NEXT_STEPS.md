@@ -2882,7 +2882,7 @@ Se trovi qualificazioni anche in `src/main.rs`, `src/cli.rs`, `src/parser.rs`, �
 
 # Step 15 — Refactor stilistico parte 2: eliminare `process::exit(1)` runtime
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `52002fd` — 7/7 cargo test, 107/107 XML, zero `exit(1)` runtime**
 
 ## Format commit message obbligatorio
 
@@ -3015,6 +3015,284 @@ NOTA: il test runner XML supporta `<expected_stderr>` (visto nel codice di `xml_
 
 ---
 
+# Step 16 — Integer-notation heuristic per large integer-like float
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio
+
+```
+feat(step16): integer-notation heuristic for large integer-like floats
+
+IN-SCOPE:
+- Estendere format_number_awk: per float `n == n.trunc() && finite`:
+  - se |n| < 1e16: i64 fast-path (esistente)
+  - se 1e16 <= |n| < 1e21: usa sprintf("%.0f", n) (nuovo)
+  - altrimenti: usa fmt richiesto + strip dot (esistente)
+- Match comportamento BSD/gawk: `print 1e20` → "100000000000000000000" invece di "1e+20"
+- Aggiornare test esistente test_print_scientific_no_orphan_dot per il nuovo expected
+- 2 testcase nuovi per blindare il range
+
+OUT-OF-SCOPE (debito esplicito):
+- Threshold tuning oltre 1e21: oltre quel valore manteniamo scientific (la precisione f64 si degrada significativamente)
+- Re-introdurre proptest range esteso (testato in Step 13-bis e ripristinato a [-1e6, 1e6]) — fuori scope
+- Modificare CONVFMT default da "%.6g" — manteniamo POSIX
+
+Testcase aggiunti: 2 nuovi + 1 modificato. Totali: 109 XML, 7 cargo.
+```
+
+## Goal
+Risolvere la divergenza #15 catalogata da Step 13 audit: rawk produce scientific notation per integer-like float magnitude > 1e16, mentre BSD awk e gawk usano integer notation fino a ~1e21. Implementare la stessa heuristica.
+
+Comportamento attuale:
+- `print 1e20` → `1e+20` (scientific, %.6g default)
+- `print 1e16` → `10000000000000000` (i64 fast-path, OK ma soglia subito sotto)
+
+Comportamento target (post-fix):
+- `print 1e20` → `100000000000000000000` (integer notation via %.0f)
+- `print 1e16` → `10000000000000000` (i64 fast-path, invariato)
+- `print 1e21` → `1e+21` (scientific, oltre la soglia integer-friendly)
+- `print 1.5e20` → resta scientific (non è integer-like, ha frazione)
+
+## Decisioni di design (NON riaprire)
+
+### D16.1 — Estendere `format_number_awk` con un secondo fast-path
+In `src/types.rs`:
+```rust
+fn format_number_awk(n: f64, fmt: &str) -> String {
+    // Path A: i64 fast-path per integer-like piccoli (esistente)
+    if n.is_finite() && n == n.trunc() && n.abs() < 1e16 {
+        return format!("{}", n as i64);
+    }
+    // Path B: %.0f per integer-like grandi entro f64 precision (NUOVO)
+    if n.is_finite() && n == n.trunc() && n.abs() < 1e21 {
+        return sprintf::sprintf!("%.0f", n).unwrap_or_else(|_| n.to_string());
+    }
+    // Path C: usa fmt richiesto, strip dot orfani (esistente)
+    let s = sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string());
+    let s = if s.ends_with('.') { s[..s.len()-1].to_string() } else { s };
+    s.replace(".e+", "e+")
+     .replace(".e-", "e-")
+     .replace(".E+", "E+")
+     .replace(".E-", "E-")
+}
+```
+
+### D16.2 — Threshold 1e21 per Path B
+Motivo: oltre 1e21, f64 ha gap di precisione tali che %.0f produce numeri "approssimati" che divergono troppo dall'intuizione utente. Match BSD awk che usa una soglia simile.
+
+### D16.3 — Update test esistente `test_print_scientific_no_orphan_dot`
+Il testcase attuale è:
+```xml
+<testcase name="test_print_scientific_no_orphan_dot">
+    <awk><![CDATA[BEGIN { print 1e20 }]]></awk>
+    <expected_stdout match="exact"><![CDATA[1e+20
+]]></expected_stdout>
+</testcase>
+```
+
+Cambiare expected a:
+```xml
+    <expected_stdout match="exact"><![CDATA[100000000000000000000
+]]></expected_stdout>
+```
+
+E rinominare il testcase in `test_print_large_int_as_integer_notation` (il nome attuale era basato sull'output scientific, non più valido).
+
+### D16.4 — Nuovi testcase per blindare il range
+```xml
+<testcase name="test_print_int_at_threshold">
+    <awk><![CDATA[BEGIN { print 1e16 }]]></awk>
+    <expected_stdout match="exact"><![CDATA[10000000000000000
+]]></expected_stdout>
+</testcase>
+<testcase name="test_print_huge_uses_scientific">
+    <awk><![CDATA[BEGIN { print 1e21 }]]></awk>
+    <expected_stdout match="exact"><![CDATA[1e+21
+]]></expected_stdout>
+</testcase>
+```
+
+### D16.5 — Verifica test esistenti regression
+Il proptest `template_scientific_no_orphan_dot` ha range `[1e16, 1e20]`. Con il fix, output diventa "integer notation" (es. "10000000000000000000"). Il check è `!out.contains(".e") && !out.contains(".E")` — passa anche con integer notation. Nessun cambio richiesto al proptest. ✓
+
+I testcase di Step 12-bis (`test_print_float_no_trailing_dot`) usano valori tipo `-61111.04...` che non sono integer-like, non vanno in Path B. Restano invariati. ✓
+
+## File modificati attesi
+
+- `src/types.rs` (~5 righe in `format_number_awk` per il nuovo Path B)
+- `tests/testsuite.xml` (+2 nuovi testcase, 1 modificato)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, **7/7 cargo + 109/109 XML**
+- [ ] `print 1e20` produce `100000000000000000000` (verifica live)
+- [ ] `print 1e16` produce `10000000000000000` (invariato)
+- [ ] `print 1e21` produce `1e+21` (oltre soglia, scientific)
+
+## Anti-pattern Step 16
+
+- ❌ Estendere la soglia oltre 1e21 — la precisione f64 si degrada troppo, output diventerebbe poco leggibile.
+- ❌ Touch al meccanismo `nextfile_pending`/`exit_pending` — fuori scope.
+- ❌ Re-introdurre proptest con range `[1e16, 1e20]` differential — Step 13-bis ha già documentato la divergenza, il template attuale (no-orphan-dot only) è sufficiente.
+- ❌ Cambiare CONVFMT default — `%.6g` è POSIX, lo manteniamo.
+
+---
+
+# Step 17 — Refactor: split `testsuite.xml` in file per testcase
+
+🔒 **LOCKED** — _attivare solo dopo ✅ di Step 16. La spec sotto è pronta._
+
+## Format commit message obbligatorio
+
+```
+refactor(step17): split testsuite.xml into one file per testcase
+
+IN-SCOPE:
+- Migrazione 109 testcase da `tests/testsuite.xml` a `tests/cases/NNNN_<name>.xml` (1 file ognuno)
+- Update `xml_runner_test.rs` per leggere glob `tests/cases/*.xml` invece di file unico
+- Update `src/bin/diffrun.rs` allo stesso modo
+- Output del test runner ora mostra `[N/M] <name>` invece di `[OK]` (più tracciabile)
+- Rimozione di `tests/testsuite.xml` (sostituito completamente)
+- Numerazione 0001-0109 in ordine di apparizione del file originale, immutabile (nuovi test prendono numeri progressivi senza renumerare i precedenti)
+
+OUT-OF-SCOPE (debito esplicito):
+- Cambiare il formato XML interno dei testcase — manteniamo lo stesso schema
+- Cambiare la logica di confronto (exact/contains) — invariata
+- Migration script committato come tool — facoltativo, può essere eseguito una volta e scartato
+- File JSON/TOML invece di XML — manteniamo XML per coerenza con esistente
+
+Testcase aggiunti: 0. Totali: 109 (invariati, ridistribuiti).
+```
+
+## Goal
+Rendere visibile il singolo testcase nel filesystem. Quando un test fallisce, il path del file lo identifica immediatamente. Numerazione zero-padded permette ordering deterministico e preserve l'ordering storico.
+
+Migrazione: `testsuite.xml` (109 testcase) → 109 file `tests/cases/0001_test_basic_print.xml`, `0002_test_record_separator.xml`, ecc.
+
+## Decisioni di design
+
+### D17.1 — Naming convention
+`tests/cases/NNNN_<test_name>.xml` dove:
+- NNNN = 4-digit zero-padded (supporta fino a 9999 testcase)
+- `<test_name>` = identico al `name=` attribute del testcase
+- Estensione `.xml`
+
+Esempio: `tests/cases/0001_test_basic_print.xml`
+
+### D17.2 — Format del file singolo
+Ogni file contiene UN solo `<testcase>` wrapped come root:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<testcase name="test_basic_print">
+    <args>...</args>  <!-- opzionale -->
+    <awk><![CDATA[...]]></awk>
+    <stdin>...</stdin>  <!-- opzionale -->
+    <expected_stdout match="exact"><![CDATA[...]]></expected_stdout>
+    <expected_stderr>...</expected_stderr>  <!-- opzionale -->
+</testcase>
+```
+
+NOTA: niente più `<testsuite>` wrapper. Il "suite" è implicito dalla cartella.
+
+### D17.3 — Migration script (one-shot)
+Scrivere uno script Python `scripts/split_testsuite.py` (o Rust binary `src/bin/split.rs`):
+1. Parsa `tests/testsuite.xml`
+2. Per ogni `<testcase>` con index i (1-based):
+   - Estrae `name` attribute
+   - Crea file `tests/cases/{i:04d}_{name}.xml` con header XML + testcase content
+3. Stampa "Migrated 109 testcases to tests/cases/"
+
+Lo script può essere eliminato dopo la migrazione (commit script + commit removal possono essere lo stesso) OR lasciato in `scripts/` come riferimento. Scelgo: lasciare in `scripts/` per documentazione.
+
+### D17.4 — Update `xml_runner_test.rs`
+```rust
+fn run_xml_testsuite() {
+    let cases_dir = std::path::Path::new("tests/cases");
+    let mut entries: Vec<std::path::PathBuf> = std::fs::read_dir(cases_dir)
+        .expect("Failed to read tests/cases dir")
+        .filter_map(|e| e.ok())
+        .map(|e| e.path())
+        .filter(|p| p.extension().and_then(|s| s.to_str()) == Some("xml"))
+        .collect();
+    entries.sort();  // numeric/alphabetic order
+    
+    let total = entries.len();
+    let mut failed = 0;
+    
+    for (i, path) in entries.iter().enumerate() {
+        let case: TestCase = quick_xml::de::from_str(
+            &std::fs::read_to_string(path).unwrap()
+        ).expect(&format!("Failed to parse {}", path.display()));
+        
+        let case_name = path.file_stem().unwrap().to_string_lossy();
+        println!("  [{}/{}] {}", i+1, total, case_name);
+        
+        // ... esecuzione invariata ...
+        
+        if case_failed {
+            failed += 1;
+        }
+    }
+    
+    if failed > 0 { panic!("{} of {} tests failed", failed, total); }
+}
+```
+
+NOTA: rimuovere `TestSuite` struct, ora superfluo.
+
+### D17.5 — Update `src/bin/diffrun.rs`
+Stessa logica di lettura globbed: `tests/cases/*.xml` ordinati. Il resto invariato.
+
+### D17.6 — Rimuovere `tests/testsuite.xml`
+Dopo la migrazione, eliminare il file tramite `git rm tests/testsuite.xml`. Storia git lo preserva.
+
+### D17.7 — Numerazione stabile (no renumber)
+Step futuri che aggiungono testcase usano il prossimo numero progressivo (0110, 0111, ...). Se un test viene rimosso, **NON renumerare** gli altri: lasciare il "buco" nella sequenza. Numeri stabili = git log leggibile.
+
+### D17.8 — Output formattato del test runner
+Cambiare l'output da:
+```
+  [OK]
+```
+a:
+```
+  [42/109] test_concat_basic
+```
+Più tracciabile e indica chiaramente il progresso.
+
+### D17.9 — Niente touch al codice di rawk
+Solo `tests/`, `src/bin/diffrun.rs`, eventualmente `scripts/`. NON toccare `src/runner.rs`, `src/types.rs`, `src/parser.rs`, ecc.
+
+## File modificati attesi
+
+- `tests/testsuite.xml` → ELIMINATO (`git rm`)
+- `tests/cases/0001_*.xml` ... `tests/cases/0109_*.xml` → CREATI
+- `tests/xml_runner_test.rs` (~30 righe modificate)
+- `src/bin/diffrun.rs` (~10 righe modificate)
+- (eventuale: `scripts/split_testsuite.py` per documentazione)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, 109 testcase tutti passano
+- [ ] `tests/testsuite.xml` non esiste più
+- [ ] `ls tests/cases/*.xml | wc -l` = 109
+- [ ] Tutti i file `tests/cases/*.xml` hanno prefisso 4-digit zero-padded
+- [ ] Output di `cargo test --test xml_runner_test -- --nocapture` mostra `[N/M] <name>` per ogni test
+- [ ] `cargo run --bin diffrun` continua a funzionare
+
+## Anti-pattern Step 17
+
+- ❌ Renumerare i test esistenti — i numeri sono stabili, no rinumerazione.
+- ❌ Toccare `src/runner.rs` o altri file di codice rawk — fuori scope.
+- ❌ Cambiare il formato XML del singolo testcase — manteniamo lo schema esistente.
+- ❌ Mescolare con altre feature/fix — questo è un refactor di tooling puro.
+- ❌ Tenere `testsuite.xml` come "backup" — git history è il backup, file rimane = duplicazione confusa.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -3049,6 +3327,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 13 (bundle quick fixes) | 🟡 PARTIAL | `d643295` | 4/5 proptest, 105/105 XML | D13.1 (orphan dot scientific) + D13.2 (default-run) + D13.4 (testcase XML) applicate correttamente. **Process violation**: D13.3 (estendere range proptest a [-1e25, 1e25]) ha esposto un divergence nuovo (rawk produce scientific, BSD awk produce plain integer per valori magnitude > 1e16) NON in scope di Step 13. Gemini ha committato con `cargo test` rosso (4/5 proptest pass), violando l'anti-pattern "build green ad ogni commit". Step 13-bis aperto per ripristinare green con strategy revert range + nuovo template proptest mirato. |
 | 2026-05-03 | Step 13-bis (restore green) | ✅ APPROVED | `e761252` | 7/7 cargo test, 105/105 XML | D13bis.1-D13bis.3 applicate letteralmente. Range di `template_add` revertito a `[-1e6, 1e6]`. Nuovo `template_scientific_no_orphan_dot` aggiunto: range `[1e16, 1e20]`, NON differential, controlla solo well-formedness output rawk (no `.e`/`.E` orphan). Documentazione divergence rawk-vs-BSD-awk nel commit message. Step 13 e 13-bis ora entrambi ✅. Backlog top → Step 14 (refactor stilistico). |
 | 2026-05-03 | Step 14 (refactor parte 1: qualifications) | ✅ APPROVED | `1a5d5b7` | 7/7 cargo, 105/105 XML | D14.1-D14.6 applicate letteralmente. Refactor mechanical: 2 use statements aggiunti, ~80 occorrenze di `crate::types::*` e `crate::ast::*` sostituite con shorthand. Net delta `+114/-112` = +2 righe (solo i `use`). 0 occorrenze residue verificate via grep. Build clean, comportamento invariato. By-the-book. Backlog top → Step 15 (refactor parte 2: Result<_, AwkError>). |
+| 2026-05-03 | Step 15 (refactor parte 2: no più exit(1) runtime) | ✅ APPROVED | `52002fd` | 7/7 cargo, 107/107 XML | D15.1-D15.6 applicate letteralmente. Zero `exit(1)` in `src/` (verificato live), `exit(2)` per CLI errors preservato. `div`/`rem` su zero → warning + `Number(0.0)` (gawk-style). Unknown function → warning + `Uninitialized`. 2 testcase regression con `<expected_stderr>`. Refactor scoped pragmatico (no signature change `Result<_, AwkError>`, esplicitamente fuori scope). 14 step principali ✅ + 4 bis ✅. Backlog ha solo item 15 (integer-notation heuristic) rimasto. |
 
 ---
 
@@ -3070,7 +3349,8 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 12. ~~Bug residuo: orphan dot in scientific notation~~ → **promosso a Step 13** ✅ specced
 13. ~~Ergonomia: `default-run = "rawk"` in Cargo.toml~~ → **promosso a Step 13** ✅ specced (bundle)
 14. ~~Tighten proptest ranges~~ → **promosso a Step 13** ✅ specced (bundle)
-15. **Implementare heuristica "integer notation for large integer-like float"** — rawk produce scientific (`%.6g`) per float magnitude > 1e16 anche se integer-like; BSD awk e gawk usano notation integer per "integer-like" float fino a ~1e20. Fix architetturale: estendere fast-path di `format_number_awk` con bound più alto (es. 1e21) usando arithmetic check senza loss of precision. Trovato durante audit Step 13.
+15. ~~Implementare heuristica "integer notation for large integer-like float"~~ → **promosso a Step 16** ✅ specced
+16. **Refactor: split testsuite.xml in file per testcase** → **promosso a Step 17** ✅ specced (LOCKED until Step 16 ✅)
 
 ---
 
