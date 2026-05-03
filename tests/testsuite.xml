@@ -697,4 +697,37 @@ line3]]></stdin>
 3:line3
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_nextfile_single_file_endfile_runs">
+        <awk><![CDATA[NR == 2 { nextfile } { print NR ":" $0 } ENDFILE { print "EF" } END { print "END:" NR }]]></awk>
+        <stdin><![CDATA[a
+b
+c
+d]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1:a
+EF
+END:2
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_nextfile_first_record_no_print">
+        <awk><![CDATA[NR == 1 { nextfile } { print NR ":" $0 } END { print "done" }]]></awk>
+        <stdin><![CDATA[a
+b
+c]]></stdin>
+        <expected_stdout match="exact"><![CDATA[done
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_nextfile_in_user_function">
+        <awk><![CDATA[
+        function skip() { nextfile }
+        NR == 2 { skip() }
+        { print NR ":" $0 }
+        END { print "END" }
+        ]]></awk>
+        <stdin><![CDATA[a
+b
+c]]></stdin>
+        <expected_stdout match="exact"><![CDATA[1:a
+END
+]]></expected_stdout>
+    </testcase>
 </testsuite>

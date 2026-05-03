@@ -50,6 +50,7 @@ pub enum Statement {
     Break,
     Continue,
     Next,
+    NextFile,
     Return(Option<Expr>),
     Exit(Option<Expr>),
     Expr(Expr),

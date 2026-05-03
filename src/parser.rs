@@ -141,6 +141,7 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
         }
         Rule::break_stmt => Statement::Break,
         Rule::continue_stmt => Statement::Continue,
+        Rule::nextfile_stmt => Statement::NextFile,
         Rule::next_stmt => Statement::Next,
         Rule::return_stmt => {
             let mut inners = inner.into_inner();

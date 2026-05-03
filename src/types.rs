@@ -185,6 +185,8 @@ pub struct EvalContext {
     pub regex_cache: HashMap<String, regex::Regex>,
     pub convfmt: String,
     pub ofmt: String,
+    pub nextfile_pending: bool,
+    pub exit_pending: Option<i32>,
 }
 
 impl EvalContext {
@@ -208,6 +210,8 @@ impl EvalContext {
             regex_cache: HashMap::new(),
             convfmt: "%.6g".to_string(),
             ofmt: "%.6g".to_string(),
+            nextfile_pending: false,
+            exit_pending: None,
         }
     }
 

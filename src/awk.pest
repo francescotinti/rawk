@@ -35,6 +35,7 @@ statement = {
     delete_stmt |
     break_stmt |
     continue_stmt |
+    nextfile_stmt |
     next_stmt |
     return_stmt |
     exit_stmt |
@@ -55,6 +56,7 @@ print_stmt = { "print" ~ print_expr_list? ~ redirect? }
 printf_stmt = { "printf" ~ print_expr_list? ~ redirect? }
 break_stmt = { "break" }
 continue_stmt = { "continue" }
+nextfile_stmt = { "nextfile" }
 next_stmt = { "next" }
 return_stmt = { "return" ~ expr? }
 exit_stmt = { "exit" ~ expr? }

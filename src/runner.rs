@@ -31,6 +31,7 @@ pub enum FlowControl {
     Break,
     Continue,
     Next,
+    NextFile,
     Return(crate::types::AwkValue),
     Exit(i32),
 }
@@ -213,8 +214,17 @@ fn run_rules_on_record(rules: &[CompiledRule], context: &mut EvalContext) -> Flo
             if fc == FlowControl::Next {
                 break; // break the rule loop, process next line
             }
+            if fc == FlowControl::NextFile {
+                return FlowControl::NextFile;
+            }
             if matches!(fc, FlowControl::Exit(_)) {
                 return fc;
+            }
+            if context.nextfile_pending {
+                return FlowControl::NextFile;
+            }
+            if let Some(code) = context.exit_pending {
+                return FlowControl::Exit(code);
             }
         }
     }
@@ -255,6 +265,7 @@ fn process_single_byte<R: BufRead>(mut reader: R, delim: u8, context: &mut EvalC
 
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+        if fc == FlowControl::NextFile { return Ok(FlowControl::None); }
     }
 
     Ok(FlowControl::None)
@@ -273,6 +284,7 @@ fn process_paragraph<R: BufRead>(mut reader: R, context: &mut EvalContext, rules
             context.update_record(record);
             let fc = run_rules_on_record(rules, context);
             if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+            if fc == FlowControl::NextFile { return Ok(FlowControl::None); }
         }
         last_end = mat.end();
     }
@@ -282,6 +294,7 @@ fn process_paragraph<R: BufRead>(mut reader: R, context: &mut EvalContext, rules
         context.update_record(last);
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+        if fc == FlowControl::NextFile { return Ok(FlowControl::None); }
     }
     Ok(FlowControl::None)
 }
@@ -300,6 +313,7 @@ fn process_regex_rs<R: BufRead>(mut reader: R, rs: &str, context: &mut EvalConte
         context.update_record(record);
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+        if fc == FlowControl::NextFile { return Ok(FlowControl::None); }
         last_end = mat.end();
     }
     let last = &all[last_end..];
@@ -308,19 +322,22 @@ fn process_regex_rs<R: BufRead>(mut reader: R, rs: &str, context: &mut EvalConte
         context.update_record(last);
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+        if fc == FlowControl::NextFile { return Ok(FlowControl::None); }
     }
     Ok(FlowControl::None)
 }
 
 fn process_lines<R: BufRead>(reader: R, context: &mut EvalContext, rules: &[CompiledRule]) -> anyhow::Result<FlowControl> {
     let rs_val = context.get_var("RS").as_string();
-    if rs_val.is_empty() {
+    let res = if rs_val.is_empty() {
         process_paragraph(reader, context, rules)
     } else if rs_val.chars().count() == 1 {
         process_single_byte(reader, rs_val.as_bytes()[0], context, rules)
     } else {
         process_regex_rs(reader, &rs_val, context, rules)
-    }
+    };
+    context.nextfile_pending = false;
+    res
 }
 
 fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
@@ -665,6 +682,13 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                         if let FlowControl::Return(val) = fc {
                             return val;
                         }
+                        if matches!(fc, FlowControl::Exit(_) | FlowControl::NextFile) {
+                            if let FlowControl::Exit(code) = fc {
+                                context.exit_pending = Some(code);
+                            } else {
+                                context.nextfile_pending = true;
+                            }
+                        }
                         crate::types::AwkValue::Uninitialized
                     } else {
                         eprintln!("awk: unknown function {}", name);
@@ -793,10 +817,14 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
 
 fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowControl {
     for stmt in action {
+        if context.nextfile_pending { return FlowControl::NextFile; }
+        if let Some(code) = context.exit_pending { return FlowControl::Exit(code); }
+
         match stmt {
             Statement::Break => return FlowControl::Break,
             Statement::Continue => return FlowControl::Continue,
             Statement::Next => return FlowControl::Next,
+            Statement::NextFile => return FlowControl::NextFile,
             Statement::Return(expr_opt) => {
                 let val = if let Some(expr) = expr_opt {
                     eval_expr(expr, context)
@@ -818,7 +846,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break { break; }
                     if fc == FlowControl::Continue { continue; }
-                    if fc == FlowControl::Next { return fc; }
+                    if fc == FlowControl::Next || fc == FlowControl::NextFile { return fc; }
                     if let FlowControl::Exit(_) = fc { return fc; }
                 }
             }
@@ -826,7 +854,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 loop {
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break { break; }
-                    if fc == FlowControl::Next { return fc; }
+                    if fc == FlowControl::Next || fc == FlowControl::NextFile { return fc; }
                     if let FlowControl::Exit(_) = fc { return fc; }
                     if !eval_expr(cond, context).is_truthy() { break; }
                 }
@@ -842,7 +870,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break { break; }
                     if fc == FlowControl::Continue { continue; }
-                    if fc == FlowControl::Next { return fc; }
+                    if fc == FlowControl::Next || fc == FlowControl::NextFile { return fc; }
                     if let FlowControl::Exit(_) = fc { return fc; }
                 }
             }
@@ -858,7 +886,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     }
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break { break; }
-                    if matches!(fc, FlowControl::Return(_)) || fc == FlowControl::Next { return fc; }
+                    if matches!(fc, FlowControl::Return(_)) || fc == FlowControl::Next || fc == FlowControl::NextFile { return fc; }
                     if let FlowControl::Exit(_) = fc { return fc; }
                     // FlowControl::Continue just continues
                     if let Some(s) = step {

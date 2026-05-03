@@ -1132,7 +1132,7 @@ after
 
 # Step 5 — Record Separator: paragraph mode + multi-char regex
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `ffbc0fe` — 82 test verdi**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -1405,6 +1405,178 @@ line3]]></stdin>
 
 ---
 
+# Step 6 — Statement `nextfile`
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+feat(step6): nextfile statement
+
+IN-SCOPE:
+- Grammar: nextfile_stmt
+- AST: Statement::NextFile
+- FlowControl::NextFile variant
+- Propagazione attraverso run_rules_on_record + process_* (esce dal loop record corrente)
+- ENDFILE block ancora eseguito dopo nextfile (semantica POSIX)
+
+OUT-OF-SCOPE (debito esplicito):
+- Test multi-file richiede infrastruttura test diversa (oggi xml_runner_test usa solo stdin) — testiamo solo single-file behavior + END/ENDFILE ordering
+- nextfile dentro ENDFILE/END (POSIX undefined behavior, lasciamo non-supportato)
+
+Testcase aggiunti: 3. Totali: 85.
+```
+
+## Goal
+Implementare lo statement AWK `nextfile` (POSIX). Semantica: interrompe il processing dei record del file corrente, esegue il blocco `ENDFILE`, e passa al file successivo (eseguendo `BEGINFILE` per quello). Equivalente a "fast-forward to end of current file".
+
+Oggi `nextfile` non è in grammatica. Uno script come `BEGIN { } /skip/ { nextfile } { print }` darebbe parse error.
+
+## Decisioni di design (NON riaprire)
+
+### D6.1 — Grammar
+In `awk.pest`, aggiungere `nextfile_stmt` accanto a `next_stmt`:
+```pest
+statement = {
+    (if_stmt |
+    ...
+    next_stmt |
+    nextfile_stmt |
+    return_stmt |
+    ...) ~ eos?
+}
+nextfile_stmt = { "nextfile" }
+```
+
+**ATTENZIONE alla precedenza pest**: `nextfile_stmt` deve venire PRIMA di `next_stmt` nell'alternazione, altrimenti `next` matcha il prefisso e `file` resta orfano (stesso problema risolto in Step 2 per `printf`/`print`).
+
+### D6.2 — AST
+In `ast.rs`:
+```rust
+Statement::NextFile,
+```
+Aggiungere il variant tra `Next` e `Return`.
+
+### D6.3 — FlowControl
+In `runner.rs`:
+```rust
+pub enum FlowControl {
+    None,
+    Break,
+    Continue,
+    Next,
+    NextFile,   // ← nuovo
+    Return(crate::types::AwkValue),
+    Exit(i32),
+}
+```
+
+### D6.4 — Parser
+In `parser.rs::parse_statement`, aggiungere case:
+```rust
+Rule::nextfile_stmt => Statement::NextFile,
+```
+
+### D6.5 — Execute action
+In `runner.rs::execute_action`, aggiungere case:
+```rust
+Statement::NextFile => return FlowControl::NextFile,
+```
+
+### D6.6 — Propagation in `run_rules_on_record`
+Estendere il match per riconoscere NextFile e propagarlo:
+```rust
+let fc = execute_action(&rule.action, context);
+if fc == FlowControl::Next { break; }
+if fc == FlowControl::NextFile { return FlowControl::NextFile; }  // ← nuovo
+if matches!(fc, FlowControl::Exit(_)) { return fc; }
+```
+
+### D6.7 — Propagation nelle 3 `process_*`
+In `process_single_byte`, `process_paragraph`, `process_regex_rs`, dopo il loop di rules:
+```rust
+let fc = run_rules_on_record(rules, context);
+if matches!(fc, FlowControl::Exit(_)) { return Ok(fc); }
+if fc == FlowControl::NextFile { return Ok(FlowControl::None); }  // ← nuovo: esci dal file ma non dal run
+```
+
+Ritornare `Ok(FlowControl::None)` (non `NextFile`) perché il loop in `run()` su `files_to_process` continua naturalmente al file successivo. ENDFILE/BEGINFILE blocks sono già parte del flusso `run()` (eseguiti per ogni iterazione del for su `files_to_process`).
+
+### D6.8 — Verifica ENDFILE
+Il blocco `ENDFILE` viene eseguito in `run()` dopo `process_lines` per ogni file:
+```rust
+if let FlowControl::Exit(...) = process_lines(...)? { ... }
+if let FlowControl::Exit(code) = execute_special_blocks(..., SpecialBlock::EndFile) { ... }
+```
+Quando `process_lines` ritorna `None` (incluso il caso NextFile), `ENDFILE` viene eseguito normalmente. ✓
+
+## Testcase obbligatori (aggiungere a `tests/testsuite.xml` PRIMA del codice)
+
+```xml
+<testcase name="test_nextfile_single_file_endfile_runs">
+    <awk><![CDATA[NR == 2 { nextfile } { print NR ":" $0 } ENDFILE { print "EF" } END { print "END:" NR }]]></awk>
+    <stdin><![CDATA[a
+b
+c
+d]]></stdin>
+    <expected_stdout match="exact"><![CDATA[1:a
+EF
+END:2
+]]></expected_stdout>
+</testcase>
+<testcase name="test_nextfile_first_record_no_print">
+    <awk><![CDATA[NR == 1 { nextfile } { print NR ":" $0 } END { print "done" }]]></awk>
+    <stdin><![CDATA[a
+b
+c]]></stdin>
+    <expected_stdout match="exact"><![CDATA[done
+]]></expected_stdout>
+</testcase>
+<testcase name="test_nextfile_in_user_function">
+    <awk><![CDATA[
+    function skip() { nextfile }
+    NR == 2 { skip() }
+    { print NR ":" $0 }
+    END { print "END" }
+    ]]></awk>
+    <stdin><![CDATA[a
+b
+c]]></stdin>
+    <expected_stdout match="exact"><![CDATA[1:a
+END
+]]></expected_stdout>
+</testcase>
+```
+
+**Nota**: i testcase verificano solo single-file behavior + END/ENDFILE ordering. Multi-file requires test infrastructure changes (out-of-scope, vedi commit message).
+
+Sul terzo testcase: `nextfile` da dentro una user function richiede che `FlowControl::NextFile` propaghi anche attraverso `Expr::FunctionCall` execution. Verifica nel codice di `eval_expr` per `FunctionCall` user-defined: oggi cattura `Return(val)` e ignora altri FlowControl. Probabilmente serve estendere la cattura a NextFile (e Exit, già gestito? verificare).
+
+## File modificati attesi
+
+- `src/awk.pest` (+1 rule per `nextfile_stmt`, +1 alternativa nello statement)
+- `src/ast.rs` (+1 variant `Statement::NextFile`)
+- `src/parser.rs` (+1 case in `parse_statement`)
+- `src/runner.rs` (~10 righe nette: +1 variant FlowControl, +1 case execute_action, +3 propagation in process_*, +1 in run_rules_on_record, possibile fix in FunctionCall)
+- `tests/testsuite.xml` (+3 testcase)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, 82 + 3 = **85 testcase passano**
+- [ ] Tutti i testcase Step 1-5 ancora verdi
+- [ ] `nextfile_stmt` nell'alternazione DEVE venire prima di `next_stmt` (greedy-match issue come `printf`/`print`)
+
+## Anti-pattern specifici Step 6
+
+- ❌ Mettere `nextfile_stmt` dopo `next_stmt` — Pest matcha il prefisso `next` e `file` orfano dà errore.
+- ❌ Implementare nextfile come "exit del run" anziché "exit del file corrente" — semantica POSIX richiede continuazione coi file successivi.
+- ❌ Saltare ENDFILE block dopo nextfile — POSIX dice ENDFILE deve essere eseguito.
+- ❌ Estendere il test runner XML per supportare multi-file — è un cambio infrastrutturale fuori scope di questo step.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -1427,6 +1599,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 2 (printf reale) | ✅ APPROVED | `510d2c3` | 59/59 | Tutte le D2.1-D2.7 applicate letteralmente (sprintf crate, awk_sprintf scanner, format_one mapping, decode_string_escapes a parse-time, integration in Statement::Printf e builtin). T0 cleanup completato: zombie files rimossi. Bonus fix non segnalato: swap `printf_stmt`/`print_stmt` in pest grammar per evitare greedy-match. Process: by the book. Backlog top → Step 3. |
 | 2026-05-03 | Step 3 (escape `\xHH`/`\NNN`) | ✅ APPROVED | `cec7a9d` | 66/66 | D3.1-D3.4 applicate letteralmente. Implementazione di `decode_string_escapes` rifatta con `peek()` lookahead-based, hex e octal greedy-match, modulo 256 sull'octal overflow, fallback graceful per escape sconosciuti. 7 testcase con casi multibyte/zero/overflow/unknown. Process: by the book per il secondo step consecutivo. Backlog top → Step 4. |
 | 2026-05-03 | Step 4 (system/close/fflush) | ✅ APPROVED | `227c3e5` | 74/74 | D4.1-D4.6 applicate letteralmente. Refactor `out_files: HashMap<_, OutputStream>` con enum File/Pipe per tracciare Child, `wait()` correttamente su close di pipe, final shutdown drain in `run()`. Side-fix non in spec ma documentato in commit message: introdotto `print_expr_list` per risolvere ambiguità POSIX `print x > "file"` (redirect vs comparison). Comportamento corretto POSIX. Avrebbe dovuto essere SPEC-Q ma trasparenza nel commit lo ha mitigato. Minor: manca riga "Testcase aggiunti: N. Totali: M." nel commit message. Backlog top → Step 5. |
+| 2026-05-03 | Step 5 (RS paragraph + regex) | ✅ APPROVED | `ffbc0fe` | 82/82 | D5.1-D5.6 applicate letteralmente. Refactor `process_lines` in 3 funzioni (`process_single_byte`, `process_paragraph`, `process_regex_rs`) + dispatch top-level + helper `run_rules_on_record` estratto. Bonus sensato: default esplicito `RS="\n"` in `run()`. Commit message format perfettamente conforme (incluso "Testcase aggiunti: 8. Totali: 82.", che mancava in Step 4). 5° step consecutivo by-the-book. Backlog top → Step 6. |
 
 ---
 
@@ -1437,7 +1610,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 1. ~~String literal escape `\xHH` e `\NNN` (octal)~~ → **promosso a Step 3** ✅ specced
 2. ~~Builtin `system()` / `close()` / `fflush()`~~ → **promosso a Step 4** ✅ specced
 3. ~~Paragraph mode `RS=""` + RS regex multi-char~~ → **promosso a Step 5** ✅ specced
-4. **Statement `nextfile`** — non in grammatica oggi. Aggiungere rule + AST + flusso.
+4. ~~Statement `nextfile`~~ → **promosso a Step 6** ✅ specced
 5. **NF assignment side-effects (donefld/donerec)** — `NF = 3` deve troncare `fields`; `$5 = "x"` con NF=3 deve estendere e ricostruire `$0` lazy.
 6. **`getline` da pipe (`"cmd" | getline`)** — oggi solo `getline < file`. Estendere grammatica + runner.
 7. **`printf`/`print` con `>>` append e `|` pipe** — già implementato in `handle_output`, ma testare edge case (file riaperti, append vs write, encoding).
