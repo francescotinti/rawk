@@ -881,4 +881,9 @@ line2
         <expected_stdout match="exact"><![CDATA[15
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_print_float_no_trailing_dot">
+        <awk><![CDATA[BEGIN { x = -449970.44564619905 + 388859.40804116876; print x }]]></awk>
+        <expected_stdout match="exact"><![CDATA[-61111
+]]></expected_stdout>
+    </testcase>
 </testsuite>

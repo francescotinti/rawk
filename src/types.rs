@@ -149,7 +149,13 @@ fn format_number_awk(n: f64, fmt: &str) -> String {
     if n.is_finite() && n == n.trunc() && n.abs() < 1e16 {
         format!("{}", n as i64)
     } else {
-        sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string())
+        let s = sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string());
+        // Workaround sprintf v0.4 bug: %g può lasciare trailing dot orfano
+        if s.ends_with('.') {
+            s[..s.len()-1].to_string()
+        } else {
+            s
+        }
     }
 }
 
