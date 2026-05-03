@@ -2075,7 +2075,7 @@ line2
 
 # Step 10 — CLI `-v var=value` injection + estensione test infra
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `03fb7f6` — 103 test verdi**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -2247,6 +2247,136 @@ NOTA: il terzo testcase (`test_v_multiple_last_wins`) verifica anche che la nuov
 
 ---
 
+# Step 11 — Differential testing harness vs system awk (read-only report)
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+test(step11): differential test harness vs system awk
+
+IN-SCOPE:
+- Nuovo binario `cargo run --bin diffrun` che processa testsuite.xml
+- Per ogni testcase: spawn rawk e system awk, confronta stdout
+- Genera report classificato: MATCH / DIVERGE / SKIPPED (con motivo)
+- Skip euristico per testcase che usano feature gawk-only (rare nel testsuite)
+
+OUT-OF-SCOPE (debito esplicito):
+- Build di c_awk via build.rs (`cc` crate) — usiamo system awk (BSD su macOS, gawk su Linux), c_awk source resta riferimento documentale non-eseguito
+- Auto-fail su divergenze — il report è informativo, non integra cargo test
+- Diff visivo tipo `diff -u` — basta indicare match/diverge con prime 3 righe di output
+- Casi che richiedono `<args>` con flag rawk-specific — saltati con motivo
+
+Testcase aggiunti: 0 (non si modifica testsuite.xml). Totali: 103.
+```
+
+## Goal
+Costruire un **report comparativo** che lancia ogni testcase XML del nostro testsuite sia su rawk che su system `awk`, e segnala dove gli output divergono. Non fa fail del build: è uno strumento di scoperta — i divergence sono **deliverable** della Fase 4 della metodologia legacy-port (skill).
+
+Tre tipi di outcome attesi:
+- **MATCH**: rawk e system awk producono stesso stdout → il nostro test è solido sia su rawk che su POSIX awk standard
+- **DIVERGE**: gli output differiscono → o il nostro test è sbagliato, o rawk ha un'estensione/divergenza voluta, o system awk implementa diversamente. Da investigare manualmente.
+- **SKIPPED**: testcase non eseguibile su system awk per ragioni note (es. usa gawk extension che BSD awk non supporta) → documentato
+
+## Decisioni di design (NON riaprire)
+
+### D11.1 — Binario separato `diffrun`
+NON un test cargo (`#[test]`). Un binario separato sotto `src/bin/diffrun.rs`. Comando: `cargo run --bin diffrun`. Output stampato a stdout/stderr. Exit code 0 sempre (non integra CI).
+
+Aggiungere a `Cargo.toml`:
+```toml
+[[bin]]
+name = "rawk"
+path = "src/main.rs"
+
+[[bin]]
+name = "diffrun"
+path = "src/bin/diffrun.rs"
+```
+(il `[[bin]]` esplicito per `rawk` può richiedere di aggiungerlo se non c'è — verificare).
+
+### D11.2 — Riuso del parsing XML
+`diffrun.rs` deve parsare `tests/testsuite.xml` con la stessa logica di `xml_runner_test.rs`. Due opzioni:
+- (a) Copiare le struct (DRY violation ma semplice)
+- (b) Estrarre in modulo condiviso `tests/common/xml_schema.rs` o `src/lib.rs` con feature flag
+
+Scegliamo (a) per semplicità: 30 righe di duplicazione vs un refactor di moduli. Documentare con `// duplicato da tests/xml_runner_test.rs (DRY trade-off accettato)`.
+
+### D11.3 — Esecuzione comparativa
+Per ogni testcase:
+1. Costruire i due Command, uno per `env!("CARGO_BIN_EXE_rawk")` e uno per `awk` (PATH).
+2. Applicare gli `<args>` allo stesso modo a entrambi.
+3. Stdin identico.
+4. Confrontare `stdout` byte-per-byte (trim trailing whitespace solo se il match XML è "exact" con trim — replicare la logica di xml_runner_test).
+
+### D11.4 — Skip euristico
+Saltare testcase che probabilmente non funzioneranno su system awk:
+- Casi con `<args>` che usano flag rawk-specific (per ora nessuno, ma `--csv` lo è).
+- Casi che usano gawk-only built-ins: `systime`, `strftime`, `and`, `or`, `xor`, `lshift`, `rshift`, `gensub`, `mktime`. Detect via grep su `case.awk`.
+- Casi con `RT` (gawk extension). Detect via grep "RT".
+- BEGINFILE/ENDFILE (gawk extension). Detect via grep.
+- Bitwise built-ins ecc.
+
+Per ogni skip, emettere `SKIPPED: <name> (reason: <reason>)`.
+
+### D11.5 — Output del report
+Formato strutturato a stdout:
+```
+=== rawk differential test report ===
+Reference awk: /usr/bin/awk (output of `awk --version` on first line)
+Total testcase: 103
+  MATCH:    XX
+  DIVERGE:  YY  (vedi sotto)
+  SKIPPED:  ZZ  (vedi sotto)
+
+== DIVERGENCES ==
+[1] test_concat_basic
+    rawk:    "abc\n"
+    awk:     "abc\n"
+    (no diff — false positive, fixare logica)
+[2] test_concat_func_call_disambig
+    rawk:    "6 5\n"
+    awk:     "6 5\n"
+    ...
+
+== SKIPPED ==
+[1] test_bitwise_and_time — uses gawk extension `and()`
+[2] test_gawk_manual_seven_random_numbers — uses gawk-only `srand` deterministic
+...
+```
+
+### D11.6 — Robustezza
+Se `awk` non trovato in PATH, esci con messaggio `awk binary not found in PATH; install awk to use diffrun`. Exit code 0 (non è errore di build).
+
+Se un testcase fa timeout (>5s), marca come `TIMEOUT` invece di MATCH/DIVERGE.
+
+## File modificati attesi
+
+- `Cargo.toml` (+pochi righe per `[[bin]]` di diffrun)
+- `src/bin/diffrun.rs` (NUOVO file, ~150 righe)
+- (NESSUN cambio a `src/runner.rs`, `src/parser.rs`, `tests/`)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo build --bin diffrun` clean
+- [ ] `cargo run --bin diffrun` esegue senza panic, produce report a stdout
+- [ ] Report mostra MATCH per la maggioranza dei testcase POSIX-puri (concat, printf basico, escape, RS basico)
+- [ ] Skip count > 0 (ci sono testcase con built-in gawk-only)
+- [ ] **Tutti i 103 testcase di `cargo test` continuano a passare** (Step 11 è additivo, non tocca nulla)
+- [ ] DIVERGE count è atteso > 0 — è il valore del report. **Non considerarlo un fallimento**, scriverlo nel commit message come "Divergenze rilevate: N (da analizzare in step futuri)".
+
+## Anti-pattern specifici Step 11
+
+- ❌ Far fallire `cargo test` se ci sono divergenze — è un report, non un test integrato.
+- ❌ Costruire c_awk via `build.rs` con `cc` crate — fuori scope, complicazione massiva. Usare `awk` da PATH.
+- ❌ Tentare di "fixare" tutti i divergence al volo — sono il valore del report, vanno catalogati per analisi futura. Eventuali fix andranno in Step N+1.
+- ❌ Modificare `tests/testsuite.xml` — questo step non aggiunge testcase.
+- ❌ Modificare `xml_runner_test.rs` — è già funzionante, diffrun lo affianca.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -2274,6 +2404,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 7 (NF side-effects) | ✅ APPROVED | `05533e1` | 90/90 | D7.1-D7.5 applicate letteralmente. `set_var("NF", ...)` ora truncate/extend `fields` + rebuild $0 con OFS. Edge case NF=0 gestito. `self.vars.get("OFS")` come prescritto per evitare borrow issue. 5 testcase: 3 nuovi comportamenti + 2 regression su set_field già funzionanti. NEXT_STEPS.md committato nel commit di Gemini (workflow chiarificato sui commit ora attivo). 7° step by-the-book. Backlog top → Step 8. |
 | 2026-05-03 | Step 8 (getline da pipe) | ✅ APPROVED | `b3fc303` | 94/94 | D8.1-D8.6 applicate letteralmente. Refactor `in_files` con enum `InputStream` simmetrico a `out_files` di Step 4. Grammar: `pipe_getline` come prima alternativa, con `non_getline_primary` per evitare recursion. AST: `GetlineSource { Main, File, Pipe }`. `close()` wait su pipe child. Final shutdown estesa per drain anche `in_files`. Bonus non dichiarato: `PartialEq` derive su `BinaryOperator` ed `Expr` per match del nuovo enum. 8° step by-the-book. Backlog top → Step 9. |
 | 2026-05-03 | Step 9 (redirect regression coverage) | ✅ APPROVED | `26969c7` | 99/99 | D9.1-D9.3 applicate letteralmente. **Step più pulito finora**: solo `tests/testsuite.xml` + `NEXT_STEPS.md` modificati (zero src/), come da spec. 5 testcase di regression per redirect: cached `>`, `>>` after close, `>` re-truncate, pipe multi-write, `printf >`. Commit message format perfetto. Test count tondo: 99. 9° step by-the-book. Backlog top → Step 10. |
+| 2026-05-03 | Step 10 (CLI -v var=value) | ✅ APPROVED | `03fb7f6` | 103/103 | D10.1-D10.6 applicate letteralmente. Parsing `-v name=value` in `run()` con exit(2) su invalid. `decode_string_escapes` pubblicizzata. Test infra estesa con `<args>` opzionali in XML schema. Ordering `-v` dopo OFS/ORS default verificato live (`-v OFS=:` produce `a:b:c`). 4 testcase tutti passano. 10° step by-the-book. Backlog top → Step 11. |
 
 ---
 
@@ -2289,7 +2420,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 6. ~~`getline` da pipe (`"cmd" | getline`)~~ → **promosso a Step 8** ✅ specced
 7. ~~`printf`/`print` con `>>` append e `|` pipe~~ → **promosso a Step 9** ✅ specced (test-only)
 8. ~~CLI: `-v var=value` reale e separatore `--`~~ → **promosso a Step 10** ✅ specced
-9. **Differential testing infrastructure** (Fase 4a della skill `legacy-port`) — `build.rs` con feature flag `differential`, FFI verso `c_awk/` compilato come libreria statica.
+9. ~~Differential testing infrastructure~~ → **promosso a Step 11** ✅ specced (scoped down: system awk via PATH, no FFI/cc/build.rs)
 10. **Property-based testing** (Fase 4b) — `proptest` con property roundtrip e cross-roundtrip rawk vs c_awk.
 11. **Refactor stilistico finale** — rimuovere tutti i `crate::types::AwkValue::...` qualificati, sostituire `eprintln+exit(1)` con `Result<_, AwkError>` propagato fino a `main`.
 

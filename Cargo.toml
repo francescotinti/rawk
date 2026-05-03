@@ -12,7 +12,15 @@ pest_derive = "2.8.6"
 rand = "0.10.1"
 regex = "1.12.3"
 sprintf = "0.4"
-
-[dev-dependencies]
 quick-xml = { version = "0.39.2", features = ["serialize"] }
 serde = { version = "1.0.228", features = ["derive"] }
+
+[dev-dependencies]
+
+[[bin]]
+name = "rawk"
+path = "src/main.rs"
+
+[[bin]]
+name = "diffrun"
+path = "src/bin/diffrun.rs"
