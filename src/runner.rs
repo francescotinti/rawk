@@ -92,6 +92,18 @@ pub fn run(config: Config) -> anyhow::Result<()> {
         context.functions.insert(f.name, (f.params, f.body));
     }
 
+    for v in &config.variables {
+        if let Some(eq_pos) = v.find('=') {
+            let name = v[..eq_pos].to_string();
+            let raw_value = &v[eq_pos+1..];
+            let decoded = crate::parser::decode_string_escapes(raw_value);
+            context.set_var(&name, crate::types::AwkValue::from_str_num(decoded));
+        } else {
+            eprintln!("rawk: invalid -v assignment '{}': expected name=value", v);
+            std::process::exit(2);
+        }
+    }
+
     // Execute BEGIN blocks
     let fc = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::Begin);
     if let FlowControl::Exit(code) = fc {

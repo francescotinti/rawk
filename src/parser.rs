@@ -471,7 +471,7 @@ fn parse_term(term: Pair<Rule>) -> Expr {
     base_expr
 }
 
-fn decode_string_escapes(raw: &str) -> String {
+pub fn decode_string_escapes(raw: &str) -> String {
     let mut out = String::with_capacity(raw.len());
     let mut chars = raw.chars().peekable();
     while let Some(c) = chars.next() {

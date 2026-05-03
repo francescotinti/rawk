@@ -849,4 +849,36 @@ line2
         <expected_stdout match="exact"><![CDATA[got:42
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_v_basic_assign">
+        <args>-v</args>
+        <args>x=42</args>
+        <awk><![CDATA[BEGIN { print x }]]></awk>
+        <expected_stdout match="exact"><![CDATA[42
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_v_string_value">
+        <args>-v</args>
+        <args>name=hello world</args>
+        <awk><![CDATA[BEGIN { print name }]]></awk>
+        <expected_stdout match="exact"><![CDATA[hello world
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_v_multiple_last_wins">
+        <args>-v</args>
+        <args>x=1</args>
+        <args>-v</args>
+        <args>y=2</args>
+        <args>-v</args>
+        <args>x=99</args>
+        <awk><![CDATA[BEGIN { print x, y }]]></awk>
+        <expected_stdout match="exact"><![CDATA[99 2
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_v_strnum_numeric_coercion">
+        <args>-v</args>
+        <args>n=10</args>
+        <awk><![CDATA[BEGIN { print n + 5 }]]></awk>
+        <expected_stdout match="exact"><![CDATA[15
+]]></expected_stdout>
+    </testcase>
 </testsuite>

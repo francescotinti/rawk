@@ -1957,7 +1957,7 @@ close=0
 
 # Step 9 — Regression coverage: redirect `>>` append + pipe `|` edge case
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `26969c7` — 99 test verdi**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -2073,6 +2073,180 @@ line2
 
 ---
 
+# Step 10 — CLI `-v var=value` injection + estensione test infra
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+feat(step10): CLI -v var=value injection
+
+IN-SCOPE:
+- Parse -v name=value flags in run() prima di BEGIN
+- Iniezione come StrNum (from_str_num) in EvalContext
+- Decode escape sequences (\n, \t, ecc.) nei value (decode_string_escapes pubblicizzato da parser)
+- Multi -v processing in ordine (last-wins per stesso name)
+- Test infra: estensione XML <testcase> con <args> opzionali + parsing in xml_runner_test.rs
+
+OUT-OF-SCOPE (debito esplicito):
+- Validazione del nome variabile (accettiamo qualunque cosa prima di =)
+- -- separator handling (clap lo gestisce nativamente, non testiamo esplicitamente)
+- Iniezione di assegnazioni POSIX-style come argomenti positionali (es. `awk 'prog' x=5 file`) — backlog separato
+
+Testcase aggiunti: 4. Totali: 103.
+```
+
+## Goal
+Oggi `cli.rs` accetta `-v` come `Vec<String>`, ma `runner.rs::run` non legge mai `config.variables`. Quindi `rawk -v x=5 'BEGIN{print x}'` stampa stringa vuota (x è uninitialized).
+
+POSIX richiede:
+- Parsing di `-v name=value`
+- Iniezione PRIMA del BEGIN block
+- Tipo del valore: **StrNum** (numerico se parsabile come f64, stringa altrimenti)
+- Escape sequences nel value (`\n`, `\t`, ...)
+- Multiple `-v` processati in ordine: last-wins per stesso name
+
+## Decisioni di design (NON riaprire)
+
+### D10.1 — Parsing di `name=value`
+In `runner.rs::run`, **dopo** `EvalContext::new(...)` e **prima** dell'esecuzione dei BEGIN block, aggiungere:
+```rust
+for v in &config.variables {
+    if let Some(eq_pos) = v.find('=') {
+        let name = v[..eq_pos].to_string();
+        let raw_value = &v[eq_pos+1..];
+        let decoded = crate::parser::decode_string_escapes(raw_value);
+        context.set_var(&name, crate::types::AwkValue::from_str_num(decoded));
+    } else {
+        eprintln!("rawk: invalid -v assignment '{}': expected name=value", v);
+        std::process::exit(2);
+    }
+}
+```
+
+NOTA: exit code 2 (non 1) per distinguere errori CLI da errori di runtime (POSIX convention).
+
+### D10.2 — Pubblicare `decode_string_escapes`
+In `parser.rs`, cambiare:
+```rust
+fn decode_string_escapes(raw: &str) -> String {
+```
+in:
+```rust
+pub fn decode_string_escapes(raw: &str) -> String {
+```
+Niente refactor della logica, solo visibilità.
+
+### D10.3 — Validazione nome variabile (rilassata)
+**Non** implementare validation strict del nome (deve essere `[A-Za-z_][A-Za-z0-9_]*`). Accettare qualunque cosa prima di `=` e lasciare che `set_var` la accetti. POSIX dice che nomi invalidi sono undefined behavior — preferiamo permissive.
+
+### D10.4 — Estensione test infrastructure
+In `tests/xml_runner_test.rs`:
+- Aggiungere field opzionale `args: Vec<String>` al `TestCase`:
+```rust
+#[derive(Debug, Deserialize)]
+struct TestCase {
+    #[serde(rename = "@name")]
+    name: String,
+    #[serde(rename = "args", default)]
+    args: Vec<String>,
+    awk: String,
+    stdin: Option<String>,
+    expected_stdout: ExpectedStdout,
+    expected_stderr: Option<String>,
+}
+```
+- Modificare il loop di spawn per applicare gli args **prima** dell'awk script:
+```rust
+let mut cmd = Command::new(env!("CARGO_BIN_EXE_rawk"));
+for arg in &case.args {
+    cmd.arg(arg);
+}
+cmd.arg(&case.awk);
+```
+
+### D10.5 — Schema XML per testcase con args
+Sintassi nuova:
+```xml
+<testcase name="...">
+    <args>-v</args>
+    <args>x=42</args>
+    <awk><![CDATA[BEGIN { print x }]]></awk>
+    <expected_stdout match="exact"><![CDATA[42
+]]></expected_stdout>
+</testcase>
+```
+Ogni `<args>` element è un singolo argomento CLI passato a rawk. L'ordine è preservato.
+
+### D10.6 — Ordering: -v processato prima di BEGIN
+Il blocco di iniezione va **prima** della chiamata a `execute_special_blocks(..., SpecialBlock::Begin)` ma **dopo** il setup di vars built-in (OFS, ORS, ARGV, ENVIRON). Questo permette a un BEGIN block di leggere le var iniettate, ed evita che gli built-in sovrascrivano un eventuale `-v OFS=...` (last-wins ordering).
+
+ATTENZIONE: se l'utente fa `rawk -v OFS=":" '...'`, il valore di OFS deve diventare ":" — quindi i `-v` devono andare DOPO i set di OFS/ORS default in `run()`. Verificare l'ordinamento.
+
+## Testcase obbligatori (aggiungere a `tests/testsuite.xml` PRIMA del codice)
+
+```xml
+<testcase name="test_v_basic_assign">
+    <args>-v</args>
+    <args>x=42</args>
+    <awk><![CDATA[BEGIN { print x }]]></awk>
+    <expected_stdout match="exact"><![CDATA[42
+]]></expected_stdout>
+</testcase>
+<testcase name="test_v_string_value">
+    <args>-v</args>
+    <args>name=hello world</args>
+    <awk><![CDATA[BEGIN { print name }]]></awk>
+    <expected_stdout match="exact"><![CDATA[hello world
+]]></expected_stdout>
+</testcase>
+<testcase name="test_v_multiple_last_wins">
+    <args>-v</args>
+    <args>x=1</args>
+    <args>-v</args>
+    <args>y=2</args>
+    <args>-v</args>
+    <args>x=99</args>
+    <awk><![CDATA[BEGIN { print x, y }]]></awk>
+    <expected_stdout match="exact"><![CDATA[99 2
+]]></expected_stdout>
+</testcase>
+<testcase name="test_v_strnum_numeric_coercion">
+    <args>-v</args>
+    <args>n=10</args>
+    <awk><![CDATA[BEGIN { print n + 5 }]]></awk>
+    <expected_stdout match="exact"><![CDATA[15
+]]></expected_stdout>
+</testcase>
+```
+
+NOTA: il terzo testcase (`test_v_multiple_last_wins`) verifica anche che la nuova infrastruttura `<args>` supporti ripetizioni multiple correttamente.
+
+## File modificati attesi
+
+- `src/parser.rs` (+1 keyword `pub`)
+- `src/runner.rs` (+~10 righe per parsing -v + iniezione)
+- `tests/xml_runner_test.rs` (+1 field nello struct + 1 loop spawn modifica)
+- `tests/testsuite.xml` (+4 testcase con `<args>`)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, 99 + 4 = **103 testcase passano**
+- [ ] Tutti i testcase Step 1-9 ancora verdi
+- [ ] L'estensione `<args>` funziona retrocompatibile: testcase esistenti senza `<args>` continuano a passare invariati grazie a `#[serde(default)]`
+
+## Anti-pattern specifici Step 10
+
+- ❌ Validazione strict del nome variabile — fuori scope, accettiamo permissive.
+- ❌ Iniettare valori come `String` invece di usare `from_str_num` — perde la dualità POSIX.
+- ❌ Posizionare l'iniezione PRIMA del setup di OFS/ORS/ARGV — i `-v` devono poter sovrascriverli.
+- ❌ Modificare `cli.rs` (`Config` struct) — il flag `-v` esiste già, basta leggerlo nel runner.
+- ❌ Hardcoded path al binario rawk nel test runner — usare `env!("CARGO_BIN_EXE_rawk")` come già fa.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -2099,6 +2273,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 6 (nextfile) | ✅ APPROVED | `b74e7e3` | 85/85 | D6.1-D6.7 applicate letteralmente. D6.8 (propagation through user function call) risolta out-of-spec con flag `nextfile_pending`/`exit_pending` su `EvalContext`: `eval_expr` non può propagare `FlowControl` via valore di ritorno (signature è `AwkValue`), quindi side-effect-based. Funziona, ma stato mutable nascosto. Da rivalutare in Step 11 (refactor stilistico) con possibile signature change `eval_expr -> Result<AwkValue, FlowControl>`. Commit message format conforme. Backlog top → Step 7. |
 | 2026-05-03 | Step 7 (NF side-effects) | ✅ APPROVED | `05533e1` | 90/90 | D7.1-D7.5 applicate letteralmente. `set_var("NF", ...)` ora truncate/extend `fields` + rebuild $0 con OFS. Edge case NF=0 gestito. `self.vars.get("OFS")` come prescritto per evitare borrow issue. 5 testcase: 3 nuovi comportamenti + 2 regression su set_field già funzionanti. NEXT_STEPS.md committato nel commit di Gemini (workflow chiarificato sui commit ora attivo). 7° step by-the-book. Backlog top → Step 8. |
 | 2026-05-03 | Step 8 (getline da pipe) | ✅ APPROVED | `b3fc303` | 94/94 | D8.1-D8.6 applicate letteralmente. Refactor `in_files` con enum `InputStream` simmetrico a `out_files` di Step 4. Grammar: `pipe_getline` come prima alternativa, con `non_getline_primary` per evitare recursion. AST: `GetlineSource { Main, File, Pipe }`. `close()` wait su pipe child. Final shutdown estesa per drain anche `in_files`. Bonus non dichiarato: `PartialEq` derive su `BinaryOperator` ed `Expr` per match del nuovo enum. 8° step by-the-book. Backlog top → Step 9. |
+| 2026-05-03 | Step 9 (redirect regression coverage) | ✅ APPROVED | `26969c7` | 99/99 | D9.1-D9.3 applicate letteralmente. **Step più pulito finora**: solo `tests/testsuite.xml` + `NEXT_STEPS.md` modificati (zero src/), come da spec. 5 testcase di regression per redirect: cached `>`, `>>` after close, `>` re-truncate, pipe multi-write, `printf >`. Commit message format perfetto. Test count tondo: 99. 9° step by-the-book. Backlog top → Step 10. |
 
 ---
 
@@ -2113,7 +2288,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 5. ~~NF assignment side-effects (donefld/donerec)~~ → **promosso a Step 7** ✅ specced
 6. ~~`getline` da pipe (`"cmd" | getline`)~~ → **promosso a Step 8** ✅ specced
 7. ~~`printf`/`print` con `>>` append e `|` pipe~~ → **promosso a Step 9** ✅ specced (test-only)
-8. **CLI: `-v var=value` reale e separatore `--`** — il flag `-v` esiste in clap ma le assegnazioni non vengono parsate e iniettate in `EvalContext`.
+8. ~~CLI: `-v var=value` reale e separatore `--`~~ → **promosso a Step 10** ✅ specced
 9. **Differential testing infrastructure** (Fase 4a della skill `legacy-port`) — `build.rs` con feature flag `differential`, FFI verso `c_awk/` compilato come libreria statica.
 10. **Property-based testing** (Fase 4b) — `proptest` con property roundtrip e cross-roundtrip rawk vs c_awk.
 11. **Refactor stilistico finale** — rimuovere tutti i `crate::types::AwkValue::...` qualificati, sostituire `eprintln+exit(1)` con `Result<_, AwkError>` propagato fino a `main`.

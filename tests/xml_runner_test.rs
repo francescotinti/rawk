@@ -15,6 +15,8 @@ struct TestSuite {
 struct TestCase {
     #[serde(rename = "@name")]
     name: String,
+    #[serde(rename = "args", default)]
+    args: Vec<String>,
     awk: String,
     stdin: Option<String>,
     expected_stdout: ExpectedStdout,
@@ -51,6 +53,9 @@ fn run_xml_testsuite() {
         println!("  Test Case: {}", case.name);
 
         let mut cmd = Command::new(env!("CARGO_BIN_EXE_rawk"));
+        for arg in &case.args {
+            cmd.arg(arg);
+        }
         cmd.arg(&case.awk);
         cmd.stdin(Stdio::piped());
         cmd.stdout(Stdio::piped());
