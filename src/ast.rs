@@ -9,7 +9,7 @@ pub enum BinaryOperator {
     Add, Sub, Mul, Div,
     Eq, Neq, Lt, Lte, Gt, Gte,
     And, Or,
-    Match, NotMatch, In, Concat,
+    Match, NotMatch, In,
 }
 
 #[derive(Debug, Clone)]

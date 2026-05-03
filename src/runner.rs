@@ -598,10 +598,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     let arr_name = if let Expr::Variable(v) = &**rhs { v.clone() } else { "".to_string() };
                     crate::types::AwkValue::Number(if context.arrays.get(&arr_name).map(|a| a.contains_key(&key)).unwrap_or(false) { 1.0 } else { 0.0 })
                 }
-                BinaryOperator::Concat => {
-                    let s = format!("{}{}", l_val.as_string(), r_val.as_string());
-                    crate::types::AwkValue::String(s)
-                }
+
             }
         }
     }
