@@ -408,7 +408,7 @@ Testcase aggiunti: 0. Totali: 42.
 
 # Step 2 — Printf / sprintf con format specifiers reali
 
-🟢 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `510d2c3` — 59 test verdi**
 
 ## ⚠️ T0 — Pre-cleanup obbligatorio (1 minuto)
 Prima di iniziare il lavoro funzionale, rimuovi 4 file zombie ancora tracciati (residuo di Step 1-bis per inaccuratezza dello spec Claude):
@@ -711,6 +711,158 @@ c]]></expected_stdout>
 
 ---
 
+# Step 3 — String literal escape `\xHH` e `\NNN` (octal)
+
+🟢 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+feat(step3): String literal escapes \xHH and \NNN (octal)
+
+IN-SCOPE:
+- decode_string_escapes esteso con \xHH (1-2 hex digits) e \NNN (1-3 octal digits)
+- Integrazione del case \0 nel ramo octal generico
+
+OUT-OF-SCOPE (debito esplicito):
+- \uHHHH Unicode escape (4 hex) — gawk extension non POSIX
+- \UHHHHHHHH Unicode (8 hex) — non POSIX
+- Byte non-UTF8 puri (\xFF + others) — limitazione strutturale di Rust String
+
+Testcase aggiunti: 7. Totali: 66.
+```
+
+## Goal
+Completare `decode_string_escapes` (introdotto in Step 2) con il supporto per:
+- `\xHH` — escape esadecimale (1 o 2 hex digits, case-insensitive)
+- `\NNN` — escape ottale (1, 2, o 3 octal digits 0-7)
+
+POSIX awk supporta entrambi. Attualmente `decode_string_escapes` gestisce solo `\n \t \r \\ \" \/ \a \b \f \v \0` e fallisce silenziosamente sui multi-char escape.
+
+## Decisioni di design (NON riaprire)
+
+### D3.1 — Sintassi accettata
+- **Hex**: `\x` seguito da 1 o 2 hex digit (`0-9a-fA-F`). Greedy: prendi sempre il massimo possibile.
+- **Octal**: `\` seguito da 1, 2, o 3 octal digit (`0-7`). Greedy: prendi sempre il massimo possibile.
+- Se `\x` non è seguito da nessun hex digit → preserva `\x` literali (no panic).
+
+### D3.2 — Range e overflow
+- Hex: 0x00-0xFF → 1 byte. `\xHH` con due digit dà al massimo 0xFF, OK.
+- Octal: `\0` (0) a `\777` (511 dec). Valore `> 0xFF` → applicare modulo 256 (POSIX-compliant).
+- `\0` resta supportato come case zero del ramo octal generico (rimuovere il vecchio case speciale).
+
+### D3.3 — Encoding nel target Rust
+Il byte risultante è inserito nella stringa Rust come `char::from_u32(byte as u32).unwrap()`. I byte 0x00-0xFF sono code-point validi U+0000-U+00FF. Quindi `\xFF` diventa `'\u{ff}'` (UTF-8 a 2 byte). Questo diverge dal C awk che lavora su byte. Limitazione strutturale di Rust String (UTF-8) — documentare nel commit message come OUT-OF-SCOPE.
+
+### D3.4 — Implementazione
+Riscrivere `decode_string_escapes` in `parser.rs`. Il pattern (lookahead-based con `chars.peek()` invece di `chars.next()` come oggi):
+
+```rust
+fn decode_string_escapes(raw: &str) -> String {
+    let mut out = String::with_capacity(raw.len());
+    let mut chars = raw.chars().peekable();
+    while let Some(c) = chars.next() {
+        if c != '\\' { out.push(c); continue; }
+        match chars.peek().copied() {
+            Some('n')  => { chars.next(); out.push('\n'); }
+            Some('t')  => { chars.next(); out.push('\t'); }
+            Some('r')  => { chars.next(); out.push('\r'); }
+            Some('\\') => { chars.next(); out.push('\\'); }
+            Some('"')  => { chars.next(); out.push('"'); }
+            Some('/')  => { chars.next(); out.push('/'); }
+            Some('a')  => { chars.next(); out.push('\x07'); }
+            Some('b')  => { chars.next(); out.push('\x08'); }
+            Some('f')  => { chars.next(); out.push('\x0c'); }
+            Some('v')  => { chars.next(); out.push('\x0b'); }
+            Some('x') => {
+                chars.next();
+                let mut hex = String::new();
+                for _ in 0..2 {
+                    if let Some(&h) = chars.peek() {
+                        if h.is_ascii_hexdigit() { hex.push(h); chars.next(); } else { break; }
+                    }
+                }
+                if !hex.is_empty() {
+                    let val = u32::from_str_radix(&hex, 16).unwrap_or(0);
+                    out.push(char::from_u32(val).unwrap_or('\0'));
+                } else {
+                    out.push('\\'); out.push('x');
+                }
+            }
+            Some(d) if d.is_digit(8) => {
+                let mut oct = String::new();
+                for _ in 0..3 {
+                    if let Some(&o) = chars.peek() {
+                        if o.is_digit(8) { oct.push(o); chars.next(); } else { break; }
+                    }
+                }
+                let val = u32::from_str_radix(&oct, 8).unwrap_or(0) % 256;
+                out.push(char::from_u32(val).unwrap_or('\0'));
+            }
+            Some(other) => { chars.next(); out.push('\\'); out.push(other); }
+            None => out.push('\\'),
+        }
+    }
+    out
+}
+```
+
+NOTA: il vecchio case `Some('0') => out.push('\0')` va RIMOSSO. È coperto dal nuovo ramo octal generico (`\0` matcha `is_digit(8)` su '0' e produce byte 0).
+
+## Testcase obbligatori (aggiungere a `tests/testsuite.xml` PRIMA del codice)
+
+```xml
+<testcase name="test_escape_hex_basic">
+    <awk><![CDATA[BEGIN { printf "%s\n", "\x41\x42\x43" }]]></awk>
+    <expected_stdout match="exact"><![CDATA[ABC
+]]></expected_stdout>
+</testcase>
+<testcase name="test_escape_hex_one_digit">
+    <awk><![CDATA[BEGIN { printf "[%d]\n", length("\x9") }]]></awk>
+    <expected_stdout match="exact"><![CDATA[[1]
+]]></expected_stdout>
+</testcase>
+<testcase name="test_escape_octal_basic">
+    <awk><![CDATA[BEGIN { printf "%s\n", "\101\102\103" }]]></awk>
+    <expected_stdout match="exact"><![CDATA[ABC
+]]></expected_stdout>
+</testcase>
+<testcase name="test_escape_octal_short">
+    <awk><![CDATA[BEGIN { printf "[%d]\n", length("\7") }]]></awk>
+    <expected_stdout match="exact"><![CDATA[[1]
+]]></expected_stdout>
+</testcase>
+<testcase name="test_escape_octal_zero">
+    <awk><![CDATA[BEGIN { printf "[%d]\n", length("\0") }]]></awk>
+    <expected_stdout match="exact"><![CDATA[[1]
+]]></expected_stdout>
+</testcase>
+<testcase name="test_escape_mixed_hex_octal">
+    <awk><![CDATA[BEGIN { printf "%s\n", "\x48\x69\41" }]]></awk>
+    <expected_stdout match="exact"><![CDATA[Hi!
+]]></expected_stdout>
+</testcase>
+<testcase name="test_escape_unknown_preserved">
+    <awk><![CDATA[BEGIN { printf "%s\n", "a\zb" }]]></awk>
+    <expected_stdout match="exact"><![CDATA[a\zb
+]]></expected_stdout>
+</testcase>
+```
+
+## File modificati attesi
+
+- `src/parser.rs` (~30 righe modificate in `decode_string_escapes`)
+- `tests/testsuite.xml` (+7 testcase)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, 59 + 7 = **66 testcase passano**
+- [ ] Commit message format obbligatorio rispettato
+- [ ] Tutti i testcase Step 1 e Step 2 ancora verdi (regression check)
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -730,6 +882,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | (pre-Step 1) | — | `453987f` | 31/31 | Baseline auditata. Step di "Step 1, 3, 5" del piano originale completati cumulativamente nei 3 commit `ed791b9` → `52c1645` → `453987f`. Workflow formalizzato a partire da qui. |
 | 2026-05-03 | Step 1 (concat + CONVFMT) | 🟡 PARTIAL | `3082b1a` | 42/42 | Codice ✅: D1.1-D1.7 tutte applicate, build clean, test verdi. Process violations: commit message non conforme, file junk committati (.DS_Store, f1.txt, f2.txt, scratch.rs, pest_test.rs), header step non aggiornato, test `test_concat_func_call_disambig` silently amended (giustamente — era errore Claude — ma andava flaggato). Sblocco Step 2 condizionato a commit di cleanup. |
 | 2026-05-03 | Step 1-bis (cleanup) | ✅ APPROVED | `640462d` | 42/42 | Junk files committati rimossi (`.DS_Store, f1.txt, f2.txt, src/scratch.rs, pest_test.rs`); `.gitignore` esteso. Caveat: 4 file zombie ancora tracciati (`debug.rs, dummy.txt, out.txt, scratch.rs` alla root) per inaccuratezza dello spec Claude — assegnati a T0 di Step 2. Step 1 ora ✅, Step 2 sbloccato. |
+| 2026-05-03 | Step 2 (printf reale) | ✅ APPROVED | `510d2c3` | 59/59 | Tutte le D2.1-D2.7 applicate letteralmente (sprintf crate, awk_sprintf scanner, format_one mapping, decode_string_escapes a parse-time, integration in Statement::Printf e builtin). T0 cleanup completato: zombie files rimossi. Bonus fix non segnalato: swap `printf_stmt`/`print_stmt` in pest grammar per evitare greedy-match. Process: by the book. Backlog top → Step 3. |
 
 ---
 
@@ -737,7 +890,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 
 Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e lo promuove a spec completa (Fase A). I numeri qui sono indicativi: lo step promosso prende il prossimo numero progressivo (Step 3, Step 4, ecc.).
 
-1. **String literal escape `\xHH` e `\NNN` (octal)** — completare `decode_string_escapes` (introdotto in Step 2) con escape esadecimali e ottali.
+1. ~~String literal escape `\xHH` e `\NNN` (octal)~~ → **promosso a Step 3** ✅ specced
 2. **Builtin `system()` / `close()` / `fflush()`** — sblocca controllo I/O e shell-out. `close()` deve far `wait()` sui figli pipe per evitare zombie.
 3. **Paragraph mode `RS=""` + RS regex multi-char** — fix critico in `process_lines`: oggi prende solo `rs_val.as_bytes()[0]`.
 4. **Statement `nextfile`** — non in grammatica oggi. Aggiungere rule + AST + flusso.

@@ -475,19 +475,43 @@ fn decode_string_escapes(raw: &str) -> String {
     let mut chars = raw.chars().peekable();
     while let Some(c) = chars.next() {
         if c != '\\' { out.push(c); continue; }
-        match chars.next() {
-            Some('n')  => out.push('\n'),
-            Some('t')  => out.push('\t'),
-            Some('r')  => out.push('\r'),
-            Some('\\') => out.push('\\'),
-            Some('"')  => out.push('"'),
-            Some('/')  => out.push('/'),
-            Some('a')  => out.push('\x07'),
-            Some('b')  => out.push('\x08'),
-            Some('f')  => out.push('\x0c'),
-            Some('v')  => out.push('\x0b'),
-            Some('0') => out.push('\0'),
-            Some(other) => { out.push('\\'); out.push(other); }
+        match chars.peek().copied() {
+            Some('n')  => { chars.next(); out.push('\n'); }
+            Some('t')  => { chars.next(); out.push('\t'); }
+            Some('r')  => { chars.next(); out.push('\r'); }
+            Some('\\') => { chars.next(); out.push('\\'); }
+            Some('"')  => { chars.next(); out.push('"'); }
+            Some('/')  => { chars.next(); out.push('/'); }
+            Some('a')  => { chars.next(); out.push('\x07'); }
+            Some('b')  => { chars.next(); out.push('\x08'); }
+            Some('f')  => { chars.next(); out.push('\x0c'); }
+            Some('v')  => { chars.next(); out.push('\x0b'); }
+            Some('x') => {
+                chars.next();
+                let mut hex = String::new();
+                for _ in 0..2 {
+                    if let Some(&h) = chars.peek() {
+                        if h.is_ascii_hexdigit() { hex.push(h); chars.next(); } else { break; }
+                    }
+                }
+                if !hex.is_empty() {
+                    let val = u32::from_str_radix(&hex, 16).unwrap_or(0);
+                    out.push(char::from_u32(val).unwrap_or('\0'));
+                } else {
+                    out.push('\\'); out.push('x');
+                }
+            }
+            Some(d) if d.is_digit(8) => {
+                let mut oct = String::new();
+                for _ in 0..3 {
+                    if let Some(&o) = chars.peek() {
+                        if o.is_digit(8) { oct.push(o); chars.next(); } else { break; }
+                    }
+                }
+                let val = u32::from_str_radix(&oct, 8).unwrap_or(0) % 256;
+                out.push(char::from_u32(val).unwrap_or('\0'));
+            }
+            Some(other) => { chars.next(); out.push('\\'); out.push(other); }
             None => out.push('\\'),
         }
     }

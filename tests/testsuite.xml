@@ -508,4 +508,39 @@ c]]></expected_stdout>
         <expected_stdout match="exact"><![CDATA[h
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_escape_hex_basic">
+        <awk><![CDATA[BEGIN { printf "%s\n", "\x41\x42\x43" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[ABC
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_escape_hex_one_digit">
+        <awk><![CDATA[BEGIN { printf "[%d]\n", length("\x9") }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[1]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_escape_octal_basic">
+        <awk><![CDATA[BEGIN { printf "%s\n", "\101\102\103" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[ABC
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_escape_octal_short">
+        <awk><![CDATA[BEGIN { printf "[%d]\n", length("\7") }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[1]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_escape_octal_zero">
+        <awk><![CDATA[BEGIN { printf "[%d]\n", length("\0") }]]></awk>
+        <expected_stdout match="exact"><![CDATA[[1]
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_escape_mixed_hex_octal">
+        <awk><![CDATA[BEGIN { printf "%s\n", "\x48\x69\41" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[Hi!
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_escape_unknown_preserved">
+        <awk><![CDATA[BEGIN { printf "%s\n", "a\zb" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[a\zb
+]]></expected_stdout>
+    </testcase>
 </testsuite>
