@@ -108,6 +108,6 @@ op_inc = { "++" }
 op_dec = { "--" }
 
 ident = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "_")* }
-number = @{ "-"? ~ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT*)? ~ (("e" | "E") ~ ("+" | "-")? ~ ASCII_DIGIT+)? }
+number = @{ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT*)? ~ (("e" | "E") ~ ("+" | "-")? ~ ASCII_DIGIT+)? }
 string_literal = ${ "\"" ~ inner_string ~ "\"" }
 inner_string = @{ (!"\"" ~ ANY)* }

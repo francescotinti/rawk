@@ -47,12 +47,12 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     let mut context = EvalContext::new(fs);
 
     context.set_var("ARGC", crate::types::AwkValue::Number(config.input_files.len() as f64 + 1.0));
-    context.set_array_var("ARGV", "0", crate::types::AwkValue::String("rawk".to_string()));
+    context.set_array_var("ARGV", "0", crate::types::AwkValue::from_str_num("rawk".to_string()));
     for (i, file) in config.input_files.iter().enumerate() {
-        context.set_array_var("ARGV", &format!("{}", i + 1), crate::types::AwkValue::String(file.clone()));
+        context.set_array_var("ARGV", &format!("{}", i + 1), crate::types::AwkValue::from_str_num(file.clone()));
     }
     for (key, val) in std::env::vars() {
-        context.set_array_var("ENVIRON", &key, crate::types::AwkValue::String(val));
+        context.set_array_var("ENVIRON", &key, crate::types::AwkValue::from_str_num(val));
     }
     context.set_var("OFS", crate::types::AwkValue::String(" ".to_string()));
     context.set_var("ORS", crate::types::AwkValue::String("\n".to_string()));
@@ -292,7 +292,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
             if read_success {
                 let line_str = line.trim_end_matches(&['\r', '\n'][..]).to_string();
                 if let Some(var) = var_opt {
-                    context.set_var(var, crate::types::AwkValue::String(line_str));
+                    context.set_var(var, crate::types::AwkValue::from_str_num(line_str));
                 } else {
                     context.update_record(&line_str);
                 }
@@ -471,7 +471,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     let count = parts.len();
                     for (i, p) in parts.iter().enumerate() {
                         let key = format!("{}", i + 1);
-                        context.set_array_var(&arr_name, &key, crate::types::AwkValue::String(p.to_string()));
+                        context.set_array_var(&arr_name, &key, crate::types::AwkValue::from_str_num(p.to_string()));
                     }
                     crate::types::AwkValue::Number(count as f64)
                 }

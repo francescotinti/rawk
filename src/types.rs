@@ -51,7 +51,7 @@ impl AwkValue {
             AwkValue::Uninitialized => false,
             AwkValue::Number(n) => *n != 0.0,
             AwkValue::String(s) => !s.is_empty(), // Standard awk: empty string is false, non-empty is true (even "0")
-            AwkValue::StrNum(s, _) => !s.is_empty(),
+            AwkValue::StrNum(_, n) => *n != 0.0,
         }
     }
 
