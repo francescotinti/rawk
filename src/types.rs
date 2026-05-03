@@ -7,7 +7,7 @@
 use crate::ast::Statement;
 use std::collections::HashMap;
 use std::fmt;
-use std::io::{Write, BufRead};
+use std::io::BufRead;
 use rand::rngs::StdRng;
 
 /// Represents an AWK dynamic value (number, string, or uninitialized).
@@ -153,6 +153,20 @@ fn format_number_awk(n: f64, fmt: &str) -> String {
     }
 }
 
+pub enum OutputStream {
+    File(Box<dyn std::io::Write>),
+    Pipe { stdin: Box<dyn std::io::Write>, child: std::process::Child },
+}
+
+impl OutputStream {
+    pub fn writer(&mut self) -> &mut dyn std::io::Write {
+        match self {
+            OutputStream::File(w) => w.as_mut(),
+            OutputStream::Pipe { stdin, .. } => stdin.as_mut(),
+        }
+    }
+}
+
 /// Represents the Evaluation Context (the state) for the current line.
 pub struct EvalContext {
     pub nr: usize,              // Number of Records read so far
@@ -163,7 +177,7 @@ pub struct EvalContext {
     pub record: String,
     pub vars: HashMap<String, AwkValue>,
     pub arrays: HashMap<String, HashMap<String, AwkValue>>,
-    pub out_files: HashMap<String, Box<dyn Write>>,
+    pub out_files: HashMap<String, OutputStream>,
     pub in_files: HashMap<String, Box<dyn BufRead>>,
     pub rng: StdRng,
     pub local_scopes: Vec<HashMap<String, AwkValue>>,

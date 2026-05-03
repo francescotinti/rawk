@@ -222,14 +222,14 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
             let is_printf = inner.as_rule() == Rule::printf_stmt;
             for p in inner.into_inner() {
                 match p.as_rule() {
-                    Rule::expr_list => {
+                    Rule::expr_list | Rule::print_expr_list => {
                         for e in p.into_inner() {
                             exprs.push(parse_expr(e));
                         }
                     }
                     Rule::redirect => {
+                        let p_str = p.as_str();
                         let mut r_inners = p.into_inner();
-                        let p_str = r_inners.as_str();
                         let op = if p_str.starts_with(">>") {
                             ">>".to_string()
                         } else if p_str.starts_with(">") {

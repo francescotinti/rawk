@@ -153,6 +153,20 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     if let FlowControl::Exit(code) = fc {
         std::process::exit(code);
     }
+    
+    // Final cleanup: flush tutto, wait() su pipe children
+    use std::io::Write;
+    let _ = std::io::stdout().flush();
+    let streams: Vec<crate::types::OutputStream> = context.out_files.drain().map(|(_,v)| v).collect();
+    for stream in streams {
+        match stream {
+            crate::types::OutputStream::File(_) => {}
+            crate::types::OutputStream::Pipe { stdin, mut child } => {
+                drop(stdin);
+                let _ = child.wait();
+            }
+        }
+    }
 
     Ok(())
 }
@@ -413,6 +427,72 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     let v1 = eval_expr(&args[0], context).as_number() as i64;
                     let v2 = eval_expr(&args[1], context).as_number() as i64;
                     crate::types::AwkValue::Number((v1 >> v2) as f64)
+                }
+                "system" => {
+                    if args.is_empty() { return crate::types::AwkValue::Number(0.0); }
+                    let cmd = eval_expr(&args[0], context).as_string();
+                    use std::io::Write;
+                    let _ = std::io::stdout().flush();
+                    let status = std::process::Command::new("sh")
+                        .arg("-c")
+                        .arg(&cmd)
+                        .status();
+                    let code = match status {
+                        Ok(s) => s.code().unwrap_or(-1),
+                        Err(_) => -1,
+                    };
+                    crate::types::AwkValue::Number(code as f64)
+                }
+                "close" => {
+                    if args.is_empty() { return crate::types::AwkValue::Number(-1.0); }
+                    let target = eval_expr(&args[0], context).as_string();
+                    let mut status: i32 = 0;
+                    let mut found = false;
+                    
+                    if let Some(stream) = context.out_files.remove(&target) {
+                        found = true;
+                        match stream {
+                            crate::types::OutputStream::File(_) => { }
+                            crate::types::OutputStream::Pipe { stdin, mut child } => {
+                                drop(stdin);
+                                if let Ok(s) = child.wait() {
+                                    status = s.code().unwrap_or(-1);
+                                } else {
+                                    status = -1;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if context.in_files.remove(&target).is_some() {
+                        found = true;
+                    }
+                    
+                    if found { crate::types::AwkValue::Number(status as f64) } else { crate::types::AwkValue::Number(-1.0) }
+                }
+                "fflush" => {
+                    use std::io::Write;
+                    let target = if args.is_empty() {
+                        String::new()
+                    } else {
+                        eval_expr(&args[0], context).as_string()
+                    };
+                    
+                    if target.is_empty() {
+                        let mut ok = std::io::stdout().flush().is_ok();
+                        for stream in context.out_files.values_mut() {
+                            if stream.writer().flush().is_err() { ok = false; }
+                        }
+                        crate::types::AwkValue::Number(if ok { 0.0 } else { -1.0 })
+                    } else if target == "stdout" || target == "/dev/stdout" {
+                        let r = std::io::stdout().flush();
+                        crate::types::AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
+                    } else if let Some(stream) = context.out_files.get_mut(&target) {
+                        let r = stream.writer().flush();
+                        crate::types::AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
+                    } else {
+                        crate::types::AwkValue::Number(-1.0)
+                    }
                 }
                 "sprintf" => {
                     if args.is_empty() { return crate::types::AwkValue::String(String::new()); }
@@ -788,24 +868,24 @@ fn handle_output(output: &str, redirect: &Option<(String, Expr)>, context: &mut 
     if let Some((op, file_expr)) = redirect {
         let filename = eval_expr(file_expr, context).as_string();
         use std::fs::OpenOptions;
-        use std::io::Write;
-        let file = context.out_files.entry(filename.clone()).or_insert_with(|| {
+        let stream = context.out_files.entry(filename.clone()).or_insert_with(|| {
             if op == ">>" {
-                Box::new(OpenOptions::new().create(true).append(true).open(&filename).unwrap()) as Box<dyn std::io::Write>
+                crate::types::OutputStream::File(Box::new(OpenOptions::new().create(true).append(true).open(&filename).unwrap()))
             } else if op == "|" {
                 use std::process::{Command, Stdio};
-                let child = Command::new("sh")
+                let mut child = Command::new("sh")
                     .arg("-c")
                     .arg(&filename)
                     .stdin(Stdio::piped())
                     .spawn()
                     .unwrap();
-                Box::new(child.stdin.unwrap()) as Box<dyn std::io::Write>
+                let stdin = child.stdin.take().unwrap();
+                crate::types::OutputStream::Pipe { stdin: Box::new(stdin), child }
             } else {
-                Box::new(OpenOptions::new().create(true).write(true).truncate(true).open(&filename).unwrap()) as Box<dyn std::io::Write>
+                crate::types::OutputStream::File(Box::new(OpenOptions::new().create(true).write(true).truncate(true).open(&filename).unwrap()))
             }
         });
-        write!(file, "{}", output).unwrap();
+        write!(stream.writer(), "{}", output).unwrap();
     } else {
         print!("{}", output);
     }

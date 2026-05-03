@@ -543,4 +543,64 @@ c]]></expected_stdout>
         <expected_stdout match="exact"><![CDATA[a\zb
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_system_exit_code">
+        <awk><![CDATA[BEGIN { x = system("exit 7"); print x }]]></awk>
+        <expected_stdout match="exact"><![CDATA[7
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_system_command_output">
+        <awk><![CDATA[BEGIN { system("echo hello"); print "after" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[hello
+after
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_system_zero">
+        <awk><![CDATA[BEGIN { print system("true") }]]></awk>
+        <expected_stdout match="exact"><![CDATA[0
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_close_file_reopen">
+        <awk><![CDATA[BEGIN {
+            print "first" > "/tmp/rawk_step4_close.txt"
+            close("/tmp/rawk_step4_close.txt")
+            print "second" > "/tmp/rawk_step4_close.txt"
+            close("/tmp/rawk_step4_close.txt")
+            getline line < "/tmp/rawk_step4_close.txt"
+            print line
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[second
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_close_pipe">
+        <awk><![CDATA[BEGIN {
+            print "hello" | "cat"
+            x = close("cat")
+            print "x=" x
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[hello
+x=0
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_close_unknown_returns_neg1">
+        <awk><![CDATA[BEGIN { print close("not_open") }]]></awk>
+        <expected_stdout match="exact"><![CDATA[-1
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_fflush_no_arg">
+        <awk><![CDATA[BEGIN { print "before"; fflush(); print "after" }]]></awk>
+        <expected_stdout match="exact"><![CDATA[before
+after
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_fflush_specific_file">
+        <awk><![CDATA[BEGIN {
+            print "data" > "/tmp/rawk_step4_fflush.txt"
+            fflush("/tmp/rawk_step4_fflush.txt")
+            getline line < "/tmp/rawk_step4_fflush.txt"
+            print "got: " line
+            close("/tmp/rawk_step4_fflush.txt")
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[got: data
+]]></expected_stdout>
+    </testcase>
 </testsuite>

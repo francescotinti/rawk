@@ -713,7 +713,7 @@ c]]></expected_stdout>
 
 # Step 3 — String literal escape `\xHH` e `\NNN` (octal)
 
-🟢 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `cec7a9d` — 66 test verdi**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -863,6 +863,273 @@ NOTA: il vecchio case `Some('0') => out.push('\0')` va RIMOSSO. È coperto dal n
 
 ---
 
+# Step 4 — Builtin I/O: `system()`, `close()`, `fflush()`
+
+🟢 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+feat(step4): I/O builtins system, close, fflush
+
+IN-SCOPE:
+- system(cmd): exec via /bin/sh -c, restituisce exit status
+- close(target): flush+close di file/pipe, wait() su child di pipe per evitare zombie
+- fflush(target): flush stream specifico o tutti se "" / no-arg
+- Refactor out_files: HashMap<String, OutputStream> con enum File/Pipe per tracciare Child
+- Final shutdown in run(): drain tutti gli stream prima di uscire
+
+OUT-OF-SCOPE (debito esplicito):
+- "cmd" | getline (input pipe — backlog #6)
+- in_files cleanup tramite close() (sì lo gestiamo, ma getline-da-pipe arriverà dopo)
+- system() che NON flush stdin del programma awk (non rilevante: awk non legge da stdin in modo bufferizzato fuori da getline)
+```
+
+## Goal
+Implementare i 3 builtin I/O più richiesti per script reali:
+- `system(cmd)` — esegue `cmd` via shell, ritorna exit status
+- `close(target)` — chiude esplicitamente uno stream aperto, restituisce status (per pipe: exit del child)
+- `fflush(target)` — forza flush di uno stream o di tutti
+
+Senza `close()`, le pipe verso processi esterni lasciano zombie (`Child` mai `wait()`-ato). Senza `fflush()`, l'output verso file/pipe può non essere visibile fino al termine. Senza `system()`, niente shell-out.
+
+## Decisioni di design (NON riaprire)
+
+### D4.1 — Refactor data structure `out_files`
+Cambia in `types.rs`:
+```rust
+pub enum OutputStream {
+    File(Box<dyn std::io::Write>),
+    Pipe { stdin: Box<dyn std::io::Write>, child: std::process::Child },
+}
+pub struct EvalContext {
+    // ...
+    pub out_files: HashMap<String, OutputStream>,
+    // resto invariato
+}
+```
+Aggiungi metodo helper:
+```rust
+impl OutputStream {
+    pub fn writer(&mut self) -> &mut dyn std::io::Write {
+        match self {
+            OutputStream::File(w) => w.as_mut(),
+            OutputStream::Pipe { stdin, .. } => stdin.as_mut(),
+        }
+    }
+}
+```
+
+### D4.2 — `system(cmd)`
+Aggiungi case in `eval_expr` per `FunctionCall("system", args)`:
+```rust
+"system" => {
+    if args.is_empty() { return AwkValue::Number(0.0); }
+    let cmd = eval_expr(&args[0], context).as_string();
+    // Flush stdout per non mescolare output
+    use std::io::Write;
+    let _ = std::io::stdout().flush();
+    let status = std::process::Command::new("sh")
+        .arg("-c")
+        .arg(&cmd)
+        .status();
+    let code = match status {
+        Ok(s) => s.code().unwrap_or(-1),
+        Err(_) => -1,
+    };
+    AwkValue::Number(code as f64)
+}
+```
+
+### D4.3 — `close(target)`
+Aggiungi case:
+```rust
+"close" => {
+    if args.is_empty() { return AwkValue::Number(-1.0); }
+    let target = eval_expr(&args[0], context).as_string();
+    let mut status: i32 = 0;
+    let mut found = false;
+    
+    if let Some(stream) = context.out_files.remove(&target) {
+        found = true;
+        match stream {
+            OutputStream::File(_) => { /* drop chiude e flush, status=0 */ }
+            OutputStream::Pipe { stdin, mut child } => {
+                drop(stdin); // EOF al child
+                if let Ok(s) = child.wait() {
+                    status = s.code().unwrap_or(-1);
+                } else {
+                    status = -1;
+                }
+            }
+        }
+    }
+    
+    if context.in_files.remove(&target).is_some() {
+        found = true;
+    }
+    
+    if found { AwkValue::Number(status as f64) } else { AwkValue::Number(-1.0) }
+}
+```
+
+### D4.4 — `fflush(target)`
+```rust
+"fflush" => {
+    use std::io::Write;
+    let target = if args.is_empty() {
+        String::new()
+    } else {
+        eval_expr(&args[0], context).as_string()
+    };
+    
+    if target.is_empty() {
+        // Flush tutto: stdout + ogni out_files
+        let mut ok = std::io::stdout().flush().is_ok();
+        for stream in context.out_files.values_mut() {
+            if stream.writer().flush().is_err() { ok = false; }
+        }
+        AwkValue::Number(if ok { 0.0 } else { -1.0 })
+    } else if target == "stdout" || target == "/dev/stdout" {
+        let r = std::io::stdout().flush();
+        AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
+    } else if let Some(stream) = context.out_files.get_mut(&target) {
+        let r = stream.writer().flush();
+        AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
+    } else {
+        AwkValue::Number(-1.0)
+    }
+}
+```
+
+### D4.5 — Update `handle_output` per costruire `OutputStream`
+In `runner.rs`, sostituire la chiusura `or_insert_with` di `handle_output` per costruire `OutputStream::File` o `OutputStream::Pipe` invece di `Box<dyn Write>` direttamente. Per `|`: cattura sia `child.stdin` che `child` stesso.
+
+```rust
+let stream = context.out_files.entry(filename.clone()).or_insert_with(|| {
+    if op == ">>" {
+        OutputStream::File(Box::new(OpenOptions::new().create(true).append(true).open(&filename).unwrap()))
+    } else if op == "|" {
+        let mut child = Command::new("sh")
+            .arg("-c")
+            .arg(&filename)
+            .stdin(Stdio::piped())
+            .spawn()
+            .unwrap();
+        let stdin = child.stdin.take().unwrap();
+        OutputStream::Pipe { stdin: Box::new(stdin), child }
+    } else {
+        OutputStream::File(Box::new(OpenOptions::new().create(true).write(true).truncate(true).open(&filename).unwrap()))
+    }
+});
+write!(stream.writer(), "{}", output).unwrap();
+```
+
+### D4.6 — Final shutdown in `run()`
+Alla fine di `pub fn run(...)`, dopo l'esecuzione dei blocchi END, drainare tutti gli stream rimasti per evitare zombie:
+```rust
+// Final cleanup: flush tutto, wait() su pipe children
+use std::io::Write;
+let _ = std::io::stdout().flush();
+let streams: Vec<OutputStream> = context.out_files.drain().map(|(_,v)| v).collect();
+for stream in streams {
+    match stream {
+        OutputStream::File(_) => {}
+        OutputStream::Pipe { stdin, mut child } => {
+            drop(stdin);
+            let _ = child.wait();
+        }
+    }
+}
+```
+
+## Testcase obbligatori (aggiungere a `tests/testsuite.xml` PRIMA del codice)
+
+```xml
+<testcase name="test_system_exit_code">
+    <awk><![CDATA[BEGIN { x = system("exit 7"); print x }]]></awk>
+    <expected_stdout match="exact"><![CDATA[7
+]]></expected_stdout>
+</testcase>
+<testcase name="test_system_command_output">
+    <awk><![CDATA[BEGIN { system("echo hello"); print "after" }]]></awk>
+    <expected_stdout match="exact"><![CDATA[hello
+after
+]]></expected_stdout>
+</testcase>
+<testcase name="test_system_zero">
+    <awk><![CDATA[BEGIN { print system("true") }]]></awk>
+    <expected_stdout match="exact"><![CDATA[0
+]]></expected_stdout>
+</testcase>
+<testcase name="test_close_file_reopen">
+    <awk><![CDATA[BEGIN {
+        print "first" > "/tmp/rawk_step4_close.txt"
+        close("/tmp/rawk_step4_close.txt")
+        print "second" > "/tmp/rawk_step4_close.txt"
+        close("/tmp/rawk_step4_close.txt")
+        getline line < "/tmp/rawk_step4_close.txt"
+        print line
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[second
+]]></expected_stdout>
+</testcase>
+<testcase name="test_close_pipe">
+    <awk><![CDATA[BEGIN {
+        print "hello" | "cat"
+        x = close("cat")
+        print "x=" x
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[hello
+x=0
+]]></expected_stdout>
+</testcase>
+<testcase name="test_close_unknown_returns_neg1">
+    <awk><![CDATA[BEGIN { print close("not_open") }]]></awk>
+    <expected_stdout match="exact"><![CDATA[-1
+]]></expected_stdout>
+</testcase>
+<testcase name="test_fflush_no_arg">
+    <awk><![CDATA[BEGIN { print "before"; fflush(); print "after" }]]></awk>
+    <expected_stdout match="exact"><![CDATA[before
+after
+]]></expected_stdout>
+</testcase>
+<testcase name="test_fflush_specific_file">
+    <awk><![CDATA[BEGIN {
+        print "data" > "/tmp/rawk_step4_fflush.txt"
+        fflush("/tmp/rawk_step4_fflush.txt")
+        getline line < "/tmp/rawk_step4_fflush.txt"
+        print "got: " line
+        close("/tmp/rawk_step4_fflush.txt")
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[got: data
+]]></expected_stdout>
+</testcase>
+```
+
+## File modificati attesi
+
+- `src/types.rs` (+15 righe per `OutputStream` enum + helper)
+- `src/runner.rs` (~50 righe nette: 3 builtin cases + handle_output update + final shutdown)
+- `tests/testsuite.xml` (+8 testcase)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning)
+- [ ] `cargo test` verde, 66 + 8 = **74 testcase passano**
+- [ ] Tutti i testcase Step 1-3 ancora verdi (regression check)
+- [ ] Test integration robusto: i testcase con `/tmp/...` vanno cleanati o usano nomi unici (es. `/tmp/rawk_step4_*`) per evitare conflitti con run paralleli
+- [ ] Nessun zombie process dopo run completo (Gemini può verificare con `ps` durante sviluppo, non parte dei test automatici)
+
+## Anti-pattern specifici Step 4
+
+- ❌ Lasciare `out_files: HashMap<String, Box<dyn Write>>` legacy "per compatibilità" — è un refactor totale, niente shim.
+- ❌ Implementare `close()` senza `wait()` sui child di pipe (zombie process leak — è il bug che il fix vuole risolvere).
+- ❌ Aggiungere builtin diversi da `system/close/fflush` "perché tanto siamo qui" (es. `gensub`, `mktime`). Sono backlog separato.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -883,6 +1150,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 1 (concat + CONVFMT) | 🟡 PARTIAL | `3082b1a` | 42/42 | Codice ✅: D1.1-D1.7 tutte applicate, build clean, test verdi. Process violations: commit message non conforme, file junk committati (.DS_Store, f1.txt, f2.txt, scratch.rs, pest_test.rs), header step non aggiornato, test `test_concat_func_call_disambig` silently amended (giustamente — era errore Claude — ma andava flaggato). Sblocco Step 2 condizionato a commit di cleanup. |
 | 2026-05-03 | Step 1-bis (cleanup) | ✅ APPROVED | `640462d` | 42/42 | Junk files committati rimossi (`.DS_Store, f1.txt, f2.txt, src/scratch.rs, pest_test.rs`); `.gitignore` esteso. Caveat: 4 file zombie ancora tracciati (`debug.rs, dummy.txt, out.txt, scratch.rs` alla root) per inaccuratezza dello spec Claude — assegnati a T0 di Step 2. Step 1 ora ✅, Step 2 sbloccato. |
 | 2026-05-03 | Step 2 (printf reale) | ✅ APPROVED | `510d2c3` | 59/59 | Tutte le D2.1-D2.7 applicate letteralmente (sprintf crate, awk_sprintf scanner, format_one mapping, decode_string_escapes a parse-time, integration in Statement::Printf e builtin). T0 cleanup completato: zombie files rimossi. Bonus fix non segnalato: swap `printf_stmt`/`print_stmt` in pest grammar per evitare greedy-match. Process: by the book. Backlog top → Step 3. |
+| 2026-05-03 | Step 3 (escape `\xHH`/`\NNN`) | ✅ APPROVED | `cec7a9d` | 66/66 | D3.1-D3.4 applicate letteralmente. Implementazione di `decode_string_escapes` rifatta con `peek()` lookahead-based, hex e octal greedy-match, modulo 256 sull'octal overflow, fallback graceful per escape sconosciuti. 7 testcase con casi multibyte/zero/overflow/unknown. Process: by the book per il secondo step consecutivo. Backlog top → Step 4. |
 
 ---
 
@@ -891,7 +1159,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e lo promuove a spec completa (Fase A). I numeri qui sono indicativi: lo step promosso prende il prossimo numero progressivo (Step 3, Step 4, ecc.).
 
 1. ~~String literal escape `\xHH` e `\NNN` (octal)~~ → **promosso a Step 3** ✅ specced
-2. **Builtin `system()` / `close()` / `fflush()`** — sblocca controllo I/O e shell-out. `close()` deve far `wait()` sui figli pipe per evitare zombie.
+2. ~~Builtin `system()` / `close()` / `fflush()`~~ → **promosso a Step 4** ✅ specced
 3. **Paragraph mode `RS=""` + RS regex multi-char** — fix critico in `process_lines`: oggi prende solo `rs_val.as_bytes()[0]`.
 4. **Statement `nextfile`** — non in grammatica oggi. Aggiungere rule + AST + flusso.
 5. **NF assignment side-effects (donefld/donerec)** — `NF = 3` deve troncare `fields`; `$5 = "x"` con NF=3 deve estendere e ricostruire `$0` lazy.
