@@ -292,4 +292,31 @@ BOB Bro 5
 CHARLIE Whi 5
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_gawk_manual_wc">
+        <awk><![CDATA[ 
+        {
+            chars += length($0) + 1  
+            words += NF
+        }
+        END { print NR, words, chars }
+        ]]></awk>
+        <stdin><![CDATA[hello world
+this is a test]]></stdin>
+        <expected_stdout match="exact"><![CDATA[2 6 27
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_gawk_manual_gsub_replacement">
+        <awk><![CDATA[ 
+        BEGIN {
+            pat = "apple"
+            repl = "orange"
+        }
+        { gsub(pat, repl); print $0 }
+        ]]></awk>
+        <stdin><![CDATA[I like apple.
+apple pie is good.]]></stdin>
+        <expected_stdout match="exact"><![CDATA[I like orange.
+orange pie is good.
+]]></expected_stdout>
+    </testcase>
 </testsuite>
