@@ -1726,7 +1726,7 @@ q
 
 # Step 8 — `getline` da pipe (`"cmd" | getline [var]`)
 
-🚧 **FATTO — AUDIT PENDING**
+✅ **DONE — commit `b3fc303` — 94 test verdi**
 
 ## Format commit message obbligatorio (ripetuto qui per evitare oblio)
 
@@ -1955,6 +1955,124 @@ close=0
 
 ---
 
+# Step 9 — Regression coverage: redirect `>>` append + pipe `|` edge case
+
+🚧 **FATTO — AUDIT PENDING**
+
+## Format commit message obbligatorio (ripetuto qui per evitare oblio)
+
+```
+test(step9): regression coverage for redirect operators
+
+IN-SCOPE:
+- 5 testcase XML che verificano comportamenti già implementati ma non blindati:
+  - print > file con scritture multiple (handle cached, non re-truncate)
+  - print >> file con append dopo close
+  - print > file dopo close (re-truncate)
+  - print | "cmd" multi-write con close finale
+  - printf > file (redirect su printf)
+
+OUT-OF-SCOPE (debito esplicito):
+- Codice nuovo o fix di bug — questo è puro test coverage. Se i test rivelano bug, marcare 🟡 PARTIAL e aprire Step 9-bis.
+- Encoding non-UTF-8 sui redirect — limitazione strutturale di Rust String, già documentata.
+- Race condition tra figli pipe simultanei — fuori scope.
+
+Testcase aggiunti: 5. Totali: 99.
+```
+
+## Goal
+Step di pura **test coverage**: nessun codice nuovo. Le feature di redirect (`>`, `>>`, `|`) sono implementate da Step 4 e Step 8, ma la copertura test è minima — esiste solo `test_close_pipe` e `test_close_file_reopen`. Aggiungere 5 testcase mirati a edge case importanti per blindare contro regressioni future.
+
+## Decisioni di design (NON riaprire)
+
+### D9.1 — Niente codice nuovo
+Questo step modifica SOLO `tests/testsuite.xml`. Se durante l'esecuzione un testcase fallisce, **non sistemare al volo**: marca commit come `🟡 PARTIAL — bug rilevato`, e Claude scriverà uno Step 9-bis con la D-decision per il fix.
+
+### D9.2 — Naming e isolamento
+Tutti i testcase usano file `/tmp/rawk_step9_*` per evitare collisioni con run paralleli o residui di altri step.
+
+### D9.3 — Cleanup non necessario
+I file `/tmp/rawk_step9_*` non vanno cleanati esplicitamente nei testcase: `> file` truncate al boot di ogni run, e l'OS pulisce `/tmp` periodicamente. Se serve cleanup, va in un task infrastruttura separato.
+
+## Testcase obbligatori
+
+```xml
+<testcase name="test_redirect_overwrite_handle_cached">
+    <awk><![CDATA[BEGIN {
+        print "first" > "/tmp/rawk_step9_a.txt"
+        print "second" > "/tmp/rawk_step9_a.txt"
+        close("/tmp/rawk_step9_a.txt")
+        while ((getline line < "/tmp/rawk_step9_a.txt") > 0) print line
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[first
+second
+]]></expected_stdout>
+</testcase>
+<testcase name="test_redirect_append_after_close">
+    <awk><![CDATA[BEGIN {
+        print "a" > "/tmp/rawk_step9_b.txt"
+        close("/tmp/rawk_step9_b.txt")
+        print "b" >> "/tmp/rawk_step9_b.txt"
+        close("/tmp/rawk_step9_b.txt")
+        while ((getline line < "/tmp/rawk_step9_b.txt") > 0) print line
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[a
+b
+]]></expected_stdout>
+</testcase>
+<testcase name="test_redirect_overwrite_after_close_truncates">
+    <awk><![CDATA[BEGIN {
+        print "first" > "/tmp/rawk_step9_c.txt"
+        close("/tmp/rawk_step9_c.txt")
+        print "second" > "/tmp/rawk_step9_c.txt"
+        close("/tmp/rawk_step9_c.txt")
+        while ((getline line < "/tmp/rawk_step9_c.txt") > 0) print line
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[second
+]]></expected_stdout>
+</testcase>
+<testcase name="test_pipe_multi_writes_to_cat">
+    <awk><![CDATA[BEGIN {
+        print "line1" | "cat"
+        print "line2" | "cat"
+        close("cat")
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[line1
+line2
+]]></expected_stdout>
+</testcase>
+<testcase name="test_printf_with_redirect">
+    <awk><![CDATA[BEGIN {
+        printf "%d\n", 42 > "/tmp/rawk_step9_d.txt"
+        close("/tmp/rawk_step9_d.txt")
+        getline x < "/tmp/rawk_step9_d.txt"
+        print "got:" x
+    }]]></awk>
+    <expected_stdout match="exact"><![CDATA[got:42
+]]></expected_stdout>
+</testcase>
+```
+
+## File modificati attesi
+
+- `tests/testsuite.xml` (+5 testcase)
+- (NESSUN file `src/`)
+
+## Acceptance criteria
+
+- [ ] `cargo build` clean (0 warning) — non dovrebbe toccare il codice
+- [ ] `cargo test` verde, 94 + 5 = **99 testcase passano**
+- [ ] Tutti i testcase Step 1-8 ancora verdi (nessuna regressione)
+- [ ] Se anche UN solo testcase fallisce, **NON fixare al volo**: commit 🟡 PARTIAL e segnalare a Claude
+
+## Anti-pattern specifici Step 9
+
+- ❌ Modificare `src/runner.rs` o altri file di codice — è uno step di sole-test.
+- ❌ Aggiungere testcase "tanto per riempire" non in spec — solo i 5 sopra.
+- ❌ Sopprimere testcase fallenti perché "non importanti" — sono il valore principale di questo step.
+
+---
+
 # Anti-patterns globali del codice (controllo finale prima del commit)
 
 - ❌ Dichiarare uno step "✅ fatto" se manca anche un solo sotto-task delle decisioni `D*.*`. Se incompleto, header → `🟡 PARTIAL` ed elenca i `TODO(stepN-bis):` nei file.
@@ -1980,6 +2098,7 @@ Ogni audit di Claude termina aggiungendo una riga qui. La riga più recente è i
 | 2026-05-03 | Step 5 (RS paragraph + regex) | ✅ APPROVED | `ffbc0fe` | 82/82 | D5.1-D5.6 applicate letteralmente. Refactor `process_lines` in 3 funzioni (`process_single_byte`, `process_paragraph`, `process_regex_rs`) + dispatch top-level + helper `run_rules_on_record` estratto. Bonus sensato: default esplicito `RS="\n"` in `run()`. Commit message format perfettamente conforme (incluso "Testcase aggiunti: 8. Totali: 82.", che mancava in Step 4). 5° step consecutivo by-the-book. Backlog top → Step 6. |
 | 2026-05-03 | Step 6 (nextfile) | ✅ APPROVED | `b74e7e3` | 85/85 | D6.1-D6.7 applicate letteralmente. D6.8 (propagation through user function call) risolta out-of-spec con flag `nextfile_pending`/`exit_pending` su `EvalContext`: `eval_expr` non può propagare `FlowControl` via valore di ritorno (signature è `AwkValue`), quindi side-effect-based. Funziona, ma stato mutable nascosto. Da rivalutare in Step 11 (refactor stilistico) con possibile signature change `eval_expr -> Result<AwkValue, FlowControl>`. Commit message format conforme. Backlog top → Step 7. |
 | 2026-05-03 | Step 7 (NF side-effects) | ✅ APPROVED | `05533e1` | 90/90 | D7.1-D7.5 applicate letteralmente. `set_var("NF", ...)` ora truncate/extend `fields` + rebuild $0 con OFS. Edge case NF=0 gestito. `self.vars.get("OFS")` come prescritto per evitare borrow issue. 5 testcase: 3 nuovi comportamenti + 2 regression su set_field già funzionanti. NEXT_STEPS.md committato nel commit di Gemini (workflow chiarificato sui commit ora attivo). 7° step by-the-book. Backlog top → Step 8. |
+| 2026-05-03 | Step 8 (getline da pipe) | ✅ APPROVED | `b3fc303` | 94/94 | D8.1-D8.6 applicate letteralmente. Refactor `in_files` con enum `InputStream` simmetrico a `out_files` di Step 4. Grammar: `pipe_getline` come prima alternativa, con `non_getline_primary` per evitare recursion. AST: `GetlineSource { Main, File, Pipe }`. `close()` wait su pipe child. Final shutdown estesa per drain anche `in_files`. Bonus non dichiarato: `PartialEq` derive su `BinaryOperator` ed `Expr` per match del nuovo enum. 8° step by-the-book. Backlog top → Step 9. |
 
 ---
 
@@ -1993,7 +2112,7 @@ Lista prioritaria dei prossimi step. Dopo ogni audit ✅, Claude prende il top e
 4. ~~Statement `nextfile`~~ → **promosso a Step 6** ✅ specced
 5. ~~NF assignment side-effects (donefld/donerec)~~ → **promosso a Step 7** ✅ specced
 6. ~~`getline` da pipe (`"cmd" | getline`)~~ → **promosso a Step 8** ✅ specced
-7. **`printf`/`print` con `>>` append e `|` pipe** — già implementato in `handle_output`, ma testare edge case (file riaperti, append vs write, encoding).
+7. ~~`printf`/`print` con `>>` append e `|` pipe~~ → **promosso a Step 9** ✅ specced (test-only)
 8. **CLI: `-v var=value` reale e separatore `--`** — il flag `-v` esiste in clap ma le assegnazioni non vengono parsate e iniettate in `EvalContext`.
 9. **Differential testing infrastructure** (Fase 4a della skill `legacy-port`) — `build.rs` con feature flag `differential`, FFI verso `c_awk/` compilato come libreria statica.
 10. **Property-based testing** (Fase 4b) — `proptest` con property roundtrip e cross-roundtrip rawk vs c_awk.

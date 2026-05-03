@@ -795,4 +795,58 @@ L:three
 close=0
 ]]></expected_stdout>
     </testcase>
+    <testcase name="test_redirect_overwrite_handle_cached">
+        <awk><![CDATA[BEGIN {
+            print "first" > "/tmp/rawk_step9_a.txt"
+            print "second" > "/tmp/rawk_step9_a.txt"
+            close("/tmp/rawk_step9_a.txt")
+            while ((getline line < "/tmp/rawk_step9_a.txt") > 0) print line
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[first
+second
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_redirect_append_after_close">
+        <awk><![CDATA[BEGIN {
+            print "a" > "/tmp/rawk_step9_b.txt"
+            close("/tmp/rawk_step9_b.txt")
+            print "b" >> "/tmp/rawk_step9_b.txt"
+            close("/tmp/rawk_step9_b.txt")
+            while ((getline line < "/tmp/rawk_step9_b.txt") > 0) print line
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[a
+b
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_redirect_overwrite_after_close_truncates">
+        <awk><![CDATA[BEGIN {
+            print "first" > "/tmp/rawk_step9_c.txt"
+            close("/tmp/rawk_step9_c.txt")
+            print "second" > "/tmp/rawk_step9_c.txt"
+            close("/tmp/rawk_step9_c.txt")
+            while ((getline line < "/tmp/rawk_step9_c.txt") > 0) print line
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[second
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_pipe_multi_writes_to_cat">
+        <awk><![CDATA[BEGIN {
+            print "line1" | "cat"
+            print "line2" | "cat"
+            close("cat")
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[line1
+line2
+]]></expected_stdout>
+    </testcase>
+    <testcase name="test_printf_with_redirect">
+        <awk><![CDATA[BEGIN {
+            printf "%d\n", 42 > "/tmp/rawk_step9_d.txt"
+            close("/tmp/rawk_step9_d.txt")
+            getline x < "/tmp/rawk_step9_d.txt"
+            print "got:" x
+        }]]></awk>
+        <expected_stdout match="exact"><![CDATA[got:42
+]]></expected_stdout>
+    </testcase>
 </testsuite>
