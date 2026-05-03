@@ -110,6 +110,19 @@ impl AwkValue {
         }
         AwkValue::Number(self.as_number() / divisor)
     }
+
+    pub fn rem(&self, other: &Self) -> Self {
+        let divisor = other.as_number();
+        if divisor == 0.0 {
+            eprintln!("awk: division by zero in mod");
+            std::process::exit(1);
+        }
+        AwkValue::Number(self.as_number() % divisor)
+    }
+
+    pub fn pow(&self, other: &Self) -> Self {
+        AwkValue::Number(self.as_number().powf(other.as_number()))
+    }
 }
 
 impl fmt::Display for AwkValue {
@@ -133,6 +146,7 @@ pub struct EvalContext {
     pub rng: StdRng,
     pub local_scopes: Vec<HashMap<String, AwkValue>>,
     pub functions: HashMap<String, (Vec<String>, Vec<Statement>)>,
+    pub regex_cache: HashMap<String, regex::Regex>,
 }
 
 impl EvalContext {
@@ -153,7 +167,17 @@ impl EvalContext {
             rng: rand::SeedableRng::seed_from_u64(0),
             local_scopes: Vec::new(),
             functions: HashMap::new(),
+            regex_cache: HashMap::new(),
         }
+    }
+
+    pub fn compile_or_get_regex(&mut self, re: &str) -> regex::Regex {
+        if let Some(r) = self.regex_cache.get(re) {
+            return r.clone();
+        }
+        let compiled = regex::Regex::new(re).unwrap_or_else(|_| regex::Regex::new("").unwrap());
+        self.regex_cache.insert(re.to_string(), compiled.clone());
+        compiled
     }
 
     /// Update the context with a new record (line), splitting it into fields.

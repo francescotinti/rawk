@@ -81,7 +81,7 @@ func_call = { ident ~ "(" ~ expr_list? ~ ")" }
 prefix_op = _{ op_inc | op_dec | op_not | op_plus | op_minus }
 postfix_op = _{ op_inc | op_dec }
 
-infix_op = _{ op_and | op_or | op_match | op_not_match | op_in | op_eq | op_neq | op_ge | op_le | op_gt | op_lt | op_add | op_sub | op_mul | op_div }
+infix_op = _{ op_and | op_or | op_match | op_not_match | op_in | op_eq | op_neq | op_ge | op_le | op_gt | op_lt | op_add | op_sub | op_pow | op_mul | op_div | op_mod }
 
 op_and = { "&&" }
 op_or  = { "||" }
@@ -98,6 +98,8 @@ op_add = { "+" }
 op_sub = { "-" }
 op_mul = { "*" }
 op_div = { "/" }
+op_mod = { "%" }
+op_pow = { "**" | "^" }
 
 op_not = { "!" }
 op_plus = { "+" }
@@ -106,6 +108,6 @@ op_inc = { "++" }
 op_dec = { "--" }
 
 ident = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "_")* }
-number = @{ "-"? ~ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT*)? }
+number = @{ "-"? ~ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT*)? ~ (("e" | "E") ~ ("+" | "-")? ~ ASCII_DIGIT+)? }
 string_literal = ${ "\"" ~ inner_string ~ "\"" }
 inner_string = @{ (!"\"" ~ ANY)* }

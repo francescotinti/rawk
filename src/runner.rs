@@ -5,7 +5,7 @@
  */
 
 use crate::ast::{BinaryOperator, Expr, Pattern, Statement};
-use regex::Regex;
+
 use crate::cli::Config;
 use crate::parser;
 use crate::types::EvalContext;
@@ -250,10 +250,11 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
             let idx = eval_expr(e, context).as_number() as usize;
             context.get_field(idx)
         }
+        Expr::NumberLiteral(n) => crate::types::AwkValue::Number(*n),
         Expr::StringLiteral(s) => crate::types::AwkValue::String(s.clone()),
         Expr::RegexLiteral(re) => {
             let record = context.get_field(0).as_string();
-            let regex = Regex::new(re).unwrap_or(Regex::new("").unwrap());
+            let regex = context.compile_or_get_regex(re);
             crate::types::AwkValue::Number(if regex.is_match(&record) { 1.0 } else { 0.0 })
         }
         Expr::Variable(v) => context.get_var(v),
@@ -445,17 +446,14 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     } else {
                         eval_expr(&args[1], context).as_string()
                     };
-                    if let Ok(re) = Regex::new(&re_str) {
-                        if let Some(m) = re.find(&s) {
-                            context.set_var("RSTART", crate::types::AwkValue::Number(m.start() as f64 + 1.0));
-                            context.set_var("RLENGTH", crate::types::AwkValue::Number(m.len() as f64));
-                            crate::types::AwkValue::Number(m.start() as f64 + 1.0)
-                        } else {
-                            context.set_var("RSTART", crate::types::AwkValue::Number(0.0));
-                            context.set_var("RLENGTH", crate::types::AwkValue::Number(-1.0));
-                            crate::types::AwkValue::Number(0.0)
-                        }
+                    let re = context.compile_or_get_regex(&re_str);
+                    if let Some(m) = re.find(&s) {
+                        context.set_var("RSTART", crate::types::AwkValue::Number(m.start() as f64 + 1.0));
+                        context.set_var("RLENGTH", crate::types::AwkValue::Number(m.len() as f64));
+                        crate::types::AwkValue::Number(m.start() as f64 + 1.0)
                     } else {
+                        context.set_var("RSTART", crate::types::AwkValue::Number(0.0));
+                        context.set_var("RLENGTH", crate::types::AwkValue::Number(-1.0));
                         crate::types::AwkValue::Number(0.0)
                     }
                 }
@@ -469,7 +467,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                             eval_expr(&args[2], context).as_string()
                         }
                     } else { context.fs.clone() };
-                    let re = Regex::new(&fs).unwrap_or(Regex::new(" ").unwrap());
+                    let re = context.compile_or_get_regex(&fs);
                     let parts: Vec<&str> = re.split(&s).filter(|x| !x.is_empty()).collect();
                     let count = parts.len();
                     for (i, p) in parts.iter().enumerate() {
@@ -488,7 +486,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     let is_gsub = name == "gsub";
                     
                     let target_val = if args.len() > 2 { eval_expr(&args[2], context).as_string() } else { context.record.clone() };
-                    let re = Regex::new(&r).unwrap_or(Regex::new("").unwrap());
+                    let re = context.compile_or_get_regex(&r);
                     
                     let mut changed = false;
                     let new_val = if is_gsub {
@@ -619,6 +617,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                 BinaryOperator::Sub => l_val.sub(&r_val),
                 BinaryOperator::Mul => l_val.mul(&r_val),
                 BinaryOperator::Div => l_val.div(&r_val),
+                BinaryOperator::Mod => l_val.rem(&r_val),
+                BinaryOperator::Pow => l_val.pow(&r_val),
                 BinaryOperator::Eq => l_val.is_eq(&r_val),
                 BinaryOperator::Neq => crate::types::AwkValue::Number(if l_val.is_eq(&r_val).as_number() == 1.0 { 0.0 } else { 1.0 }),
                 BinaryOperator::Lt => l_val.is_lt(&r_val),
@@ -633,11 +633,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     } else {
                         r_val.as_string()
                     };
-                    if let Ok(re) = Regex::new(&re_str) {
-                        crate::types::AwkValue::Number(if re.is_match(&l_val.as_string()) { 1.0 } else { 0.0 })
-                    } else {
-                        crate::types::AwkValue::Number(0.0)
-                    }
+                    let re = context.compile_or_get_regex(&re_str);
+                    crate::types::AwkValue::Number(if re.is_match(&l_val.as_string()) { 1.0 } else { 0.0 })
                 }
                 BinaryOperator::NotMatch => {
                     let re_str = if let Expr::RegexLiteral(re) = &**rhs {
@@ -645,11 +642,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> crate::types::AwkValue {
                     } else {
                         r_val.as_string()
                     };
-                    if let Ok(re) = Regex::new(&re_str) {
-                        crate::types::AwkValue::Number(if re.is_match(&l_val.as_string()) { 0.0 } else { 1.0 })
-                    } else {
-                        crate::types::AwkValue::Number(1.0)
-                    }
+                    let re = context.compile_or_get_regex(&re_str);
+                    crate::types::AwkValue::Number(if re.is_match(&l_val.as_string()) { 0.0 } else { 1.0 })
                 }
                 BinaryOperator::In => {
                     let key = l_val.as_string();

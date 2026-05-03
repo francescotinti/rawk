@@ -6,7 +6,7 @@
 
 #[derive(Debug, Clone)]
 pub enum BinaryOperator {
-    Add, Sub, Mul, Div,
+    Add, Sub, Mul, Div, Mod, Pow,
     Eq, Neq, Lt, Lte, Gt, Gte,
     And, Or,
     Match, NotMatch, In,
@@ -15,6 +15,7 @@ pub enum BinaryOperator {
 #[derive(Debug, Clone)]
 pub enum Expr {
     Field(Box<Expr>),
+    NumberLiteral(f64),
     StringLiteral(String),
     RegexLiteral(String),
     Variable(String),

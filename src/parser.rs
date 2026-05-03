@@ -24,7 +24,8 @@ fn pratt() -> PrattParser<Rule> {
         .op(Op::infix(op_in, Left))
         .op(Op::infix(op_eq, Left) | Op::infix(op_neq, Left) | Op::infix(op_gt, Left) | Op::infix(op_ge, Left) | Op::infix(op_lt, Left) | Op::infix(op_le, Left))
         .op(Op::infix(op_add, Left) | Op::infix(op_sub, Left))
-        .op(Op::infix(op_mul, Left) | Op::infix(op_div, Left))
+        .op(Op::infix(op_mul, Left) | Op::infix(op_div, Left) | Op::infix(op_mod, Left))
+        .op(Op::infix(op_pow, Right))
 }
 
 pub fn parse(input: &str) -> anyhow::Result<Program> {
@@ -339,6 +340,8 @@ fn parse_logical_expr(pair: Pair<Rule>) -> Expr {
             Rule::op_sub => BinaryOperator::Sub,
             Rule::op_mul => BinaryOperator::Mul,
             Rule::op_div => BinaryOperator::Div,
+            Rule::op_mod => BinaryOperator::Mod,
+            Rule::op_pow => BinaryOperator::Pow,
             Rule::op_eq => BinaryOperator::Eq,
             Rule::op_neq => BinaryOperator::Neq,
             Rule::op_lt => BinaryOperator::Lt,
@@ -393,7 +396,7 @@ fn parse_term(term: Pair<Rule>) -> Expr {
 fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
     let inner = primary_pair.into_inner().next().unwrap();
     match inner.as_rule() {
-        Rule::number => Expr::StringLiteral(inner.as_str().to_string()),
+        Rule::number => Expr::NumberLiteral(inner.as_str().parse::<f64>().unwrap_or(0.0)),
         Rule::string_literal => Expr::StringLiteral(inner.into_inner().next().unwrap().as_str().to_string()),
         Rule::regex_pattern => {
             let re = inner.into_inner().next().unwrap().as_str();
