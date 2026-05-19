@@ -10,7 +10,7 @@
 |------|-------|--------------------|------|
 | Phase 0 — Workspace hygiene | ✅ FATTO | 3e3035d / 83fd5a8 / 55ff6c4 | gates: macOS forks, scratch root, fmt — tutti verdi |
 | Phase 1 — Clippy zero-warning | ✅ FATTO | 65432a8 / f9650fb / 90e2f8f / e319009 / 9672924 | `[lints.clippy] all=deny`, 16 lint chiusi (10 collapsible_if, 4 expect_fun_call, 1 redundant_pattern_matching, 1 or_insert_with) |
-| Phase 2 — Runtime exit-free | ⏳ TODO | — | 10 `process::exit()` → main.rs solo |
+| Phase 2 — Runtime exit-free | ✅ FATTO | ab597e5 / 4eaff8f | 10 `process::exit()` → main.rs solo; `run() -> Result<i32>` |
 | Phase 3 — Error handling | ⏳ TODO | — | `with_context()` + expect documentati |
 | Phase 4a — `runner.rs` → dir module | ⏳ TODO | — | preparatorio |
 | Phase 4b — Estrai `runner/builtins.rs` | ⏳ TODO | — | ~400 LOC |
