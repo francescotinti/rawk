@@ -11,7 +11,8 @@
 use crate::ast::Expr;
 use crate::types::{AwkValue, EvalContext, InputStream, OutputStream};
 
-use super::{awk_sprintf, eval_expr};
+use super::eval_expr;
+use super::fmt::awk_sprintf;
 
 pub(super) fn dispatch_builtin(
     name: &str,

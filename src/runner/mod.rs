@@ -16,6 +16,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 mod builtins;
+mod fmt;
 mod io;
 
 pub enum CompiledPattern {
@@ -836,10 +837,10 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
             }
             Statement::Printf(exprs, redirect) => {
                 if !exprs.is_empty() {
-                    let fmt = eval_expr(&exprs[0], context).as_string();
+                    let format_str = eval_expr(&exprs[0], context).as_string();
                     let args: Vec<AwkValue> =
                         exprs[1..].iter().map(|e| eval_expr(e, context)).collect();
-                    let formatted = awk_sprintf(&fmt, &args);
+                    let formatted = fmt::awk_sprintf(&format_str, &args);
                     if let Err(e) = io::handle_output(&formatted, redirect, context) {
                         eprintln!("rawk: {e:#}");
                         return FlowControl::Exit(2);
@@ -897,69 +898,4 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
         }
     }
     FlowControl::None
-}
-
-fn awk_sprintf(fmt: &str, args: &[AwkValue]) -> String {
-    let mut out = String::new();
-    let mut chars = fmt.chars().peekable();
-    let mut arg_idx = 0;
-    while let Some(c) = chars.next() {
-        if c != '%' {
-            out.push(c);
-            continue;
-        }
-        // Caso speciale %% senza arg
-        if chars.peek() == Some(&'%') {
-            chars.next();
-            out.push('%');
-            continue;
-        }
-        // Accumula spec: flags + width + .precision + conversion
-        let mut spec = String::from('%');
-        loop {
-            match chars.next() {
-                None => {
-                    out.push_str(&spec);
-                    return out;
-                }
-                Some(ch) => {
-                    spec.push(ch);
-                    if "diouxXeEfgGcs".contains(ch) {
-                        let arg = args
-                            .get(arg_idx)
-                            .cloned()
-                            .unwrap_or(AwkValue::Uninitialized);
-                        arg_idx += 1;
-                        out.push_str(&format_one(&spec, &arg));
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    out
-}
-
-fn format_one(spec: &str, arg: &AwkValue) -> String {
-    let conv = spec.chars().last().unwrap();
-    match conv {
-        'd' | 'i' => sprintf::sprintf!(spec, arg.as_number() as i64).unwrap_or_default(),
-        'o' | 'x' | 'X' | 'u' => {
-            sprintf::sprintf!(spec, arg.as_number() as u64).unwrap_or_default()
-        }
-        'c' => {
-            let ch: char = match arg {
-                AwkValue::String(s) | AwkValue::StrNum(s, _) if !s.is_empty() => {
-                    s.chars().next().unwrap()
-                }
-                _ => char::from_u32(arg.as_number() as u32).unwrap_or('\0'),
-            };
-            let one_char = ch.to_string();
-            let spec_s = spec.replacen('c', "s", 1);
-            sprintf::sprintf!(&spec_s, one_char).unwrap_or_default()
-        }
-        'e' | 'E' | 'f' | 'g' | 'G' => sprintf::sprintf!(spec, arg.as_number()).unwrap_or_default(),
-        's' => sprintf::sprintf!(spec, arg.as_string()).unwrap_or_default(),
-        _ => spec.to_string(),
-    }
 }
