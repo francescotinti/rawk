@@ -392,10 +392,7 @@ impl EvalContext {
     }
 
     pub fn set_array_var(&mut self, array_name: &str, key: &str, value: AwkValue) {
-        let arr = self
-            .arrays
-            .entry(array_name.to_string())
-            .or_insert_with(HashMap::new);
+        let arr = self.arrays.entry(array_name.to_string()).or_default();
         arr.insert(key.to_string(), value);
     }
 }
