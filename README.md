@@ -39,5 +39,19 @@ cargo run -- -f my_script.awk input.txt
 echo "1\n2\n3" | cargo run -- '{ print $0 | "cat -n" }'
 ```
 
+## Build & Test
+
+```bash
+cargo build --release
+cargo test                                        # 109 testcase XML + property test + integrazione
+cargo run -- -f program.awk file.txt
+cargo run --bin diffrun -- tests/testsuite.xml    # confronto vs /usr/bin/awk
+```
+
+**Quality gates:**
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo fmt --check`
+- `bash scripts/checks.sh` (tutti i verification gate del piano di adeguamento idiomatico)
+
 ## 📜 Authors
 This code was written as part of an iterative AI pair-programming project aiming to explore limits in translating untyped, legacy C CLI utilities to deterministic Rust ecosystems.
