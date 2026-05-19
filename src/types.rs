@@ -12,7 +12,7 @@ use rand::rngs::StdRng;
 
 /// Represents an AWK dynamic value (number, string, or uninitialized).
 #[derive(Debug, Clone, PartialEq)]
-pub enum AwkValue {
+pub(crate) enum AwkValue {
     Uninitialized,
     Number(f64),
     String(String),
@@ -20,7 +20,7 @@ pub enum AwkValue {
 }
 
 impl AwkValue {
-    pub fn from_str_num(s: String) -> Self {
+    pub(crate) fn from_str_num(s: String) -> Self {
         if let Ok(n) = s.trim().parse::<f64>() {
             AwkValue::StrNum(s, n)
         } else {
@@ -28,7 +28,7 @@ impl AwkValue {
         }
     }
 
-    pub fn as_number(&self) -> f64 {
+    pub(crate) fn as_number(&self) -> f64 {
         match self {
             AwkValue::Uninitialized => 0.0,
             AwkValue::Number(n) => *n,
@@ -37,11 +37,11 @@ impl AwkValue {
         }
     }
 
-    pub fn as_string(&self) -> String {
+    pub(crate) fn as_string(&self) -> String {
         self.as_string_convfmt("%.6g")
     }
 
-    pub fn as_string_convfmt(&self, fmt: &str) -> String {
+    pub(crate) fn as_string_convfmt(&self, fmt: &str) -> String {
         match self {
             AwkValue::Uninitialized => String::new(),
             AwkValue::String(s) => s.clone(),
@@ -50,7 +50,7 @@ impl AwkValue {
         }
     }
 
-    pub fn is_truthy(&self) -> bool {
+    pub(crate) fn is_truthy(&self) -> bool {
         match self {
             AwkValue::Uninitialized => false,
             AwkValue::Number(n) => *n != 0.0,
@@ -80,7 +80,7 @@ impl AwkValue {
         }
     }
 
-    pub fn is_eq(&self, other: &Self) -> AwkValue {
+    pub(crate) fn is_eq(&self, other: &Self) -> AwkValue {
         if let Some((l, r)) = self.numeric_values(other) {
             AwkValue::Number(if l == r { 1.0 } else { 0.0 })
         } else {
@@ -92,7 +92,7 @@ impl AwkValue {
         }
     }
 
-    pub fn is_lt(&self, other: &Self) -> AwkValue {
+    pub(crate) fn is_lt(&self, other: &Self) -> AwkValue {
         if let Some((l, r)) = self.numeric_values(other) {
             AwkValue::Number(if l < r { 1.0 } else { 0.0 })
         } else {
@@ -104,7 +104,7 @@ impl AwkValue {
         }
     }
 
-    pub fn is_gt(&self, other: &Self) -> AwkValue {
+    pub(crate) fn is_gt(&self, other: &Self) -> AwkValue {
         if let Some((l, r)) = self.numeric_values(other) {
             AwkValue::Number(if l > r { 1.0 } else { 0.0 })
         } else {
@@ -116,19 +116,19 @@ impl AwkValue {
         }
     }
 
-    pub fn add(&self, other: &Self) -> Self {
+    pub(crate) fn add(&self, other: &Self) -> Self {
         AwkValue::Number(self.as_number() + other.as_number())
     }
 
-    pub fn sub(&self, other: &Self) -> Self {
+    pub(crate) fn sub(&self, other: &Self) -> Self {
         AwkValue::Number(self.as_number() - other.as_number())
     }
 
-    pub fn mul(&self, other: &Self) -> Self {
+    pub(crate) fn mul(&self, other: &Self) -> Self {
         AwkValue::Number(self.as_number() * other.as_number())
     }
 
-    pub fn div(&self, other: &Self) -> Self {
+    pub(crate) fn div(&self, other: &Self) -> Self {
         let divisor = other.as_number();
         if divisor == 0.0 {
             eprintln!("rawk: warning: division by zero");
@@ -137,7 +137,7 @@ impl AwkValue {
         AwkValue::Number(self.as_number() / divisor)
     }
 
-    pub fn rem(&self, other: &Self) -> Self {
+    pub(crate) fn rem(&self, other: &Self) -> Self {
         let divisor = other.as_number();
         if divisor == 0.0 {
             eprintln!("rawk: warning: division by zero in mod");
@@ -146,7 +146,7 @@ impl AwkValue {
         AwkValue::Number(self.as_number() % divisor)
     }
 
-    pub fn pow(&self, other: &Self) -> Self {
+    pub(crate) fn pow(&self, other: &Self) -> Self {
         AwkValue::Number(self.as_number().powf(other.as_number()))
     }
 }
@@ -181,7 +181,7 @@ fn format_number_awk(n: f64, fmt: &str) -> String {
         .replace(".E-", "E-")
 }
 
-pub enum OutputStream {
+pub(crate) enum OutputStream {
     File(Box<dyn std::io::Write>),
     Pipe {
         stdin: Box<dyn std::io::Write>,
@@ -190,7 +190,7 @@ pub enum OutputStream {
 }
 
 impl OutputStream {
-    pub fn writer(&mut self) -> &mut dyn std::io::Write {
+    pub(crate) fn writer(&mut self) -> &mut dyn std::io::Write {
         match self {
             OutputStream::File(w) => w.as_mut(),
             OutputStream::Pipe { stdin, .. } => stdin.as_mut(),
@@ -198,7 +198,7 @@ impl OutputStream {
     }
 }
 
-pub enum InputStream {
+pub(crate) enum InputStream {
     File(Box<dyn std::io::BufRead>),
     Pipe {
         stdout: Box<dyn std::io::BufRead>,
@@ -207,7 +207,7 @@ pub enum InputStream {
 }
 
 impl InputStream {
-    pub fn reader(&mut self) -> &mut dyn std::io::BufRead {
+    pub(crate) fn reader(&mut self) -> &mut dyn std::io::BufRead {
         match self {
             InputStream::File(r) => r.as_mut(),
             InputStream::Pipe { stdout, .. } => stdout.as_mut(),
@@ -216,29 +216,29 @@ impl InputStream {
 }
 
 /// Represents the Evaluation Context (the state) for the current line.
-pub struct EvalContext {
-    pub nr: usize,  // Number of Records read so far
-    pub fnr: usize, // Number of Records in current file
-    pub nf: usize,  // Number of Fields in current record
-    pub fs: String,
-    pub fields: Vec<AwkValue>,
-    pub record: String,
-    pub vars: HashMap<String, AwkValue>,
-    pub arrays: HashMap<String, HashMap<String, AwkValue>>,
-    pub out_files: HashMap<String, OutputStream>,
-    pub in_files: HashMap<String, InputStream>,
-    pub rng: StdRng,
-    pub local_scopes: Vec<HashMap<String, AwkValue>>,
-    pub functions: HashMap<String, (Vec<String>, Vec<Statement>)>,
-    pub regex_cache: HashMap<String, regex::Regex>,
-    pub convfmt: String,
-    pub ofmt: String,
-    pub nextfile_pending: bool,
-    pub exit_pending: Option<i32>,
+pub(crate) struct EvalContext {
+    pub(crate) nr: usize,  // Number of Records read so far
+    pub(crate) fnr: usize, // Number of Records in current file
+    pub(crate) nf: usize,  // Number of Fields in current record
+    pub(crate) fs: String,
+    pub(crate) fields: Vec<AwkValue>,
+    pub(crate) record: String,
+    pub(crate) vars: HashMap<String, AwkValue>,
+    pub(crate) arrays: HashMap<String, HashMap<String, AwkValue>>,
+    pub(crate) out_files: HashMap<String, OutputStream>,
+    pub(crate) in_files: HashMap<String, InputStream>,
+    pub(crate) rng: StdRng,
+    pub(crate) local_scopes: Vec<HashMap<String, AwkValue>>,
+    pub(crate) functions: HashMap<String, (Vec<String>, Vec<Statement>)>,
+    pub(crate) regex_cache: HashMap<String, regex::Regex>,
+    pub(crate) convfmt: String,
+    pub(crate) ofmt: String,
+    pub(crate) nextfile_pending: bool,
+    pub(crate) exit_pending: Option<i32>,
 }
 
 impl EvalContext {
-    pub fn new(fs: &str) -> Self {
+    pub(crate) fn new(fs: &str) -> Self {
         let mut vars = HashMap::new();
         vars.insert("SUBSEP".to_string(), AwkValue::String("\x1C".to_string()));
         Self {
@@ -263,7 +263,7 @@ impl EvalContext {
         }
     }
 
-    pub fn compile_or_get_regex(&mut self, re: &str) -> regex::Regex {
+    pub(crate) fn compile_or_get_regex(&mut self, re: &str) -> regex::Regex {
         if let Some(r) = self.regex_cache.get(re) {
             return r.clone();
         }
@@ -273,7 +273,7 @@ impl EvalContext {
     }
 
     /// Update the context with a new record (line), splitting it into fields.
-    pub fn update_record(&mut self, line: &str) {
+    pub(crate) fn update_record(&mut self, line: &str) {
         self.record = line.to_string();
         self.nr += 1;
         self.fnr += 1;
@@ -295,7 +295,7 @@ impl EvalContext {
     }
 
     /// Get $N. If n == 0, returns $0 (the whole record). If n > NF, returns Uninitialized.
-    pub fn get_field(&self, n: usize) -> AwkValue {
+    pub(crate) fn get_field(&self, n: usize) -> AwkValue {
         if n == 0 {
             AwkValue::String(self.record.clone())
         } else if n <= self.nf {
@@ -305,7 +305,7 @@ impl EvalContext {
         }
     }
 
-    pub fn set_field(&mut self, n: usize, value: AwkValue) {
+    pub(crate) fn set_field(&mut self, n: usize, value: AwkValue) {
         if n == 0 {
             self.update_record(&value.as_string());
         } else {
@@ -325,7 +325,7 @@ impl EvalContext {
         }
     }
 
-    pub fn get_var(&self, name: &str) -> AwkValue {
+    pub(crate) fn get_var(&self, name: &str) -> AwkValue {
         if let Some(scope) = self.local_scopes.last()
             && let Some(val) = scope.get(name)
         {
@@ -346,7 +346,7 @@ impl EvalContext {
             .unwrap_or(AwkValue::Uninitialized)
     }
 
-    pub fn set_var(&mut self, name: &str, value: AwkValue) {
+    pub(crate) fn set_var(&mut self, name: &str, value: AwkValue) {
         if let Some(scope) = self.local_scopes.last_mut()
             && scope.contains_key(name)
         {
@@ -383,7 +383,7 @@ impl EvalContext {
         }
     }
 
-    pub fn get_array_var(&self, array_name: &str, key: &str) -> AwkValue {
+    pub(crate) fn get_array_var(&self, array_name: &str, key: &str) -> AwkValue {
         self.arrays
             .get(array_name)
             .and_then(|arr| arr.get(key))
@@ -391,7 +391,7 @@ impl EvalContext {
             .unwrap_or(AwkValue::Uninitialized)
     }
 
-    pub fn set_array_var(&mut self, array_name: &str, key: &str, value: AwkValue) {
+    pub(crate) fn set_array_var(&mut self, array_name: &str, key: &str, value: AwkValue) {
         let arr = self.arrays.entry(array_name.to_string()).or_default();
         arr.insert(key.to_string(), value);
     }
