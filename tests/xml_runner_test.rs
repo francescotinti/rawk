@@ -68,10 +68,10 @@ fn run_xml_testsuite() {
 
     for (i, mc) in active.iter().enumerate() {
         let case_path = format!("tests/cases/{}", mc.file);
-        let case_xml =
-            std::fs::read_to_string(&case_path).expect(&format!("Failed to read {}", case_path));
-        let case: TestCase =
-            quick_xml::de::from_str(&case_xml).expect(&format!("Failed to parse {}", case_path));
+        let case_xml = std::fs::read_to_string(&case_path)
+            .unwrap_or_else(|_| panic!("Failed to read {}", case_path));
+        let case: TestCase = quick_xml::de::from_str(&case_xml)
+            .unwrap_or_else(|_| panic!("Failed to parse {}", case_path));
 
         println!("  [{}/{}] {}", i + 1, total, case.name);
 

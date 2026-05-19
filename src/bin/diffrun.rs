@@ -141,10 +141,10 @@ fn main() {
 
     for mc in active {
         let case_path = format!("tests/cases/{}", mc.file);
-        let case_xml =
-            std::fs::read_to_string(&case_path).expect(&format!("Failed to read {}", case_path));
-        let case: TestCase =
-            quick_xml::de::from_str(&case_xml).expect(&format!("Failed to parse {}", case_path));
+        let case_xml = std::fs::read_to_string(&case_path)
+            .unwrap_or_else(|_| panic!("Failed to read {}", case_path));
+        let case: TestCase = quick_xml::de::from_str(&case_xml)
+            .unwrap_or_else(|_| panic!("Failed to parse {}", case_path));
 
         if let Some(reason) = is_skip(&case) {
             skipped_cases.push((case.name.clone(), reason));
