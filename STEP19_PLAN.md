@@ -12,10 +12,10 @@
 | Phase 1 — Clippy zero-warning | ✅ FATTO | 65432a8 / f9650fb / 90e2f8f / e319009 / 9672924 | `[lints.clippy] all=deny`, 16 lint chiusi (10 collapsible_if, 4 expect_fun_call, 1 redundant_pattern_matching, 1 or_insert_with) |
 | Phase 2 — Runtime exit-free | ✅ FATTO | ab597e5 / 4eaff8f | 10 `process::exit()` → main.rs solo; `run() -> Result<i32>` |
 | Phase 3 — Error handling | ✅ FATTO | 91bd1c2 / 1aea947 / 32cc434 | `with_context()` su file open + programfile; 62 unwrap parser → expect con invariante pest |
-| Phase 4a — `runner.rs` → dir module | ⏳ TODO | — | preparatorio |
-| Phase 4b — Estrai `runner/builtins.rs` | ⏳ TODO | — | ~400 LOC |
-| Phase 4c — Estrai `runner/io.rs` | ⏳ TODO | — | ~200 LOC |
-| Phase 4d — Estrai `runner/fmt.rs` | ⏳ TODO | — | printf engine |
+| Phase 4a — `runner.rs` → dir module | ✅ FATTO | 4e61ba0 | git mv preparatorio, zero semantica |
+| Phase 4b — Estrai `runner/builtins.rs` | ✅ FATTO | ecede6b / 66e81cb | 340 LOC; dispatch_builtin(name, args, ctx) → Option<AwkValue> |
+| Phase 4c — Estrai `runner/io.rs` | ✅ FATTO | 5727a60 | 142 LOC; handle_output + getline open + flush_and_close_all |
+| Phase 4d — Estrai `runner/fmt.rs` | ✅ FATTO | d597228 | 79 LOC; awk_sprintf + format_one; printf_sanity 5/5 |
 | Phase 5 — Fix proptest_diff | ⏳ TODO | — | `env!("CARGO_BIN_EXE_rawk")` |
 | Phase 6 — Docs & visibilità | ⏳ TODO | — | `pub(crate)`, `///`, README, Step 19 in diary |
 
