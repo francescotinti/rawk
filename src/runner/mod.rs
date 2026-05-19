@@ -6,16 +6,17 @@
 
 use crate::ast::GetlineSource;
 use crate::ast::{BinaryOperator, Expr, Pattern, Statement};
-use crate::types::{AwkValue, InputStream, OutputStream};
+use crate::types::AwkValue;
 
 use crate::cli::Config;
 use crate::parser;
 use crate::types::EvalContext;
 use anyhow::Context;
 use std::fs::File;
-use std::io::{self, BufRead, BufReader};
+use std::io::{BufRead, BufReader};
 
 mod builtins;
+mod io;
 
 pub enum CompiledPattern {
     Expr(Expr),
@@ -143,7 +144,7 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
         {
             return Ok(code);
         }
-        let stdin = io::stdin();
+        let stdin = std::io::stdin();
         let reader = stdin.lock();
         if let FlowControl::Exit(code) = process_lines(reader, &mut context, &compiled_rules)? {
             return Ok(code);
@@ -162,7 +163,7 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
                 return Ok(code);
             }
             if filename == "-" {
-                let stdin = io::stdin();
+                let stdin = std::io::stdin();
                 let reader = stdin.lock();
                 if let FlowControl::Exit(code) =
                     process_lines(reader, &mut context, &compiled_rules)?
@@ -194,26 +195,7 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
     }
 
     // Final cleanup: flush tutto, wait() su pipe children
-    use std::io::Write;
-    let _ = std::io::stdout().flush();
-    let streams: Vec<OutputStream> = context.out_files.drain().map(|(_, v)| v).collect();
-    for stream in streams {
-        match stream {
-            OutputStream::File(_) => {}
-            OutputStream::Pipe { stdin, mut child } => {
-                drop(stdin);
-                let _ = child.wait();
-            }
-        }
-    }
-
-    let in_streams: Vec<InputStream> = context.in_files.drain().map(|(_, v)| v).collect();
-    for stream in in_streams {
-        if let InputStream::Pipe { stdout, mut child } = stream {
-            drop(stdout);
-            let _ = child.wait();
-        }
-    }
+    io::flush_and_close_all(&mut context);
 
     Ok(0)
 }
@@ -475,14 +457,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                 }
                 GetlineSource::File(file_expr) => {
                     let filename = eval_expr(file_expr, context).as_string();
-                    if !context.in_files.contains_key(&filename)
-                        && let Ok(file) = std::fs::File::open(&filename)
-                    {
-                        context.in_files.insert(
-                            filename.clone(),
-                            InputStream::File(Box::new(std::io::BufReader::new(file))),
-                        );
-                    }
+                    io::ensure_input_file(&filename, context);
                     if let Some(stream) = context.in_files.get_mut(&filename)
                         && let Ok(n) = stream.reader().read_line(&mut line)
                         && n > 0
@@ -492,26 +467,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                 }
                 GetlineSource::Pipe(cmd_expr) => {
                     let cmd = eval_expr(cmd_expr, context).as_string();
-                    if !context.in_files.contains_key(&cmd) {
-                        use std::process::{Command, Stdio};
-                        let child_res = Command::new("sh")
-                            .arg("-c")
-                            .arg(&cmd)
-                            .stdout(Stdio::piped())
-                            .spawn();
-                        if let Ok(mut child) = child_res {
-                            let stdout = child.stdout.take().unwrap();
-                            let reader = std::io::BufReader::new(stdout);
-                            context.in_files.insert(
-                                cmd.clone(),
-                                InputStream::Pipe {
-                                    stdout: Box::new(reader),
-                                    child,
-                                },
-                            );
-                        } else {
-                            return AwkValue::Number(-1.0);
-                        }
+                    if !io::ensure_input_pipe(&cmd, context) {
+                        return AwkValue::Number(-1.0);
                     }
                     if let Some(stream) = context.in_files.get_mut(&cmd) {
                         match stream.reader().read_line(&mut line) {
@@ -883,7 +840,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     let args: Vec<AwkValue> =
                         exprs[1..].iter().map(|e| eval_expr(e, context)).collect();
                     let formatted = awk_sprintf(&fmt, &args);
-                    if let Err(e) = handle_output(&formatted, redirect, context) {
+                    if let Err(e) = io::handle_output(&formatted, redirect, context) {
                         eprintln!("rawk: {e:#}");
                         return FlowControl::Exit(2);
                     }
@@ -897,7 +854,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 let ofs = context.get_var("OFS").as_string();
                 let ors = context.get_var("ORS").as_string();
                 let output = out.join(&ofs) + &ors;
-                if let Err(e) = handle_output(&output, redirect, context) {
+                if let Err(e) = io::handle_output(&output, redirect, context) {
                     eprintln!("rawk: {e:#}");
                     return FlowControl::Exit(2);
                 }
@@ -940,63 +897,6 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
         }
     }
     FlowControl::None
-}
-
-fn handle_output(
-    output: &str,
-    redirect: &Option<(String, Expr)>,
-    context: &mut EvalContext,
-) -> anyhow::Result<()> {
-    if let Some((op, file_expr)) = redirect {
-        let filename = eval_expr(file_expr, context).as_string();
-        use std::collections::hash_map::Entry;
-        use std::fs::OpenOptions;
-        let stream = match context.out_files.entry(filename.clone()) {
-            Entry::Occupied(e) => e.into_mut(),
-            Entry::Vacant(v) => {
-                let new_stream = if op == ">>" {
-                    let f = OpenOptions::new()
-                        .create(true)
-                        .append(true)
-                        .open(&filename)
-                        .with_context(|| format!("apertura file output '{filename}' in append"))?;
-                    OutputStream::File(Box::new(f))
-                } else if op == "|" {
-                    use std::process::{Command, Stdio};
-                    let mut child = Command::new("sh")
-                        .arg("-c")
-                        .arg(&filename)
-                        .stdin(Stdio::piped())
-                        .spawn()
-                        .with_context(|| format!("spawn pipe '{filename}'"))?;
-                    let stdin = child
-                        .stdin
-                        .take()
-                        .expect("Stdio::piped garantisce stdin disponibile");
-                    OutputStream::Pipe {
-                        stdin: Box::new(stdin),
-                        child,
-                    }
-                } else {
-                    let f = OpenOptions::new()
-                        .create(true)
-                        .write(true)
-                        .truncate(true)
-                        .open(&filename)
-                        .with_context(|| {
-                            format!("apertura file output '{filename}' in scrittura")
-                        })?;
-                    OutputStream::File(Box::new(f))
-                };
-                v.insert(new_stream)
-            }
-        };
-        write!(stream.writer(), "{}", output)
-            .with_context(|| format!("scrittura su '{filename}'"))?;
-    } else {
-        print!("{}", output);
-    }
-    Ok(())
 }
 
 fn awk_sprintf(fmt: &str, args: &[AwkValue]) -> String {
