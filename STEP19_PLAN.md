@@ -16,7 +16,7 @@
 | Phase 4b — Estrai `runner/builtins.rs` | ✅ FATTO | ecede6b / 66e81cb | 340 LOC; dispatch_builtin(name, args, ctx) → Option<AwkValue> |
 | Phase 4c — Estrai `runner/io.rs` | ✅ FATTO | 5727a60 | 142 LOC; handle_output + getline open + flush_and_close_all |
 | Phase 4d — Estrai `runner/fmt.rs` | ✅ FATTO | d597228 | 79 LOC; awk_sprintf + format_one; printf_sanity 5/5 |
-| Phase 5 — Fix proptest_diff | ⏳ TODO | — | `env!("CARGO_BIN_EXE_rawk")` |
+| Phase 5 — Fix proptest_diff | ✅ FATTO | (no-op) | `env!("CARGO_BIN_EXE_rawk")` già presente dal Step 12 (commit d1aefdb); audit Step 19 ha diagnosticato fail inesistenti. 6/6 proptest verdi |
 | Phase 6 — Docs & visibilità | ⏳ TODO | — | `pub(crate)`, `///`, README, Step 19 in diary |
 
 Legenda stato: ⏳ TODO · 🚧 IN CORSO · ✅ FATTO · ⚠️ PARZIALE · ❌ BLOCCATO
@@ -785,28 +785,24 @@ cargo test                                   # tutti i suite (xml, exit, error, 
 
 ### Task 5.1: Diagnosi e fix
 
-- [ ] **Step 5.1.1 (Red)**:
+> **Esito sessione 2026-05-19**: NO-OP. L'audit Step 19 riportava 6 fail con "No such file or directory" per path hard-coded, ma `tests/proptest_diff.rs` usa `env!("CARGO_BIN_EXE_rawk")` (righe 9 e 86) fin dalla creazione del file in Step 12 (commit d1aefdb). Verifica diretta: `cargo test --test proptest_diff` → `test result: ok. 6 passed; 0 failed`. Nessuna modifica al codice necessaria. La fase è chiusa con sola annotazione del piano.
+
+- [x] **Step 5.1.1 (Red)**:
 ```bash
 cargo test --test proptest_diff 2>&1 | tail -10
 ```
-Atteso: 6 fail con "No such file or directory" (path hard-coded).
+~~Atteso: 6 fail con "No such file or directory" (path hard-coded).~~ **Esito reale**: `6 passed; 0 failed`. RED-OK non si manifesta.
 
-- [ ] **Step 5.1.2 (Green)**: in `tests/proptest_diff.rs` linea 14 sostituisci il path hard-coded con:
-```rust
-const RAWK_BIN: &str = env!("CARGO_BIN_EXE_rawk");
-```
-e usa `Command::new(RAWK_BIN)`. (Pattern già usato da `tests/xml_runner_test.rs:75-92` e dai test creati in Phase 2-4.)
+- [x] **Step 5.1.2 (Green)**: già in place — `tests/proptest_diff.rs:9` e `tests/proptest_diff.rs:86` già `Command::new(env!("CARGO_BIN_EXE_rawk"))`. Nessuna edit eseguita.
 
-- [ ] **Step 5.1.3 (Verify)**:
+- [x] **Step 5.1.3 (Verify)**:
 ```bash
-cargo test --test proptest_diff 2>&1 | tail -10   # tutti pass
-cargo test                                          # tutti i suite verdi
+cargo test --test proptest_diff   # 6 passed
+bash scripts/checks.sh check_tests # 109 XML passed
 ```
+Tutti i suite verdi (8 suite: xml_runner 109 + proptest 6 + builtins 5 + printf 5 + error_messages 2 + exit_codes 4 + unit).
 
-- [ ] **Step 5.1.4 (Commit)**:
-```bash
-git add -A && git commit -m "fix(tests): proptest_diff usa env!(CARGO_BIN_EXE_rawk)"
-```
+- [x] **Step 5.1.4 (Commit)**: solo `STEP19_PLAN.md` (annotazione no-op), nessun cambio codice.
 
 ---
 
