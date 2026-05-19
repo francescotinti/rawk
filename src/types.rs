@@ -49,7 +49,7 @@ impl AwkValue {
             AwkValue::Number(n) => format_number_awk(*n, fmt),
         }
     }
-    
+
     pub fn is_truthy(&self) -> bool {
         match self {
             AwkValue::Uninitialized => false,
@@ -84,7 +84,11 @@ impl AwkValue {
         if let Some((l, r)) = self.numeric_values(other) {
             AwkValue::Number(if l == r { 1.0 } else { 0.0 })
         } else {
-            AwkValue::Number(if self.as_string() == other.as_string() { 1.0 } else { 0.0 })
+            AwkValue::Number(if self.as_string() == other.as_string() {
+                1.0
+            } else {
+                0.0
+            })
         }
     }
 
@@ -92,15 +96,23 @@ impl AwkValue {
         if let Some((l, r)) = self.numeric_values(other) {
             AwkValue::Number(if l < r { 1.0 } else { 0.0 })
         } else {
-            AwkValue::Number(if self.as_string() < other.as_string() { 1.0 } else { 0.0 })
+            AwkValue::Number(if self.as_string() < other.as_string() {
+                1.0
+            } else {
+                0.0
+            })
         }
     }
-    
+
     pub fn is_gt(&self, other: &Self) -> AwkValue {
         if let Some((l, r)) = self.numeric_values(other) {
             AwkValue::Number(if l > r { 1.0 } else { 0.0 })
         } else {
-            AwkValue::Number(if self.as_string() > other.as_string() { 1.0 } else { 0.0 })
+            AwkValue::Number(if self.as_string() > other.as_string() {
+                1.0
+            } else {
+                0.0
+            })
         }
     }
 
@@ -157,17 +169,24 @@ fn format_number_awk(n: f64, fmt: &str) -> String {
     // Path C: usa fmt richiesto, strip dot orfani (esistente)
     let s = sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string());
     // Fix 1 (Step 12-bis): trailing dot in fixed notation, "X." -> "X"
-    let s = if s.ends_with('.') { s[..s.len()-1].to_string() } else { s };
+    let s = if s.ends_with('.') {
+        s[..s.len() - 1].to_string()
+    } else {
+        s
+    };
     // Fix 2 (Step 13): orphan dot before exponent, "X.e+Y" -> "Xe+Y"
     s.replace(".e+", "e+")
-     .replace(".e-", "e-")
-     .replace(".E+", "E+")
-     .replace(".E-", "E-")
+        .replace(".e-", "e-")
+        .replace(".E+", "E+")
+        .replace(".E-", "E-")
 }
 
 pub enum OutputStream {
     File(Box<dyn std::io::Write>),
-    Pipe { stdin: Box<dyn std::io::Write>, child: std::process::Child },
+    Pipe {
+        stdin: Box<dyn std::io::Write>,
+        child: std::process::Child,
+    },
 }
 
 impl OutputStream {
@@ -181,7 +200,10 @@ impl OutputStream {
 
 pub enum InputStream {
     File(Box<dyn std::io::BufRead>),
-    Pipe { stdout: Box<dyn std::io::BufRead>, child: std::process::Child },
+    Pipe {
+        stdout: Box<dyn std::io::BufRead>,
+        child: std::process::Child,
+    },
 }
 
 impl InputStream {
@@ -195,9 +217,9 @@ impl InputStream {
 
 /// Represents the Evaluation Context (the state) for the current line.
 pub struct EvalContext {
-    pub nr: usize,              // Number of Records read so far
-    pub fnr: usize,             // Number of Records in current file
-    pub nf: usize,              // Number of Fields in current record
+    pub nr: usize,  // Number of Records read so far
+    pub fnr: usize, // Number of Records in current file
+    pub nf: usize,  // Number of Fields in current record
     pub fs: String,
     pub fields: Vec<AwkValue>,
     pub record: String,
@@ -282,7 +304,7 @@ impl EvalContext {
             AwkValue::Uninitialized
         }
     }
-    
+
     pub fn set_field(&mut self, n: usize, value: AwkValue) {
         if n == 0 {
             self.update_record(&value.as_string());
@@ -292,7 +314,7 @@ impl EvalContext {
             }
             self.fields[n - 1] = value;
             self.nf = self.fields.len();
-            
+
             // Rebuild $0 using OFS
             let ofs = self.get_var("OFS").as_string();
             let mut parts = Vec::new();
@@ -302,7 +324,7 @@ impl EvalContext {
             self.record = parts.join(&ofs);
         }
     }
-    
+
     pub fn get_var(&self, name: &str) -> AwkValue {
         if let Some(scope) = self.local_scopes.last() {
             if let Some(val) = scope.get(name) {
@@ -318,9 +340,12 @@ impl EvalContext {
             "OFMT" => return AwkValue::String(self.ofmt.clone()),
             _ => {}
         }
-        self.vars.get(name).cloned().unwrap_or(AwkValue::Uninitialized)
+        self.vars
+            .get(name)
+            .cloned()
+            .unwrap_or(AwkValue::Uninitialized)
     }
-    
+
     pub fn set_var(&mut self, name: &str, value: AwkValue) {
         if let Some(scope) = self.local_scopes.last_mut() {
             if scope.contains_key(name) {
@@ -339,7 +364,11 @@ impl EvalContext {
                     }
                 }
                 self.nf = new_nf;
-                let ofs = self.vars.get("OFS").map(|v| v.as_string()).unwrap_or_else(|| " ".to_string());
+                let ofs = self
+                    .vars
+                    .get("OFS")
+                    .map(|v| v.as_string())
+                    .unwrap_or_else(|| " ".to_string());
                 let parts: Vec<String> = self.fields.iter().map(|f| f.as_string()).collect();
                 self.record = parts.join(&ofs);
             }
@@ -353,7 +382,7 @@ impl EvalContext {
             }
         }
     }
-    
+
     pub fn get_array_var(&self, array_name: &str, key: &str) -> AwkValue {
         self.arrays
             .get(array_name)
@@ -361,9 +390,12 @@ impl EvalContext {
             .cloned()
             .unwrap_or(AwkValue::Uninitialized)
     }
-    
+
     pub fn set_array_var(&mut self, array_name: &str, key: &str, value: AwkValue) {
-        let arr = self.arrays.entry(array_name.to_string()).or_insert_with(HashMap::new);
+        let arr = self
+            .arrays
+            .entry(array_name.to_string())
+            .or_insert_with(HashMap::new);
         arr.insert(key.to_string(), value);
     }
 }

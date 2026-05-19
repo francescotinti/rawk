@@ -6,10 +6,23 @@
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum BinaryOperator {
-    Add, Sub, Mul, Div, Mod, Pow,
-    Eq, Neq, Lt, Lte, Gt, Gte,
-    And, Or,
-    Match, NotMatch, In,
+    Add,
+    Sub,
+    Mul,
+    Div,
+    Mod,
+    Pow,
+    Eq,
+    Neq,
+    Lt,
+    Lte,
+    Gt,
+    Gte,
+    And,
+    Or,
+    Match,
+    NotMatch,
+    In,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -26,8 +39,8 @@ pub enum Expr {
     StringLiteral(String),
     RegexLiteral(String),
     Variable(String),
-    ArrayAccess(String, Vec<Expr>), // a["key1", "key2"]
-    FunctionCall(String, Vec<Expr>), // length($1)
+    ArrayAccess(String, Vec<Expr>),         // a["key1", "key2"]
+    FunctionCall(String, Vec<Expr>),        // length($1)
     Getline(Option<String>, GetlineSource), // getline var < file / "cmd" | getline
     BinaryOp(Box<Expr>, BinaryOperator, Box<Expr>),
     Concat(Vec<Expr>),
@@ -47,11 +60,16 @@ pub enum Statement {
     Printf(Vec<Expr>, Option<(String, Expr)>),
     Assign(String, Expr),
     AssignArray(String, Vec<Expr>, Expr), // a[key1, key2] = value
-    AssignField(Box<Expr>, Expr), // $i = value
-    Delete(String, Option<Vec<Expr>>), // delete a[key] or delete a
+    AssignField(Box<Expr>, Expr),         // $i = value
+    Delete(String, Option<Vec<Expr>>),    // delete a[key] or delete a
     IfElse(Expr, Vec<Statement>, Option<Vec<Statement>>),
     ForIn(String, String, Vec<Statement>),
-    For(Option<Box<Statement>>, Option<Expr>, Option<Box<Statement>>, Vec<Statement>),
+    For(
+        Option<Box<Statement>>,
+        Option<Expr>,
+        Option<Box<Statement>>,
+        Vec<Statement>,
+    ),
     While(Expr, Vec<Statement>),
     DoWhile(Vec<Statement>, Expr),
     Break,
@@ -62,7 +80,6 @@ pub enum Statement {
     Exit(Option<Expr>),
     Expr(Expr),
 }
-
 
 #[derive(Debug, Clone)]
 pub struct FunctionDecl {

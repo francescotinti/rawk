@@ -4,7 +4,9 @@
  * Description: A high-fidelity port of the historic AWK language from C to Rust.
  */
 
-use crate::ast::{BinaryOperator, Expr, FunctionDecl, Pattern, Program, Rule as AstRule, Statement};
+use crate::ast::{
+    BinaryOperator, Expr, FunctionDecl, Pattern, Program, Rule as AstRule, Statement,
+};
 use pest::Parser;
 use pest::iterators::Pair;
 use pest_derive::Parser;
@@ -13,14 +15,12 @@ use pest_derive::Parser;
 #[grammar = "awk.pest"]
 pub struct AwkParser;
 
-
-
 pub fn parse(input: &str) -> anyhow::Result<Program> {
     let mut parsed = AwkParser::parse(Rule::program, input)
         .map_err(|e| anyhow::anyhow!("Parse error: {}", e))?;
-    
+
     let program_pair = parsed.next().unwrap();
-    
+
     let mut rules = Vec::new();
     let mut functions = Vec::new();
     for pair in program_pair.into_inner() {
@@ -30,17 +30,17 @@ pub fn parse(input: &str) -> anyhow::Result<Program> {
             functions.push(parse_function_decl(pair));
         }
     }
-    
+
     Ok(Program { rules, functions })
 }
 
 fn parse_function_decl(pair: Pair<Rule>) -> FunctionDecl {
     let mut inners = pair.into_inner();
     let name = inners.next().unwrap().as_str().to_string();
-    
+
     let mut params = Vec::new();
     let mut body = Vec::new();
-    
+
     if let Some(next_pair) = inners.next() {
         if next_pair.as_rule() == Rule::ident_list {
             for ident in next_pair.into_inner() {
@@ -51,14 +51,14 @@ fn parse_function_decl(pair: Pair<Rule>) -> FunctionDecl {
             body = parse_action_block(next_pair);
         }
     }
-    
+
     FunctionDecl { name, params, body }
 }
 
 fn parse_rule(pair: Pair<Rule>) -> AstRule {
     let mut pattern = None;
     let mut action = Vec::new();
-    
+
     for inner in pair.into_inner() {
         match inner.as_rule() {
             Rule::pattern => {
@@ -70,12 +70,15 @@ fn parse_rule(pair: Pair<Rule>) -> AstRule {
             _ => {}
         }
     }
-    
+
     // If no action block but we have a pattern, standard awk does print $0
     if action.is_empty() && pattern.is_some() {
-        action.push(Statement::Print(vec![Expr::Field(Box::new(Expr::StringLiteral("0".to_string())))], None));
+        action.push(Statement::Print(
+            vec![Expr::Field(Box::new(Expr::StringLiteral("0".to_string())))],
+            None,
+        ));
     }
-    
+
     AstRule { pattern, action }
 }
 
@@ -90,7 +93,7 @@ fn parse_pattern(pair: Pair<Rule>) -> Pattern {
     } else if s == "ENDFILE" {
         return Pattern::EndFile;
     }
-    
+
     let inner = pair.into_inner().next().unwrap();
     if inner.as_rule() == Rule::regex_pattern {
         let re = inner.into_inner().next().unwrap().as_str();
@@ -258,7 +261,11 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
             let e = parse_expr(inner.into_inner().next().unwrap());
             Statement::Expr(e)
         }
-        _ => unreachable!("Unhandled statement rule: pair={:?}, inner={:?}", pair.as_rule(), inner.as_rule()),
+        _ => unreachable!(
+            "Unhandled statement rule: pair={:?}, inner={:?}",
+            pair.as_rule(),
+            inner.as_rule()
+        ),
     }
 }
 
@@ -267,7 +274,7 @@ fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
     let target = inners.next().unwrap();
     let op_str = inners.next().unwrap().as_str();
     let mut expr = parse_expr(inners.next().unwrap());
-    
+
     let target_inner = target.clone().into_inner().next().unwrap();
     let op = match op_str {
         "+=" => Some(BinaryOperator::Add),
@@ -316,7 +323,11 @@ fn parse_ternary_expr(pair: Pair<Rule>) -> Expr {
     let logical_or = parse_logical_or(inners.next().unwrap());
     if let Some(true_expr_pair) = inners.next() {
         let false_expr_pair = inners.next().unwrap();
-        Expr::Ternary(Box::new(logical_or), Box::new(parse_expr(true_expr_pair)), Box::new(parse_expr(false_expr_pair)))
+        Expr::Ternary(
+            Box::new(logical_or),
+            Box::new(parse_expr(true_expr_pair)),
+            Box::new(parse_expr(false_expr_pair)),
+        )
     } else {
         logical_or
     }
@@ -325,7 +336,8 @@ fn parse_ternary_expr(pair: Pair<Rule>) -> Expr {
 fn parse_logical_or(pair: Pair<Rule>) -> Expr {
     let mut inners = pair.into_inner();
     let mut lhs = parse_logical_and(inners.next().unwrap());
-    while let Some(_) = inners.next() { // op_or
+    while let Some(_) = inners.next() {
+        // op_or
         let rhs = parse_logical_and(inners.next().unwrap());
         lhs = Expr::BinaryOp(Box::new(lhs), BinaryOperator::Or, Box::new(rhs));
     }
@@ -335,7 +347,8 @@ fn parse_logical_or(pair: Pair<Rule>) -> Expr {
 fn parse_logical_and(pair: Pair<Rule>) -> Expr {
     let mut inners = pair.into_inner();
     let mut lhs = parse_in_expr(inners.next().unwrap());
-    while let Some(_) = inners.next() { // op_and
+    while let Some(_) = inners.next() {
+        // op_and
         let rhs = parse_in_expr(inners.next().unwrap());
         lhs = Expr::BinaryOp(Box::new(lhs), BinaryOperator::And, Box::new(rhs));
     }
@@ -345,9 +358,14 @@ fn parse_logical_and(pair: Pair<Rule>) -> Expr {
 fn parse_in_expr(pair: Pair<Rule>) -> Expr {
     let mut inners = pair.into_inner();
     let lhs = parse_match_expr(inners.next().unwrap());
-    if let Some(_) = inners.next() { // op_in
+    if let Some(_) = inners.next() {
+        // op_in
         let rhs_ident = inners.next().unwrap();
-        Expr::BinaryOp(Box::new(lhs), BinaryOperator::In, Box::new(Expr::Variable(rhs_ident.as_str().to_string())))
+        Expr::BinaryOp(
+            Box::new(lhs),
+            BinaryOperator::In,
+            Box::new(Expr::Variable(rhs_ident.as_str().to_string())),
+        )
     } else {
         lhs
     }
@@ -440,11 +458,16 @@ fn parse_pow_expr(pair: Pair<Rule>) -> Expr {
 fn parse_term(term: Pair<Rule>) -> Expr {
     let mut term_inners = term.into_inner();
     let mut primary_pair = term_inners.next().unwrap();
-    
+
     let mut prefix = None;
     if primary_pair.as_rule() != Rule::primary {
         prefix = Some(primary_pair.as_rule());
-        primary_pair = term_inners.next().unwrap_or_else(|| panic!("Expected primary after prefix {:?}, but got nothing", prefix.unwrap()));
+        primary_pair = term_inners.next().unwrap_or_else(|| {
+            panic!(
+                "Expected primary after prefix {:?}, but got nothing",
+                prefix.unwrap()
+            )
+        });
     }
 
     let mut base_expr = parse_primary(primary_pair);
@@ -475,44 +498,92 @@ pub fn decode_string_escapes(raw: &str) -> String {
     let mut out = String::with_capacity(raw.len());
     let mut chars = raw.chars().peekable();
     while let Some(c) = chars.next() {
-        if c != '\\' { out.push(c); continue; }
+        if c != '\\' {
+            out.push(c);
+            continue;
+        }
         match chars.peek().copied() {
-            Some('n')  => { chars.next(); out.push('\n'); }
-            Some('t')  => { chars.next(); out.push('\t'); }
-            Some('r')  => { chars.next(); out.push('\r'); }
-            Some('\\') => { chars.next(); out.push('\\'); }
-            Some('"')  => { chars.next(); out.push('"'); }
-            Some('/')  => { chars.next(); out.push('/'); }
-            Some('a')  => { chars.next(); out.push('\x07'); }
-            Some('b')  => { chars.next(); out.push('\x08'); }
-            Some('f')  => { chars.next(); out.push('\x0c'); }
-            Some('v')  => { chars.next(); out.push('\x0b'); }
+            Some('n') => {
+                chars.next();
+                out.push('\n');
+            }
+            Some('t') => {
+                chars.next();
+                out.push('\t');
+            }
+            Some('r') => {
+                chars.next();
+                out.push('\r');
+            }
+            Some('\\') => {
+                chars.next();
+                out.push('\\');
+            }
+            Some('"') => {
+                chars.next();
+                out.push('"');
+            }
+            Some('/') => {
+                chars.next();
+                out.push('/');
+            }
+            Some('a') => {
+                chars.next();
+                out.push('\x07');
+            }
+            Some('b') => {
+                chars.next();
+                out.push('\x08');
+            }
+            Some('f') => {
+                chars.next();
+                out.push('\x0c');
+            }
+            Some('v') => {
+                chars.next();
+                out.push('\x0b');
+            }
             Some('x') => {
                 chars.next();
                 let mut hex = String::new();
                 for _ in 0..2 {
                     if let Some(&h) = chars.peek() {
-                        if h.is_ascii_hexdigit() { hex.push(h); chars.next(); } else { break; }
+                        if h.is_ascii_hexdigit() {
+                            hex.push(h);
+                            chars.next();
+                        } else {
+                            break;
+                        }
                     }
                 }
                 if !hex.is_empty() {
                     let val = u32::from_str_radix(&hex, 16).unwrap_or(0);
                     out.push(char::from_u32(val).unwrap_or('\0'));
                 } else {
-                    out.push('\\'); out.push('x');
+                    out.push('\\');
+                    out.push('x');
                 }
             }
             Some(d) if d.is_digit(8) => {
                 let mut oct = String::new();
                 for _ in 0..3 {
                     if let Some(&o) = chars.peek() {
-                        if o.is_digit(8) { oct.push(o); chars.next(); } else { break; }
+                        if o.is_digit(8) {
+                            oct.push(o);
+                            chars.next();
+                        } else {
+                            break;
+                        }
                     }
                 }
                 let val = u32::from_str_radix(&oct, 8).unwrap_or(0) % 256;
                 out.push(char::from_u32(val).unwrap_or('\0'));
             }
-            Some(other) => { chars.next(); out.push('\\'); out.push(other); }
+            Some(other) => {
+                chars.next();
+                out.push('\\');
+                out.push(other);
+            }
             None => out.push('\\'),
         }
     }
@@ -530,7 +601,9 @@ fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
 fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
     match inner.as_rule() {
         Rule::number => Expr::NumberLiteral(inner.as_str().parse::<f64>().unwrap_or(0.0)),
-        Rule::string_literal => Expr::StringLiteral(decode_string_escapes(inner.into_inner().next().unwrap().as_str())),
+        Rule::string_literal => Expr::StringLiteral(decode_string_escapes(
+            inner.into_inner().next().unwrap().as_str(),
+        )),
         Rule::regex_pattern => {
             let re = inner.into_inner().next().unwrap().as_str();
             Expr::RegexLiteral(re.to_string())
@@ -555,7 +628,8 @@ fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
                     crate::ast::GetlineSource::Main
                 };
                 Expr::Getline(var_name, source)
-            } else { // pipe_getline
+            } else {
+                // pipe_getline
                 let mut inners = actual.into_inner();
                 let cmd_primary = inners.next().unwrap(); // non_getline_primary
                 let cmd_inner = cmd_primary.into_inner().next().unwrap();
@@ -566,7 +640,10 @@ fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
                         var_name = Some(p.as_str().to_string());
                     }
                 }
-                Expr::Getline(var_name, crate::ast::GetlineSource::Pipe(Box::new(cmd_expr)))
+                Expr::Getline(
+                    var_name,
+                    crate::ast::GetlineSource::Pipe(Box::new(cmd_expr)),
+                )
             }
         }
         Rule::field => {
@@ -585,7 +662,7 @@ fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
         Rule::func_call => {
             let mut inners = inner.into_inner();
             let func_name_str = inners.next().unwrap().as_str();
-            let ident = func_name_str[..func_name_str.len()-1].to_string();
+            let ident = func_name_str[..func_name_str.len() - 1].to_string();
             let mut args = Vec::new();
             if let Some(expr_list) = inners.next() {
                 for e in expr_list.into_inner() {

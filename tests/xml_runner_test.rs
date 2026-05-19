@@ -1,7 +1,7 @@
+use serde::Deserialize;
 use std::fs::File;
 use std::io::{Read, Write};
 use std::process::{Command, Stdio};
-use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 struct Manifest {
@@ -50,12 +50,15 @@ fn run_xml_testsuite() {
     // Read the XML file
     let mut file = File::open("tests/testsuite.xml").expect("Failed to open testsuite.xml");
     let mut xml_content = String::new();
-    file.read_to_string(&mut xml_content).expect("Failed to read testsuite.xml");
+    file.read_to_string(&mut xml_content)
+        .expect("Failed to read testsuite.xml");
 
-    let manifest: Manifest = quick_xml::de::from_str(&xml_content)
-        .expect("Failed to parse manifest");
+    let manifest: Manifest =
+        quick_xml::de::from_str(&xml_content).expect("Failed to parse manifest");
 
-    let active: Vec<&ManifestCase> = manifest.cases.iter()
+    let active: Vec<&ManifestCase> = manifest
+        .cases
+        .iter()
         .filter(|c| c.enabled != "false")
         .collect();
     let total = active.len();
@@ -65,12 +68,12 @@ fn run_xml_testsuite() {
 
     for (i, mc) in active.iter().enumerate() {
         let case_path = format!("tests/cases/{}", mc.file);
-        let case_xml = std::fs::read_to_string(&case_path)
-            .expect(&format!("Failed to read {}", case_path));
-        let case: TestCase = quick_xml::de::from_str(&case_xml)
-            .expect(&format!("Failed to parse {}", case_path));
+        let case_xml =
+            std::fs::read_to_string(&case_path).expect(&format!("Failed to read {}", case_path));
+        let case: TestCase =
+            quick_xml::de::from_str(&case_xml).expect(&format!("Failed to parse {}", case_path));
 
-        println!("  [{}/{}] {}", i+1, total, case.name);
+        println!("  [{}/{}] {}", i + 1, total, case.name);
 
         let mut cmd = Command::new(env!("CARGO_BIN_EXE_rawk"));
         for arg in &case.args {
@@ -85,7 +88,9 @@ fn run_xml_testsuite() {
 
         if let Some(stdin_data) = &case.stdin {
             if let Some(mut stdin) = child.stdin.take() {
-                stdin.write_all(stdin_data.as_bytes()).expect("Failed to write to stdin");
+                stdin
+                    .write_all(stdin_data.as_bytes())
+                    .expect("Failed to write to stdin");
             }
         }
 
@@ -93,12 +98,12 @@ fn run_xml_testsuite() {
 
         let stdout_str = String::from_utf8_lossy(&output.stdout);
         let stderr_str = String::from_utf8_lossy(&output.stderr);
-        
+
         let mut case_failed = false;
 
         // Check stdout
         let expected_out = case.expected_stdout.content.trim_start(); // allow leading whitespace in CDATA
-        
+
         if case.expected_stdout.match_type == "contains" {
             for line in expected_out.lines() {
                 if !line.trim().is_empty() && !stdout_str.contains(line) {
@@ -131,9 +136,12 @@ fn run_xml_testsuite() {
                 case_failed = true;
             }
         }
-        
+
         if !output.status.success() {
-            println!("    [FAIL] Process exited with failure status: {}", output.status);
+            println!(
+                "    [FAIL] Process exited with failure status: {}",
+                output.status
+            );
             case_failed = true;
         }
 
@@ -147,4 +155,3 @@ fn run_xml_testsuite() {
         panic!("{} of {} active tests failed", failed, total);
     }
 }
-

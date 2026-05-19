@@ -1,7 +1,7 @@
+use serde::Deserialize;
 use std::fs::File;
 use std::io::{Read, Write};
 use std::process::{Command, Stdio, exit};
-use serde::Deserialize;
 
 // duplicato da tests/xml_runner_test.rs (DRY trade-off accettato)
 #[derive(Debug, Deserialize)]
@@ -61,7 +61,7 @@ fn run_cmd(mut cmd: Command, stdin_data: Option<&String>) -> Option<(String, Str
                 let _ = stdin.write_all(stdin_data.as_bytes());
             }
         }
-        
+
         // Wait with timeout would be ideal, but for now we just wait_with_output.
         // POSIX awk might hang if stdin is missing but expected.
         if let Ok(output) = child.wait_with_output() {
@@ -78,7 +78,12 @@ fn is_skip(case: &TestCase) -> Option<&'static str> {
     if script.contains("systime") || script.contains("strftime") {
         return Some("uses gawk-only systime/strftime");
     }
-    if script.contains("and(") || script.contains("or(") || script.contains("xor(") || script.contains("lshift(") || script.contains("rshift(") {
+    if script.contains("and(")
+        || script.contains("or(")
+        || script.contains("xor(")
+        || script.contains("lshift(")
+        || script.contains("rshift(")
+    {
         return Some("uses gawk-only bitwise functions");
     }
     if script.contains("gensub") || script.contains("mktime") {
@@ -101,7 +106,10 @@ fn main() {
     let awk_version = match awk_version_cmd {
         Ok(out) => {
             let s = String::from_utf8_lossy(&out.stdout);
-            s.lines().next().unwrap_or("unknown awk version").to_string()
+            s.lines()
+                .next()
+                .unwrap_or("unknown awk version")
+                .to_string()
         }
         Err(_) => {
             eprintln!("awk binary not found in PATH; install awk to use diffrun");
@@ -111,12 +119,15 @@ fn main() {
 
     let mut file = File::open("tests/testsuite.xml").expect("Failed to open testsuite.xml");
     let mut xml_content = String::new();
-    file.read_to_string(&mut xml_content).expect("Failed to read testsuite.xml");
+    file.read_to_string(&mut xml_content)
+        .expect("Failed to read testsuite.xml");
 
-    let manifest: Manifest = quick_xml::de::from_str(&xml_content)
-        .expect("Failed to parse manifest");
+    let manifest: Manifest =
+        quick_xml::de::from_str(&xml_content).expect("Failed to parse manifest");
 
-    let active: Vec<&ManifestCase> = manifest.cases.iter()
+    let active: Vec<&ManifestCase> = manifest
+        .cases
+        .iter()
         .filter(|c| c.enabled != "false")
         .collect();
 
@@ -130,10 +141,10 @@ fn main() {
 
     for mc in active {
         let case_path = format!("tests/cases/{}", mc.file);
-        let case_xml = std::fs::read_to_string(&case_path)
-            .expect(&format!("Failed to read {}", case_path));
-        let case: TestCase = quick_xml::de::from_str(&case_xml)
-            .expect(&format!("Failed to parse {}", case_path));
+        let case_xml =
+            std::fs::read_to_string(&case_path).expect(&format!("Failed to read {}", case_path));
+        let case: TestCase =
+            quick_xml::de::from_str(&case_xml).expect(&format!("Failed to parse {}", case_path));
 
         if let Some(reason) = is_skip(&case) {
             skipped_cases.push((case.name.clone(), reason));
@@ -159,9 +170,17 @@ fn main() {
 
         match (rawk_out, awk_out) {
             (Some((r_stdout, _)), Some((a_stdout, _))) => {
-                let r_norm = if case.expected_stdout.match_type == "contains" { r_stdout.clone() } else { r_stdout.trim().to_string() };
-                let a_norm = if case.expected_stdout.match_type == "contains" { a_stdout.clone() } else { a_stdout.trim().to_string() };
-                
+                let r_norm = if case.expected_stdout.match_type == "contains" {
+                    r_stdout.clone()
+                } else {
+                    r_stdout.trim().to_string()
+                };
+                let a_norm = if case.expected_stdout.match_type == "contains" {
+                    a_stdout.clone()
+                } else {
+                    a_stdout.trim().to_string()
+                };
+
                 if r_norm == a_norm {
                     match_count += 1;
                 } else {
@@ -169,7 +188,11 @@ fn main() {
                 }
             }
             _ => {
-                diverge_cases.push((case.name.clone(), "Execution failed".to_string(), "Execution failed".to_string()));
+                diverge_cases.push((
+                    case.name.clone(),
+                    "Execution failed".to_string(),
+                    "Execution failed".to_string(),
+                ));
             }
         }
     }
@@ -184,10 +207,10 @@ fn main() {
             println!("[{}] {}", i + 1, name);
             let r_lines: Vec<&str> = r_stdout.lines().take(3).collect();
             let a_lines: Vec<&str> = a_stdout.lines().take(3).collect();
-            
+
             let r_preview = if r_lines.is_empty() { "\"\"" } else { r_stdout };
             let a_preview = if a_lines.is_empty() { "\"\"" } else { a_stdout };
-            
+
             println!("    rawk:    {:?}", r_preview);
             println!("    awk:     {:?}", a_preview);
         }

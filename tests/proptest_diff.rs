@@ -1,5 +1,5 @@
-use std::process::{Command, Stdio};
 use proptest::prelude::*;
+use std::process::{Command, Stdio};
 
 fn awk_available() -> bool {
     Command::new("awk").arg("--version").output().is_ok()
