@@ -17,7 +17,7 @@
 | Phase 4c — Estrai `runner/io.rs` | ✅ FATTO | 5727a60 | 142 LOC; handle_output + getline open + flush_and_close_all |
 | Phase 4d — Estrai `runner/fmt.rs` | ✅ FATTO | d597228 | 79 LOC; awk_sprintf + format_one; printf_sanity 5/5 |
 | Phase 5 — Fix proptest_diff | ✅ FATTO | (no-op) | `env!("CARGO_BIN_EXE_rawk")` già presente dal Step 12 (commit d1aefdb); audit Step 19 ha diagnosticato fail inesistenti. 6/6 proptest verdi |
-| Phase 6 — Docs & visibilità | ⏳ TODO | — | `pub(crate)`, `///`, README, Step 19 in diary |
+| Phase 6 — Docs & visibilità | ✅ FATTO | 4db4091 / bc8a26c / a622dd7 / e1d7d14 | 47 `pub`→`pub(crate)` in types.rs; `///` su AwkValue+EvalContext+I/O+AST enums; README Build&Test; Step 19 in NEXT_STEPS.md. 23 test totali / 8 suite verdi |
 
 Legenda stato: ⏳ TODO · 🚧 IN CORSO · ✅ FATTO · ⚠️ PARZIALE · ❌ BLOCCATO
 
@@ -815,20 +815,20 @@ Tutti i suite verdi (8 suite: xml_runner 109 + proptest 6 + builtins 5 + printf 
 
 Strategia: cambia `pub` → `pub(crate)` su tutti gli item che NON sono usati da `src/bin/diffrun.rs`. Per ogni cambio: `cargo check` per individuare il primo errore di visibilità; ripristina selettivamente quel singolo item se serve esposto al binario `diffrun`.
 
-- [ ] **Step 6.1.1 (Red verification)**:
+- [x] **Step 6.1.1 (Red verification)**:
 ```bash
 test "$(grep -c '^pub ' src/types.rs)" -gt 0 && echo "pub-count=$(grep -c '^pub ' src/types.rs)"
 ```
 Annota il numero di partenza (atteso ~25).
 
-- [ ] **Step 6.1.2 (Green)**: itera. Sostituisci `pub fn` con `pub(crate) fn`, `pub struct` con `pub(crate) struct`, `pub enum` con `pub(crate) enum` salvo che `cargo check` riporti accesso da `src/bin/diffrun.rs`.
+- [x] **Step 6.1.2 (Green)**: itera. Sostituisci `pub fn` con `pub(crate) fn`, `pub struct` con `pub(crate) struct`, `pub enum` con `pub(crate) enum` salvo che `cargo check` riporti accesso da `src/bin/diffrun.rs`.
 
-- [ ] **Step 6.1.3 (Verify)**:
+- [x] **Step 6.1.3 (Verify)**:
 ```bash
 cargo check && bash scripts/checks.sh check_tests && bash scripts/checks.sh check_clippy
 ```
 
-- [ ] **Step 6.1.4 (Commit)**: `git commit -am "refactor(types): restringi visibilità a pub(crate) dove possibile"`
+- [x] **Step 6.1.4 (Commit)**: `git commit -am "refactor(types): restringi visibilità a pub(crate) dove possibile"`
 
 ### Task 6.2: Docstring `///` sui tipi pubblici principali
 
@@ -836,9 +836,9 @@ cargo check && bash scripts/checks.sh check_tests && bash scripts/checks.sh chec
 - Modify: `src/types.rs` (AwkValue varianti, EvalContext, OutputStream, InputStream)
 - Modify: `src/ast.rs` (Expr, Statement, BinaryOperator, GetlineSource, Rule, Program)
 
-- [ ] **Step 6.2.1 (Red — abilita lint missing_docs come gate)**: aggiungi temporaneamente in cima a `src/main.rs` (o `src/lib.rs` se esiste): `#![warn(missing_docs)]`. Esegui `cargo build 2>&1 | grep -c 'missing documentation'`. Atteso: numero elevato sui tipi pubblici di types.rs e ast.rs.
+- [x] **Step 6.2.1 (Red — abilita lint missing_docs come gate)**: aggiungi temporaneamente in cima a `src/main.rs` (o `src/lib.rs` se esiste): `#![warn(missing_docs)]`. Esegui `cargo build 2>&1 | grep -c 'missing documentation'`. Atteso: numero elevato sui tipi pubblici di types.rs e ast.rs.
 
-- [ ] **Step 6.2.2 (Green)**: aggiungi una riga `///` di descrizione su ogni tipo pubblico (varianti, struct, enum). Per `AwkValue` varianti includi anche un esempio di quando vengono prodotte:
+- [x] **Step 6.2.2 (Green)**: aggiungi una riga `///` di descrizione su ogni tipo pubblico (varianti, struct, enum). Per `AwkValue` varianti includi anche un esempio di quando vengono prodotte:
 
 ```rust
 /// Valore AWK polimorfo. Le coercioni Number↔String seguono le regole POSIX.
@@ -855,25 +855,25 @@ pub(crate) enum AwkValue {
 }
 ```
 
-- [ ] **Step 6.2.3 (Verify)**:
+- [x] **Step 6.2.3 (Verify)**:
 ```bash
 cargo build 2>&1 | grep -c 'missing documentation'   # 0 sui tipi target
 bash scripts/checks.sh check_tests
 ```
 
-- [ ] **Step 6.2.4 (Commit)**: `git commit -am "docs: /// su tipi pubblici (AwkValue, EvalContext, AST enums)"`
+- [x] **Step 6.2.4 (Commit)**: `git commit -am "docs: /// su tipi pubblici (AwkValue, EvalContext, AST enums)"`
 
 ### Task 6.3: README sezione Build & Test
 
 **Files:**
 - Modify: `README.md`
 
-- [ ] **Step 6.3.1 (Red verification)**:
+- [x] **Step 6.3.1 (Red verification)**:
 ```bash
 grep -q '## Build & Test' README.md && echo present || echo "RED-OK: assente"
 ```
 
-- [ ] **Step 6.3.2 (Green)**: in `README.md` aggiungi sezione:
+- [x] **Step 6.3.2 (Green)**: in `README.md` aggiungi sezione:
 
 ```markdown
 ## Build & Test
@@ -891,19 +891,19 @@ cargo run --bin diffrun -- tests/testsuite.xml   # confronto vs /usr/bin/awk
 - `bash scripts/checks.sh` (tutti i verification gate del piano di adeguamento)
 ```
 
-- [ ] **Step 6.3.3 (Verify)**:
+- [x] **Step 6.3.3 (Verify)**:
 ```bash
 grep -q '## Build & Test' README.md && echo OK
 ```
 
-- [ ] **Step 6.3.4 (Commit)**: `git commit -am "docs(README): sezione Build & Test"`
+- [x] **Step 6.3.4 (Commit)**: `git commit -am "docs(README): sezione Build & Test"`
 
 ### Task 6.4: Append Step 19 al diario
 
 **Files:**
 - Modify: `NEXT_STEPS.md`
 
-- [ ] **Step 6.4.1 (Green)**: in fondo a `NEXT_STEPS.md` (o nella sezione "Audit log" se esiste) aggiungi:
+- [x] **Step 6.4.1 (Green)**: in fondo a `NEXT_STEPS.md` (o nella sezione "Audit log" se esiste) aggiungi:
 
 ```markdown
 ## Step 19 — Idiomatic Cleanup (post-closure, 2026-05-19)
@@ -922,11 +922,11 @@ Adeguamento idiomatico Rust 2024 + chiusura debito Step 15.
 Invariante: 109/109 testcase XML verdi a ogni step. Esperimento resta chiuso, ora idiomatico.
 ```
 
-- [ ] **Step 6.4.2 (Commit)**: `git commit -am "docs(diary): Step 19 — idiomatic cleanup completato"`
+- [x] **Step 6.4.2 (Commit)**: `git commit -am "docs(diary): Step 19 — idiomatic cleanup completato"`
 
 ### Task 6.5: Sanity finale (tutti i gate verdi)
 
-- [ ] **Step 6.5.1**:
+- [x] **Step 6.5.1**:
 ```bash
 bash scripts/checks.sh    # tutti i check OK
 cargo test                # tutti i suite verdi
