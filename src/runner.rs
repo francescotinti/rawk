@@ -11,6 +11,7 @@ use crate::types::{AwkValue, InputStream, OutputStream};
 use crate::cli::Config;
 use crate::parser;
 use crate::types::EvalContext;
+use anyhow::Context;
 use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 
@@ -71,7 +72,8 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
     let mut program_text = String::new();
     if !config.program_files.is_empty() {
         for pf in &config.program_files {
-            let content = std::fs::read_to_string(pf)?;
+            let content = std::fs::read_to_string(pf)
+                .with_context(|| format!("lettura programfile '{pf}'"))?;
             program_text.push_str(&content);
             program_text.push('\n');
         }
@@ -1199,7 +1201,10 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     let args: Vec<AwkValue> =
                         exprs[1..].iter().map(|e| eval_expr(e, context)).collect();
                     let formatted = awk_sprintf(&fmt, &args);
-                    handle_output(&formatted, redirect, context);
+                    if let Err(e) = handle_output(&formatted, redirect, context) {
+                        eprintln!("rawk: {e:#}");
+                        return FlowControl::Exit(2);
+                    }
                 }
             }
             Statement::Print(exprs, redirect) => {
@@ -1210,7 +1215,10 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 let ofs = context.get_var("OFS").as_string();
                 let ors = context.get_var("ORS").as_string();
                 let output = out.join(&ofs) + &ors;
-                handle_output(&output, redirect, context);
+                if let Err(e) = handle_output(&output, redirect, context) {
+                    eprintln!("rawk: {e:#}");
+                    return FlowControl::Exit(2);
+                }
             }
             Statement::Assign(var_name, expr) => {
                 let val = eval_expr(expr, context);
@@ -1252,22 +1260,25 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
     FlowControl::None
 }
 
-fn handle_output(output: &str, redirect: &Option<(String, Expr)>, context: &mut EvalContext) {
+fn handle_output(
+    output: &str,
+    redirect: &Option<(String, Expr)>,
+    context: &mut EvalContext,
+) -> anyhow::Result<()> {
     if let Some((op, file_expr)) = redirect {
         let filename = eval_expr(file_expr, context).as_string();
+        use std::collections::hash_map::Entry;
         use std::fs::OpenOptions;
-        let stream = context
-            .out_files
-            .entry(filename.clone())
-            .or_insert_with(|| {
-                if op == ">>" {
-                    OutputStream::File(Box::new(
-                        OpenOptions::new()
-                            .create(true)
-                            .append(true)
-                            .open(&filename)
-                            .unwrap(),
-                    ))
+        let stream = match context.out_files.entry(filename.clone()) {
+            Entry::Occupied(e) => e.into_mut(),
+            Entry::Vacant(v) => {
+                let new_stream = if op == ">>" {
+                    let f = OpenOptions::new()
+                        .create(true)
+                        .append(true)
+                        .open(&filename)
+                        .with_context(|| format!("apertura file output '{filename}' in append"))?;
+                    OutputStream::File(Box::new(f))
                 } else if op == "|" {
                     use std::process::{Command, Stdio};
                     let mut child = Command::new("sh")
@@ -1275,27 +1286,35 @@ fn handle_output(output: &str, redirect: &Option<(String, Expr)>, context: &mut 
                         .arg(&filename)
                         .stdin(Stdio::piped())
                         .spawn()
-                        .unwrap();
-                    let stdin = child.stdin.take().unwrap();
+                        .with_context(|| format!("spawn pipe '{filename}'"))?;
+                    let stdin = child
+                        .stdin
+                        .take()
+                        .expect("Stdio::piped garantisce stdin disponibile");
                     OutputStream::Pipe {
                         stdin: Box::new(stdin),
                         child,
                     }
                 } else {
-                    OutputStream::File(Box::new(
-                        OpenOptions::new()
-                            .create(true)
-                            .write(true)
-                            .truncate(true)
-                            .open(&filename)
-                            .unwrap(),
-                    ))
-                }
-            });
-        write!(stream.writer(), "{}", output).unwrap();
+                    let f = OpenOptions::new()
+                        .create(true)
+                        .write(true)
+                        .truncate(true)
+                        .open(&filename)
+                        .with_context(|| {
+                            format!("apertura file output '{filename}' in scrittura")
+                        })?;
+                    OutputStream::File(Box::new(f))
+                };
+                v.insert(new_stream)
+            }
+        };
+        write!(stream.writer(), "{}", output)
+            .with_context(|| format!("scrittura su '{filename}'"))?;
     } else {
         print!("{}", output);
     }
+    Ok(())
 }
 
 fn awk_sprintf(fmt: &str, args: &[AwkValue]) -> String {
