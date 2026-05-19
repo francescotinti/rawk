@@ -56,10 +56,10 @@ fn run_cmd(mut cmd: Command, stdin_data: Option<&String>) -> Option<(String, Str
     cmd.stderr(Stdio::piped());
 
     if let Ok(mut child) = cmd.spawn() {
-        if let Some(stdin_data) = stdin_data {
-            if let Some(mut stdin) = child.stdin.take() {
-                let _ = stdin.write_all(stdin_data.as_bytes());
-            }
+        if let Some(stdin_data) = stdin_data
+            && let Some(mut stdin) = child.stdin.take()
+        {
+            let _ = stdin.write_all(stdin_data.as_bytes());
         }
 
         // Wait with timeout would be ideal, but for now we just wait_with_output.

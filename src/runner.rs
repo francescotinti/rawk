@@ -122,12 +122,12 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     let argc_val = context.get_var("ARGC").as_number() as i64;
     let mut files_to_process = Vec::new();
     for i in 1..argc_val {
-        if let Some(arr) = context.arrays.get("ARGV") {
-            if let Some(val) = arr.get(&i.to_string()) {
-                let filename = val.as_string();
-                if !filename.is_empty() {
-                    files_to_process.push(filename);
-                }
+        if let Some(arr) = context.arrays.get("ARGV")
+            && let Some(val) = arr.get(&i.to_string())
+        {
+            let filename = val.as_string();
+            if !filename.is_empty() {
+                files_to_process.push(filename);
             }
         }
     }
@@ -463,28 +463,27 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
 
             match source {
                 GetlineSource::Main => {
-                    if let Ok(n) = std::io::stdin().read_line(&mut line) {
-                        if n > 0 {
-                            read_success = true;
-                        }
+                    if let Ok(n) = std::io::stdin().read_line(&mut line)
+                        && n > 0
+                    {
+                        read_success = true;
                     }
                 }
                 GetlineSource::File(file_expr) => {
                     let filename = eval_expr(file_expr, context).as_string();
-                    if !context.in_files.contains_key(&filename) {
-                        if let Ok(file) = std::fs::File::open(&filename) {
-                            context.in_files.insert(
-                                filename.clone(),
-                                InputStream::File(Box::new(std::io::BufReader::new(file))),
-                            );
-                        }
+                    if !context.in_files.contains_key(&filename)
+                        && let Ok(file) = std::fs::File::open(&filename)
+                    {
+                        context.in_files.insert(
+                            filename.clone(),
+                            InputStream::File(Box::new(std::io::BufReader::new(file))),
+                        );
                     }
-                    if let Some(stream) = context.in_files.get_mut(&filename) {
-                        if let Ok(n) = stream.reader().read_line(&mut line) {
-                            if n > 0 {
-                                read_success = true;
-                            }
-                        }
+                    if let Some(stream) = context.in_files.get_mut(&filename)
+                        && let Ok(n) = stream.reader().read_line(&mut line)
+                        && n > 0
+                    {
+                        read_success = true;
                     }
                 }
                 GetlineSource::Pipe(cmd_expr) => {
@@ -1156,10 +1155,10 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     execute_action(&[i.as_ref().clone()], context);
                 }
                 loop {
-                    if let Some(c) = cond {
-                        if !eval_expr(c, context).is_truthy() {
-                            break;
-                        }
+                    if let Some(c) = cond
+                        && !eval_expr(c, context).is_truthy()
+                    {
+                        break;
                     }
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break {

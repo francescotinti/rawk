@@ -326,10 +326,10 @@ impl EvalContext {
     }
 
     pub fn get_var(&self, name: &str) -> AwkValue {
-        if let Some(scope) = self.local_scopes.last() {
-            if let Some(val) = scope.get(name) {
-                return val.clone();
-            }
+        if let Some(scope) = self.local_scopes.last()
+            && let Some(val) = scope.get(name)
+        {
+            return val.clone();
         }
         match name {
             "NF" => return AwkValue::Number(self.nf as f64),
@@ -347,11 +347,11 @@ impl EvalContext {
     }
 
     pub fn set_var(&mut self, name: &str, value: AwkValue) {
-        if let Some(scope) = self.local_scopes.last_mut() {
-            if scope.contains_key(name) {
-                scope.insert(name.to_string(), value);
-                return;
-            }
+        if let Some(scope) = self.local_scopes.last_mut()
+            && scope.contains_key(name)
+        {
+            scope.insert(name.to_string(), value);
+            return;
         }
         match name {
             "NF" => {

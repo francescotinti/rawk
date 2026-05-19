@@ -86,12 +86,12 @@ fn run_xml_testsuite() {
 
         let mut child = cmd.spawn().expect("Failed to spawn rawk process");
 
-        if let Some(stdin_data) = &case.stdin {
-            if let Some(mut stdin) = child.stdin.take() {
-                stdin
-                    .write_all(stdin_data.as_bytes())
-                    .expect("Failed to write to stdin");
-            }
+        if let Some(stdin_data) = &case.stdin
+            && let Some(mut stdin) = child.stdin.take()
+        {
+            stdin
+                .write_all(stdin_data.as_bytes())
+                .expect("Failed to write to stdin");
         }
 
         let output = child.wait_with_output().expect("Failed to wait on rawk");
