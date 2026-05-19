@@ -38,7 +38,7 @@ pub enum FlowControl {
     Exit(i32),
 }
 
-pub fn run(config: Config) -> anyhow::Result<()> {
+pub fn run(config: Config) -> anyhow::Result<i32> {
     let fs = if config.csv {
         ","
     } else if let Some(ref fs) = config.field_separator {
@@ -109,14 +109,14 @@ pub fn run(config: Config) -> anyhow::Result<()> {
             context.set_var(&name, AwkValue::from_str_num(decoded));
         } else {
             eprintln!("rawk: invalid -v assignment '{}': expected name=value", v);
-            std::process::exit(2);
+            return Ok(2);
         }
     }
 
     // Execute BEGIN blocks
     let fc = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::Begin);
     if let FlowControl::Exit(code) = fc {
-        std::process::exit(code);
+        return Ok(code);
     }
 
     let argc_val = context.get_var("ARGC").as_number() as i64;
@@ -137,17 +137,17 @@ pub fn run(config: Config) -> anyhow::Result<()> {
         if let FlowControl::Exit(code) =
             execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile)
         {
-            std::process::exit(code);
+            return Ok(code);
         }
         let stdin = io::stdin();
         let reader = stdin.lock();
         if let FlowControl::Exit(code) = process_lines(reader, &mut context, &compiled_rules)? {
-            std::process::exit(code);
+            return Ok(code);
         }
         if let FlowControl::Exit(code) =
             execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::EndFile)
         {
-            std::process::exit(code);
+            return Ok(code);
         }
     } else {
         for filename in files_to_process {
@@ -155,7 +155,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
             if let FlowControl::Exit(code) =
                 execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile)
             {
-                std::process::exit(code);
+                return Ok(code);
             }
             if filename == "-" {
                 let stdin = io::stdin();
@@ -163,7 +163,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
                 if let FlowControl::Exit(code) =
                     process_lines(reader, &mut context, &compiled_rules)?
                 {
-                    std::process::exit(code);
+                    return Ok(code);
                 }
             } else {
                 let file = File::open(&filename)?;
@@ -171,13 +171,13 @@ pub fn run(config: Config) -> anyhow::Result<()> {
                 if let FlowControl::Exit(code) =
                     process_lines(reader, &mut context, &compiled_rules)?
                 {
-                    std::process::exit(code);
+                    return Ok(code);
                 }
             }
             if let FlowControl::Exit(code) =
                 execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::EndFile)
             {
-                std::process::exit(code);
+                return Ok(code);
             }
             context.fnr = 0;
         }
@@ -186,7 +186,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
     // Execute END blocks
     let fc = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::End);
     if let FlowControl::Exit(code) = fc {
-        std::process::exit(code);
+        return Ok(code);
     }
 
     // Final cleanup: flush tutto, wait() su pipe children
@@ -211,7 +211,7 @@ pub fn run(config: Config) -> anyhow::Result<()> {
         }
     }
 
-    Ok(())
+    Ok(0)
 }
 
 #[derive(Debug, PartialEq, Eq)]

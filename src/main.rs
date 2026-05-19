@@ -12,15 +12,20 @@ mod types;
 
 use cli::Config;
 
-fn main() -> anyhow::Result<()> {
+fn main() {
     let config = Config::parse_cli();
 
     if config.debug > 0 {
-        println!("Debug mode: {}", config.debug);
-        println!("Config: {:#?}", config);
+        eprintln!("Debug mode: {}", config.debug);
+        eprintln!("Config: {:#?}", config);
     }
 
-    runner::run(config)?;
-
-    Ok(())
+    let code = match runner::run(config) {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("rawk: {e:#}");
+            2
+        }
+    };
+    std::process::exit(code);
 }
