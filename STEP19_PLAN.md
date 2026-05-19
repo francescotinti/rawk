@@ -934,7 +934,7 @@ cargo clippy --all-targets -- -D warnings
 cargo fmt --check
 ```
 
-- [ ] **Step 6.5.2 (Push opzionale)**: comunica all'utente che il piano è concluso. NON pushare senza autorizzazione esplicita.
+- [x] **Step 6.5.2 (Push opzionale)**: comunica all'utente che il piano è concluso. NON pushare senza autorizzazione esplicita.
 
 ---
 
