@@ -10,12 +10,18 @@ use std::fmt;
 
 use rand::rngs::StdRng;
 
-/// Represents an AWK dynamic value (number, string, or uninitialized).
+/// Valore AWK polimorfo. Le coercioni Number↔String seguono le regole POSIX
+/// (numeric context usa `as_number`, string context usa `as_string` con `CONVFMT`/`OFMT`).
 #[derive(Debug, Clone, PartialEq)]
 pub(crate) enum AwkValue {
+    /// Variabile mai assegnata. Coerce a `0` in contesto numerico, `""` in contesto stringa.
     Uninitialized,
+    /// Valore numerico (double-precision IEEE 754).
     Number(f64),
+    /// Stringa esplicita: letterale del programma o risultato di concatenazione.
     String(String),
+    /// Dual-typed: input proveniente da `getline`, `$N` o argv che parsea numericamente.
+    /// La cache `(testo, valore)` evita di ri-parsare a ogni confronto numerico.
     StrNum(String, f64),
 }
 
@@ -181,6 +187,8 @@ fn format_number_awk(n: f64, fmt: &str) -> String {
         .replace(".E-", "E-")
 }
 
+/// Stream di output AWK aperto: file regolare oppure pipe a un comando.
+/// Le `Pipe` mantengono lo `Child` per poter attendere `wait()` su `close()`.
 pub(crate) enum OutputStream {
     File(Box<dyn std::io::Write>),
     Pipe {
@@ -198,6 +206,8 @@ impl OutputStream {
     }
 }
 
+/// Stream di input AWK aperto: file regolare oppure pipe da un comando (`"cmd" | getline`).
+/// Come `OutputStream::Pipe`, conserva lo `Child` per `wait()` su `close()`.
 pub(crate) enum InputStream {
     File(Box<dyn std::io::BufRead>),
     Pipe {
@@ -215,7 +225,10 @@ impl InputStream {
     }
 }
 
-/// Represents the Evaluation Context (the state) for the current line.
+/// Stato runtime di un programma AWK in esecuzione: record correnti, campi,
+/// variabili scalari/array (con scope locali per funzioni utente), stream
+/// aperti, cache regex, parametri di format (`CONVFMT`/`OFMT`) e segnali di
+/// flow-control out-of-band (`nextfile_pending`, `exit_pending`).
 pub(crate) struct EvalContext {
     pub(crate) nr: usize,  // Number of Records read so far
     pub(crate) fnr: usize, // Number of Records in current file

@@ -4,6 +4,8 @@
  * Description: A high-fidelity port of the historic AWK language from C to Rust.
  */
 
+/// Operatori binari supportati da AWK: aritmetici, di confronto, logici, regex-match
+/// e l'operatore d'appartenenza array (`In`).
 #[derive(Debug, Clone, PartialEq)]
 pub enum BinaryOperator {
     Add,
@@ -25,6 +27,11 @@ pub enum BinaryOperator {
     In,
 }
 
+/// Sorgente da cui leggere per la statement `getline`.
+///
+/// - `Main`: input principale (file argv o stdin).
+/// - `File`: redirezione `getline < file`.
+/// - `Pipe`: redirezione `"cmd" | getline`.
 #[derive(Debug, Clone, PartialEq)]
 pub enum GetlineSource {
     Main,
@@ -32,6 +39,9 @@ pub enum GetlineSource {
     Pipe(Box<Expr>),
 }
 
+/// Nodo espressione dell'AST AWK. Coprire l'intero linguaggio richiede
+/// varianti per letterali, accessi a campo/variabile/array, chiamate
+/// di funzione, operatori e i tre tipi di `getline`.
 #[derive(Debug, Clone, PartialEq)]
 pub enum Expr {
     Field(Box<Expr>),
@@ -54,6 +64,8 @@ pub enum Expr {
     Not(Box<Expr>), // !expr
 }
 
+/// Nodo statement dell'AST AWK. Le varianti `Break`/`Continue`/`Next`/`NextFile`/
+/// `Return`/`Exit` propagano flow-control tramite `FlowControl` nel runner.
 #[derive(Debug, Clone)]
 pub enum Statement {
     Print(Vec<Expr>, Option<(String, Expr)>),
@@ -81,6 +93,7 @@ pub enum Statement {
     Expr(Expr),
 }
 
+/// Dichiarazione di una funzione utente AWK (`function nome(args) { body }`).
 #[derive(Debug, Clone)]
 pub struct FunctionDecl {
     pub name: String,
@@ -88,6 +101,9 @@ pub struct FunctionDecl {
     pub body: Vec<Statement>,
 }
 
+/// Pattern di una regola AWK. `Expr` matcha quando l'espressione è truthy
+/// per la riga corrente; `Begin`/`End` eseguono prima/dopo l'input;
+/// `BeginFile`/`EndFile` agli stessi confini per ciascun file argv.
 #[derive(Debug, Clone)]
 pub enum Pattern {
     Expr(Expr),
@@ -97,12 +113,16 @@ pub enum Pattern {
     EndFile,
 }
 
+/// Singola regola AWK: coppia opzionale `pattern { action }`.
+/// Se `pattern` è `None`, l'azione viene eseguita per ogni record.
 #[derive(Debug, Clone)]
 pub struct Rule {
     pub pattern: Option<Pattern>,
     pub action: Vec<Statement>,
 }
 
+/// Programma AWK completo: una lista ordinata di regole più le
+/// funzioni utente dichiarate (visibili globalmente, ordine irrilevante).
 #[derive(Debug, Clone)]
 pub struct Program {
     pub rules: Vec<Rule>,
