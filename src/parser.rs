@@ -358,7 +358,7 @@ fn parse_logical_and(pair: Pair<Rule>) -> Expr {
 fn parse_in_expr(pair: Pair<Rule>) -> Expr {
     let mut inners = pair.into_inner();
     let lhs = parse_match_expr(inners.next().unwrap());
-    if let Some(_) = inners.next() {
+    if inners.next().is_some() {
         // op_in
         let rhs_ident = inners.next().unwrap();
         Expr::BinaryOp(
