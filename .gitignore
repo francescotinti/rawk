@@ -12,3 +12,13 @@ out.txt
 dummy.txt
 f1.txt
 f2.txt
+
+# macOS resource forks
+._*
+
+# Scratch / experiments at root (alias dei pattern già sopra, esplicitati per chiarezza)
+/parse_test.rs
+/pest_test.rs
+/out.txt
+/f1.txt
+/f2.txt
