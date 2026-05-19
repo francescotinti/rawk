@@ -3612,3 +3612,20 @@ Tutti i 18 item originali (16 base + 2 polish) sono ora promossi a step. Nessun 
 # Quando hai finito uno step
 
 Aggiorna l'header dello step da `🚧 PRONTO PER GEMINI` a `🟢 FATTO — AUDIT PENDING`, fai il commit con il format obbligatorio, e poi **fermati**. Francesco triggera l'audit di Claude. **Non avviare lo step successivo** anche se il suo spec è già scritto: aspetta che `## Audit Log` registri ✅ e che il successivo passi da 🔒 LOCKED a 🚧 PRONTO PER GEMINI.
+
+---
+
+## Step 19 — Idiomatic Cleanup (post-closure, 2026-05-19)
+Adeguamento idiomatico Rust 2024 + chiusura debito Step 15.
+
+| Fase | Esito |
+|------|-------|
+| Phase 0 — workspace hygiene (no macOS forks, no scratch, fmt) | ✅ |
+| Phase 1 — clippy `all=deny` zero warning | ✅ |
+| Phase 2 — runtime exit-free (chiude debito Step 15) | ✅ |
+| Phase 3 — error context (with_context) + expect documentati | ✅ |
+| Phase 4 — runner.rs splittato in {mod,builtins,io,fmt}.rs | ✅ |
+| Phase 5 — proptest infrastructure fix (env!CARGO_BIN_EXE) | ✅ no-op |
+| Phase 6 — visibilità pub(crate) + docstring + README Build&Test | ✅ |
+
+Invariante: 109/109 testcase XML verdi a ogni step. Esperimento resta chiuso, ora idiomatico.
