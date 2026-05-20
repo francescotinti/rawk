@@ -235,7 +235,7 @@ pub(crate) struct EvalContext {
     pub(crate) nf: usize,  // Number of Fields in current record
     pub(crate) fs: String,
     pub(crate) fields: Vec<AwkValue>,
-    pub(crate) record: String,
+    pub(crate) record: Vec<u8>,
     pub(crate) vars: HashMap<String, AwkValue>,
     pub(crate) arrays: HashMap<String, HashMap<String, AwkValue>>,
     pub(crate) out_files: HashMap<String, OutputStream>,
@@ -260,7 +260,7 @@ impl EvalContext {
             nf: 0,
             fs: fs.to_string(),
             fields: Vec::new(),
-            record: String::new(),
+            record: Vec::new(),
             vars,
             arrays: HashMap::new(),
             out_files: HashMap::new(),
@@ -286,10 +286,14 @@ impl EvalContext {
     }
 
     /// Update the context with a new record (line), splitting it into fields.
-    pub(crate) fn update_record(&mut self, line: &str) {
-        self.record = line.to_string();
+    pub(crate) fn update_record(&mut self, line: &[u8]) {
+        self.record = line.to_vec();
         self.nr += 1;
         self.fnr += 1;
+
+        // PHASE7.1→7.2 BRIDGE: field splitting still operates on str.
+        let line_str = String::from_utf8_lossy(line);
+        let line = line_str.as_ref();
 
         // Awk default field splitting: split by whitespace, and ignore leading/trailing whitespace
         if self.fs == " " {
@@ -310,7 +314,8 @@ impl EvalContext {
     /// Get $N. If n == 0, returns $0 (the whole record). If n > NF, returns Uninitialized.
     pub(crate) fn get_field(&self, n: usize) -> AwkValue {
         if n == 0 {
-            AwkValue::String(self.record.clone())
+            // PHASE7.1→7.2 BRIDGE: AwkValue::String still expects String.
+            AwkValue::String(String::from_utf8_lossy(&self.record).into_owned())
         } else if n <= self.nf {
             self.fields[n - 1].clone()
         } else {
@@ -320,7 +325,8 @@ impl EvalContext {
 
     pub(crate) fn set_field(&mut self, n: usize, value: AwkValue) {
         if n == 0 {
-            self.update_record(&value.as_string());
+            // PHASE7.1→7.2 BRIDGE: value.as_string() still returns String.
+            self.update_record(value.as_string().as_bytes());
         } else {
             while self.fields.len() < n {
                 self.fields.push(AwkValue::String(String::new()));
@@ -334,7 +340,8 @@ impl EvalContext {
             for f in &self.fields {
                 parts.push(f.as_string());
             }
-            self.record = parts.join(&ofs);
+            // PHASE7.1→7.2 BRIDGE: join over String, then convert to bytes.
+            self.record = parts.join(&ofs).into_bytes();
         }
     }
 
@@ -383,7 +390,8 @@ impl EvalContext {
                     .map(|v| v.as_string())
                     .unwrap_or_else(|| " ".to_string());
                 let parts: Vec<String> = self.fields.iter().map(|f| f.as_string()).collect();
-                self.record = parts.join(&ofs);
+                // PHASE7.1→7.2 BRIDGE: join over String, then convert to bytes.
+                self.record = parts.join(&ofs).into_bytes();
             }
             "NR" => self.nr = value.as_number() as usize,
             "FNR" => self.fnr = value.as_number() as usize,

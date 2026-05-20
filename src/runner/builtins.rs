@@ -22,7 +22,8 @@ pub(super) fn dispatch_builtin(
     let value = match name {
         "length" => {
             let s = if args.is_empty() {
-                context.record.clone()
+                // PHASE7.1→7.2 BRIDGE: record is now Vec<u8> while as_string() still returns String.
+                String::from_utf8_lossy(&context.record).into_owned()
             } else {
                 eval_expr(&args[0], context).as_string()
             };
@@ -292,7 +293,8 @@ pub(super) fn dispatch_builtin(
             let target_val = if args.len() > 2 {
                 eval_expr(&args[2], context).as_string()
             } else {
-                context.record.clone()
+                // PHASE7.1→7.2 BRIDGE: record is now Vec<u8> while target_val is String.
+                String::from_utf8_lossy(&context.record).into_owned()
             };
             let re = context.compile_or_get_regex(&r);
 
@@ -329,7 +331,8 @@ pub(super) fn dispatch_builtin(
                     _ => {}
                 }
             } else {
-                context.update_record(&new_val);
+                // PHASE7.1→7.2 BRIDGE: new_val still String.
+                context.update_record(new_val.as_bytes());
             }
 
             AwkValue::Number(if changed { 1.0 } else { 0.0 })

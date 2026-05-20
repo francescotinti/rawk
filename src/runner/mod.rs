@@ -301,7 +301,8 @@ fn process_single_byte<R: BufRead>(
         }
 
         context.set_var("RT", AwkValue::String(rt_str));
-        context.update_record(line_str);
+        // PHASE7.1→7.2 BRIDGE: line_str still &str.
+        context.update_record(line_str.as_bytes());
 
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
@@ -329,7 +330,8 @@ fn process_paragraph<R: BufRead>(
         let record = &trimmed[last_end..mat.start()];
         if !record.is_empty() {
             context.set_var("RT", AwkValue::String(mat.as_str().to_string()));
-            context.update_record(record);
+            // PHASE7.1→7.2 BRIDGE: record still &str.
+            context.update_record(record.as_bytes());
             let fc = run_rules_on_record(rules, context);
             if matches!(fc, FlowControl::Exit(_)) {
                 return Ok(fc);
@@ -343,7 +345,8 @@ fn process_paragraph<R: BufRead>(
     let last = trimmed[last_end..].trim_end_matches('\n');
     if !last.is_empty() {
         context.set_var("RT", AwkValue::String(String::new()));
-        context.update_record(last);
+        // PHASE7.1→7.2 BRIDGE: last still &str.
+        context.update_record(last.as_bytes());
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
             return Ok(fc);
@@ -371,7 +374,8 @@ fn process_regex_rs<R: BufRead>(
     for mat in re.find_iter(&all) {
         let record = &all[last_end..mat.start()];
         context.set_var("RT", AwkValue::String(mat.as_str().to_string()));
-        context.update_record(record);
+        // PHASE7.1→7.2 BRIDGE: record still &str.
+        context.update_record(record.as_bytes());
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
             return Ok(fc);
@@ -384,7 +388,8 @@ fn process_regex_rs<R: BufRead>(
     let last = &all[last_end..];
     if !last.is_empty() {
         context.set_var("RT", AwkValue::String(String::new()));
-        context.update_record(last);
+        // PHASE7.1→7.2 BRIDGE: last still &str.
+        context.update_record(last.as_bytes());
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
             return Ok(fc);
@@ -486,7 +491,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                 if let Some(var) = var_opt {
                     context.set_var(var, AwkValue::from_str_num(line_str));
                 } else {
-                    context.update_record(&line_str);
+                    // PHASE7.1→7.2 BRIDGE: line_str still String.
+                    context.update_record(line_str.as_bytes());
                 }
                 AwkValue::Number(1.0)
             } else {
