@@ -200,3 +200,13 @@ test "$(rtk grep -rn 'from_utf8_lossy' src/ | wc -l)" -le 3 && echo OK
 - `NEXT_STEPS.md` — diario di porting C→Rust.
 - POSIX awk specification (IEEE Std 1003.1-2017) — base normativa per byte-semantics.
 - `regex::bytes` API docs — matcher byte-based, unicode-off-by-default.
+
+---
+
+## Stato Phase 7.1 — chiusa 2026-05-21
+
+- `EvalContext.record: Vec<u8>` con read_until bytes pass-through nel record loop (`process_single_byte`) e nei tre path di `getline` (Main/File/Pipe).
+- `update_record` ora accetta `&[u8]`; field splitting interno conserva la semantica via BRIDGE `String::from_utf8_lossy` marcato `// PHASE7.1→7.2 BRIDGE`.
+- Boundary residui (saranno rimossi in 7.2): 14 BRIDGE marker totali — 5 in `src/types.rs` (field split, `get_field($0)`, `set_field($0)`, due join OFS); 6 in `src/runner/mod.rs` (RT in `process_single_byte`, 4 nei path `process_paragraph`/`process_regex_rs` che usano ancora `read_to_string`, 1 nel ramo `getline … > var`); 3 in `src/runner/builtins.rs` (`length()` su $0, `sub`/`gsub` target_val, update record finale).
+- Gate verdi a ogni commit: `cargo test` 23 passed, `bash scripts/checks.sh` 7/7 OK, `diffrun tests/testsuite.xml` invariato a 95 MATCH / 9 DIVERGE / 5 SKIPPED.
+- Commit di chiusura: `0b5e86f` (types,runner record Vec<u8>), `c484d29` (runner read_until bytes + getline).
