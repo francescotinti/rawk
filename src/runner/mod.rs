@@ -281,28 +281,32 @@ fn process_single_byte<R: BufRead>(
             break;
         }
 
-        let line = String::from_utf8_lossy(&buffer);
-        let mut line_str = line.as_ref();
-        let mut rt_str = String::new();
-
-        if line_str.ends_with(delim as char) {
-            line_str = &line_str[..line_str.len() - 1];
-            rt_str = String::from_utf8_lossy(&[delim]).to_string();
-            if delim == b'\n' && line_str.ends_with('\r') {
-                line_str = &line_str[..line_str.len() - 1];
-                rt_str = "\r\n".to_string();
+        // Strip trailing record terminator (delim, plus optional CR for "\r\n") on raw bytes.
+        let mut end = buffer.len();
+        let mut rt_bytes: Vec<u8> = Vec::new();
+        if end > 0 && buffer[end - 1] == delim {
+            end -= 1;
+            rt_bytes.push(delim);
+            if delim == b'\n' && end > 0 && buffer[end - 1] == b'\r' {
+                end -= 1;
+                rt_bytes.clear();
+                rt_bytes.extend_from_slice(b"\r\n");
             }
-        } else if delim == b'\n' && line_str.ends_with("\r\n") {
-            line_str = &line_str[..line_str.len() - 2];
-            rt_str = "\r\n".to_string();
-        } else if delim == b'\n' && line_str.ends_with('\n') {
-            line_str = &line_str[..line_str.len() - 1];
-            rt_str = "\n".to_string();
+        } else if delim == b'\n' && end >= 2 && &buffer[end - 2..end] == b"\r\n" {
+            end -= 2;
+            rt_bytes.extend_from_slice(b"\r\n");
+        } else if delim == b'\n' && end > 0 && buffer[end - 1] == b'\n' {
+            end -= 1;
+            rt_bytes.push(b'\n');
         }
+        let line_bytes = &buffer[..end];
 
-        context.set_var("RT", AwkValue::String(rt_str));
-        // PHASE7.1→7.2 BRIDGE: line_str still &str.
-        context.update_record(line_str.as_bytes());
+        // PHASE7.1→7.2 BRIDGE: RT remains AwkValue::String for now.
+        context.set_var(
+            "RT",
+            AwkValue::String(String::from_utf8_lossy(&rt_bytes).into_owned()),
+        );
+        context.update_record(line_bytes);
 
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
@@ -450,12 +454,13 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             context.get_array_var(arr_name, &key)
         }
         Expr::Getline(var_opt, source) => {
-            let mut line = String::new();
+            let mut line: Vec<u8> = Vec::new();
             let mut read_success = false;
 
             match source {
                 GetlineSource::Main => {
-                    if let Ok(n) = std::io::stdin().read_line(&mut line)
+                    let mut stdin = std::io::stdin().lock();
+                    if let Ok(n) = stdin.read_until(b'\n', &mut line)
                         && n > 0
                     {
                         read_success = true;
@@ -465,7 +470,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                     let filename = eval_expr(file_expr, context).as_string();
                     io::ensure_input_file(&filename, context);
                     if let Some(stream) = context.in_files.get_mut(&filename)
-                        && let Ok(n) = stream.reader().read_line(&mut line)
+                        && let Ok(n) = stream.reader().read_until(b'\n', &mut line)
                         && n > 0
                     {
                         read_success = true;
@@ -477,7 +482,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                         return AwkValue::Number(-1.0);
                     }
                     if let Some(stream) = context.in_files.get_mut(&cmd) {
-                        match stream.reader().read_line(&mut line) {
+                        match stream.reader().read_until(b'\n', &mut line) {
                             Ok(0) => read_success = false,
                             Ok(_) => read_success = true,
                             Err(_) => return AwkValue::Number(-1.0),
@@ -487,12 +492,21 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             }
 
             if read_success {
-                let line_str = line.trim_end_matches(&['\r', '\n'][..]).to_string();
+                // Strip trailing \n and optional \r on bytes.
+                if line.last() == Some(&b'\n') {
+                    line.pop();
+                }
+                if line.last() == Some(&b'\r') {
+                    line.pop();
+                }
                 if let Some(var) = var_opt {
-                    context.set_var(var, AwkValue::from_str_num(line_str));
+                    // PHASE7.1→7.2 BRIDGE: from_str_num still takes String.
+                    context.set_var(
+                        var,
+                        AwkValue::from_str_num(String::from_utf8_lossy(&line).into_owned()),
+                    );
                 } else {
-                    // PHASE7.1→7.2 BRIDGE: line_str still String.
-                    context.update_record(line_str.as_bytes());
+                    context.update_record(&line);
                 }
                 AwkValue::Number(1.0)
             } else {
