@@ -58,20 +58,20 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
         "ARGC",
         AwkValue::Number(config.input_files.len() as f64 + 1.0),
     );
-    context.set_array_var("ARGV", "0", AwkValue::from_str_num("rawk".to_string()));
+    context.set_array_var("ARGV", "0", AwkValue::from_str_num(b"rawk".to_vec()));
     for (i, file) in config.input_files.iter().enumerate() {
         context.set_array_var(
             "ARGV",
             &format!("{}", i + 1),
-            AwkValue::from_str_num(file.clone()),
+            AwkValue::from_str_num(file.clone().into_bytes()),
         );
     }
     for (key, val) in std::env::vars() {
-        context.set_array_var("ENVIRON", &key, AwkValue::from_str_num(val));
+        context.set_array_var("ENVIRON", &key, AwkValue::from_str_num(val.into_bytes()));
     }
-    context.set_var("OFS", AwkValue::String(" ".to_string()));
-    context.set_var("ORS", AwkValue::String("\n".to_string()));
-    context.set_var("RS", AwkValue::String("\n".to_string()));
+    context.set_var("OFS", AwkValue::String(b" ".to_vec()));
+    context.set_var("ORS", AwkValue::String(b"\n".to_vec()));
+    context.set_var("RS", AwkValue::String(b"\n".to_vec()));
 
     let mut program_text = String::new();
     if !config.program_files.is_empty() {
@@ -112,7 +112,7 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
             let name = v[..eq_pos].to_string();
             let raw_value = &v[eq_pos + 1..];
             let decoded = crate::parser::decode_string_escapes(raw_value);
-            context.set_var(&name, AwkValue::from_str_num(decoded));
+            context.set_var(&name, AwkValue::from_str_num(decoded.into_bytes()));
         } else {
             eprintln!("rawk: invalid -v assignment '{}': expected name=value", v);
             return Ok(2);
@@ -126,20 +126,21 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
     }
 
     let argc_val = context.get_var("ARGC").as_number() as i64;
-    let mut files_to_process = Vec::new();
+    let mut files_to_process: Vec<String> = Vec::new();
     for i in 1..argc_val {
         if let Some(arr) = context.arrays.get("ARGV")
             && let Some(val) = arr.get(&i.to_string())
         {
             let filename = val.as_string();
             if !filename.is_empty() {
-                files_to_process.push(filename);
+                // Path file: resta String (design R3).
+                files_to_process.push(String::from_utf8_lossy(&filename).into_owned());
             }
         }
     }
 
     if files_to_process.is_empty() {
-        context.set_var("FILENAME", AwkValue::String("-".to_string()));
+        context.set_var("FILENAME", AwkValue::String(b"-".to_vec()));
         if let FlowControl::Exit(code) =
             execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile)
         {
@@ -157,7 +158,7 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
         }
     } else {
         for filename in files_to_process {
-            context.set_var("FILENAME", AwkValue::String(filename.clone()));
+            context.set_var("FILENAME", AwkValue::String(filename.clone().into_bytes()));
             if let FlowControl::Exit(code) =
                 execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile)
             {
@@ -301,11 +302,7 @@ fn process_single_byte<R: BufRead>(
         }
         let line_bytes = &buffer[..end];
 
-        // PHASE7.1→7.2 BRIDGE: RT remains AwkValue::String for now.
-        context.set_var(
-            "RT",
-            AwkValue::String(String::from_utf8_lossy(&rt_bytes).into_owned()),
-        );
+        context.set_var("RT", AwkValue::String(rt_bytes));
         context.update_record(line_bytes);
 
         let fc = run_rules_on_record(rules, context);
@@ -325,6 +322,8 @@ fn process_paragraph<R: BufRead>(
     context: &mut EvalContext,
     rules: &[CompiledRule],
 ) -> anyhow::Result<FlowControl> {
+    // PHASE7.2→7.4 BRIDGE: paragraph mode legge ancora via read_to_string (str);
+    // migrazione byte-aware competenza di 7.4.
     let mut all = String::new();
     reader.read_to_string(&mut all)?;
     let trimmed = all.trim_start_matches('\n');
@@ -333,8 +332,7 @@ fn process_paragraph<R: BufRead>(
     for mat in re.find_iter(trimmed) {
         let record = &trimmed[last_end..mat.start()];
         if !record.is_empty() {
-            context.set_var("RT", AwkValue::String(mat.as_str().to_string()));
-            // PHASE7.1→7.2 BRIDGE: record still &str.
+            context.set_var("RT", AwkValue::String(mat.as_str().as_bytes().to_vec()));
             context.update_record(record.as_bytes());
             let fc = run_rules_on_record(rules, context);
             if matches!(fc, FlowControl::Exit(_)) {
@@ -348,8 +346,7 @@ fn process_paragraph<R: BufRead>(
     }
     let last = trimmed[last_end..].trim_end_matches('\n');
     if !last.is_empty() {
-        context.set_var("RT", AwkValue::String(String::new()));
-        // PHASE7.1→7.2 BRIDGE: last still &str.
+        context.set_var("RT", AwkValue::String(Vec::new()));
         context.update_record(last.as_bytes());
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
@@ -368,6 +365,8 @@ fn process_regex_rs<R: BufRead>(
     context: &mut EvalContext,
     rules: &[CompiledRule],
 ) -> anyhow::Result<FlowControl> {
+    // PHASE7.2→7.4 BRIDGE: RS-regex mode legge ancora via read_to_string (str);
+    // migrazione byte-aware competenza di 7.4.
     let mut all = String::new();
     reader.read_to_string(&mut all)?;
     let re = match regex::Regex::new(rs) {
@@ -377,8 +376,7 @@ fn process_regex_rs<R: BufRead>(
     let mut last_end = 0;
     for mat in re.find_iter(&all) {
         let record = &all[last_end..mat.start()];
-        context.set_var("RT", AwkValue::String(mat.as_str().to_string()));
-        // PHASE7.1→7.2 BRIDGE: record still &str.
+        context.set_var("RT", AwkValue::String(mat.as_str().as_bytes().to_vec()));
         context.update_record(record.as_bytes());
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
@@ -391,8 +389,7 @@ fn process_regex_rs<R: BufRead>(
     }
     let last = &all[last_end..];
     if !last.is_empty() {
-        context.set_var("RT", AwkValue::String(String::new()));
-        // PHASE7.1→7.2 BRIDGE: last still &str.
+        context.set_var("RT", AwkValue::String(Vec::new()));
         context.update_record(last.as_bytes());
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
@@ -413,13 +410,25 @@ fn process_lines<R: BufRead>(
     let rs_val = context.get_var("RS").as_string();
     let res = if rs_val.is_empty() {
         process_paragraph(reader, context, rules)
-    } else if rs_val.chars().count() == 1 {
-        process_single_byte(reader, rs_val.as_bytes()[0], context, rules)
+    } else if rs_val.len() == 1 {
+        process_single_byte(reader, rs_val[0], context, rules)
     } else {
-        process_regex_rs(reader, &rs_val, context, rules)
+        // PHASE7.2→7.4 BRIDGE: RS-regex compilato su &str finché 7.4 non porta regex::bytes.
+        process_regex_rs(reader, &String::from_utf8_lossy(&rs_val), context, rules)
     };
     context.nextfile_pending = false;
     res
+}
+
+/// Compone la chiave di un array AWK: valuta i sotto-indici e li unisce con SUBSEP.
+// PHASE7.2→7.3 BRIDGE: la chiave array resta String fino a 7.3 (poi Vec<u8> byte-aware).
+fn eval_array_key(key_exprs: &[Expr], context: &mut EvalContext) -> String {
+    let mut parts: Vec<Vec<u8>> = Vec::new();
+    for k in key_exprs {
+        parts.push(eval_expr(k, context).as_string());
+    }
+    let subsep = context.get_var("SUBSEP").as_string();
+    String::from_utf8_lossy(&parts.join(subsep.as_slice())).into_owned()
 }
 
 fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
@@ -429,28 +438,24 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             context.get_field(idx)
         }
         Expr::NumberLiteral(n) => AwkValue::Number(*n),
-        Expr::StringLiteral(s) => AwkValue::String(s.clone()),
+        Expr::StringLiteral(s) => AwkValue::String(s.clone().into_bytes()),
         Expr::Concat(parts) => {
             let convfmt = context.convfmt.clone();
-            let s: String = parts
-                .iter()
-                .map(|e| eval_expr(e, context).as_string_convfmt(&convfmt))
-                .collect();
+            let mut s: Vec<u8> = Vec::new();
+            for e in parts {
+                s.extend(eval_expr(e, context).as_string_convfmt(&convfmt));
+            }
             AwkValue::String(s)
         }
         Expr::RegexLiteral(re) => {
-            let record = context.get_field(0).as_string();
+            // PHASE7.2→7.4 BRIDGE: regex match su &str finché 7.4 non porta regex::bytes.
+            let record = String::from_utf8_lossy(&context.get_field(0).as_string()).into_owned();
             let regex = context.compile_or_get_regex(re);
             AwkValue::Number(if regex.is_match(&record) { 1.0 } else { 0.0 })
         }
         Expr::Variable(v) => context.get_var(v),
         Expr::ArrayAccess(arr_name, key_exprs) => {
-            let mut keys_str = Vec::new();
-            for k in key_exprs {
-                keys_str.push(eval_expr(k, context).as_string());
-            }
-            let subsep = context.get_var("SUBSEP").as_string();
-            let key = keys_str.join(&subsep);
+            let key = eval_array_key(key_exprs, context);
             context.get_array_var(arr_name, &key)
         }
         Expr::Getline(var_opt, source) => {
@@ -467,7 +472,10 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                     }
                 }
                 GetlineSource::File(file_expr) => {
-                    let filename = eval_expr(file_expr, context).as_string();
+                    // Path file: resta String (design R3).
+                    let filename =
+                        String::from_utf8_lossy(&eval_expr(file_expr, context).as_string())
+                            .into_owned();
                     io::ensure_input_file(&filename, context);
                     if let Some(stream) = context.in_files.get_mut(&filename)
                         && let Ok(n) = stream.reader().read_until(b'\n', &mut line)
@@ -477,7 +485,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                     }
                 }
                 GetlineSource::Pipe(cmd_expr) => {
-                    let cmd = eval_expr(cmd_expr, context).as_string();
+                    let cmd = String::from_utf8_lossy(&eval_expr(cmd_expr, context).as_string())
+                        .into_owned();
                     if !io::ensure_input_pipe(&cmd, context) {
                         return AwkValue::Number(-1.0);
                     }
@@ -500,11 +509,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                     line.pop();
                 }
                 if let Some(var) = var_opt {
-                    // PHASE7.1→7.2 BRIDGE: from_str_num still takes String.
-                    context.set_var(
-                        var,
-                        AwkValue::from_str_num(String::from_utf8_lossy(&line).into_owned()),
-                    );
+                    context.set_var(var, AwkValue::from_str_num(line));
                 } else {
                     context.update_record(&line);
                 }
@@ -563,11 +568,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val.clone());
             } else if let Expr::ArrayAccess(arr, ks) = &**e {
-                let mut keys_str = Vec::new();
-                for k in ks {
-                    keys_str.push(eval_expr(k, context).as_string());
-                }
-                let key = keys_str.join(&context.get_var("SUBSEP").as_string());
+                let key = eval_array_key(ks, context);
                 context.set_array_var(arr, &key, new_val.clone());
             }
             new_val
@@ -578,11 +579,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val);
             } else if let Expr::ArrayAccess(arr, ks) = &**e {
-                let mut keys_str = Vec::new();
-                for k in ks {
-                    keys_str.push(eval_expr(k, context).as_string());
-                }
-                let key = keys_str.join(&context.get_var("SUBSEP").as_string());
+                let key = eval_array_key(ks, context);
                 context.set_array_var(arr, &key, new_val);
             }
             val
@@ -593,11 +590,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val.clone());
             } else if let Expr::ArrayAccess(arr, ks) = &**e {
-                let mut keys_str = Vec::new();
-                for k in ks {
-                    keys_str.push(eval_expr(k, context).as_string());
-                }
-                let key = keys_str.join(&context.get_var("SUBSEP").as_string());
+                let key = eval_array_key(ks, context);
                 context.set_array_var(arr, &key, new_val.clone());
             }
             new_val
@@ -608,11 +601,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             if let Expr::Variable(v) = &**e {
                 context.set_var(v, new_val);
             } else if let Expr::ArrayAccess(arr, ks) = &**e {
-                let mut keys_str = Vec::new();
-                for k in ks {
-                    keys_str.push(eval_expr(k, context).as_string());
-                }
-                let key = keys_str.join(&context.get_var("SUBSEP").as_string());
+                let key = eval_array_key(ks, context);
                 context.set_array_var(arr, &key, new_val);
             }
             val
@@ -676,33 +665,30 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                     0.0
                 }),
                 BinaryOperator::Match => {
+                    // PHASE7.2→7.4 BRIDGE: regex match su &str finché 7.4 non porta regex::bytes.
                     let re_str = if let Expr::RegexLiteral(re) = &**rhs {
                         re.clone()
                     } else {
-                        r_val.as_string()
+                        String::from_utf8_lossy(&r_val.as_string()).into_owned()
                     };
                     let re = context.compile_or_get_regex(&re_str);
-                    AwkValue::Number(if re.is_match(&l_val.as_string()) {
-                        1.0
-                    } else {
-                        0.0
-                    })
+                    let subject = String::from_utf8_lossy(&l_val.as_string()).into_owned();
+                    AwkValue::Number(if re.is_match(&subject) { 1.0 } else { 0.0 })
                 }
                 BinaryOperator::NotMatch => {
+                    // PHASE7.2→7.4 BRIDGE: regex match su &str finché 7.4 non porta regex::bytes.
                     let re_str = if let Expr::RegexLiteral(re) = &**rhs {
                         re.clone()
                     } else {
-                        r_val.as_string()
+                        String::from_utf8_lossy(&r_val.as_string()).into_owned()
                     };
                     let re = context.compile_or_get_regex(&re_str);
-                    AwkValue::Number(if re.is_match(&l_val.as_string()) {
-                        0.0
-                    } else {
-                        1.0
-                    })
+                    let subject = String::from_utf8_lossy(&l_val.as_string()).into_owned();
+                    AwkValue::Number(if re.is_match(&subject) { 0.0 } else { 1.0 })
                 }
                 BinaryOperator::In => {
-                    let key = l_val.as_string();
+                    // PHASE7.2→7.3 BRIDGE: chiave array resta String fino a 7.3.
+                    let key = String::from_utf8_lossy(&l_val.as_string()).into_owned();
                     let arr_name = if let Expr::Variable(v) = &**rhs {
                         v.clone()
                     } else {
@@ -796,7 +782,8 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     .unwrap_or_default();
 
                 for key in keys {
-                    context.set_var(key_name, AwkValue::String(key));
+                    // PHASE7.2→7.3 BRIDGE: chiave array resta String fino a 7.3.
+                    context.set_var(key_name, AwkValue::String(key.into_bytes()));
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break {
                         break;
@@ -860,7 +847,8 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     let format_str = eval_expr(&exprs[0], context).as_string();
                     let args: Vec<AwkValue> =
                         exprs[1..].iter().map(|e| eval_expr(e, context)).collect();
-                    let formatted = fmt::awk_sprintf(&format_str, &args);
+                    // PHASE7.2→7.5 BRIDGE: awk_sprintf opera ancora su &str.
+                    let formatted = fmt::awk_sprintf(&String::from_utf8_lossy(&format_str), &args);
                     if let Err(e) = io::handle_output(&formatted, redirect, context) {
                         eprintln!("rawk: {e:#}");
                         return FlowControl::Exit(2);
@@ -868,14 +856,18 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 }
             }
             Statement::Print(exprs, redirect) => {
-                let mut out = Vec::new();
+                let mut out: Vec<Vec<u8>> = Vec::new();
                 for e in exprs {
                     out.push(eval_expr(e, context).as_string_convfmt(&context.ofmt));
                 }
                 let ofs = context.get_var("OFS").as_string();
                 let ors = context.get_var("ORS").as_string();
-                let output = out.join(&ofs) + &ors;
-                if let Err(e) = io::handle_output(&output, redirect, context) {
+                let mut output = out.join(ofs.as_slice());
+                output.extend_from_slice(&ors);
+                // PHASE7.2→7.6 BRIDGE: output byte-esatto è competenza di 7.6.
+                if let Err(e) =
+                    io::handle_output(&String::from_utf8_lossy(&output), redirect, context)
+                {
                     eprintln!("rawk: {e:#}");
                     return FlowControl::Exit(2);
                 }
@@ -885,11 +877,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 context.set_var(var_name, val);
             }
             Statement::AssignArray(arr_name, key_exprs, val_expr) => {
-                let mut keys = Vec::new();
-                for e in key_exprs {
-                    keys.push(eval_expr(e, context).as_string());
-                }
-                let key = keys.join(&context.get_var("SUBSEP").as_string());
+                let key = eval_array_key(key_exprs, context);
                 let val = eval_expr(val_expr, context);
                 context.set_array_var(arr_name, &key, val);
             }
@@ -900,11 +888,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
             }
             Statement::Delete(arr_name, keys_opt) => {
                 if let Some(keys) = keys_opt {
-                    let mut keys_str = Vec::new();
-                    for k in keys {
-                        keys_str.push(eval_expr(k, context).as_string());
-                    }
-                    let key = keys_str.join(&context.get_var("SUBSEP").as_string());
+                    let key = eval_array_key(keys, context);
                     if let Some(arr) = context.arrays.get_mut(arr_name) {
                         arr.remove(&key);
                     }

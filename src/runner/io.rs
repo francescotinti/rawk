@@ -22,7 +22,9 @@ pub(super) fn handle_output(
     context: &mut EvalContext,
 ) -> anyhow::Result<()> {
     if let Some((op, file_expr)) = redirect {
-        let filename = eval_expr(file_expr, context).as_string();
+        // Path file: resta String (design R3 — i path non sono dati AWK osservabili).
+        let filename =
+            String::from_utf8_lossy(&eval_expr(file_expr, context).as_string()).into_owned();
         use std::collections::hash_map::Entry;
         use std::fs::OpenOptions;
         let stream = match context.out_files.entry(filename.clone()) {

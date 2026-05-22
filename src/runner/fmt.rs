@@ -64,7 +64,8 @@ fn format_one(spec: &str, arg: &AwkValue) -> String {
         'c' => {
             let ch: char = match arg {
                 AwkValue::String(s) | AwkValue::StrNum(s, _) if !s.is_empty() => {
-                    s.chars().next().unwrap()
+                    // PHASE7.2→7.5 BRIDGE: %c byte-aware è competenza di 7.5.
+                    String::from_utf8_lossy(s).chars().next().unwrap()
                 }
                 _ => char::from_u32(arg.as_number() as u32).unwrap_or('\0'),
             };
@@ -73,7 +74,9 @@ fn format_one(spec: &str, arg: &AwkValue) -> String {
             sprintf::sprintf!(&spec_s, one_char).unwrap_or_default()
         }
         'e' | 'E' | 'f' | 'g' | 'G' => sprintf::sprintf!(spec, arg.as_number()).unwrap_or_default(),
-        's' => sprintf::sprintf!(spec, arg.as_string()).unwrap_or_default(),
+        // PHASE7.2→7.5 BRIDGE: printf %s byte-aware è competenza di 7.5.
+        's' => sprintf::sprintf!(spec, String::from_utf8_lossy(&arg.as_string()).into_owned())
+            .unwrap_or_default(),
         _ => spec.to_string(),
     }
 }

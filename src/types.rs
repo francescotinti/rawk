@@ -19,18 +19,20 @@ pub(crate) enum AwkValue {
     /// Valore numerico (double-precision IEEE 754).
     Number(f64),
     /// Stringa esplicita: letterale del programma o risultato di concatenazione.
-    String(String),
+    String(Vec<u8>),
     /// Dual-typed: input proveniente da `getline`, `$N` o argv che parsea numericamente.
     /// La cache `(testo, valore)` evita di ri-parsare a ogni confronto numerico.
-    StrNum(String, f64),
+    StrNum(Vec<u8>, f64),
 }
 
 impl AwkValue {
-    pub(crate) fn from_str_num(s: String) -> Self {
-        if let Ok(n) = s.trim().parse::<f64>() {
-            AwkValue::StrNum(s, n)
-        } else {
-            AwkValue::String(s)
+    pub(crate) fn from_str_num(s: Vec<u8>) -> Self {
+        let parsed = std::str::from_utf8(&s)
+            .ok()
+            .and_then(|t| t.trim().parse::<f64>().ok());
+        match parsed {
+            Some(n) => AwkValue::StrNum(s, n),
+            None => AwkValue::String(s),
         }
     }
 
@@ -38,21 +40,24 @@ impl AwkValue {
         match self {
             AwkValue::Uninitialized => 0.0,
             AwkValue::Number(n) => *n,
-            AwkValue::String(s) => s.trim().parse::<f64>().unwrap_or(0.0),
+            AwkValue::String(s) => std::str::from_utf8(s)
+                .ok()
+                .and_then(|t| t.trim().parse::<f64>().ok())
+                .unwrap_or(0.0),
             AwkValue::StrNum(_, n) => *n,
         }
     }
 
-    pub(crate) fn as_string(&self) -> String {
+    pub(crate) fn as_string(&self) -> Vec<u8> {
         self.as_string_convfmt("%.6g")
     }
 
-    pub(crate) fn as_string_convfmt(&self, fmt: &str) -> String {
+    pub(crate) fn as_string_convfmt(&self, fmt: &str) -> Vec<u8> {
         match self {
-            AwkValue::Uninitialized => String::new(),
+            AwkValue::Uninitialized => Vec::new(),
             AwkValue::String(s) => s.clone(),
             AwkValue::StrNum(s, _) => s.clone(),
-            AwkValue::Number(n) => format_number_awk(*n, fmt),
+            AwkValue::Number(n) => format_number_awk(*n, fmt).into_bytes(),
         }
     }
 
@@ -67,15 +72,20 @@ impl AwkValue {
 
     // AWK comparison rules MVP: try numeric comparison first, fallback to string
     fn numeric_values(&self, other: &Self) -> Option<(f64, f64)> {
+        let parse_str = |s: &[u8]| -> Option<f64> {
+            std::str::from_utf8(s)
+                .ok()
+                .and_then(|t| t.trim().parse::<f64>().ok())
+        };
         let l = match self {
             AwkValue::Number(n) => Some(*n),
-            AwkValue::String(s) => s.trim().parse::<f64>().ok(),
+            AwkValue::String(s) => parse_str(s),
             AwkValue::StrNum(_, n) => Some(*n),
             AwkValue::Uninitialized => Some(0.0),
         };
         let r = match other {
             AwkValue::Number(n) => Some(*n),
-            AwkValue::String(s) => s.trim().parse::<f64>().ok(),
+            AwkValue::String(s) => parse_str(s),
             AwkValue::StrNum(_, n) => Some(*n),
             AwkValue::Uninitialized => Some(0.0),
         };
@@ -159,7 +169,9 @@ impl AwkValue {
 
 impl fmt::Display for AwkValue {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.as_string())
+        // PHASE7.2→7.6 BRIDGE: Display è String-only; output byte-esatto userà
+        // `write_all(&val.as_string())` direttamente nel path di output (7.6).
+        write!(f, "{}", String::from_utf8_lossy(&self.as_string()))
     }
 }
 
@@ -253,7 +265,7 @@ pub(crate) struct EvalContext {
 impl EvalContext {
     pub(crate) fn new(fs: &str) -> Self {
         let mut vars = HashMap::new();
-        vars.insert("SUBSEP".to_string(), AwkValue::String("\x1C".to_string()));
+        vars.insert("SUBSEP".to_string(), AwkValue::String(b"\x1C".to_vec()));
         Self {
             nr: 0,
             fnr: 0,
@@ -291,7 +303,8 @@ impl EvalContext {
         self.nr += 1;
         self.fnr += 1;
 
-        // PHASE7.1→7.2 BRIDGE: field splitting still operates on str.
+        // PHASE7.2→7.5 BRIDGE: field splitting opera ancora su str; 7.5 porta
+        // lo split byte-aware (FS byte-arbitrario).
         let line_str = String::from_utf8_lossy(line);
         let line = line_str.as_ref();
 
@@ -299,13 +312,13 @@ impl EvalContext {
         if self.fs == " " {
             self.fields = line
                 .split_whitespace()
-                .map(|s| AwkValue::from_str_num(s.to_string()))
+                .map(|s| AwkValue::from_str_num(s.as_bytes().to_vec()))
                 .collect();
         } else {
             // Split by custom Field Separator
             self.fields = line
                 .split(&self.fs)
-                .map(|s| AwkValue::from_str_num(s.to_string()))
+                .map(|s| AwkValue::from_str_num(s.as_bytes().to_vec()))
                 .collect();
         }
         self.nf = self.fields.len();
@@ -314,8 +327,7 @@ impl EvalContext {
     /// Get $N. If n == 0, returns $0 (the whole record). If n > NF, returns Uninitialized.
     pub(crate) fn get_field(&self, n: usize) -> AwkValue {
         if n == 0 {
-            // PHASE7.1→7.2 BRIDGE: AwkValue::String still expects String.
-            AwkValue::String(String::from_utf8_lossy(&self.record).into_owned())
+            AwkValue::String(self.record.clone())
         } else if n <= self.nf {
             self.fields[n - 1].clone()
         } else {
@@ -325,23 +337,21 @@ impl EvalContext {
 
     pub(crate) fn set_field(&mut self, n: usize, value: AwkValue) {
         if n == 0 {
-            // PHASE7.1→7.2 BRIDGE: value.as_string() still returns String.
-            self.update_record(value.as_string().as_bytes());
+            self.update_record(&value.as_string());
         } else {
             while self.fields.len() < n {
-                self.fields.push(AwkValue::String(String::new()));
+                self.fields.push(AwkValue::String(Vec::new()));
             }
             self.fields[n - 1] = value;
             self.nf = self.fields.len();
 
             // Rebuild $0 using OFS
             let ofs = self.get_var("OFS").as_string();
-            let mut parts = Vec::new();
+            let mut parts: Vec<Vec<u8>> = Vec::new();
             for f in &self.fields {
                 parts.push(f.as_string());
             }
-            // PHASE7.1→7.2 BRIDGE: join over String, then convert to bytes.
-            self.record = parts.join(&ofs).into_bytes();
+            self.record = parts.join(ofs.as_slice());
         }
     }
 
@@ -355,9 +365,10 @@ impl EvalContext {
             "NF" => return AwkValue::Number(self.nf as f64),
             "NR" => return AwkValue::Number(self.nr as f64),
             "FNR" => return AwkValue::Number(self.fnr as f64),
-            "FS" => return AwkValue::String(self.fs.clone()),
-            "CONVFMT" => return AwkValue::String(self.convfmt.clone()),
-            "OFMT" => return AwkValue::String(self.ofmt.clone()),
+            // PHASE7.2→7.3 BRIDGE: fs/convfmt/ofmt restano String fino a 7.3.
+            "FS" => return AwkValue::String(self.fs.clone().into_bytes()),
+            "CONVFMT" => return AwkValue::String(self.convfmt.clone().into_bytes()),
+            "OFMT" => return AwkValue::String(self.ofmt.clone().into_bytes()),
             _ => {}
         }
         self.vars
@@ -380,7 +391,7 @@ impl EvalContext {
                     self.fields.truncate(new_nf);
                 } else {
                     while self.fields.len() < new_nf {
-                        self.fields.push(AwkValue::String(String::new()));
+                        self.fields.push(AwkValue::String(Vec::new()));
                     }
                 }
                 self.nf = new_nf;
@@ -388,16 +399,16 @@ impl EvalContext {
                     .vars
                     .get("OFS")
                     .map(|v| v.as_string())
-                    .unwrap_or_else(|| " ".to_string());
-                let parts: Vec<String> = self.fields.iter().map(|f| f.as_string()).collect();
-                // PHASE7.1→7.2 BRIDGE: join over String, then convert to bytes.
-                self.record = parts.join(&ofs).into_bytes();
+                    .unwrap_or_else(|| b" ".to_vec());
+                let parts: Vec<Vec<u8>> = self.fields.iter().map(|f| f.as_string()).collect();
+                self.record = parts.join(ofs.as_slice());
             }
             "NR" => self.nr = value.as_number() as usize,
             "FNR" => self.fnr = value.as_number() as usize,
-            "FS" => self.fs = value.as_string(),
-            "CONVFMT" => self.convfmt = value.as_string(),
-            "OFMT" => self.ofmt = value.as_string(),
+            // PHASE7.2→7.3 BRIDGE: fs/convfmt/ofmt restano String fino a 7.3.
+            "FS" => self.fs = String::from_utf8_lossy(&value.as_string()).into_owned(),
+            "CONVFMT" => self.convfmt = String::from_utf8_lossy(&value.as_string()).into_owned(),
+            "OFMT" => self.ofmt = String::from_utf8_lossy(&value.as_string()).into_owned(),
             _ => {
                 self.vars.insert(name.to_string(), value);
             }
