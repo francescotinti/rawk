@@ -438,7 +438,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             context.get_field(idx)
         }
         Expr::NumberLiteral(n) => AwkValue::Number(*n),
-        Expr::StringLiteral(s) => AwkValue::String(s.clone().into_bytes()),
+        Expr::StringLiteral(s) => AwkValue::String(s.clone()),
         Expr::Concat(parts) => {
             let convfmt = context.convfmt.clone();
             let mut s: Vec<u8> = Vec::new();
@@ -450,7 +450,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
         Expr::RegexLiteral(re) => {
             // PHASE7.2→7.4 BRIDGE: regex match su &str finché 7.4 non porta regex::bytes.
             let record = String::from_utf8_lossy(&context.get_field(0).as_string()).into_owned();
-            let regex = context.compile_or_get_regex(re);
+            let regex = context.compile_or_get_regex(&String::from_utf8_lossy(re));
             AwkValue::Number(if regex.is_match(&record) { 1.0 } else { 0.0 })
         }
         Expr::Variable(v) => context.get_var(v),
@@ -667,7 +667,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                 BinaryOperator::Match => {
                     // PHASE7.2→7.4 BRIDGE: regex match su &str finché 7.4 non porta regex::bytes.
                     let re_str = if let Expr::RegexLiteral(re) = &**rhs {
-                        re.clone()
+                        String::from_utf8_lossy(re).into_owned()
                     } else {
                         String::from_utf8_lossy(&r_val.as_string()).into_owned()
                     };
@@ -678,7 +678,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                 BinaryOperator::NotMatch => {
                     // PHASE7.2→7.4 BRIDGE: regex match su &str finché 7.4 non porta regex::bytes.
                     let re_str = if let Expr::RegexLiteral(re) = &**rhs {
-                        re.clone()
+                        String::from_utf8_lossy(re).into_owned()
                     } else {
                         String::from_utf8_lossy(&r_val.as_string()).into_owned()
                     };

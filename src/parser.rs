@@ -84,7 +84,7 @@ fn parse_rule(pair: Pair<Rule>) -> AstRule {
     // If no action block but we have a pattern, standard awk does print $0
     if action.is_empty() && pattern.is_some() {
         action.push(Statement::Print(
-            vec![Expr::Field(Box::new(Expr::StringLiteral("0".to_string())))],
+            vec![Expr::Field(Box::new(Expr::StringLiteral(b"0".to_vec())))],
             None,
         ));
     }
@@ -114,7 +114,7 @@ fn parse_pattern(pair: Pair<Rule>) -> Pattern {
             .next()
             .expect("pest: Rule::regex_pattern racchiude sempre un regex_body")
             .as_str();
-        Pattern::Expr(Expr::RegexLiteral(re.to_string()))
+        Pattern::Expr(Expr::RegexLiteral(re.as_bytes().to_vec()))
     } else {
         Pattern::Expr(parse_expr(inner))
     }
@@ -324,7 +324,7 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
                 }
             }
             if exprs.is_empty() && !is_printf {
-                exprs.push(Expr::Field(Box::new(Expr::StringLiteral("0".to_string()))));
+                exprs.push(Expr::Field(Box::new(Expr::StringLiteral(b"0".to_vec()))));
             }
             if is_printf {
                 Statement::Printf(exprs, redirect)
@@ -788,20 +788,23 @@ fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
 fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
     match inner.as_rule() {
         Rule::number => Expr::NumberLiteral(inner.as_str().parse::<f64>().unwrap_or(0.0)),
-        Rule::string_literal => Expr::StringLiteral(decode_string_escapes(
-            inner
-                .into_inner()
-                .next()
-                .expect("pest: Rule::string_literal racchiude sempre il body string")
-                .as_str(),
-        )),
+        Rule::string_literal => Expr::StringLiteral(
+            decode_string_escapes(
+                inner
+                    .into_inner()
+                    .next()
+                    .expect("pest: Rule::string_literal racchiude sempre il body string")
+                    .as_str(),
+            )
+            .into_bytes(),
+        ),
         Rule::regex_pattern => {
             let re = inner
                 .into_inner()
                 .next()
                 .expect("pest: Rule::regex_pattern racchiude sempre un regex_body")
                 .as_str();
-            Expr::RegexLiteral(re.to_string())
+            Expr::RegexLiteral(re.as_bytes().to_vec())
         }
         Rule::ident => Expr::Variable(inner.as_str().to_string()),
         Rule::getline_expr => {

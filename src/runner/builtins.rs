@@ -256,7 +256,7 @@ pub(super) fn dispatch_builtin(
             // PHASE7.2→7.4 BRIDGE: subject/regex su &str finché 7.4 non porta regex::bytes.
             let s = String::from_utf8_lossy(&eval_expr(&args[0], context).as_string()).into_owned();
             let re_str = if let Expr::RegexLiteral(re) = &args[1] {
-                re.clone()
+                String::from_utf8_lossy(re).into_owned()
             } else {
                 String::from_utf8_lossy(&eval_expr(&args[1], context).as_string()).into_owned()
             };
@@ -281,7 +281,7 @@ pub(super) fn dispatch_builtin(
             };
             let fs = if args.len() > 2 {
                 if let Expr::RegexLiteral(re) = &args[2] {
-                    re.clone()
+                    String::from_utf8_lossy(re).into_owned()
                 } else {
                     String::from_utf8_lossy(&eval_expr(&args[2], context).as_string()).into_owned()
                 }
@@ -304,7 +304,7 @@ pub(super) fn dispatch_builtin(
         "sub" | "gsub" => {
             // PHASE7.2→7.4 BRIDGE: regex/replace su &str finché 7.4 non porta regex::bytes.
             let r = if let Expr::RegexLiteral(re) = &args[0] {
-                re.clone()
+                String::from_utf8_lossy(re).into_owned()
             } else {
                 String::from_utf8_lossy(&eval_expr(&args[0], context).as_string()).into_owned()
             };

@@ -46,8 +46,8 @@ pub enum GetlineSource {
 pub enum Expr {
     Field(Box<Expr>),
     NumberLiteral(f64),
-    StringLiteral(String),
-    RegexLiteral(String),
+    StringLiteral(Vec<u8>),
+    RegexLiteral(Vec<u8>),
     Variable(String),
     ArrayAccess(String, Vec<Expr>),         // a["key1", "key2"]
     FunctionCall(String, Vec<Expr>),        // length($1)
