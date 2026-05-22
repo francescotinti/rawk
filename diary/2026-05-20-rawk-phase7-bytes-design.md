@@ -210,3 +210,15 @@ test "$(rtk grep -rn 'from_utf8_lossy' src/ | wc -l)" -le 3 && echo OK
 - Boundary residui (saranno rimossi in 7.2): 14 BRIDGE marker totali — 5 in `src/types.rs` (field split, `get_field($0)`, `set_field($0)`, due join OFS); 6 in `src/runner/mod.rs` (RT in `process_single_byte`, 4 nei path `process_paragraph`/`process_regex_rs` che usano ancora `read_to_string`, 1 nel ramo `getline … > var`); 3 in `src/runner/builtins.rs` (`length()` su $0, `sub`/`gsub` target_val, update record finale).
 - Gate verdi a ogni commit: `cargo test` 23 passed, `bash scripts/checks.sh` 7/7 OK, `diffrun tests/testsuite.xml` invariato a 95 MATCH / 9 DIVERGE / 5 SKIPPED.
 - Commit di chiusura: `0b5e86f` (types,runner record Vec<u8>), `c484d29` (runner read_until bytes + getline).
+
+## Stato Phase 7.2 — chiusa 2026-05-22
+
+- `AwkValue::String(Vec<u8>)` e `AwkValue::StrNum(Vec<u8>, f64)` — core type byte-native. `from_str_num`, `as_string`, `as_string_convfmt` operano su `Vec<u8>`; `as_number`/`numeric_values` decodificano via `std::str::from_utf8` solo per il parse numerico; `is_truthy` usa `Vec<u8>::is_empty`.
+- AST byte-native: `Expr::StringLiteral(Vec<u8>)`, `Expr::RegexLiteral(Vec<u8>)`. Il parser produce i byte con `decode_string_escapes(...).into_bytes()`. OP per 7.5: `decode_string_escapes` produce ancora una `String` UTF-8, quindi `\NNN`/`\xNN` ≥ 0x80 danno la codifica UTF-8 multi-byte, non il singolo byte — semantica invariata rispetto a pre-7.2, fix byte-esatto rinviato a 7.5.
+- Builtins byte-native dove naturale: `length()` byte-count POSIX, `substr()`/`index()` su byte, `tolower()`/`toupper()` ASCII-fold. `sprintf`/`printf`/`match`/`split`/`sub`/`gsub` restano su `&str` via bridge fino a 7.4/7.5.
+- Rischio R1 (§5): il type swap ha prodotto 107 compile-error (> 50). Decisione dell'agente esecutore: nessuno split 7.2a/7.2b con commit rosso intermedio (vietato dal protocollo "ogni commit verde"); cascade completo in un unico commit verde. Le divergenze logiche separabili (letterali AST) restano commit distinto come da piano.
+- Tutti i 14 BRIDGE `// PHASE7.1→7.2` rimossi. Introdotti 22 BRIDGE `// PHASE7.2→7.{3,4,5,6}`: 6→7.3 (array key + fs/convfmt/ofmt), 9→7.4 (regex `&str`), 5→7.5 (printf/builtins), 2→7.6 (output). `from_utf8_lossy` in `src/`: 44 occorrenze, caleranno con la rimozione dei bridge in 7.3–7.6.
+- Nuovo helper `eval_array_key()` in `runner/mod.rs`: centralizza la composizione chiave array (join SUBSEP) — un solo punto da convertire a chiave `Vec<u8>` in 7.3.
+- Gate verdi a ogni commit: `cargo build --all-targets` 0 errori, `cargo clippy --all-targets -- -D warnings` 0 lint, `cargo fmt --check` pulito, `cargo test` 23 passed, `bash scripts/checks.sh` 7/7 OK.
+- `diffrun tests/testsuite.xml`: baseline 95 MATCH / 9 DIVERGE / 5 SKIPPED invariato. Le 8 divergenze stabili sono identiche a pre-7.2; `test_gawk_manual_word_frequency` è non-deterministico (iterazione `for-in` su `HashMap`, ~1/6 di MATCH), oscilla 95↔96 MATCH ed è già conteggiato nelle 9 divergenze documentate.
+- Commit di chiusura: `f82d574` (types,runner: AwkValue Vec<u8> + cascade), `cff8232` (ast,parser: letterali Vec<u8>).

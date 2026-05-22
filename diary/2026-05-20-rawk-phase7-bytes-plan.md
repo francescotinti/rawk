@@ -776,13 +776,14 @@ Expected: tutto verde + 109/109.
 
 Edit `diary/2026-05-20-rawk-phase7-bytes-design.md` (sezione "Stato"):
 ```markdown
-## Stato Phase 7.2 — chiusa <DATA>
+## Stato Phase 7.2 — chiusa 2026-05-22
 
 - `AwkValue::String(Vec<u8>)`, `AwkValue::StrNum(Vec<u8>, f64)` — core type bytes.
 - AST `StringLiteral(Vec<u8>)`, `RegexLiteral(Vec<u8>)` — letterali pass-through bytes.
-- Bridge 7.1→7.2 rimossi. Restano 7.2→7.{3,4,5} bridges (~N occorrenze).
-- 109/109 XML verdi a ogni step.
-- Commit SHA chiusura: [da inserire dopo].
+- Bridge 7.1→7.2 rimossi (0 residui). Restano 22 bridge 7.2→7.{3,4,5,6}: 6→7.3, 9→7.4, 5→7.5, 2→7.6.
+- diffrun invariato 95/9/5 a ogni commit; `cargo test` 23 passed, `checks.sh` 7/7, clippy 0 lint.
+- Type swap: 107 compile-error (R1 > 50) risolti in cascade unico verde, no commit rosso.
+- Commit chiusura: `f82d574` (types,runner cascade), `cff8232` (ast,parser letterali).
 ```
 
 - [ ] **Step 4: Commit chiusura**
