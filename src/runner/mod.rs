@@ -19,6 +19,22 @@ mod builtins;
 mod fmt;
 mod io;
 
+fn trim_leading_newlines(b: &[u8]) -> &[u8] {
+    let mut i = 0;
+    while i < b.len() && b[i] == b'\n' {
+        i += 1;
+    }
+    &b[i..]
+}
+
+fn trim_trailing_newlines(b: &[u8]) -> &[u8] {
+    let mut j = b.len();
+    while j > 0 && b[j - 1] == b'\n' {
+        j -= 1;
+    }
+    &b[..j]
+}
+
 pub enum CompiledPattern {
     Expr(Expr),
     Begin,
@@ -117,7 +133,7 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
             let name = v[..eq_pos].to_string();
             let raw_value = &v[eq_pos + 1..];
             let decoded = crate::parser::decode_string_escapes(raw_value);
-            context.set_var(&name, AwkValue::from_str_num(decoded.into_bytes()));
+            context.set_var(&name, AwkValue::from_str_num(decoded));
         } else {
             eprintln!("rawk: invalid -v assignment '{}': expected name=value", v);
             return Ok(2);
@@ -327,18 +343,19 @@ fn process_paragraph<R: BufRead>(
     context: &mut EvalContext,
     rules: &[CompiledRule],
 ) -> anyhow::Result<FlowControl> {
-    // PHASE7.2→7.4 BRIDGE: paragraph mode legge ancora via read_to_string (str);
-    // migrazione byte-aware competenza di 7.4.
-    let mut all = String::new();
-    reader.read_to_string(&mut all)?;
-    let trimmed = all.trim_start_matches('\n');
-    let re = regex::Regex::new(r"\n\n+").unwrap();
+    let mut all: Vec<u8> = Vec::new();
+    reader.read_to_end(&mut all)?;
+    let trimmed = trim_leading_newlines(&all);
+    let re = regex::bytes::RegexBuilder::new(r"\n\n+")
+        .unicode(false)
+        .build()
+        .unwrap();
     let mut last_end = 0;
     for mat in re.find_iter(trimmed) {
         let record = &trimmed[last_end..mat.start()];
         if !record.is_empty() {
-            context.set_var("RT", AwkValue::String(mat.as_str().as_bytes().to_vec()));
-            context.update_record(record.as_bytes());
+            context.set_var("RT", AwkValue::String(mat.as_bytes().to_vec()));
+            context.update_record(record);
             let fc = run_rules_on_record(rules, context);
             if matches!(fc, FlowControl::Exit(_)) {
                 return Ok(fc);
@@ -349,10 +366,10 @@ fn process_paragraph<R: BufRead>(
         }
         last_end = mat.end();
     }
-    let last = trimmed[last_end..].trim_end_matches('\n');
+    let last = trim_trailing_newlines(&trimmed[last_end..]);
     if !last.is_empty() {
         context.set_var("RT", AwkValue::String(Vec::new()));
-        context.update_record(last.as_bytes());
+        context.update_record(last);
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
             return Ok(fc);
@@ -366,23 +383,27 @@ fn process_paragraph<R: BufRead>(
 
 fn process_regex_rs<R: BufRead>(
     mut reader: R,
-    rs: &str,
+    rs: &[u8],
     context: &mut EvalContext,
     rules: &[CompiledRule],
 ) -> anyhow::Result<FlowControl> {
-    // PHASE7.2→7.4 BRIDGE: RS-regex mode legge ancora via read_to_string (str);
-    // migrazione byte-aware competenza di 7.4.
-    let mut all = String::new();
-    reader.read_to_string(&mut all)?;
-    let re = match regex::Regex::new(rs) {
+    let mut all: Vec<u8> = Vec::new();
+    reader.read_to_end(&mut all)?;
+    // RS may contain raw high bytes (e.g. `RS = "\xC3+"` after AWK string
+    // interpretation). The regex crate requires `&str` patterns; we promote
+    // each non-ASCII byte to `\xNN` so it matches the literal byte in the
+    // haystack. Unicode mode is disabled so escapes match raw bytes
+    // regardless of UTF-8 validity.
+    let pat = crate::types::regex_pattern_from_bytes(rs);
+    let re = match regex::bytes::RegexBuilder::new(&pat).unicode(false).build() {
         Ok(r) => r,
         Err(_) => return Ok(FlowControl::None),
     };
     let mut last_end = 0;
     for mat in re.find_iter(&all) {
         let record = &all[last_end..mat.start()];
-        context.set_var("RT", AwkValue::String(mat.as_str().as_bytes().to_vec()));
-        context.update_record(record.as_bytes());
+        context.set_var("RT", AwkValue::String(mat.as_bytes().to_vec()));
+        context.update_record(record);
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
             return Ok(fc);
@@ -395,7 +416,7 @@ fn process_regex_rs<R: BufRead>(
     let last = &all[last_end..];
     if !last.is_empty() {
         context.set_var("RT", AwkValue::String(Vec::new()));
-        context.update_record(last.as_bytes());
+        context.update_record(last);
         let fc = run_rules_on_record(rules, context);
         if matches!(fc, FlowControl::Exit(_)) {
             return Ok(fc);
@@ -418,8 +439,7 @@ fn process_lines<R: BufRead>(
     } else if rs_val.len() == 1 {
         process_single_byte(reader, rs_val[0], context, rules)
     } else {
-        // PHASE7.2→7.4 BRIDGE: RS-regex compilato su &str finché 7.4 non porta regex::bytes.
-        process_regex_rs(reader, &String::from_utf8_lossy(&rs_val), context, rules)
+        process_regex_rs(reader, &rs_val, context, rules)
     };
     context.nextfile_pending = false;
     res
@@ -454,9 +474,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             AwkValue::String(s)
         }
         Expr::RegexLiteral(re) => {
-            // PHASE7.2→7.4 BRIDGE: regex match su &str finché 7.4 non porta regex::bytes.
-            let record = String::from_utf8_lossy(&context.get_field(0).as_string()).into_owned();
-            let regex = context.compile_or_get_regex(&String::from_utf8_lossy(re));
+            let record = context.get_field(0).as_string();
+            let regex = context.compile_or_get_regex(re);
             AwkValue::Number(if regex.is_match(&record) { 1.0 } else { 0.0 })
         }
         Expr::Variable(v) => context.get_var(v),
@@ -671,25 +690,23 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                     0.0
                 }),
                 BinaryOperator::Match => {
-                    // PHASE7.2→7.4 BRIDGE: regex match su &str finché 7.4 non porta regex::bytes.
-                    let re_str = if let Expr::RegexLiteral(re) = &**rhs {
-                        String::from_utf8_lossy(re).into_owned()
+                    let re_bytes: std::borrow::Cow<[u8]> = if let Expr::RegexLiteral(re) = &**rhs {
+                        std::borrow::Cow::Borrowed(re.as_slice())
                     } else {
-                        String::from_utf8_lossy(&r_val.as_string()).into_owned()
+                        std::borrow::Cow::Owned(r_val.as_string())
                     };
-                    let re = context.compile_or_get_regex(&re_str);
-                    let subject = String::from_utf8_lossy(&l_val.as_string()).into_owned();
+                    let re = context.compile_or_get_regex(&re_bytes);
+                    let subject = l_val.as_string();
                     AwkValue::Number(if re.is_match(&subject) { 1.0 } else { 0.0 })
                 }
                 BinaryOperator::NotMatch => {
-                    // PHASE7.2→7.4 BRIDGE: regex match su &str finché 7.4 non porta regex::bytes.
-                    let re_str = if let Expr::RegexLiteral(re) = &**rhs {
-                        String::from_utf8_lossy(re).into_owned()
+                    let re_bytes: std::borrow::Cow<[u8]> = if let Expr::RegexLiteral(re) = &**rhs {
+                        std::borrow::Cow::Borrowed(re.as_slice())
                     } else {
-                        String::from_utf8_lossy(&r_val.as_string()).into_owned()
+                        std::borrow::Cow::Owned(r_val.as_string())
                     };
-                    let re = context.compile_or_get_regex(&re_str);
-                    let subject = String::from_utf8_lossy(&l_val.as_string()).into_owned();
+                    let re = context.compile_or_get_regex(&re_bytes);
+                    let subject = l_val.as_string();
                     AwkValue::Number(if re.is_match(&subject) { 0.0 } else { 1.0 })
                 }
                 BinaryOperator::In => {

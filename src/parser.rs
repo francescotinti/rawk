@@ -676,54 +676,59 @@ fn parse_term(term: Pair<Rule>) -> Expr {
     base_expr
 }
 
-pub fn decode_string_escapes(raw: &str) -> String {
-    let mut out = String::with_capacity(raw.len());
+pub fn decode_string_escapes(raw: &str) -> Vec<u8> {
+    // POSIX AWK strings are byte sequences: `\xNN` must produce the raw
+    // byte NN, not the UTF-8 encoding of codepoint U+00NN. We accumulate
+    // raw bytes directly; non-escaped source characters are emitted as
+    // their UTF-8 encoding (source files are UTF-8 by convention).
+    let mut out: Vec<u8> = Vec::with_capacity(raw.len());
     let mut chars = raw.chars().peekable();
+    let mut buf = [0u8; 4];
     while let Some(c) = chars.next() {
         if c != '\\' {
-            out.push(c);
+            out.extend_from_slice(c.encode_utf8(&mut buf).as_bytes());
             continue;
         }
         match chars.peek().copied() {
             Some('n') => {
                 chars.next();
-                out.push('\n');
+                out.push(b'\n');
             }
             Some('t') => {
                 chars.next();
-                out.push('\t');
+                out.push(b'\t');
             }
             Some('r') => {
                 chars.next();
-                out.push('\r');
+                out.push(b'\r');
             }
             Some('\\') => {
                 chars.next();
-                out.push('\\');
+                out.push(b'\\');
             }
             Some('"') => {
                 chars.next();
-                out.push('"');
+                out.push(b'"');
             }
             Some('/') => {
                 chars.next();
-                out.push('/');
+                out.push(b'/');
             }
             Some('a') => {
                 chars.next();
-                out.push('\x07');
+                out.push(0x07);
             }
             Some('b') => {
                 chars.next();
-                out.push('\x08');
+                out.push(0x08);
             }
             Some('f') => {
                 chars.next();
-                out.push('\x0c');
+                out.push(0x0c);
             }
             Some('v') => {
                 chars.next();
-                out.push('\x0b');
+                out.push(0x0b);
             }
             Some('x') => {
                 chars.next();
@@ -739,11 +744,11 @@ pub fn decode_string_escapes(raw: &str) -> String {
                     }
                 }
                 if !hex.is_empty() {
-                    let val = u32::from_str_radix(&hex, 16).unwrap_or(0);
-                    out.push(char::from_u32(val).unwrap_or('\0'));
+                    let val = u32::from_str_radix(&hex, 16).unwrap_or(0) & 0xFF;
+                    out.push(val as u8);
                 } else {
-                    out.push('\\');
-                    out.push('x');
+                    out.push(b'\\');
+                    out.push(b'x');
                 }
             }
             Some(d) if d.is_digit(8) => {
@@ -759,14 +764,14 @@ pub fn decode_string_escapes(raw: &str) -> String {
                     }
                 }
                 let val = u32::from_str_radix(&oct, 8).unwrap_or(0) % 256;
-                out.push(char::from_u32(val).unwrap_or('\0'));
+                out.push(val as u8);
             }
             Some(other) => {
                 chars.next();
-                out.push('\\');
-                out.push(other);
+                out.push(b'\\');
+                out.extend_from_slice(other.encode_utf8(&mut buf).as_bytes());
             }
-            None => out.push('\\'),
+            None => out.push(b'\\'),
         }
     }
     out
@@ -788,16 +793,13 @@ fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
 fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
     match inner.as_rule() {
         Rule::number => Expr::NumberLiteral(inner.as_str().parse::<f64>().unwrap_or(0.0)),
-        Rule::string_literal => Expr::StringLiteral(
-            decode_string_escapes(
-                inner
-                    .into_inner()
-                    .next()
-                    .expect("pest: Rule::string_literal racchiude sempre il body string")
-                    .as_str(),
-            )
-            .into_bytes(),
-        ),
+        Rule::string_literal => Expr::StringLiteral(decode_string_escapes(
+            inner
+                .into_inner()
+                .next()
+                .expect("pest: Rule::string_literal racchiude sempre il body string")
+                .as_str(),
+        )),
         Rule::regex_pattern => {
             let re = inner
                 .into_inner()

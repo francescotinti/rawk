@@ -10,6 +10,32 @@ use std::fmt;
 
 use rand::rngs::StdRng;
 
+/// Convert a raw byte sequence into a `&str` regex pattern, promoting each
+/// non-ASCII byte to its `\xNN` escape form. ASCII bytes (including regex
+/// metacharacters and backslash) pass through unchanged so AWK regex syntax
+/// is preserved. The result is always valid UTF-8 and represents the same
+/// byte-literal semantics when fed to `regex::bytes::Regex` with Unicode
+/// mode disabled.
+pub(crate) fn regex_pattern_from_bytes(re: &[u8]) -> String {
+    // Fast path: if the input is already valid UTF-8 with no high bytes,
+    // it's safe to use as-is. Non-ASCII bytes (>=0x80) must be escaped
+    // regardless of UTF-8 validity, since their codepoints (when valid)
+    // would not match raw bytes 1:1 in the haystack.
+    if re.iter().all(|&b| b < 0x80) {
+        // SAFETY: all bytes are ASCII, so the slice is valid UTF-8.
+        return std::str::from_utf8(re).unwrap().to_string();
+    }
+    let mut out = String::with_capacity(re.len() + 8);
+    for &b in re {
+        if b < 0x80 {
+            out.push(b as char);
+        } else {
+            out.push_str(&format!("\\x{:02X}", b));
+        }
+    }
+    out
+}
+
 /// Valore AWK polimorfo. Le coercioni Number↔String seguono le regole POSIX
 /// (numeric context usa `as_number`, string context usa `as_string` con `CONVFMT`/`OFMT`).
 #[derive(Debug, Clone, PartialEq)]
@@ -255,7 +281,7 @@ pub(crate) struct EvalContext {
     pub(crate) rng: StdRng,
     pub(crate) local_scopes: Vec<HashMap<String, AwkValue>>,
     pub(crate) functions: HashMap<String, (Vec<String>, Vec<Statement>)>,
-    pub(crate) regex_cache: HashMap<String, regex::Regex>,
+    pub(crate) regex_cache: HashMap<Vec<u8>, regex::bytes::Regex>,
     pub(crate) convfmt: Vec<u8>,
     pub(crate) ofmt: Vec<u8>,
     pub(crate) nextfile_pending: bool,
@@ -288,12 +314,30 @@ impl EvalContext {
         }
     }
 
-    pub(crate) fn compile_or_get_regex(&mut self, re: &str) -> regex::Regex {
+    pub(crate) fn compile_or_get_regex(&mut self, re: &[u8]) -> regex::bytes::Regex {
         if let Some(r) = self.regex_cache.get(re) {
             return r.clone();
         }
-        let compiled = regex::Regex::new(re).unwrap_or_else(|_| regex::Regex::new("").unwrap());
-        self.regex_cache.insert(re.to_string(), compiled.clone());
+        // POSIX AWK semantics: regex operates over raw bytes. Unicode mode
+        // off lets escapes match individual bytes in the haystack regardless
+        // of UTF-8 validity. Non-ASCII bytes in `re` (possible when patterns
+        // come from runtime string concatenation) are promoted to `\xNN`
+        // escapes so the regex crate, which requires `&str` patterns, can
+        // still encode the original byte semantics.
+        let pat = regex_pattern_from_bytes(re);
+        let build = |p: &str| -> regex::bytes::Regex {
+            regex::bytes::RegexBuilder::new(p)
+                .unicode(false)
+                .build()
+                .unwrap_or_else(|_| {
+                    regex::bytes::RegexBuilder::new("")
+                        .unicode(false)
+                        .build()
+                        .unwrap()
+                })
+        };
+        let compiled = build(&pat);
+        self.regex_cache.insert(re.to_vec(), compiled.clone());
         compiled
     }
 

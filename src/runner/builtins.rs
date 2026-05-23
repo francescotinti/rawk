@@ -14,6 +14,39 @@ use crate::types::{AwkValue, EvalContext, InputStream, OutputStream};
 use super::eval_expr;
 use super::fmt::awk_sprintf;
 
+fn expand_awk_replacement(repl: &[u8], whole: &[u8]) -> Vec<u8> {
+    let mut out = Vec::with_capacity(repl.len() + whole.len());
+    let mut i = 0;
+    while i < repl.len() {
+        match repl[i] {
+            b'\\' if i + 1 < repl.len() => match repl[i + 1] {
+                b'&' => {
+                    out.push(b'&');
+                    i += 2;
+                }
+                b'\\' => {
+                    out.push(b'\\');
+                    i += 2;
+                }
+                other => {
+                    out.push(b'\\');
+                    out.push(other);
+                    i += 2;
+                }
+            },
+            b'&' => {
+                out.extend_from_slice(whole);
+                i += 1;
+            }
+            c => {
+                out.push(c);
+                i += 1;
+            }
+        }
+    }
+    out
+}
+
 pub(super) fn dispatch_builtin(
     name: &str,
     args: &[Expr],
@@ -253,14 +286,13 @@ pub(super) fn dispatch_builtin(
             AwkValue::String(awk_sprintf(&String::from_utf8_lossy(&fmt), &vals).into_bytes())
         }
         "match" => {
-            // PHASE7.2→7.4 BRIDGE: subject/regex su &str finché 7.4 non porta regex::bytes.
-            let s = String::from_utf8_lossy(&eval_expr(&args[0], context).as_string()).into_owned();
-            let re_str = if let Expr::RegexLiteral(re) = &args[1] {
-                String::from_utf8_lossy(re).into_owned()
+            let s = eval_expr(&args[0], context).as_string();
+            let re_bytes: std::borrow::Cow<[u8]> = if let Expr::RegexLiteral(re) = &args[1] {
+                std::borrow::Cow::Borrowed(re.as_slice())
             } else {
-                String::from_utf8_lossy(&eval_expr(&args[1], context).as_string()).into_owned()
+                std::borrow::Cow::Owned(eval_expr(&args[1], context).as_string())
             };
-            let re = context.compile_or_get_regex(&re_str);
+            let re = context.compile_or_get_regex(&re_bytes);
             if let Some(m) = re.find(&s) {
                 context.set_var("RSTART", AwkValue::Number(m.start() as f64 + 1.0));
                 context.set_var("RLENGTH", AwkValue::Number(m.len() as f64));
@@ -272,88 +304,84 @@ pub(super) fn dispatch_builtin(
             }
         }
         "split" => {
-            // PHASE7.2→7.4 BRIDGE: subject/FS su &str finché 7.4 non porta regex::bytes.
-            let s = String::from_utf8_lossy(&eval_expr(&args[0], context).as_string()).into_owned();
+            let s = eval_expr(&args[0], context).as_string();
             let arr_name = if let Expr::Variable(v) = &args[1] {
                 v.clone()
             } else {
                 "err".to_string()
             };
-            let fs = if args.len() > 2 {
+            let fs_bytes: Vec<u8> = if args.len() > 2 {
                 if let Expr::RegexLiteral(re) = &args[2] {
-                    String::from_utf8_lossy(re).into_owned()
+                    re.clone()
                 } else {
-                    String::from_utf8_lossy(&eval_expr(&args[2], context).as_string()).into_owned()
+                    eval_expr(&args[2], context).as_string()
                 }
             } else {
-                // PHASE7.2→7.4 BRIDGE: regex pattern lossy fino a 7.4 (regex::bytes).
-                String::from_utf8_lossy(&context.fs).into_owned()
+                context.fs.clone()
             };
-            let re = context.compile_or_get_regex(&fs);
-            let parts: Vec<&str> = re.split(&s).filter(|x| !x.is_empty()).collect();
+            let re = context.compile_or_get_regex(&fs_bytes);
+            let parts: Vec<&[u8]> = re.split(&s).filter(|x| !x.is_empty()).collect();
             let count = parts.len();
             for (i, p) in parts.iter().enumerate() {
                 let key = format!("{}", i + 1);
                 context.set_array_var(
                     &arr_name,
                     key.as_bytes(),
-                    AwkValue::from_str_num(p.as_bytes().to_vec()),
+                    AwkValue::from_str_num(p.to_vec()),
                 );
             }
             AwkValue::Number(count as f64)
         }
         "sub" | "gsub" => {
-            // PHASE7.2→7.4 BRIDGE: regex/replace su &str finché 7.4 non porta regex::bytes.
-            let r = if let Expr::RegexLiteral(re) = &args[0] {
-                String::from_utf8_lossy(re).into_owned()
+            let r_bytes: Vec<u8> = if let Expr::RegexLiteral(re) = &args[0] {
+                re.clone()
             } else {
-                String::from_utf8_lossy(&eval_expr(&args[0], context).as_string()).into_owned()
+                eval_expr(&args[0], context).as_string()
             };
-            let s = String::from_utf8_lossy(&eval_expr(&args[1], context).as_string()).into_owned();
+            let s_bytes = eval_expr(&args[1], context).as_string();
             let is_gsub = name == "gsub";
-
-            let target_val = if args.len() > 2 {
-                String::from_utf8_lossy(&eval_expr(&args[2], context).as_string()).into_owned()
+            let target: Vec<u8> = if args.len() > 2 {
+                eval_expr(&args[2], context).as_string()
             } else {
-                String::from_utf8_lossy(&context.record).into_owned()
+                context.record.clone()
             };
-            let re = context.compile_or_get_regex(&r);
+            let re = context.compile_or_get_regex(&r_bytes);
 
-            let mut changed = false;
-            let new_val = if is_gsub {
-                let res = re.replace_all(&target_val, s.as_str());
-                if res != target_val {
-                    changed = true;
-                }
-                res.to_string()
+            let new_val: Vec<u8> = if is_gsub {
+                re.replace_all(&target, |caps: &regex::bytes::Captures| {
+                    expand_awk_replacement(&s_bytes, caps.get(0).unwrap().as_bytes())
+                })
+                .into_owned()
             } else {
-                let res = re.replace(&target_val, s.as_str());
-                if res != target_val {
-                    changed = true;
-                }
-                res.to_string()
+                re.replace(&target, |caps: &regex::bytes::Captures| {
+                    expand_awk_replacement(&s_bytes, caps.get(0).unwrap().as_bytes())
+                })
+                .into_owned()
             };
+            let changed = new_val != target;
 
             if args.len() > 2 {
                 match &args[2] {
-                    Expr::Variable(v) => context.set_var(v, AwkValue::String(new_val.into_bytes())),
+                    Expr::Variable(v) => context.set_var(v, AwkValue::String(new_val)),
                     Expr::Field(e) => {
                         let f_idx = eval_expr(e, context).as_number() as usize;
-                        context.set_field(f_idx, AwkValue::String(new_val.into_bytes()));
+                        context.set_field(f_idx, AwkValue::String(new_val));
                     }
                     Expr::ArrayAccess(arr, ks) => {
-                        let mut keys: Vec<Vec<u8>> = Vec::new();
-                        for k in ks {
-                            keys.push(eval_expr(k, context).as_string());
-                        }
+                        let mut joined: Vec<u8> = Vec::new();
                         let subsep = context.get_var("SUBSEP").as_string();
-                        let key = keys.join(subsep.as_slice());
-                        context.set_array_var(arr, &key, AwkValue::String(new_val.into_bytes()));
+                        for (i, k) in ks.iter().enumerate() {
+                            if i > 0 {
+                                joined.extend_from_slice(&subsep);
+                            }
+                            joined.extend_from_slice(&eval_expr(k, context).as_string());
+                        }
+                        context.set_array_var(arr, &joined, AwkValue::String(new_val));
                     }
                     _ => {}
                 }
             } else {
-                context.update_record(new_val.as_bytes());
+                context.update_record(&new_val);
             }
 
             AwkValue::Number(if changed { 1.0 } else { 0.0 })
