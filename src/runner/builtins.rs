@@ -286,7 +286,8 @@ pub(super) fn dispatch_builtin(
                     String::from_utf8_lossy(&eval_expr(&args[2], context).as_string()).into_owned()
                 }
             } else {
-                context.fs.clone()
+                // PHASE7.2→7.4 BRIDGE: regex pattern lossy fino a 7.4 (regex::bytes).
+                String::from_utf8_lossy(&context.fs).into_owned()
             };
             let re = context.compile_or_get_regex(&fs);
             let parts: Vec<&str> = re.split(&s).filter(|x| !x.is_empty()).collect();

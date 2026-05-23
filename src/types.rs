@@ -245,7 +245,7 @@ pub(crate) struct EvalContext {
     pub(crate) nr: usize,  // Number of Records read so far
     pub(crate) fnr: usize, // Number of Records in current file
     pub(crate) nf: usize,  // Number of Fields in current record
-    pub(crate) fs: String,
+    pub(crate) fs: Vec<u8>,
     pub(crate) fields: Vec<AwkValue>,
     pub(crate) record: Vec<u8>,
     pub(crate) vars: HashMap<String, AwkValue>,
@@ -256,21 +256,21 @@ pub(crate) struct EvalContext {
     pub(crate) local_scopes: Vec<HashMap<String, AwkValue>>,
     pub(crate) functions: HashMap<String, (Vec<String>, Vec<Statement>)>,
     pub(crate) regex_cache: HashMap<String, regex::Regex>,
-    pub(crate) convfmt: String,
-    pub(crate) ofmt: String,
+    pub(crate) convfmt: Vec<u8>,
+    pub(crate) ofmt: Vec<u8>,
     pub(crate) nextfile_pending: bool,
     pub(crate) exit_pending: Option<i32>,
 }
 
 impl EvalContext {
-    pub(crate) fn new(fs: &str) -> Self {
+    pub(crate) fn new(fs: &[u8]) -> Self {
         let mut vars = HashMap::new();
         vars.insert("SUBSEP".to_string(), AwkValue::String(b"\x1C".to_vec()));
         Self {
             nr: 0,
             fnr: 0,
             nf: 0,
-            fs: fs.to_string(),
+            fs: fs.to_vec(),
             fields: Vec::new(),
             record: Vec::new(),
             vars,
@@ -281,8 +281,8 @@ impl EvalContext {
             local_scopes: Vec::new(),
             functions: HashMap::new(),
             regex_cache: HashMap::new(),
-            convfmt: "%.6g".to_string(),
-            ofmt: "%.6g".to_string(),
+            convfmt: b"%.6g".to_vec(),
+            ofmt: b"%.6g".to_vec(),
             nextfile_pending: false,
             exit_pending: None,
         }
@@ -307,9 +307,10 @@ impl EvalContext {
         // lo split byte-aware (FS byte-arbitrario).
         let line_str = String::from_utf8_lossy(line);
         let line = line_str.as_ref();
+        let fs_lossy = String::from_utf8_lossy(&self.fs);
 
         // Awk default field splitting: split by whitespace, and ignore leading/trailing whitespace
-        if self.fs == " " {
+        if fs_lossy.as_ref() == " " {
             self.fields = line
                 .split_whitespace()
                 .map(|s| AwkValue::from_str_num(s.as_bytes().to_vec()))
@@ -317,7 +318,7 @@ impl EvalContext {
         } else {
             // Split by custom Field Separator
             self.fields = line
-                .split(&self.fs)
+                .split(fs_lossy.as_ref())
                 .map(|s| AwkValue::from_str_num(s.as_bytes().to_vec()))
                 .collect();
         }
@@ -365,10 +366,9 @@ impl EvalContext {
             "NF" => return AwkValue::Number(self.nf as f64),
             "NR" => return AwkValue::Number(self.nr as f64),
             "FNR" => return AwkValue::Number(self.fnr as f64),
-            // PHASE7.2→7.3 BRIDGE: fs/convfmt/ofmt restano String fino a 7.3.
-            "FS" => return AwkValue::String(self.fs.clone().into_bytes()),
-            "CONVFMT" => return AwkValue::String(self.convfmt.clone().into_bytes()),
-            "OFMT" => return AwkValue::String(self.ofmt.clone().into_bytes()),
+            "FS" => return AwkValue::String(self.fs.clone()),
+            "CONVFMT" => return AwkValue::String(self.convfmt.clone()),
+            "OFMT" => return AwkValue::String(self.ofmt.clone()),
             _ => {}
         }
         self.vars
@@ -405,10 +405,9 @@ impl EvalContext {
             }
             "NR" => self.nr = value.as_number() as usize,
             "FNR" => self.fnr = value.as_number() as usize,
-            // PHASE7.2→7.3 BRIDGE: fs/convfmt/ofmt restano String fino a 7.3.
-            "FS" => self.fs = String::from_utf8_lossy(&value.as_string()).into_owned(),
-            "CONVFMT" => self.convfmt = String::from_utf8_lossy(&value.as_string()).into_owned(),
-            "OFMT" => self.ofmt = String::from_utf8_lossy(&value.as_string()).into_owned(),
+            "FS" => self.fs = value.as_string(),
+            "CONVFMT" => self.convfmt = value.as_string(),
+            "OFMT" => self.ofmt = value.as_string(),
             _ => {
                 self.vars.insert(name.to_string(), value);
             }

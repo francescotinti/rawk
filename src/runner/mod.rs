@@ -52,7 +52,7 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
         " "
     };
 
-    let mut context = EvalContext::new(fs);
+    let mut context = EvalContext::new(fs.as_bytes());
 
     context.set_var(
         "ARGC",
@@ -445,7 +445,8 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
         Expr::NumberLiteral(n) => AwkValue::Number(*n),
         Expr::StringLiteral(s) => AwkValue::String(s.clone()),
         Expr::Concat(parts) => {
-            let convfmt = context.convfmt.clone();
+            // PHASE7.2→7.5 BRIDGE: as_string_convfmt richiede &str fino a 7.5 (printf bytes).
+            let convfmt = String::from_utf8_lossy(&context.convfmt).into_owned();
             let mut s: Vec<u8> = Vec::new();
             for e in parts {
                 s.extend(eval_expr(e, context).as_string_convfmt(&convfmt));
@@ -860,8 +861,10 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
             }
             Statement::Print(exprs, redirect) => {
                 let mut out: Vec<Vec<u8>> = Vec::new();
+                // PHASE7.2→7.5 BRIDGE: as_string_convfmt richiede &str fino a 7.5.
+                let ofmt = String::from_utf8_lossy(&context.ofmt).into_owned();
                 for e in exprs {
-                    out.push(eval_expr(e, context).as_string_convfmt(&context.ofmt));
+                    out.push(eval_expr(e, context).as_string_convfmt(&ofmt));
                 }
                 let ofs = context.get_var("OFS").as_string();
                 let ors = context.get_var("ORS").as_string();
