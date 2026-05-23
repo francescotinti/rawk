@@ -295,7 +295,7 @@ pub(super) fn dispatch_builtin(
                 let key = format!("{}", i + 1);
                 context.set_array_var(
                     &arr_name,
-                    &key,
+                    key.as_bytes(),
                     AwkValue::from_str_num(p.as_bytes().to_vec()),
                 );
             }
@@ -346,9 +346,7 @@ pub(super) fn dispatch_builtin(
                             keys.push(eval_expr(k, context).as_string());
                         }
                         let subsep = context.get_var("SUBSEP").as_string();
-                        // PHASE7.2→7.3 BRIDGE: array key resta String fino a 7.3.
-                        let key =
-                            String::from_utf8_lossy(&keys.join(subsep.as_slice())).into_owned();
+                        let key = keys.join(subsep.as_slice());
                         context.set_array_var(arr, &key, AwkValue::String(new_val.into_bytes()));
                     }
                     _ => {}

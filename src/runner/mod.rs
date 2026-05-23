@@ -58,16 +58,21 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
         "ARGC",
         AwkValue::Number(config.input_files.len() as f64 + 1.0),
     );
-    context.set_array_var("ARGV", "0", AwkValue::from_str_num(b"rawk".to_vec()));
+    context.set_array_var("ARGV", b"0", AwkValue::from_str_num(b"rawk".to_vec()));
     for (i, file) in config.input_files.iter().enumerate() {
+        let key_str = format!("{}", i + 1);
         context.set_array_var(
             "ARGV",
-            &format!("{}", i + 1),
+            key_str.as_bytes(),
             AwkValue::from_str_num(file.clone().into_bytes()),
         );
     }
     for (key, val) in std::env::vars() {
-        context.set_array_var("ENVIRON", &key, AwkValue::from_str_num(val.into_bytes()));
+        context.set_array_var(
+            "ENVIRON",
+            key.as_bytes(),
+            AwkValue::from_str_num(val.into_bytes()),
+        );
     }
     context.set_var("OFS", AwkValue::String(b" ".to_vec()));
     context.set_var("ORS", AwkValue::String(b"\n".to_vec()));
@@ -129,7 +134,7 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
     let mut files_to_process: Vec<String> = Vec::new();
     for i in 1..argc_val {
         if let Some(arr) = context.arrays.get("ARGV")
-            && let Some(val) = arr.get(&i.to_string())
+            && let Some(val) = arr.get(i.to_string().as_bytes())
         {
             let filename = val.as_string();
             if !filename.is_empty() {
@@ -421,14 +426,14 @@ fn process_lines<R: BufRead>(
 }
 
 /// Compone la chiave di un array AWK: valuta i sotto-indici e li unisce con SUBSEP.
-// PHASE7.2→7.3 BRIDGE: la chiave array resta String fino a 7.3 (poi Vec<u8> byte-aware).
-fn eval_array_key(key_exprs: &[Expr], context: &mut EvalContext) -> String {
+/// Phase 7.3: chiave byte-pulita, nessuna conversione lossy.
+fn eval_array_key(key_exprs: &[Expr], context: &mut EvalContext) -> Vec<u8> {
     let mut parts: Vec<Vec<u8>> = Vec::new();
     for k in key_exprs {
         parts.push(eval_expr(k, context).as_string());
     }
     let subsep = context.get_var("SUBSEP").as_string();
-    String::from_utf8_lossy(&parts.join(subsep.as_slice())).into_owned()
+    parts.join(subsep.as_slice())
 }
 
 fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
@@ -687,8 +692,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                     AwkValue::Number(if re.is_match(&subject) { 0.0 } else { 1.0 })
                 }
                 BinaryOperator::In => {
-                    // PHASE7.2→7.3 BRIDGE: chiave array resta String fino a 7.3.
-                    let key = String::from_utf8_lossy(&l_val.as_string()).into_owned();
+                    let key = l_val.as_string();
                     let arr_name = if let Expr::Variable(v) = &**rhs {
                         v.clone()
                     } else {
@@ -698,7 +702,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                         if context
                             .arrays
                             .get(&arr_name)
-                            .map(|a| a.contains_key(&key))
+                            .map(|a| a.contains_key(key.as_slice()))
                             .unwrap_or(false)
                         {
                             1.0
@@ -775,15 +779,14 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 }
             },
             Statement::ForIn(key_name, arr_name, block) => {
-                let keys: Vec<String> = context
+                let keys: Vec<Vec<u8>> = context
                     .arrays
                     .get(arr_name)
                     .map(|arr| arr.keys().cloned().collect())
                     .unwrap_or_default();
 
                 for key in keys {
-                    // PHASE7.2→7.3 BRIDGE: chiave array resta String fino a 7.3.
-                    context.set_var(key_name, AwkValue::String(key.into_bytes()));
+                    context.set_var(key_name, AwkValue::String(key));
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break {
                         break;

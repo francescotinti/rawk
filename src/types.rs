@@ -249,7 +249,7 @@ pub(crate) struct EvalContext {
     pub(crate) fields: Vec<AwkValue>,
     pub(crate) record: Vec<u8>,
     pub(crate) vars: HashMap<String, AwkValue>,
-    pub(crate) arrays: HashMap<String, HashMap<String, AwkValue>>,
+    pub(crate) arrays: HashMap<String, HashMap<Vec<u8>, AwkValue>>,
     pub(crate) out_files: HashMap<String, OutputStream>,
     pub(crate) in_files: HashMap<String, InputStream>,
     pub(crate) rng: StdRng,
@@ -415,7 +415,7 @@ impl EvalContext {
         }
     }
 
-    pub(crate) fn get_array_var(&self, array_name: &str, key: &str) -> AwkValue {
+    pub(crate) fn get_array_var(&self, array_name: &str, key: &[u8]) -> AwkValue {
         self.arrays
             .get(array_name)
             .and_then(|arr| arr.get(key))
@@ -423,8 +423,8 @@ impl EvalContext {
             .unwrap_or(AwkValue::Uninitialized)
     }
 
-    pub(crate) fn set_array_var(&mut self, array_name: &str, key: &str, value: AwkValue) {
+    pub(crate) fn set_array_var(&mut self, array_name: &str, key: &[u8], value: AwkValue) {
         let arr = self.arrays.entry(array_name.to_string()).or_default();
-        arr.insert(key.to_string(), value);
+        arr.insert(key.to_vec(), value);
     }
 }
