@@ -817,7 +817,7 @@ git commit -m "phase7.2(diary): chiusura — AwkValue+AST bytes, 109/109 invaria
 
 | Sub-phase | Files principali | BRIDGE da rimuovere |
 |-----------|------------------|---------------------|
-| 7.3 | `src/types.rs` (EvalContext.arrays, fs, convfmt, ofmt), `runner/mod.rs` array access | `// PHASE7.2→7.3 BRIDGE` (array key lossy) |
+| 7.3 ✅ | `src/types.rs` (EvalContext.arrays, fs, convfmt, ofmt), `runner/mod.rs` array access, `builtins.rs` sub/gsub | `// PHASE7.2→7.3 BRIDGE` rimossi (6/6, 2026-05-23) |
 | 7.4 | `src/types.rs` (regex_cache), `runner/mod.rs` (`~`, `!~`, `match`, `gsub`, `sub`, `split` regex), Cargo features se serve | `// PHASE7.2→7.4 BRIDGE` (regex_cache + compile_or_get_regex) |
 | 7.5 | `src/runner/builtins.rs` (length, substr, index, split), `src/runner/fmt.rs` (printf %s) | `// PHASE7.2→7.5 BRIDGE` (split su &str interno update_record) |
 | 7.6 | `src/runner/io.rs` (handle_output), `src/types.rs` (OutputStream) | residui from_utf8_lossy nel path output |
