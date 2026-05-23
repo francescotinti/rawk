@@ -16,11 +16,14 @@ use super::eval_expr;
 /// Print/redirect handler usato da print/printf. Senza redirect scrive su
 /// stdout; con `>` apre/tronca, `>>` apre in append, `|` esegue spawn pipe.
 /// Riusa lo stream se la chiave (`filename`) è già nella mappa.
+/// Phase 7.5: `output` è `&[u8]` byte-clean — emesso via `write_all` senza
+/// passare per `Display`/`from_utf8_lossy`.
 pub(super) fn handle_output(
-    output: &str,
+    output: &[u8],
     redirect: &Option<(String, Expr)>,
     context: &mut EvalContext,
 ) -> anyhow::Result<()> {
+    use std::io::Write;
     if let Some((op, file_expr)) = redirect {
         // Path file: resta String (design R3 — i path non sono dati AWK osservabili).
         let filename =
@@ -67,10 +70,15 @@ pub(super) fn handle_output(
                 v.insert(new_stream)
             }
         };
-        write!(stream.writer(), "{}", output)
+        stream
+            .writer()
+            .write_all(output)
             .with_context(|| format!("scrittura su '{filename}'"))?;
     } else {
-        print!("{}", output);
+        std::io::stdout()
+            .lock()
+            .write_all(output)
+            .context("scrittura su stdout")?;
     }
     Ok(())
 }

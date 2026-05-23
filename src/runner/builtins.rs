@@ -282,8 +282,7 @@ pub(super) fn dispatch_builtin(
             }
             let fmt = eval_expr(&args[0], context).as_string();
             let vals: Vec<AwkValue> = args[1..].iter().map(|e| eval_expr(e, context)).collect();
-            // PHASE7.2→7.5 BRIDGE: awk_sprintf opera ancora su &str/String.
-            AwkValue::String(awk_sprintf(&String::from_utf8_lossy(&fmt), &vals).into_bytes())
+            AwkValue::String(awk_sprintf(&fmt, &vals))
         }
         "match" => {
             let s = eval_expr(&args[0], context).as_string();

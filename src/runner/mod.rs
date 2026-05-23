@@ -465,8 +465,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
         Expr::NumberLiteral(n) => AwkValue::Number(*n),
         Expr::StringLiteral(s) => AwkValue::String(s.clone()),
         Expr::Concat(parts) => {
-            // PHASE7.2→7.5 BRIDGE: as_string_convfmt richiede &str fino a 7.5 (printf bytes).
-            let convfmt = String::from_utf8_lossy(&context.convfmt).into_owned();
+            let convfmt = context.convfmt.clone();
             let mut s: Vec<u8> = Vec::new();
             for e in parts {
                 s.extend(eval_expr(e, context).as_string_convfmt(&convfmt));
@@ -868,8 +867,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     let format_str = eval_expr(&exprs[0], context).as_string();
                     let args: Vec<AwkValue> =
                         exprs[1..].iter().map(|e| eval_expr(e, context)).collect();
-                    // PHASE7.2→7.5 BRIDGE: awk_sprintf opera ancora su &str.
-                    let formatted = fmt::awk_sprintf(&String::from_utf8_lossy(&format_str), &args);
+                    let formatted: Vec<u8> = fmt::awk_sprintf(&format_str, &args);
                     if let Err(e) = io::handle_output(&formatted, redirect, context) {
                         eprintln!("rawk: {e:#}");
                         return FlowControl::Exit(2);
@@ -878,8 +876,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
             }
             Statement::Print(exprs, redirect) => {
                 let mut out: Vec<Vec<u8>> = Vec::new();
-                // PHASE7.2→7.5 BRIDGE: as_string_convfmt richiede &str fino a 7.5.
-                let ofmt = String::from_utf8_lossy(&context.ofmt).into_owned();
+                let ofmt = context.ofmt.clone();
                 for e in exprs {
                     out.push(eval_expr(e, context).as_string_convfmt(&ofmt));
                 }
@@ -887,10 +884,7 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                 let ors = context.get_var("ORS").as_string();
                 let mut output = out.join(ofs.as_slice());
                 output.extend_from_slice(&ors);
-                // PHASE7.2→7.6 BRIDGE: output byte-esatto è competenza di 7.6.
-                if let Err(e) =
-                    io::handle_output(&String::from_utf8_lossy(&output), redirect, context)
-                {
+                if let Err(e) = io::handle_output(&output, redirect, context) {
                     eprintln!("rawk: {e:#}");
                     return FlowControl::Exit(2);
                 }

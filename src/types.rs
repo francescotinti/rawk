@@ -75,15 +75,23 @@ impl AwkValue {
     }
 
     pub(crate) fn as_string(&self) -> Vec<u8> {
-        self.as_string_convfmt("%.6g")
+        self.as_string_convfmt(b"%.6g")
     }
 
-    pub(crate) fn as_string_convfmt(&self, fmt: &str) -> Vec<u8> {
+    /// Converte il valore in bytes secondo CONVFMT/OFMT. `fmt` è atteso ASCII
+    /// (CONVFMT/OFMT default `%.6g`); il path numerico delega a
+    /// `format_number_awk` che richiede `&str` — convertiamo con `from_utf8`
+    /// e fallback `%.6g` se l'utente setta CONVFMT con byte non-UTF-8
+    /// (comportamento undefined POSIX).
+    pub(crate) fn as_string_convfmt(&self, fmt: &[u8]) -> Vec<u8> {
         match self {
             AwkValue::Uninitialized => Vec::new(),
             AwkValue::String(s) => s.clone(),
             AwkValue::StrNum(s, _) => s.clone(),
-            AwkValue::Number(n) => format_number_awk(*n, fmt).into_bytes(),
+            AwkValue::Number(n) => {
+                let fmt_str = std::str::from_utf8(fmt).unwrap_or("%.6g");
+                format_number_awk(*n, fmt_str).into_bytes()
+            }
         }
     }
 
