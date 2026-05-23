@@ -233,6 +233,29 @@ fn format_number_awk(n: f64, fmt: &str) -> String {
         .replace(".E-", "E-")
 }
 
+/// Splitta `haystack` in segmenti separati da `sep` (substring match,
+/// byte-exact). Se `sep` è vuoto, ritorna un singolo elemento contenente
+/// l'intero `haystack`.
+fn split_bytes_by_separator<'a>(haystack: &'a [u8], sep: &[u8]) -> Vec<&'a [u8]> {
+    if sep.is_empty() {
+        return vec![haystack];
+    }
+    let mut out: Vec<&[u8]> = Vec::new();
+    let mut start = 0;
+    let mut i = 0;
+    while i + sep.len() <= haystack.len() {
+        if &haystack[i..i + sep.len()] == sep {
+            out.push(&haystack[start..i]);
+            i += sep.len();
+            start = i;
+        } else {
+            i += 1;
+        }
+    }
+    out.push(&haystack[start..]);
+    out
+}
+
 /// Stream di output AWK aperto: file regolare oppure pipe a un comando.
 /// Le `Pipe` mantengono lo `Child` per poter attendere `wait()` su `close()`.
 pub(crate) enum OutputStream {
@@ -350,30 +373,28 @@ impl EvalContext {
     }
 
     /// Update the context with a new record (line), splitting it into fields.
+    /// Phase 7.5: split byte-aware. FS = `b" "` (default) → run di whitespace
+    /// `[' ', '\t', '\n']` con leading/trailing skip (semantica POSIX awk).
+    /// FS arbitrario (1 byte o multi-byte) → split byte-letterale sulla
+    /// sequenza separator (parità col behavior `str::split` pre-7.5 senza la
+    /// distorsione lossy su byte alti).
     pub(crate) fn update_record(&mut self, line: &[u8]) {
         self.record = line.to_vec();
         self.nr += 1;
         self.fnr += 1;
 
-        // PHASE7.2→7.5 BRIDGE: field splitting opera ancora su str; 7.5 porta
-        // lo split byte-aware (FS byte-arbitrario).
-        let line_str = String::from_utf8_lossy(line);
-        let line = line_str.as_ref();
-        let fs_lossy = String::from_utf8_lossy(&self.fs);
-
-        // Awk default field splitting: split by whitespace, and ignore leading/trailing whitespace
-        if fs_lossy.as_ref() == " " {
-            self.fields = line
-                .split_whitespace()
-                .map(|s| AwkValue::from_str_num(s.as_bytes().to_vec()))
-                .collect();
+        let fields: Vec<AwkValue> = if self.fs.as_slice() == b" " {
+            line.split(|&b| b == b' ' || b == b'\t' || b == b'\n')
+                .filter(|seg| !seg.is_empty())
+                .map(|seg| AwkValue::from_str_num(seg.to_vec()))
+                .collect()
         } else {
-            // Split by custom Field Separator
-            self.fields = line
-                .split(fs_lossy.as_ref())
-                .map(|s| AwkValue::from_str_num(s.as_bytes().to_vec()))
-                .collect();
-        }
+            split_bytes_by_separator(line, &self.fs)
+                .into_iter()
+                .map(|seg| AwkValue::from_str_num(seg.to_vec()))
+                .collect()
+        };
+        self.fields = fields;
         self.nf = self.fields.len();
     }
 
