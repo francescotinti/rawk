@@ -4,27 +4,8 @@
 //! `String::from_utf8_lossy` perché tutti i byte invalidi diventano `\u{FFFD}`).
 //! GREEN dopo 7.3.2 (storage `HashMap<Vec<u8>, AwkValue>` byte-pulito).
 
-use std::io::Write;
-use std::process::{Command, Stdio};
-
-const RAWK: &str = env!("CARGO_BIN_EXE_rawk");
-
-fn run_with_stdin(prog: &str, stdin: &[u8]) -> Vec<u8> {
-    let mut child = Command::new(RAWK)
-        .arg(prog)
-        .stdin(Stdio::piped())
-        .stdout(Stdio::piped())
-        .spawn()
-        .expect("spawn rawk");
-    child
-        .stdin
-        .as_mut()
-        .expect("stdin")
-        .write_all(stdin)
-        .expect("write stdin");
-    let out = child.wait_with_output().expect("wait rawk");
-    out.stdout
-}
+mod common;
+use common::run_with_stdin;
 
 /// Due chiavi che differiscono solo per byte > 0x7f devono restare distinte
 /// (con lossy collassano entrambe a U+FFFD e il count diventa 1 invece di 2).

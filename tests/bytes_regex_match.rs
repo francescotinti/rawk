@@ -5,27 +5,8 @@
 //! RSTART/RLENGTH sono in offset lossy e non in byte). GREEN dopo 7.4.2:
 //! `regex_cache: HashMap<Vec<u8>, regex::bytes::Regex>` + match su `&[u8]`.
 
-use std::io::Write;
-use std::process::{Command, Stdio};
-
-const RAWK: &str = env!("CARGO_BIN_EXE_rawk");
-
-fn run_with_stdin(prog: &str, stdin: &[u8]) -> Vec<u8> {
-    let mut child = Command::new(RAWK)
-        .arg(prog)
-        .stdin(Stdio::piped())
-        .stdout(Stdio::piped())
-        .spawn()
-        .expect("spawn rawk");
-    child
-        .stdin
-        .as_mut()
-        .expect("stdin")
-        .write_all(stdin)
-        .expect("write stdin");
-    let out = child.wait_with_output().expect("wait rawk");
-    out.stdout
-}
+mod common;
+use common::run_with_stdin;
 
 /// `match()` deve restituire RSTART in byte, non in unità lossy.
 /// Input `\xC3\xC3foo`: `foo` inizia al byte 3 (1-based).
