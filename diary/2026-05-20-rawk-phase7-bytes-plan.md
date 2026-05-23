@@ -14,8 +14,8 @@
 - **7.2** — AwkValue bytes (core type swap + cascade fix)
 - **7.3** — Array keys + runtime vars bytes — _piano in sessione propria_
 - **7.4** — Regex matcher bytes (`regex::bytes`) — _piano in sessione propria_
-- **7.5** — Builtins + printf bytes — _piano in sessione propria_
-- **7.6** — Output bytes — _piano in sessione propria_
+- **7.5** — Builtins + printf bytes — ✅ chiusa 2026-05-24, vedi `diary/2026-05-23-rawk-phase7.5-bytes-plan.md` + `diary/2026-05-24-rawk-phase7.5-closure.md`. Commit range: `664ba2f`…`b184dcb`. Scope esteso a includere `io::handle_output` bytes (8 BRIDGE rimossi: 7× 7.2→7.5 + 1× 7.2→7.6 output handler).
+- **7.6** — Output bytes — 🟡 partial: 1 dei 2 BRIDGE rimossi in 7.5 (output handler). Resta solo `Display` impl di `AwkValue` (types.rs:206). Phase 7.6 sarà piccola.
 - **7.7** — Acceptance tests byte-aware — _piano in sessione propria_
 
 Questo documento copre 7.0, 7.1, 7.2 in detail. Le sub-phase 7.3–7.7 ricevono `writing-plans` dedicato a inizio sessione (pattern STEP19: "una fase per sessione, piano fresco").
