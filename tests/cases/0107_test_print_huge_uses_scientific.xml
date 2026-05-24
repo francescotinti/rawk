@@ -3,4 +3,5 @@
     <awk>BEGIN { print 1e21 }</awk>
     <expected_stdout match="exact">1e+21
 </expected_stdout>
+    <expected_divergence reason="bwk-different-number-format"/>
 </testcase>

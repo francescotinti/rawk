@@ -3,4 +3,5 @@
     <awk>BEGIN { printf "%s\n", "a\zb" }</awk>
     <expected_stdout match="exact">a\zb
 </expected_stdout>
+    <expected_divergence reason="bwk-escape-handling"/>
 </testcase>

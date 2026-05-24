@@ -3,4 +3,5 @@
     <awk>BEGIN { printf "[%d]\n", length("\0") }</awk>
     <expected_stdout match="exact">[1]
 </expected_stdout>
+    <expected_divergence reason="bwk-truncates-at-nul"/>
 </testcase>

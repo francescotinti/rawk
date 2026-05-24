@@ -5,4 +5,5 @@
 </expected_stderr>
     <expected_stdout match="exact">after:
 </expected_stdout>
+    <expected_divergence reason="bwk-fatal-on-warning"/>
 </testcase>

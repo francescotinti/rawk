@@ -10,7 +10,7 @@
 |------|-------|--------------------|------|
 | Phase 0 — Plan & hygiene | ✅ FATTO | (vedi commit precedente) | Plan file + macOS forks clean |
 | Phase 1 — Schema + diffrun bucket | ✅ FATTO | (vedi commit Phase 1) | `<expected_divergence reason="…"/>` + 4-bucket output, exit 1 se UNEXPECTED > 0 |
-| Phase 2 — Annotate 8 testcase noti | ⏳ TODO | — | I divergenze attuali POSIX-correct |
+| Phase 2 — Annotate 9 testcase noti | ✅ FATTO | (vedi commit Phase 2) | 8 stable + 1 non-deterministic (word_frequency); UNEXPECTED-DIVERGE = 0; exit 0 |
 | Phase 3 — `checks.sh` gate | ⏳ TODO | — | Fallisce se `UNEXPECTED-DIVERGE > 0` |
 
 Legenda stato: ⏳ TODO · 🚧 IN CORSO · ✅ FATTO · ⚠️ PARZIALE · ❌ BLOCCATO

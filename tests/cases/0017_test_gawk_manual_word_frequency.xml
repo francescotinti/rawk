@@ -15,4 +15,5 @@
 awk 1
 hello 2
 </expected_stdout>
+    <expected_divergence reason="non-deterministic-iteration-order"/>
 </testcase>

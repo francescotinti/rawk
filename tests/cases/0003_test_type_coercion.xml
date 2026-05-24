@@ -3,4 +3,5 @@
     <awk>BEGIN { print "10" + 5, "42" == 42, "abc" + 0 }</awk>
     <expected_stdout match="exact">15 1 0
 </expected_stdout>
+    <expected_divergence reason="bwk-parser-quirk"/>
 </testcase>

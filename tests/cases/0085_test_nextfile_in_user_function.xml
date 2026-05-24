@@ -12,4 +12,5 @@ c</stdin>
     <expected_stdout match="exact">1:a
 END
 </expected_stdout>
+    <expected_divergence reason="bwk-fatal-on-warning"/>
 </testcase>
