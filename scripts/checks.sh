@@ -31,6 +31,19 @@ check_runner_split() {
     && [ -f src/runner/io.rs ] && [ -f src/runner/fmt.rs ] \
     || { echo "FAIL: runner non splittato"; return 1; }
 }
+check_diffrun_no_unexpected() {
+  cargo build --release --bin diffrun --quiet 2>/dev/null
+  local output unexpected
+  output=$(target/release/diffrun tests/testsuite.xml 2>&1)
+  unexpected=$(printf '%s\n' "$output" \
+    | awk '/^  UNEXPECTED-DIVERGE:/ { print $2; exit }')
+  if [ "$unexpected" != "0" ]; then
+    echo "FAIL: $unexpected unexpected divergences"
+    printf '%s\n' "$output"
+    return 1
+  fi
+  return 0
+}
 
 run_all() { for fn in $(declare -F | awk '$3 ~ /^check_/ {print $3}'); do
   printf '%-30s ' "$fn"; $fn && echo OK; done; }
