@@ -67,8 +67,7 @@ pub(super) fn awk_sprintf(fmt: &[u8], args: &[AwkValue]) -> Vec<u8> {
 fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, out: &mut Vec<u8>) {
     // Lo spec è ASCII puro per costruzione (% + flags `-+ #0` + digit + `.` +
     // conversion byte). `from_utf8` è O(spec.len) ma piccolo (raramente >10B).
-    let spec = std::str::from_utf8(spec_bytes)
-        .expect("awk_sprintf: format spec must be ASCII");
+    let spec = std::str::from_utf8(spec_bytes).expect("awk_sprintf: format spec must be ASCII");
     match conv {
         b'd' | b'i' => {
             let s = sprintf::sprintf!(spec, arg.as_number() as i64).unwrap_or_default();

@@ -6,7 +6,6 @@
 
 use crate::ast::Statement;
 use std::collections::HashMap;
-use std::fmt;
 
 use rand::rngs::StdRng;
 
@@ -198,14 +197,6 @@ impl AwkValue {
 
     pub(crate) fn pow(&self, other: &Self) -> Self {
         AwkValue::Number(self.as_number().powf(other.as_number()))
-    }
-}
-
-impl fmt::Display for AwkValue {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        // PHASE7.2→7.6 BRIDGE: Display è String-only; output byte-esatto userà
-        // `write_all(&val.as_string())` direttamente nel path di output (7.6).
-        write!(f, "{}", String::from_utf8_lossy(&self.as_string()))
     }
 }
 
