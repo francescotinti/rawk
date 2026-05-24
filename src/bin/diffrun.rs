@@ -35,6 +35,7 @@ struct TestCase {
     stdin: Option<String>,
     expected_stdout: ExpectedStdout,
     expected_stderr: Option<String>,
+    expected_divergence: Option<ExpectedDivergence>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -44,6 +45,13 @@ struct ExpectedStdout {
     match_type: String,
     #[serde(rename = "$value")]
     content: String,
+}
+
+#[derive(Debug, Deserialize)]
+#[allow(dead_code)]
+struct ExpectedDivergence {
+    #[serde(rename = "@reason")]
+    reason: String,
 }
 
 fn default_match() -> String {
@@ -136,7 +144,8 @@ fn main() {
     println!("Total testcase: {}", active.len());
 
     let mut match_count = 0;
-    let mut diverge_cases = Vec::new();
+    let mut expected_diverge_cases: Vec<(String, String, String, String)> = Vec::new();
+    let mut unexpected_diverge_cases: Vec<(String, String, String)> = Vec::new();
     let mut skipped_cases = Vec::new();
 
     for mc in active {
@@ -183,34 +192,75 @@ fn main() {
 
                 if r_norm == a_norm {
                     match_count += 1;
+                } else if let Some(ed) = &case.expected_divergence {
+                    expected_diverge_cases.push((
+                        case.name.clone(),
+                        r_stdout,
+                        a_stdout,
+                        ed.reason.clone(),
+                    ));
                 } else {
-                    diverge_cases.push((case.name.clone(), r_stdout, a_stdout));
+                    unexpected_diverge_cases.push((case.name.clone(), r_stdout, a_stdout));
                 }
             }
             _ => {
-                diverge_cases.push((
+                let payload = (
                     case.name.clone(),
                     "Execution failed".to_string(),
                     "Execution failed".to_string(),
-                ));
+                );
+                if let Some(ed) = &case.expected_divergence {
+                    expected_diverge_cases.push((
+                        payload.0,
+                        payload.1,
+                        payload.2,
+                        ed.reason.clone(),
+                    ));
+                } else {
+                    unexpected_diverge_cases.push(payload);
+                }
             }
         }
     }
 
-    println!("  MATCH:    {}", match_count);
-    println!("  DIVERGE:  {}  (vedi sotto)", diverge_cases.len());
-    println!("  SKIPPED:  {}  (vedi sotto)", skipped_cases.len());
+    println!("  MATCH:               {}", match_count);
+    println!("  EXPECTED-DIVERGE:    {}", expected_diverge_cases.len());
+    println!("  UNEXPECTED-DIVERGE:  {}", unexpected_diverge_cases.len());
+    println!("  SKIPPED:             {}", skipped_cases.len());
 
-    if !diverge_cases.is_empty() {
-        println!("\n== DIVERGENCES ==");
-        for (i, (name, r_stdout, a_stdout)) in diverge_cases.iter().enumerate() {
+    if !unexpected_diverge_cases.is_empty() {
+        println!("\n== UNEXPECTED DIVERGENCES (regressions) ==");
+        for (i, (name, r_stdout, a_stdout)) in unexpected_diverge_cases.iter().enumerate() {
             println!("[{}] {}", i + 1, name);
-            let r_lines: Vec<&str> = r_stdout.lines().take(3).collect();
-            let a_lines: Vec<&str> = a_stdout.lines().take(3).collect();
+            let r_preview = if r_stdout.is_empty() {
+                "\"\""
+            } else {
+                r_stdout
+            };
+            let a_preview = if a_stdout.is_empty() {
+                "\"\""
+            } else {
+                a_stdout
+            };
+            println!("    rawk:    {:?}", r_preview);
+            println!("    awk:     {:?}", a_preview);
+        }
+    }
 
-            let r_preview = if r_lines.is_empty() { "\"\"" } else { r_stdout };
-            let a_preview = if a_lines.is_empty() { "\"\"" } else { a_stdout };
-
+    if !expected_diverge_cases.is_empty() {
+        println!("\n== EXPECTED DIVERGENCES (annotated) ==");
+        for (i, (name, r_stdout, a_stdout, reason)) in expected_diverge_cases.iter().enumerate() {
+            println!("[{}] {}  ({})", i + 1, name, reason);
+            let r_preview = if r_stdout.is_empty() {
+                "\"\""
+            } else {
+                r_stdout
+            };
+            let a_preview = if a_stdout.is_empty() {
+                "\"\""
+            } else {
+                a_stdout
+            };
             println!("    rawk:    {:?}", r_preview);
             println!("    awk:     {:?}", a_preview);
         }
@@ -221,5 +271,9 @@ fn main() {
         for (i, (name, reason)) in skipped_cases.iter().enumerate() {
             println!("[{}] {} — {}", i + 1, name, reason);
         }
+    }
+
+    if !unexpected_diverge_cases.is_empty() {
+        exit(1);
     }
 }

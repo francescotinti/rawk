@@ -8,8 +8,8 @@
 
 | Fase | Stato | Commit di chiusura | Note |
 |------|-------|--------------------|------|
-| Phase 0 — Plan & hygiene | 🚧 IN CORSO | — | Plan file + macOS forks clean |
-| Phase 1 — Schema + diffrun bucket | ⏳ TODO | — | `<expected_divergence reason="…"/>` + 4-bucket output |
+| Phase 0 — Plan & hygiene | ✅ FATTO | (vedi commit precedente) | Plan file + macOS forks clean |
+| Phase 1 — Schema + diffrun bucket | ✅ FATTO | (vedi commit Phase 1) | `<expected_divergence reason="…"/>` + 4-bucket output, exit 1 se UNEXPECTED > 0 |
 | Phase 2 — Annotate 8 testcase noti | ⏳ TODO | — | I divergenze attuali POSIX-correct |
 | Phase 3 — `checks.sh` gate | ⏳ TODO | — | Fallisce se `UNEXPECTED-DIVERGE > 0` |
 
