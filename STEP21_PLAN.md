@@ -8,9 +8,9 @@
 
 | Fase | Stato | Commit di chiusura | Note |
 |------|-------|--------------------|------|
-| Phase 0 — Plan & hygiene | ⏳ TODO | — | STEP21_PLAN.md + macOS forks clean |
-| Phase 1 — Rimozione skip stale + annotation 2 testcase | ⏳ TODO | — | is_skip() snellito + 2 XML annotati + diffrun_buckets.rs aggiornato |
-| Phase 2 — Verify + diary | ⏳ TODO | — | scripts/checks.sh 8/8 + diary di chiusura |
+| Phase 0 — Plan & hygiene | ✅ FATTO | `fd8aa01` | STEP21_PLAN.md + macOS forks clean |
+| Phase 1 — Rimozione skip stale + annotation 2 testcase | ✅ FATTO | `04e8a6b` | is_skip() snellito + 2 XML annotati + diffrun_buckets.rs invariante MATCH+EXPECTED=106 |
+| Phase 2 — Verify + diary | ✅ FATTO | *(questo commit)* | scripts/checks.sh 8/8 + `diary/2026-05-24-rawk-step21-closure.md` |
 
 Legenda stato: ⏳ TODO · 🚧 IN CORSO · ✅ FATTO · ⚠️ PARZIALE · ❌ BLOCCATO
 
