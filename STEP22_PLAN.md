@@ -8,9 +8,9 @@
 
 | Fase | Stato | Commit di chiusura | Note |
 |------|-------|--------------------|------|
-| Phase 0 — Plan & hygiene | ⏳ TODO | — | STEP22_PLAN.md + macOS forks clean |
-| Phase 1 — Rimozione skip `RT` + annotation 2 testcase | ⏳ TODO | — | is_skip() snellito + 2 XML annotati + diffrun_buckets.rs invariante MATCH+EXPECTED=108 |
-| Phase 2 — Verify + diary | ⏳ TODO | — | scripts/checks.sh 8/8 + `diary/2026-05-24-rawk-step22-closure.md` |
+| Phase 0 — Plan & hygiene | ✅ FATTO | `ea3725e` | STEP22_PLAN.md + macOS forks clean |
+| Phase 1 — Rimozione skip `RT` + annotation 2 testcase | ✅ FATTO | `2933e86` | is_skip() snellito + 2 XML annotati + invariante MATCH+EXPECTED=108 |
+| Phase 2 — Verify + diary | ✅ FATTO | *(questo commit)* | scripts/checks.sh 8/8 + `diary/2026-05-24-rawk-step22-closure.md` |
 
 Legenda stato: ⏳ TODO · 🚧 IN CORSO · ✅ FATTO · ⚠️ PARZIALE · ❌ BLOCCATO
 
