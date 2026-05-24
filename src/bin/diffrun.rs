@@ -89,9 +89,6 @@ fn is_skip(case: &TestCase) -> Option<&'static str> {
     if script.contains("gensub") || script.contains("mktime") {
         return Some("uses gawk-only gensub/mktime");
     }
-    if script.contains("RT") {
-        return Some("uses gawk-only RT variable");
-    }
     if script.contains("BEGINFILE") || script.contains("ENDFILE") {
         return Some("uses gawk-only BEGINFILE/ENDFILE");
     }

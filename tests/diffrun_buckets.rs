@@ -1,12 +1,15 @@
 // Step 20 Phase 1 — diffrun bucket output contract.
 // Step 21 — stale SKIP retirement: 2 testcase (0006 bitwise, 0012 srand-rng)
 // promossi da SKIPPED a EXPECTED-DIVERGE.
+// Step 22 — stale SKIP retirement: 2 testcase RT (0029 single-char RS,
+// 0080 paragraph RS) promossi da SKIPPED a EXPECTED-DIVERGE.
 //
 // Pre-step20 (RED): diffrun emits a single `DIVERGE:` bucket.
 // Post-step20 Phase 1 (GREEN): diffrun splits divergences into
 // `EXPECTED-DIVERGE:` (testcases marked `<expected_divergence reason="…"/>`)
 // and `UNEXPECTED-DIVERGE:` (real regressions).
 // Post-step21 (GREEN): counts == 96 / 10 / 0 / 3.
+// Post-step22 (GREEN): counts == 95 / 13 / 0 / 1 (MATCH+EXPECTED=108).
 
 use std::process::Command;
 
@@ -66,12 +69,12 @@ fn diffrun_exits_nonzero_when_unexpected_divergences_present() {
 }
 
 #[test]
-fn diffrun_step21_target_counts() {
-    // Step 21 target after stale-skip retirement.
-    // Phase 1 RED: con `is_skip()` ancora largo, SKIPPED=5 e MATCH+EXPECTED=104.
-    // Phase 1 GREEN: bitwise+srand escono dallo skip e i due testcase
-    // ricevono <expected_divergence/>, portando MATCH+EXPECTED a 106 e
-    // SKIPPED a 3.
+fn diffrun_step22_target_counts() {
+    // Step 22 target after stale-skip retirement (RT).
+    // Phase 1 RED: con `is_skip()` ancora largo, SKIPPED=3 e MATCH+EXPECTED=106.
+    // Phase 1 GREEN: RT esce dallo skip e i due testcase (0029, 0080)
+    // ricevono <expected_divergence/>, portando MATCH+EXPECTED a 108 e
+    // SKIPPED a 1 (solo BEGINFILE/ENDFILE).
     //
     // Nota: MATCH ed EXPECTED-DIVERGE oscillano singolarmente per via di
     // `0017_test_gawk_manual_word_frequency.xml` (match="contains" +
@@ -84,8 +87,8 @@ fn diffrun_step21_target_counts() {
     let s = parse_bucket(&stdout, "SKIPPED");
     assert_eq!(
         (m + e, u, s),
-        (106, 0, 3),
-        "Step 21 target violato (atteso MATCH+EXPECTED=106, UNEXPECTED=0, SKIPPED=3; \
+        (108, 0, 1),
+        "Step 22 target violato (atteso MATCH+EXPECTED=108, UNEXPECTED=0, SKIPPED=1; \
          attuali m={m} e={e} u={u} s={s})\n---\n{stdout}"
     );
     assert!(

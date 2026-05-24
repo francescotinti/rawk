@@ -16,4 +16,5 @@ c</stdin>
 ]
 3:c:[]
 </expected_stdout>
+    <expected_divergence reason="bwk-missing-gawk-extension"/>
 </testcase>
