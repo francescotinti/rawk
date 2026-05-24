@@ -1,9 +1,12 @@
 // Step 20 Phase 1 — diffrun bucket output contract.
+// Step 21 — stale SKIP retirement: 2 testcase (0006 bitwise, 0012 srand-rng)
+// promossi da SKIPPED a EXPECTED-DIVERGE.
 //
 // Pre-step20 (RED): diffrun emits a single `DIVERGE:` bucket.
 // Post-step20 Phase 1 (GREEN): diffrun splits divergences into
 // `EXPECTED-DIVERGE:` (testcases marked `<expected_divergence reason="…"/>`)
 // and `UNEXPECTED-DIVERGE:` (real regressions).
+// Post-step21 (GREEN): counts == 96 / 10 / 0 / 3.
 
 use std::process::Command;
 
@@ -60,6 +63,35 @@ fn diffrun_exits_nonzero_when_unexpected_divergences_present() {
             "UNEXPECTED-DIVERGE=0 but exit code is failure\n---\n{stdout}"
         );
     }
+}
+
+#[test]
+fn diffrun_step21_target_counts() {
+    // Step 21 target after stale-skip retirement.
+    // Phase 1 RED: con `is_skip()` ancora largo, SKIPPED=5 e MATCH+EXPECTED=104.
+    // Phase 1 GREEN: bitwise+srand escono dallo skip e i due testcase
+    // ricevono <expected_divergence/>, portando MATCH+EXPECTED a 106 e
+    // SKIPPED a 3.
+    //
+    // Nota: MATCH ed EXPECTED-DIVERGE oscillano singolarmente per via di
+    // `0017_test_gawk_manual_word_frequency.xml` (match="contains" +
+    // `non-deterministic-iteration-order`), quindi assertiamo solo la loro
+    // somma — che è l'invariante stabile.
+    let (stdout, status) = run_diffrun();
+    let m = parse_bucket(&stdout, "MATCH");
+    let e = parse_bucket(&stdout, "EXPECTED-DIVERGE");
+    let u = parse_bucket(&stdout, "UNEXPECTED-DIVERGE");
+    let s = parse_bucket(&stdout, "SKIPPED");
+    assert_eq!(
+        (m + e, u, s),
+        (106, 0, 3),
+        "Step 21 target violato (atteso MATCH+EXPECTED=106, UNEXPECTED=0, SKIPPED=3; \
+         attuali m={m} e={e} u={u} s={s})\n---\n{stdout}"
+    );
+    assert!(
+        status.success(),
+        "exit code non zero malgrado UNEXPECTED-DIVERGE=0\n---\n{stdout}"
+    );
 }
 
 fn parse_bucket(stdout: &str, label: &str) -> u32 {

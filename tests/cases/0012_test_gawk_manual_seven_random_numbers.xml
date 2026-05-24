@@ -9,4 +9,5 @@
 97
 39
 </expected_stdout>
+    <expected_divergence reason="bwk-different-rng"/>
 </testcase>

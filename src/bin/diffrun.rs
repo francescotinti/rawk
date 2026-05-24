@@ -86,14 +86,6 @@ fn is_skip(case: &TestCase) -> Option<&'static str> {
     if script.contains("systime") || script.contains("strftime") {
         return Some("uses gawk-only systime/strftime");
     }
-    if script.contains("and(")
-        || script.contains("or(")
-        || script.contains("xor(")
-        || script.contains("lshift(")
-        || script.contains("rshift(")
-    {
-        return Some("uses gawk-only bitwise functions");
-    }
     if script.contains("gensub") || script.contains("mktime") {
         return Some("uses gawk-only gensub/mktime");
     }
@@ -102,9 +94,6 @@ fn is_skip(case: &TestCase) -> Option<&'static str> {
     }
     if script.contains("BEGINFILE") || script.contains("ENDFILE") {
         return Some("uses gawk-only BEGINFILE/ENDFILE");
-    }
-    if script.contains("srand") {
-        return Some("uses srand (might be non-deterministic or system-specific)");
     }
     None
 }

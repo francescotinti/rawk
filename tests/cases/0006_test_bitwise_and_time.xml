@@ -3,4 +3,5 @@
     <awk>BEGIN { print and(5, 3), lshift(1, 2) }</awk>
     <expected_stdout match="exact">1 4
 </expected_stdout>
+    <expected_divergence reason="bwk-missing-gawk-extension"/>
 </testcase>
