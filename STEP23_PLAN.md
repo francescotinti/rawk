@@ -8,9 +8,9 @@
 
 | Fase | Stato | Commit di chiusura | Note |
 |------|-------|--------------------|------|
-| Phase 0 — Plan & hygiene | 🚧 IN CORSO | *(questo commit)* | STEP23_PLAN.md + macOS forks clean |
-| Phase 1 — Rimozione skip `BEGINFILE/ENDFILE` + annotation 1 testcase | ⏳ TODO | — | is_skip() snellito + 1 XML annotato + invariante MATCH+EXPECTED=109 |
-| Phase 2 — Verify + diary | ⏳ TODO | — | scripts/checks.sh 8/8 + `diary/2026-05-24-rawk-step23-closure.md` |
+| Phase 0 — Plan & hygiene | ✅ FATTO | `2abe0fc` | STEP23_PLAN.md + macOS forks clean |
+| Phase 1 — Rimozione skip `BEGINFILE/ENDFILE` + annotation 1 testcase | ✅ FATTO | `fa96efe` | `is_skip()` ridotta a `None` no-op + 0083 XML annotato + invariante `MATCH+EXPECTED=109`, `SKIPPED=0` |
+| Phase 2 — Verify + diary | ✅ FATTO | *(questo commit)* | `scripts/checks.sh` 8/8 + `diary/2026-05-24-rawk-step23-closure.md` |
 
 Legenda stato: ⏳ TODO · 🚧 IN CORSO · ✅ FATTO · ⚠️ PARZIALE · ❌ BLOCCATO
 
