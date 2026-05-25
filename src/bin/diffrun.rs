@@ -81,17 +81,11 @@ fn run_cmd(mut cmd: Command, stdin_data: Option<&String>) -> Option<(String, Str
     None
 }
 
-fn is_skip(case: &TestCase) -> Option<&'static str> {
-    let script = &case.awk;
-    if script.contains("systime") || script.contains("strftime") {
-        return Some("uses gawk-only systime/strftime");
-    }
-    if script.contains("gensub") || script.contains("mktime") {
-        return Some("uses gawk-only gensub/mktime");
-    }
-    if script.contains("BEGINFILE") || script.contains("ENDFILE") {
-        return Some("uses gawk-only BEGINFILE/ENDFILE");
-    }
+fn is_skip(_case: &TestCase) -> Option<&'static str> {
+    // Step 23 chiude la serie 21→22→23: tutte le heuristic stale (bitwise,
+    // srand, RT, BEGINFILE/ENDFILE) sono state ritirate. Le divergenze note
+    // sono ora annotate caso-per-caso via `<expected_divergence reason="…"/>`
+    // sui rispettivi XML; nessun script viene più scartato a priori.
     None
 }
 

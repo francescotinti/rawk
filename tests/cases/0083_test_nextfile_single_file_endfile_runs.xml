@@ -9,4 +9,5 @@ d</stdin>
 EF
 END:2
 </expected_stdout>
+    <expected_divergence reason="bwk-missing-gawk-extension"/>
 </testcase>
