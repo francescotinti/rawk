@@ -85,7 +85,7 @@ fn expression(expr: &Expr, safe: bool) -> Result<()> {
             expression(b, safe)?;
             expression(c, safe)?;
         }
-        Expr::Concat(args) | Expr::ArrayAccess(_, args) => {
+        Expr::Concat(args) | Expr::Tuple(args) | Expr::ArrayAccess(_, args) => {
             for arg in args {
                 expression(arg, safe)?;
             }
@@ -216,7 +216,10 @@ fn collect_expr<'a>(expr: &'a Expr, out: &mut Vec<&'a Expr>) {
             collect_expr(a, out);
             collect_expr(b, out);
         }
-        Expr::Concat(args) | Expr::FunctionCall(_, args) | Expr::ArrayAccess(_, args) => {
+        Expr::Concat(args)
+        | Expr::Tuple(args)
+        | Expr::FunctionCall(_, args)
+        | Expr::ArrayAccess(_, args) => {
             for e in args {
                 collect_expr(e, out);
             }

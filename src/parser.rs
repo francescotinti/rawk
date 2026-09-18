@@ -393,7 +393,7 @@ fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
         "*=" => Some(BinaryOperator::Mul),
         "/=" => Some(BinaryOperator::Div),
         "%=" => Some(BinaryOperator::Mod),
-        "^=" => Some(BinaryOperator::Pow),
+        "^=" | "**=" => Some(BinaryOperator::Pow),
         _ => None,
     };
 
@@ -507,11 +507,19 @@ fn parse_logical_and(pair: Pair<Rule>) -> Expr {
 
 fn parse_in_expr(pair: Pair<Rule>) -> Expr {
     let mut inners = pair.into_inner();
-    let lhs = parse_match_expr(
-        inners
-            .next()
-            .expect("pest: Rule::in_expr inizia sempre con un match_expr"),
-    );
+    let first = inners.next().expect("in expression operand");
+    if first.as_rule() == Rule::tuple_in {
+        let mut parts = first.into_inner();
+        let name = parts.next_back().unwrap().as_str().to_string();
+        parts.next_back(); // in operator
+        let keys = parts.map(parse_expr).collect();
+        return Expr::BinaryOp(
+            Box::new(Expr::Tuple(keys)),
+            BinaryOperator::In,
+            Box::new(Expr::Variable(name)),
+        );
+    }
+    let lhs = parse_match_expr(first);
     if inners.next().is_some() {
         // op_in
         let rhs_ident = inners
@@ -842,6 +850,7 @@ fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
                 .as_str();
             Expr::RegexLiteral(re.as_bytes().to_vec())
         }
+        Rule::bare_length => Expr::FunctionCall("length".into(), vec![]),
         Rule::ident => Expr::Variable(inner.as_str().to_string()),
         Rule::getline_expr => {
             let actual = inner
@@ -918,7 +927,9 @@ fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
                 .next()
                 .expect("pest: Rule::func_call inizia con func_name(")
                 .as_str();
-            let ident = func_name_str[..func_name_str.len() - 1].to_string();
+            let ident = func_name_str[..func_name_str.len() - 1]
+                .trim_end()
+                .to_string();
             let mut args = Vec::new();
             if let Some(expr_list) = inners.next() {
                 for e in expr_list.into_inner() {

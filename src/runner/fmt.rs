@@ -43,7 +43,7 @@ pub(super) fn awk_sprintf(
         while i < fmt.len() {
             let c = fmt[i];
             i += 1;
-            if b"diouxXeEfgGcs".contains(&c) {
+            if b"diouxXeEfgGaAcs".contains(&c) {
                 conv = Some(c);
                 break;
             }
@@ -85,6 +85,7 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
             let s = sprintf::sprintf!(spec, arg.as_number() as u64).unwrap_or_default();
             out.extend_from_slice(s.as_bytes());
         }
+        b'a' | b'A' => out.extend(hex_float(spec_bytes, arg.as_number())),
         b'e' | b'E' | b'f' | b'g' | b'G' => {
             let s = sprintf::sprintf!(spec, arg.as_number()).unwrap_or_default();
             out.extend_from_slice(s.as_bytes());
@@ -188,4 +189,90 @@ fn parse_s_flags(spec_bytes: &[u8]) -> (usize, Option<usize>, bool, bool) {
         precision = Some(p);
     }
     (width, precision, left_align, zero_pad)
+}
+
+// C99 hexadecimal floating point conversion from the exact IEEE-754 bits.
+// Precision follows the reference libc: Darwin resolves exact ties toward
+// zero; other targets use ties to even.
+fn hex_float(spec: &[u8], value: f64) -> Vec<u8> {
+    let value = value + 0.0; // BWK setfval normalizes negative zero.
+    let (width, precision, left, zero) = parse_s_flags(spec);
+    let upper = spec.last() == Some(&b'A');
+    let sign = if value.is_sign_negative() {
+        "-"
+    } else if spec.contains(&b'+') {
+        "+"
+    } else if spec.contains(&b' ') {
+        " "
+    } else {
+        ""
+    };
+    let mut body = if !value.is_finite() {
+        if value.is_nan() {
+            "nan".to_string()
+        } else {
+            "inf".to_string()
+        }
+    } else {
+        let bits = value.abs().to_bits();
+        let raw_exp = ((bits >> 52) & 0x7ff) as i32;
+        let mut mantissa = bits & ((1u64 << 52) - 1);
+        let exponent = if raw_exp == 0 {
+            if mantissa == 0 {
+                0
+            } else if cfg!(target_os = "macos") {
+                let shift = mantissa.leading_zeros() - 11;
+                mantissa <<= shift;
+                -1022 - shift as i32
+            } else {
+                -1022
+            }
+        } else {
+            mantissa |= 1 << 52;
+            raw_exp - 1023
+        };
+        let digits = precision.unwrap_or(13);
+        if digits < 13 {
+            let shift = 52 - 4 * digits;
+            let unit = 1u64 << shift;
+            let remainder = mantissa & (unit - 1);
+            let half = unit / 2;
+            // Darwin's %a rounds from the first omitted hexadecimal digit;
+            // an omitted 8 is not rounded up, even with further nonzero digits.
+            let round = if cfg!(target_os = "macos") {
+                (remainder >> (shift - 4)) > 8
+            } else {
+                remainder > half || (remainder == half && (mantissa / unit) & 1 != 0)
+            };
+            mantissa = (mantissa / unit + u64::from(round)) * unit;
+        }
+        let whole = mantissa >> 52;
+        let mut fraction = format!("{:013x}", mantissa & ((1u64 << 52) - 1));
+        if let Some(n) = precision {
+            fraction.truncate(n.min(13));
+            fraction.extend(std::iter::repeat_n('0', n.saturating_sub(13)));
+        } else {
+            while fraction.ends_with('0') {
+                fraction.pop();
+            }
+        }
+        let point = if !fraction.is_empty() || spec.contains(&b'#') {
+            "."
+        } else {
+            ""
+        };
+        format!("0x{whole:x}{point}{fraction}p{exponent:+}")
+    };
+    if upper {
+        body.make_ascii_uppercase();
+    }
+    let padding = width.saturating_sub(sign.len() + body.len());
+    let result = if left {
+        format!("{sign}{body}{}", " ".repeat(padding))
+    } else if zero && value.is_finite() {
+        format!("{sign}{}{}{}", &body[..2], "0".repeat(padding), &body[2..])
+    } else {
+        format!("{}{sign}{body}", " ".repeat(padding))
+    };
+    result.into_bytes()
 }

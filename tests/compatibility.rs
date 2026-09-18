@@ -94,3 +94,55 @@ proptest::proptest! {
         compare(&program, input.as_bytes());
     }
 }
+
+#[test]
+fn hex_floats_precision_flags_and_boundaries() {
+    for value in [
+        "0",
+        "-0.0",
+        "42",
+        "-42.5",
+        "1.5",
+        "1.53125",
+        "1.96875",
+        "0.1",
+        "1e-300/1e8",
+        "1e300",
+    ] {
+        for format in [
+            "%a", "%A", "%.0a", "%.1a", "%.2a", "%.16a", "%#a", "%+020.2a", "%-20a", "% 20A",
+        ] {
+            compare(&format!("BEGIN {{printf \"{format}\\n\", {value}}}"), b"");
+        }
+    }
+}
+
+#[test]
+fn tuple_membership_uses_current_subsep_between_components() {
+    compare(
+        "function has(a,x,y){return ((x,y) in a)} BEGIN {SUBSEP=\":\";a[1,2]=7;print has(a,1,2);print ((3,4) in a);delete a[1,2];print ((1,2) in a)}",
+        b"",
+    );
+    compare(
+        "BEGIN {a[(SUBSEP=\"x\"),(SUBSEP=\"yy\"),3]=7; print (((SUBSEP=\"x\"),(SUBSEP=\"yy\"),3) in a)}",
+        b"",
+    );
+}
+
+#[test]
+fn braces_in_bracket_expressions_are_not_repetitions() {
+    compare(
+        "BEGIN {print (\"{\" ~ /[]a{256}]/), (\"{\" ~ /[[:digit:]{256}]/); print (\"aa\" ~ /a{2}/)}",
+        b"",
+    );
+}
+
+#[test]
+fn numeric_conversion_matches_original_buffer_limit() {
+    for fmt in ["%.254f", "%.255f", "%.256f", "%.1000f", "%300.6f"] {
+        compare(
+            &format!("BEGIN {{OFMT=\"{fmt}\";CONVFMT=OFMT;print 1.25;printf \"%s\\n\",1.25}}"),
+            b"",
+        );
+    }
+}

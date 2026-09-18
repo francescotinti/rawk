@@ -237,6 +237,20 @@ fn numeric_prefix(bytes: &[u8]) -> f64 {
 }
 
 fn format_number_awk(n: f64, fmt: &str) -> String {
+    let mut text = format_number_unbounded(n, fmt);
+    let mut limit = text.len().min(255);
+    while !text.is_char_boundary(limit) {
+        limit -= 1;
+    }
+    text.truncate(limit);
+    text
+}
+
+fn format_number_unbounded(n: f64, fmt: &str) -> String {
+    if !n.is_finite() {
+        let sign = if n.is_sign_negative() { "-" } else { "+" };
+        return format!("{sign}{}", if n.is_nan() { "nan" } else { "inf" });
+    }
     // Path A: i64 fast-path per integer-like piccoli (esistente)
     if n.is_finite() && n == n.trunc() && n.abs() < 1e16 {
         return format!("{}", n as i64);
@@ -251,7 +265,10 @@ fn format_number_awk(n: f64, fmt: &str) -> String {
         .and_then(|s| s.strip_suffix('f'))
         .and_then(|s| s.parse::<usize>().ok())
     {
-        return format!("{n:.precision$}");
+        // The original conversion buffer is 256 bytes including its NUL.
+        let mut result = format!("{n:.precision$}", precision = precision.min(1024));
+        result.truncate(result.len().min(255));
+        return result;
     }
     // Path C: usa fmt richiesto, strip dot orfani (esistente)
     let s = sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string());

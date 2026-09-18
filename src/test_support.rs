@@ -15,8 +15,28 @@ pub struct Outcome {
     pub timed_out: bool,
 }
 
-pub fn run(mut command: Command, input: &[u8], timeout: Duration) -> Result<Outcome> {
+pub fn run(command: Command, input: &[u8], timeout: Duration) -> Result<Outcome> {
+    Ok(run_with_fixtures(command, input, timeout, &[])?.0)
+}
+
+/// Copy named fixtures into the isolated working directory and capture files
+/// produced by the program as well as its streams and exit status.
+pub fn run_with_fixtures(
+    mut command: Command,
+    input: &[u8],
+    timeout: Duration,
+    fixtures: &[(&str, &[u8])],
+) -> Result<(Outcome, std::collections::BTreeMap<String, Vec<u8>>)> {
     let work = tempfile::tempdir()?;
+    for (name, bytes) in fixtures {
+        anyhow::ensure!(
+            Path::new(name)
+                .components()
+                .all(|c| matches!(c, std::path::Component::Normal(_))),
+            "invalid fixture path"
+        );
+        fs::write(work.path().join(name), bytes)?;
+    }
     let io = tempfile::tempdir()?;
     let input_path = io.path().join("stdin");
     fs::write(&input_path, input)?;
@@ -50,12 +70,23 @@ pub fn run(mut command: Command, input: &[u8], timeout: Duration) -> Result<Outc
     // A script may leave background children even when the parent exits normally.
     #[cfg(unix)]
     kill_group(child.id());
-    Ok(Outcome {
-        stdout: fs::read(stdout_path)?,
-        stderr: fs::read(stderr_path)?,
-        code: status.code(),
-        timed_out,
-    })
+    let mut files = std::collections::BTreeMap::new();
+    for entry in fs::read_dir(work.path())? {
+        let entry = entry?;
+        let name = entry.file_name().to_string_lossy().into_owned();
+        if entry.file_type()?.is_file() && !fixtures.iter().any(|(f, _)| *f == name) {
+            files.insert(name, fs::read(entry.path())?);
+        }
+    }
+    Ok((
+        Outcome {
+            stdout: fs::read(stdout_path)?,
+            stderr: fs::read(stderr_path)?,
+            code: status.code(),
+            timed_out,
+        },
+        files,
+    ))
 }
 
 #[cfg(unix)]

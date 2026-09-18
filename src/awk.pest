@@ -2,7 +2,7 @@
 // Authors: Francesco Tinti & Antigravity (Google Deepmind)
 // Description: A high-fidelity port of the historic AWK language from C to Rust.
 
-WHITESPACE = _{ " " | "\t" | "\r" }
+WHITESPACE = _{ " " | "\t" | "\r" | "\\" ~ "\r"? ~ "\n" }
 COMMENT = _{ "#" ~ (!"\n" ~ ANY)* }
 nl = _{ "\n" }
 eos = _{ ";" | nl }
@@ -63,10 +63,11 @@ return_stmt = { "return" ~ expr? }
 exit_stmt = { "exit" ~ expr? }
 redirect = { (">>" | ">" | "|") ~ expr }
 assign_stmt = { assignable ~ assign_op ~ nl* ~ expr }
-assign_op = { "+=" | "-=" | "*=" | "/=" | "%=" | "^=" | ("=" ~ !"=") }
+assign_op = { "**=" | "+=" | "-=" | "*=" | "/=" | "%=" | "^=" | ("=" ~ !"=") }
 expr_stmt = { expr }
 
-block_or_stmt = { action_block | statement }
+block_or_stmt = { action_block | statement | empty_stmt }
+empty_stmt = { ";" }
 
 assignable = { array_access | field | ident }
 
@@ -75,31 +76,31 @@ expr_list = { expr ~ (nl* ~ "," ~ nl* ~ expr)* }
 expr = { assignment_expr }
 assignment_expr = { (assignable ~ assign_op ~ expr) | ternary_expr }
 ternary_expr   = { logical_or ~ (nl* ~ "?" ~ nl* ~ expr ~ nl* ~ ":" ~ nl* ~ expr)? }
-logical_or     = { logical_and ~ (nl* ~ op_or ~ nl* ~ logical_and)* }
-logical_and    = { in_expr ~ (nl* ~ op_and ~ nl* ~ in_expr)* }
-in_expr        = { match_expr ~ (nl* ~ op_in ~ nl* ~ ident)? }
-match_expr     = { rel_expr ~ (nl* ~ (op_match | op_not_match) ~ nl* ~ rel_expr)* }
-rel_expr       = { concat_expr ~ (nl* ~ rel_op ~ nl* ~ concat_expr)* }
+logical_or     = { logical_and ~ (op_or ~ nl* ~ logical_and)* }
+logical_and    = { in_expr ~ (op_and ~ nl* ~ in_expr)* }
+in_expr        = { tuple_in | match_expr ~ (op_in ~ nl* ~ ident)? }
+match_expr     = { rel_expr ~ ((op_match | op_not_match) ~ nl* ~ rel_expr)* }
+rel_expr       = { concat_expr ~ (rel_op ~ nl* ~ concat_expr)* }
 rel_op         = _{ op_eq | op_neq | op_ge | op_le | op_gt | op_lt }
 
 print_expr_list = { print_expr ~ (nl* ~ "," ~ nl* ~ print_expr)* }
 print_expr = { print_assignment_expr }
 print_assignment_expr = { (assignable ~ assign_op ~ print_expr) | print_ternary_expr }
 print_ternary_expr = { print_logical_or ~ (nl* ~ "?" ~ nl* ~ print_expr ~ nl* ~ ":" ~ nl* ~ print_expr)? }
-print_logical_or = { print_logical_and ~ (nl* ~ op_or ~ nl* ~ print_logical_and)* }
-print_logical_and = { print_in_expr ~ (nl* ~ op_and ~ nl* ~ print_in_expr)* }
-print_in_expr = { print_match_expr ~ (nl* ~ op_in ~ nl* ~ ident)? }
-print_match_expr = { print_rel_expr ~ (nl* ~ (op_match | op_not_match) ~ nl* ~ print_rel_expr)* }
-print_rel_expr = { concat_expr ~ (nl* ~ print_rel_op ~ nl* ~ concat_expr)* }
+print_logical_or = { print_logical_and ~ (op_or ~ nl* ~ print_logical_and)* }
+print_logical_and = { print_in_expr ~ (op_and ~ nl* ~ print_in_expr)* }
+print_in_expr = { tuple_in | print_match_expr ~ (op_in ~ nl* ~ ident)? }
+print_match_expr = { print_rel_expr ~ ((op_match | op_not_match) ~ nl* ~ print_rel_expr)* }
+print_rel_expr = { concat_expr ~ (print_rel_op ~ nl* ~ concat_expr)* }
 print_rel_op = _{ op_eq | op_neq | op_le | op_lt }
 concat_expr    = { add_expr ~ add_expr* }
-add_expr       = { mul_expr ~ (nl* ~ (op_add | op_sub) ~ nl* ~ mul_expr)* }
-mul_expr = { unary_expr ~ (nl* ~ (op_mul | op_div | op_mod) ~ nl* ~ unary_expr)* }
+add_expr       = { mul_expr ~ ((op_add | op_sub) ~ nl* ~ mul_expr)* }
+mul_expr = { unary_expr ~ ((op_mul | op_div | op_mod) ~ nl* ~ unary_expr)* }
 unary_expr = { ((op_minus | op_plus | op_not) ~ nl* ~ unary_expr) | pow_expr }
-pow_expr       = { term ~ (nl* ~ op_pow ~ nl* ~ unary_expr)? }
-term           = { ((op_inc | op_dec) ~ nl*)? ~ primary ~ (nl* ~ postfix_op)? }
+pow_expr       = { term ~ (op_pow ~ nl* ~ unary_expr)? }
+term           = { ((op_inc | op_dec) ~ nl*)? ~ primary ~ (postfix_op)? }
 
-non_getline_primary = { field | func_call | array_access | number | string_literal | regex_pattern | ident | ("(" ~ nl* ~ expr ~ nl* ~ ")") }
+non_getline_primary = { field | func_call | bare_length | array_access | number | string_literal | regex_pattern | ident | ("(" ~ nl* ~ expr ~ nl* ~ ")") }
 primary = { getline_expr | non_getline_primary }
 
 getline_expr = { pipe_getline | plain_getline }
@@ -107,7 +108,9 @@ pipe_getline = { non_getline_primary ~ nl* ~ "|" ~ nl* ~ "getline" ~ ident? }
 plain_getline = { "getline" ~ ident? ~ (nl* ~ "<" ~ nl* ~ expr)? }
 field = { "$" ~ primary }
 array_access = { ident ~ "[" ~ nl* ~ expr_list ~ nl* ~ "]" }
-func_name = @{ ident ~ "(" }
+builtin_name = @{ ("atan2" | "close" | "cos" | "exp" | "fflush" | "gsub" | "index" | "int" | "length" | "log" | "match" | "rand" | "sin" | "split" | "sprintf" | "sqrt" | "srand" | "substr" | "sub" | "system" | "tolower" | "toupper") ~ !(ASCII_ALPHANUMERIC | "_") }
+func_name = @{ (builtin_name ~ (" " | "\t")* | ident) ~ "(" }
+bare_length = { "length" ~ !(ASCII_ALPHANUMERIC | "_") }
 func_call = { func_name ~ nl* ~ expr_list? ~ nl* ~ ")" }
 ws_or_nl  = _{ " " | "\t" | "\r" | "\n" }
 
@@ -144,3 +147,5 @@ string_literal = ${ "\"" ~ inner_string ~ "\"" }
 inner_string = @{ ("\\" ~ ANY | !"\"" ~ ANY)* }
 
 paren_print_args = { "(" ~ nl* ~ expr_list? ~ nl* ~ ")" }
+
+tuple_in = { "(" ~ nl* ~ expr ~ (nl* ~ "," ~ nl* ~ expr)+ ~ nl* ~ ")" ~ nl* ~ op_in ~ nl* ~ ident }

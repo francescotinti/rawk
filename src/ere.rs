@@ -37,6 +37,7 @@ impl<'a> Match<'a> {
 }
 impl Ere {
     pub(crate) fn new(bytes: &[u8]) -> Result<Self, String> {
+        validate_repetitions(bytes)?;
         let pattern = crate::types::regex_pattern_from_bytes(bytes);
         let locator = regex::bytes::RegexBuilder::new(&pattern)
             .unicode(false)
@@ -162,4 +163,66 @@ pub(crate) fn split_using(bytes: &[u8], re: &Ere) -> Vec<Vec<u8>> {
     }
     parts.push(bytes[start..].to_vec());
     parts
+}
+
+// Match the original C engine's repetition bound without interpreting escaped
+// braces or digits inside bracket expressions as quantifiers.
+fn validate_repetitions(pattern: &[u8]) -> Result<(), String> {
+    let mut i = 0;
+    while i < pattern.len() {
+        match pattern[i] {
+            b'\\' => {
+                i += 2;
+                continue;
+            }
+            b'[' => {
+                i += 1;
+                if pattern.get(i) == Some(&b'^') {
+                    i += 1;
+                }
+                if pattern.get(i) == Some(&b']') {
+                    i += 1;
+                }
+                while i < pattern.len() && pattern[i] != b']' {
+                    if pattern[i] == b'\\' {
+                        i += 2;
+                        continue;
+                    }
+                    if pattern[i] == b'[' && pattern.get(i + 1).is_some_and(|b| b":.=".contains(b))
+                    {
+                        let delimiter = pattern[i + 1];
+                        i += 2;
+                        while i + 1 < pattern.len()
+                            && !(pattern[i] == delimiter && pattern[i + 1] == b']')
+                        {
+                            i += 1;
+                        }
+                        i += 2;
+                    } else {
+                        i += 1;
+                    }
+                }
+            }
+            b'{' => {
+                let mut j = i + 1;
+                let mut count = 0u32;
+                while let Some(&b) = pattern.get(j) {
+                    if b.is_ascii_digit() {
+                        count = count * 10 + u32::from(b - b'0');
+                        if count > 255 {
+                            return Err("repetition count exceeds 255".into());
+                        }
+                    } else if b == b',' {
+                        count = 0;
+                    } else {
+                        break;
+                    }
+                    j += 1;
+                }
+            }
+            _ => {}
+        }
+        i += 1;
+    }
+    Ok(())
 }

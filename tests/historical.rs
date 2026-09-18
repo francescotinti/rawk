@@ -3,6 +3,10 @@ use rawk::test_support as harness;
 use std::{path::Path, process::Command, time::Duration};
 
 const POSITIVE: &[&str] = &[
+    "a-format",
+    "subsep-overflow",
+    "inf-nan-torture",
+    "fmt-overflow",
     "concat-assign-same",
     "decr-NF",
     "fs-overflow",
@@ -63,6 +67,7 @@ fn original_invalid_programs_are_rejected_without_panicking() {
     for name in [
         "pfile-overflow",
         "repetition-no-atom",
+        "repetition-overflow",
         "missing-precision",
         "negative-nf",
     ] {

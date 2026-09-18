@@ -55,6 +55,7 @@ pub enum Expr {
     Getline(Option<String>, GetlineSource), // getline var < file / "cmd" | getline
     BinaryOp(Box<Expr>, BinaryOperator, Box<Expr>),
     Concat(Vec<Expr>),
+    Tuple(Vec<Expr>),
     UnaryMinus(Box<Expr>),
     UnaryPlus(Box<Expr>),
     Ternary(Box<Expr>, Box<Expr>, Box<Expr>), // cond ? true_expr : false_expr

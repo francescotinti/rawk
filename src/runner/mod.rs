@@ -66,7 +66,16 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
         "ARGC",
         AwkValue::Number(config.input_files.len() as f64 + 1.0),
     );
-    context.set_array_var("ARGV", b"0", AwkValue::from_str_num(b"rawk".to_vec()));
+    context.set_array_var(
+        "ARGV",
+        b"0",
+        AwkValue::from_str_num(
+            std::env::args()
+                .next()
+                .unwrap_or_else(|| "rawk".into())
+                .into_bytes(),
+        ),
+    );
     for (i, file) in config.input_files.iter().enumerate() {
         let key_str = format!("{}", i + 1);
         context.set_array_var(
@@ -94,8 +103,10 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
         for pf in &config.program_files {
             let content = std::fs::read_to_string(pf)
                 .with_context(|| format!("lettura programfile '{pf}'"))?;
+            if !program_text.is_empty() {
+                program_text.push('\n');
+            }
             program_text.push_str(&content);
-            program_text.push('\n');
         }
     } else if let Some(ref p) = config.program {
         program_text.push_str(p);
@@ -400,12 +411,14 @@ impl Target {
 /// Compone la chiave di un array AWK: valuta i sotto-indici e li unisce con SUBSEP.
 /// Phase 7.3: chiave byte-pulita, nessuna conversione lossy.
 fn eval_array_key(key_exprs: &[Expr], context: &mut EvalContext) -> Result<Vec<u8>, FlowControl> {
-    let mut parts: Vec<Vec<u8>> = Vec::new();
-    for k in key_exprs {
-        parts.push(eval_expr(k, context)?.as_string_convfmt(&context.convfmt));
+    let mut key = Vec::new();
+    for (index, expr) in key_exprs.iter().enumerate() {
+        if index != 0 {
+            key.extend(context.get_var("SUBSEP").as_string());
+        }
+        key.extend(eval_expr(expr, context)?.as_string_convfmt(&context.convfmt));
     }
-    let subsep = context.get_var("SUBSEP").as_string();
-    Ok(parts.join(subsep.as_slice()))
+    Ok(key)
 }
 
 fn eval_expr(expr: &Expr, context: &mut EvalContext) -> Result<AwkValue, FlowControl> {
@@ -413,6 +426,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> Result<AwkValue, FlowCon
         Expr::Field(_) => target(expr, context)?.get(context),
         Expr::NumberLiteral(n) => AwkValue::Number(*n),
         Expr::StringLiteral(s) => AwkValue::String(s.clone()),
+        Expr::Tuple(parts) => AwkValue::String(eval_array_key(parts, context)?),
         Expr::Concat(parts) => {
             let convfmt = context.convfmt.clone();
             let mut s: Vec<u8> = Vec::new();
@@ -584,7 +598,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> Result<AwkValue, FlowCon
             let value = old.add(&AwkValue::Number(increment));
             target.set(context, value.clone())?;
             if matches!(expr, Expr::PostInc(_) | Expr::PostDec(_)) {
-                old
+                AwkValue::Number(old.as_number())
             } else {
                 value
             }
