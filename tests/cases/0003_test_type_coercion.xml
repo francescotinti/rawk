@@ -1,7 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <testcase name="test_type_coercion">
     <awk>BEGIN { print "10" + 5, "42" == 42, "abc" + 0 }</awk>
     <expected_stdout match="exact">15 1 0
 </expected_stdout>
-    <expected_divergence reason="bwk-parser-quirk"/>
+    <expected_divergence reason="bwk-parser-quirk">
+        <stdout />
+        <stderr>&lt;AWK&gt;: syntax error at source line 1
+ context is
+	BEGIN { print "10" + 5, "42" &gt;&gt;&gt;  == &lt;&lt;&lt;&#32;
+&lt;AWK&gt;: illegal statement at source line 1
+&lt;AWK&gt;: illegal statement at source line 1
+</stderr>
+        <status>2</status>
+    </expected_divergence>
 </testcase>

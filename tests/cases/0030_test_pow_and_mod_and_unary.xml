@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_pow_and_mod_and_unary">
-    <awk> 
+    <awk>&#32;
         BEGIN {
             print -1.5e-3
             print -(2+3)

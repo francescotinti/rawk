@@ -11,9 +11,8 @@
             print word, freq[word]
     }</awk>
     <stdin>Hello world! Hello, AWK.</stdin>
-    <expected_stdout match="contains">world 1
+    <expected_stdout match="unordered-lines">world 1
 awk 1
 hello 2
 </expected_stdout>
-    <expected_divergence reason="non-deterministic-iteration-order"/>
 </testcase>

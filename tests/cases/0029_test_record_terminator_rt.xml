@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <testcase name="test_record_terminator_rt">
     <awk>
         BEGIN { RS="A" }
@@ -7,7 +7,14 @@
     <stdin>1A2A3</stdin>
     <expected_stdout match="exact">1 RT: A
 2 RT: A
-3 RT:
+3 RT:&#32;
 </expected_stdout>
-    <expected_divergence reason="bwk-missing-gawk-extension"/>
+    <expected_divergence reason="bwk-missing-gawk-extension">
+        <stdout>1 RT:&#32;
+2 RT:&#32;
+3 RT:&#32;
+</stdout>
+        <stderr />
+        <status>0</status>
+    </expected_divergence>
 </testcase>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcase name="test_strnum_truthy">
-    <awk> 
+    <awk>&#32;
         { if ($1) print "T"; else print "F" }
         </awk>
     <stdin>0

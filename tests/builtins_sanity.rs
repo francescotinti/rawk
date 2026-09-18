@@ -1,10 +1,7 @@
-use std::process::Command;
-
-const RAWK: &str = env!("CARGO_BIN_EXE_rawk");
+mod common;
 
 fn run(prog: &str) -> String {
-    let out = Command::new(RAWK).args([prog]).output().unwrap();
-    String::from_utf8(out.stdout).unwrap()
+    String::from_utf8(common::run_with_stdin(prog, b"")).unwrap()
 }
 
 #[test]

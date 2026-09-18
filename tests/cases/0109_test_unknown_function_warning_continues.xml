@@ -1,9 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testcase name="test_unknown_function_warning_continues">
+<?xml version='1.0' encoding='UTF-8'?>
+<testcase name="test_unknown_function_is_fatal">
     <awk>BEGIN { x = unknown_fn(42); print "after:" x }</awk>
-    <expected_stderr>rawk: warning: unknown function 'unknown_fn' (returning empty)
+    <expected_stderr>rawk: unknown function 'unknown_fn'
 </expected_stderr>
-    <expected_stdout match="exact">after:
-</expected_stdout>
-    <expected_divergence reason="bwk-fatal-on-warning"/>
+    <expected_stdout match="exact" />
+    <expected_divergence reason="diagnostic-format">
+        <stdout />
+        <stderr>&lt;AWK&gt;: calling undefined function unknown_fn
+ source line number 1
+</stderr>
+        <status>2</status>
+    </expected_divergence>
+    <expected_status>2</expected_status>
 </testcase>
