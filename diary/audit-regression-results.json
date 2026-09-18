@@ -1,0 +1,621 @@
+[
+  {
+    "name": "safe",
+    "program": "BEGIN {system(\"printf SAFE_PROBE\")}",
+    "input": "",
+    "mode": [
+      "safe"
+    ],
+    "c": {
+      "code": 2,
+      "stdout_hex": "",
+      "stderr_hex": "2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a2073797374656d20697320756e7361666520617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e203e3e3e20207b73797374656d203c3c3c2028227072696e746620534146455f50524f424522297d0a2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a2073796e746178206572726f7220617420736f75726365206c696e6520310a2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a",
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: system is unsafe at source line 1\n context is\n\tBEGIN >>>  {system <<< (\"printf SAFE_PROBE\")}\n/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: syntax error at source line 1\n/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: illegal statement at source line 1\n"
+    },
+    "rust": {
+      "code": 2,
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a2073797374656d20697320756e7361666520696e2073616665206d6f64650a",
+      "stdout": "",
+      "stderr": "rawk: system is unsafe in safe mode\n"
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "csv",
+    "program": "{print NF,$2}",
+    "input": "a,\"b,c\",d\n",
+    "mode": [
+      "csv"
+    ],
+    "c": {
+      "code": 0,
+      "stdout_hex": "3320622c630a",
+      "stderr_hex": "",
+      "stdout": "3 b,c\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "3320622c630a",
+      "stderr_hex": "",
+      "stdout": "3 b,c\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "exit_end",
+    "program": "BEGIN { exit 7 } END { print \"END\" }",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 7,
+      "stdout_hex": "454e440a",
+      "stderr_hex": "",
+      "stdout": "END\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 7,
+      "stdout_hex": "454e440a",
+      "stderr_hex": "",
+      "stdout": "END\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "short_circuit",
+    "program": "BEGIN { x=0; print (0 && ++x), x; print (1 || ++x), x }",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "3020300a3120300a",
+      "stderr_hex": "",
+      "stdout": "0 0\n1 0\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "3020300a3120300a",
+      "stderr_hex": "",
+      "stdout": "0 0\n1 0\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "record_counter",
+    "program": "{$0=$0; print NR,FNR} END {print NR}",
+    "input": "a\nb\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "3120310a3220320a320a",
+      "stderr_hex": "",
+      "stdout": "1 1\n2 2\n2\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "3120310a3220320a320a",
+      "stderr_hex": "",
+      "stdout": "1 1\n2 2\n2\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "fs_regex",
+    "program": "BEGIN { FS=\"[,:]+\" } {print NF,$1,$2,$3}",
+    "input": "a,b:c\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "332061206220630a",
+      "stderr_hex": "",
+      "stdout": "3 a b c\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "332061206220630a",
+      "stderr_hex": "",
+      "stdout": "3 a b c\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "rs_dynamic",
+    "program": "{print $0; RS=\":\"}",
+    "input": "a\nb:c:",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "610a620a630a",
+      "stderr_hex": "",
+      "stdout": "a\nb\nc\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "610a620a630a",
+      "stderr_hex": "",
+      "stdout": "a\nb\nc\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "regex_longest",
+    "program": "BEGIN {match(\"ab\", /a|ab/); print RSTART,RLENGTH}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "3120320a",
+      "stderr_hex": "",
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "3120320a",
+      "stderr_hex": "",
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "regex_invalid",
+    "program": "BEGIN {r=\"[\"; print (\"abc\" ~ r)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 2,
+      "stdout_hex": "",
+      "stderr_hex": "2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a206e6f6e7465726d696e617465642063686172616374657220636c617373205b0a20736f75726365206c696e65206e756d62657220310a",
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: nonterminated character class [\n source line number 1\n"
+    },
+    "rust": {
+      "code": 2,
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a207265676578207061727365206572726f723a0a202020205b0a202020205e0a6572726f723a20756e636c6f7365642063686172616374657220636c6173730a",
+      "stdout": "",
+      "stderr": "rawk: regex parse error:\n    [\n    ^\nerror: unclosed character class\n"
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "array_parameter",
+    "program": "function f(a) {a[1]=9} BEGIN {x[1]=1; f(x); print x[1]}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "390a",
+      "stderr_hex": "",
+      "stdout": "9\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "390a",
+      "stderr_hex": "",
+      "stdout": "9\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "return_while",
+    "program": "function f(i) {while(i++ < 2) {return 7} return 9} BEGIN {print f(0)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "370a",
+      "stderr_hex": "",
+      "stdout": "7\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "370a",
+      "stderr_hex": "",
+      "stdout": "7\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "next_function",
+    "program": "function f() {next} {f(); print \"BAD\"} END {print NR}",
+    "input": "a\nb\n",
+    "mode": [],
+    "c": {
+      "code": 2,
+      "stdout_hex": "",
+      "stderr_hex": "2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a206e65787420697320696c6c6567616c20696e7369646520612066756e6374696f6e20617420736f75726365206c696e65203120696e2066756e6374696f6e20660a20636f6e746578742069730a0966756e6374696f6e20662829203e3e3e20207b6e6578747d203c3c3c200a",
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: next is illegal inside a function at source line 1 in function f\n context is\n\tfunction f() >>>  {next} <<< \n"
+    },
+    "rust": {
+      "code": 2,
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a206e657874206973206e6f7420616c6c6f77656420696e207468697320636f6e746578740a",
+      "stdout": "",
+      "stderr": "rawk: next is not allowed in this context\n"
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "getline_file",
+    "program": "{getline x; print $0,x,NR,FNR}",
+    "input": "a\nb\nc\nd\n",
+    "mode": [
+      "file"
+    ],
+    "c": {
+      "code": 0,
+      "stdout_hex": "612062203220320a632064203420340a",
+      "stderr_hex": "",
+      "stdout": "a b 2 2\nc d 4 4\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "612062203220320a632064203420340a",
+      "stderr_hex": "",
+      "stdout": "a b 2 2\nc d 4 4\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "getline_counter",
+    "program": "{getline x; print $0,x,NR,FNR}",
+    "input": "a\nb\nc\nd\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "612062203220320a632064203420340a",
+      "stderr_hex": "",
+      "stdout": "a b 2 2\nc d 4 4\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "612062203220320a632064203420340a",
+      "stderr_hex": "",
+      "stdout": "a b 2 2\nc d 4 4\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "getline_missing",
+    "program": "BEGIN {print (getline x < \"/nonexistent/rawk-audit-absent\")}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "2d310a",
+      "stderr_hex": "",
+      "stdout": "-1\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "2d310a",
+      "stderr_hex": "",
+      "stdout": "-1\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "split_empty_clear",
+    "program": "BEGIN {a[9]=\"old\"; print split(\"a,,b\",a,\",\"); print a[2],(9 in a)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "330a20300a",
+      "stderr_hex": "",
+      "stdout": "3\n 0\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "330a20300a",
+      "stderr_hex": "",
+      "stdout": "3\n 0\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "gsub_count",
+    "program": "BEGIN {s=\"aaa\"; print gsub(/a/,\"b\",s),s; print sub(/b/,\"b\",s)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "33206262620a310a",
+      "stderr_hex": "",
+      "stdout": "3 bbb\n1\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "33206262620a310a",
+      "stderr_hex": "",
+      "stdout": "3 bbb\n1\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "numeric_string_compare",
+    "program": "BEGIN { print (\"01\" == \"1\"), (\"10\" < \"2\") }",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "3020310a",
+      "stderr_hex": "",
+      "stdout": "0 1\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "3020310a",
+      "stderr_hex": "",
+      "stdout": "0 1\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "numeric_prefix",
+    "program": "BEGIN {print \"12x\"+0}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "31320a",
+      "stderr_hex": "",
+      "stdout": "12\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "31320a",
+      "stderr_hex": "",
+      "stdout": "12\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "field_increment",
+    "program": "{$1++; print $1,$0}",
+    "input": "3\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "3420340a",
+      "stderr_hex": "",
+      "stdout": "4 4\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "3420340a",
+      "stderr_hex": "",
+      "stdout": "4 4\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "escaped_quote",
+    "program": "BEGIN {print \"a\\\"b\"}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "6122620a",
+      "stderr_hex": "",
+      "stdout": "a\"b\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "6122620a",
+      "stderr_hex": "",
+      "stdout": "a\"b\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "range_pattern",
+    "program": "NR==1,NR==2 {print}",
+    "input": "a\nb\nc\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "610a620a",
+      "stderr_hex": "",
+      "stdout": "a\nb\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "610a620a",
+      "stderr_hex": "",
+      "stdout": "a\nb\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "assignment_expr",
+    "program": "BEGIN {print (x=3)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "330a",
+      "stderr_hex": "",
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "330a",
+      "stderr_hex": "",
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "leading_decimal",
+    "program": "BEGIN {print .5}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "302e350a",
+      "stderr_hex": "",
+      "stdout": "0.5\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "302e350a",
+      "stderr_hex": "",
+      "stdout": "0.5\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "underscore_identifier",
+    "program": "BEGIN {_x=3; print _x}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "330a",
+      "stderr_hex": "",
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "330a",
+      "stderr_hex": "",
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "power_precedence",
+    "program": "BEGIN {print -2^2}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout_hex": "2d340a",
+      "stderr_hex": "",
+      "stdout": "-4\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "2d340a",
+      "stderr_hex": "",
+      "stdout": "-4\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "arity_panic",
+    "program": "BEGIN {print substr(\"a\")}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 2,
+      "stdout_hex": "",
+      "stderr_hex": "2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e207b7072696e74203e3e3e20207375627374722822612229203c3c3c200a2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a",
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: syntax error at source line 1\n context is\n\tBEGIN {print >>>  substr(\"a\") <<< \n/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: illegal statement at source line 1\n"
+    },
+    "rust": {
+      "code": 2,
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a20696e76616c6964206e756d626572206f6620617267756d656e747320746f207375627374723a20310a",
+      "stdout": "",
+      "stderr": "rawk: invalid number of arguments to substr: 1\n"
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "program_file_cli",
+    "program": "{print FILENAME,$0}",
+    "input": "a\nb\n",
+    "mode": [
+      "programfile"
+    ],
+    "c": {
+      "code": 0,
+      "stdout_hex": "2f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d61756469742d3075363335326d322f696e7075742e74787420610a2f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d61756469742d3075363335326d322f696e7075742e74787420620a",
+      "stderr_hex": "",
+      "stdout": "/var/folders/n2/3ynvhhr1275c7p2j80kc1q5r0000gn/T/rawk-audit-0u6352m2/input.txt a\n/var/folders/n2/3ynvhhr1275c7p2j80kc1q5r0000gn/T/rawk-audit-0u6352m2/input.txt b\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "2f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d61756469742d3075363335326d322f696e7075742e74787420610a2f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d61756469742d3075363335326d322f696e7075742e74787420620a",
+      "stderr_hex": "",
+      "stdout": "/var/folders/n2/3ynvhhr1275c7p2j80kc1q5r0000gn/T/rawk-audit-0u6352m2/input.txt a\n/var/folders/n2/3ynvhhr1275c7p2j80kc1q5r0000gn/T/rawk-audit-0u6352m2/input.txt b\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  },
+  {
+    "name": "argv_assignment",
+    "program": "{print x,$0}",
+    "input": "a\n",
+    "mode": [
+      "assignment"
+    ],
+    "c": {
+      "code": 0,
+      "stdout_hex": "3720610a",
+      "stderr_hex": "",
+      "stdout": "7 a\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout_hex": "3720610a",
+      "stderr_hex": "",
+      "stdout": "7 a\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": true
+  }
+]

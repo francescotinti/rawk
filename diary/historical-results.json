@@ -1,0 +1,622 @@
+[
+  {
+    "case": "a-format.awk",
+    "c": {
+      "stdout_hex": "3078312e35702b350a",
+      "stderr_hex": "",
+      "stdout": "0x1.5p+5\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a20756e737570706f72746564207072696e746620666f726d61740a",
+      "stdout": "",
+      "stderr": "rawk: unsupported printf format\n",
+      "code": 2,
+      "timeout": false
+    },
+    "same_output_and_status": false
+  },
+  {
+    "case": "concat-assign-same.awk",
+    "c": {
+      "stdout_hex": "31323334350a3120322033203420350a",
+      "stderr_hex": "",
+      "stdout": "12345\n1 2 3 4 5\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "31323334350a3120322033203420350a",
+      "stderr_hex": "",
+      "stdout": "12345\n1 2 3 4 5\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "decr-NF.awk",
+    "c": {
+      "stdout_hex": "360a613a623a633a643a650a350a613a623a633a643a653a0a360a",
+      "stderr_hex": "",
+      "stdout": "6\na:b:c:d:e\n5\na:b:c:d:e:\n6\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "360a613a623a633a643a650a350a613a623a633a643a653a0a360a",
+      "stderr_hex": "",
+      "stdout": "6\na:b:c:d:e\n5\na:b:c:d:e:\n6\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "fmt-overflow.awk",
+    "c": {
+      "stdout_hex": "312e323530303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030300a",
+      "stderr_hex": "",
+      "stdout": "1.2500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "312e323530303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030300a",
+      "stderr_hex": "",
+      "stdout": "1.2500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": false
+  },
+  {
+    "case": "fs-overflow.awk",
+    "c": {
+      "stdout_hex": "666f6f0a",
+      "stderr_hex": "",
+      "stdout": "foo\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "666f6f0a",
+      "stderr_hex": "",
+      "stdout": "foo\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "getline-corruption.awk",
+    "c": {
+      "stdout_hex": "61206c656e3d310a",
+      "stderr_hex": "",
+      "stdout": "a len=1\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "61206c656e3d310a",
+      "stderr_hex": "",
+      "stdout": "a len=1\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "getline-numeric.awk",
+    "c": {
+      "stdout_hex": "313230203e2035300a313230203e2035300a73616d650a",
+      "stderr_hex": "",
+      "stdout": "120 > 50\n120 > 50\nsame\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "313230203e2035300a313230203e2035300a73616d650a",
+      "stderr_hex": "",
+      "stdout": "120 > 50\n120 > 50\nsame\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "inf-nan-torture.awk",
+    "c": {
+      "stdout_hex": "31202d696e66202d696e660a32202d696e666f726d20300a3320696e666f726d20300a34202d6e616e202d6e616e0a35202d6e616e637920300a36206e616e637920300a37202d313233202d3132330a38203020300a3920313233203132330a3130202b313233203132330a3131206e616e637920300a3132202b6e616e637920300a3133202b6e616e202b6e616e0a313420696e666f726d20300a3135202b696e666f726d20300a3136202b696e66202b696e660a",
+      "stderr_hex": "",
+      "stdout": "1 -inf -inf\n2 -inform 0\n3 inform 0\n4 -nan -nan\n5 -nancy 0\n6 nancy 0\n7 -123 -123\n8 0 0\n9 123 123\n10 +123 123\n11 nancy 0\n12 +nancy 0\n13 +nan +nan\n14 inform 0\n15 +inform 0\n16 +inf +inf\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "31202d696e66202d696e660a32202d696e666f726d20300a3320696e666f726d20300a34202d6e616e202d6e616e0a35202d6e616e637920300a36206e616e637920300a37202d313233202d3132330a38203020300a3920313233203132330a3130202b313233203132330a3131206e616e637920300a3132202b6e616e637920300a3133202b6e616e206e616e0a313420696e666f726d20300a3135202b696e666f726d20300a3136202b696e6620696e660a",
+      "stderr_hex": "",
+      "stdout": "1 -inf -inf\n2 -inform 0\n3 inform 0\n4 -nan -nan\n5 -nancy 0\n6 nancy 0\n7 -123 -123\n8 0 0\n9 123 123\n10 +123 123\n11 nancy 0\n12 +nancy 0\n13 +nan nan\n14 inform 0\n15 +inform 0\n16 +inf inf\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": false
+  },
+  {
+    "case": "matchop-deref.awk",
+    "c": {
+      "stdout_hex": "370a370a",
+      "stderr_hex": "",
+      "stdout": "7\n7\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "370a370a",
+      "stderr_hex": "",
+      "stdout": "7\n7\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "missing-precision.awk",
+    "c": {
+      "stdout_hex": "",
+      "stderr_hex": "2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a206e6f7420656e6f756768206172677320696e207072696e746628252a73290a20736f75726365206c696e65206e756d62657220310a",
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: not enough args in printf(%*s)\n source line number 1\n",
+      "code": 2,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a20756e737570706f72746564207072696e746620666f726d61740a",
+      "stdout": "",
+      "stderr": "rawk: unsupported printf format\n",
+      "code": 2,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "negative-nf.awk",
+    "c": {
+      "stdout_hex": "",
+      "stderr_hex": "2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a2063616e6e6f7420736574204e4620746f2061206e656761746976652076616c75650a20736f75726365206c696e65206e756d62657220310a",
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: cannot set NF to a negative value\n source line number 1\n",
+      "code": 2,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a204e46206d757374206265206e6f6e6e6567617469766520616e642066696e6974650a",
+      "stdout": "",
+      "stderr": "rawk: NF must be nonnegative and finite\n",
+      "code": 2,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "nf-self-assign.awk",
+    "c": {
+      "stdout_hex": "612c622c630a",
+      "stderr_hex": "",
+      "stdout": "a,b,c\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "612c622c630a",
+      "stderr_hex": "",
+      "stdout": "a,b,c\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "numeric-fs.awk",
+    "c": {
+      "stdout_hex": "320a330a340a",
+      "stderr_hex": "",
+      "stdout": "2\n3\n4\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "320a330a340a",
+      "stderr_hex": "",
+      "stdout": "2\n3\n4\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "numeric-output-seps.awk",
+    "c": {
+      "stdout_hex": "6131623264316532",
+      "stderr_hex": "",
+      "stdout": "a1b2d1e2",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "6131623264316532",
+      "stderr_hex": "",
+      "stdout": "a1b2d1e2",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "numeric-rs.awk",
+    "c": {
+      "stdout_hex": "610a620a630a640a",
+      "stderr_hex": "",
+      "stdout": "a\nb\nc\nd\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "610a620a630a640a",
+      "stderr_hex": "",
+      "stdout": "a\nb\nc\nd\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "numeric-subsep.awk",
+    "c": {
+      "stdout_hex": "666f6f0a",
+      "stderr_hex": "",
+      "stdout": "foo\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "666f6f0a",
+      "stderr_hex": "",
+      "stdout": "foo\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "ofs-rebuild.awk",
+    "c": {
+      "stdout_hex": "613a623a333333333a643a653a663a670a",
+      "stderr_hex": "",
+      "stdout": "a:b:3333:d:e:f:g\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "613a623a333333333a643a653a663a670a",
+      "stderr_hex": "",
+      "stdout": "a:b:3333:d:e:f:g\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "pfile-overflow.awk",
+    "c": {
+      "stdout_hex": "",
+      "stderr_hex": "2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a2073796e746178206572726f7220617420736f75726365206c696e65203120736f757263652066696c65202f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f627567732d66697865642f7066696c652d6f766572666c6f772e61776b0a20636f6e746578742069730a09203e3e3e20203c3c3c200a2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a206261696c696e67206f757420617420736f75726365206c696e65203120736f757263652066696c65202f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f627567732d66697865642f7066696c652d6f766572666c6f772e61776b0a",
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: syntax error at source line 1 source file /Volumes/Extreme Pro/Claude/testag-awk/c_awk/bugs-fixed/pfile-overflow.awk\n context is\n\t >>>  <<< \n/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: bailing out at source line 1 source file /Volumes/Extreme Pro/Claude/testag-awk/c_awk/bugs-fixed/pfile-overflow.awk\n",
+      "code": 2,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a205061727365206572726f723a20202d2d3e20313a310a20207c0a31207c205c0a20207c205e2d2d2d0a20207c0a20203d2065787065637465642070726f6772616d0a",
+      "stdout": "",
+      "stderr": "rawk: Parse error:  --> 1:1\n  |\n1 | \\\n  | ^---\n  |\n  = expected program\n",
+      "code": 2,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "repetition-no-atom.awk",
+    "c": {
+      "stdout_hex": "",
+      "stderr_hex": "2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a20696c6c6567616c207072696d61727920696e20726567756c61722065787072657373696f6e207b30307d206174200a20736f75726365206c696e65206e756d626572203120736f757263652066696c65202f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f627567732d66697865642f72657065746974696f6e2d6e6f2d61746f6d2e61776b0a20636f6e746578742069730a09203e3e3e202f7b30307d2f203c3c3c200a",
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: illegal primary in regular expression {00} at \n source line number 1 source file /Volumes/Extreme Pro/Claude/testag-awk/c_awk/bugs-fixed/repetition-no-atom.awk\n context is\n\t >>> /{00}/ <<< \n",
+      "code": 2,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a207265676578207061727365206572726f723a0a202020207b30307d0a202020205e0a6572726f723a2072657065746974696f6e206f70657261746f72206d697373696e672065787072657373696f6e0a",
+      "stdout": "",
+      "stderr": "rawk: regex parse error:\n    {00}\n    ^\nerror: repetition operator missing expression\n",
+      "code": 2,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "repetition-overflow.awk",
+    "c": {
+      "stdout_hex": "",
+      "stderr_hex": "2f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f612e6f75743a2072657065746974696f6e20636f756e7420617b3235367d20746f6f206c617267650a20736f75726365206c696e65206e756d626572203120736f757263652066696c65202f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f627567732d66697865642f72657065746974696f6e2d6f766572666c6f772e61776b0a20636f6e746578742069730a09203e3e3e202f617b3235367d2f203c3c3c200a",
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: repetition count a{256} too large\n source line number 1 source file /Volumes/Extreme Pro/Claude/testag-awk/c_awk/bugs-fixed/repetition-overflow.awk\n context is\n\t >>> /a{256}/ <<< \n",
+      "code": 2,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "stdout": "",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": false
+  },
+  {
+    "case": "rs_underflow.awk",
+    "c": {
+      "stdout_hex": "c40a",
+      "stderr_hex": "",
+      "stdout": "\\xc4\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "c40a",
+      "stderr_hex": "",
+      "stdout": "\\xc4\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "rstart-rlength.awk",
+    "c": {
+      "stdout_hex": "330a3120300a3120330a3420300a",
+      "stderr_hex": "",
+      "stdout": "3\n1 0\n1 3\n4 0\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "330a3120300a3120330a3420300a",
+      "stderr_hex": "",
+      "stdout": "3\n1 0\n1 3\n4 0\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "space.awk",
+    "c": {
+      "stdout_hex": "222022207e205b5b3a626c616e6b3a5d5d0a222022207e205b5b3a73706163653a5d5d0a5c6120217e205b5b3a626c616e6b3a5d5d0a5c6120217e205b5b3a73706163653a5d5d0a5c6220217e205b5b3a626c616e6b3a5d5d0a5c6220217e205b5b3a73706163653a5d5d0a5c6620217e205b5b3a626c616e6b3a5d5d0a5c66207e205b5b3a73706163653a5d5d0a5c6e20217e205b5b3a626c616e6b3a5d5d0a5c6e207e205b5b3a73706163653a5d5d0a5c7220217e205b5b3a626c616e6b3a5d5d0a5c72207e205b5b3a73706163653a5d5d0a5c74207e205b5b3a626c616e6b3a5d5d0a5c74207e205b5b3a73706163653a5d5d0a5c7620217e205b5b3a626c616e6b3a5d5d0a5c76207e205b5b3a73706163653a5d5d0a",
+      "stderr_hex": "",
+      "stdout": "\" \" ~ [[:blank:]]\n\" \" ~ [[:space:]]\n\\a !~ [[:blank:]]\n\\a !~ [[:space:]]\n\\b !~ [[:blank:]]\n\\b !~ [[:space:]]\n\\f !~ [[:blank:]]\n\\f ~ [[:space:]]\n\\n !~ [[:blank:]]\n\\n ~ [[:space:]]\n\\r !~ [[:blank:]]\n\\r ~ [[:space:]]\n\\t ~ [[:blank:]]\n\\t ~ [[:space:]]\n\\v !~ [[:blank:]]\n\\v ~ [[:space:]]\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "222022207e205b5b3a626c616e6b3a5d5d0a222022207e205b5b3a73706163653a5d5d0a5c6120217e205b5b3a626c616e6b3a5d5d0a5c6120217e205b5b3a73706163653a5d5d0a5c6220217e205b5b3a626c616e6b3a5d5d0a5c6220217e205b5b3a73706163653a5d5d0a5c6620217e205b5b3a626c616e6b3a5d5d0a5c66207e205b5b3a73706163653a5d5d0a5c6e20217e205b5b3a626c616e6b3a5d5d0a5c6e207e205b5b3a73706163653a5d5d0a5c7220217e205b5b3a626c616e6b3a5d5d0a5c72207e205b5b3a73706163653a5d5d0a5c74207e205b5b3a626c616e6b3a5d5d0a5c74207e205b5b3a73706163653a5d5d0a5c7620217e205b5b3a626c616e6b3a5d5d0a5c76207e205b5b3a73706163653a5d5d0a",
+      "stderr_hex": "",
+      "stdout": "\" \" ~ [[:blank:]]\n\" \" ~ [[:space:]]\n\\a !~ [[:blank:]]\n\\a !~ [[:space:]]\n\\b !~ [[:blank:]]\n\\b !~ [[:space:]]\n\\f !~ [[:blank:]]\n\\f ~ [[:space:]]\n\\n !~ [[:blank:]]\n\\n ~ [[:space:]]\n\\r !~ [[:blank:]]\n\\r ~ [[:space:]]\n\\t ~ [[:blank:]]\n\\t ~ [[:space:]]\n\\v !~ [[:blank:]]\n\\v ~ [[:space:]]\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "split-fs-from-array.awk",
+    "c": {
+      "stdout_hex": "34206c207068616e746920320a",
+      "stderr_hex": "",
+      "stdout": "4 l phanti 2\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "34206c207068616e746920320a",
+      "stderr_hex": "",
+      "stdout": "4 l phanti 2\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "string-conv.awk",
+    "c": {
+      "stdout_hex": "61203d203e3e31322e313233343c3c0a31202d3e2031322e313233340a32202d3e2031322e31320a33202d3e2031322e313233340a",
+      "stderr_hex": "",
+      "stdout": "a = >>12.1234<<\n1 -> 12.1234\n2 -> 12.12\n3 -> 12.1234\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "61203d203e3e31322e313233343c3c0a31202d3e2031322e313233340a32202d3e2031322e31320a33202d3e2031322e313233340a",
+      "stderr_hex": "",
+      "stdout": "a = >>12.1234<<\n1 -> 12.1234\n2 -> 12.12\n3 -> 12.1234\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "subsep-overflow.awk",
+    "c": {
+      "stdout_hex": "32373030310a310a310a300a300a",
+      "stderr_hex": "",
+      "stdout": "27001\n1\n1\n0\n0\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "",
+      "stderr_hex": "7261776b3a205061727365206572726f723a2020202d2d3e2031393a32380a2020207c0a3139207c20202020207072696e7420282828535542534550203d2073747231292c2028535542534550203d2073747232292c202263222920696e2061293b0a2020207c202020202020202020202020202020202020202020202020202020205e2d2d2d0a2020207c0a2020203d20657870656374656420756e6172795f657870722c206f705f616e642c206f705f6f722c206f705f6d617463682c206f705f6e6f745f6d617463682c206f705f696e2c206f705f65712c206f705f6e65712c206f705f67652c206f705f6c652c206f705f67742c206f705f6c742c206f705f6164642c206f705f7375622c206f705f6d756c2c206f705f6469762c206f705f6d6f642c206f705f706f772c206f705f696e632c206f72206f705f6465630a",
+      "stdout": "",
+      "stderr": "rawk: Parse error:   --> 19:28\n   |\n19 |     print (((SUBSEP = str1), (SUBSEP = str2), \"c\") in a);\n   |                            ^---\n   |\n   = expected unary_expr, op_and, op_or, op_match, op_not_match, op_in, op_eq, op_neq, op_ge, op_le, op_gt, op_lt, op_add, op_sub, op_mul, op_div, op_mod, op_pow, op_inc, or op_dec\n",
+      "code": 2,
+      "timeout": false
+    },
+    "same_output_and_status": false
+  },
+  {
+    "case": "system-status.awk",
+    "c": {
+      "stdout_hex": "6e6f726d616c207374617475732034320a6465617468206279207369676e616c20737461747573203236350a6465617468206279207369676e616c207769746820636f72652064756d7020737461747573203236320a",
+      "stderr_hex": "",
+      "stdout": "normal status 42\ndeath by signal status 265\ndeath by signal with core dump status 262\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "6e6f726d616c207374617475732034320a6465617468206279207369676e616c20737461747573203236350a6465617468206279207369676e616c207769746820636f72652064756d7020737461747573203236320a",
+      "stderr_hex": "",
+      "stdout": "normal status 42\ndeath by signal status 265\ndeath by signal with core dump status 262\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "unary-plus.awk",
+    "c": {
+      "stdout_hex": "300a34332e313233350a",
+      "stderr_hex": "",
+      "stdout": "0\n43.1235\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "300a34332e313233350a",
+      "stderr_hex": "",
+      "stdout": "0\n43.1235\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "unicode-fs-rs-1.awk",
+    "c": {
+      "stdout_hex": "69642c6e616d652c6167650a312c426f62202242696c6c792220536d6974682c34320a322c4a616e650a202042726f776e2c33370a0a",
+      "stderr_hex": "",
+      "stdout": "id,name,age\n1,Bob \"Billy\" Smith,42\n2,Jane\n  Brown,37\n\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "69642c6e616d652c6167650a312c426f62202242696c6c792220536d6974682c34320a322c4a616e650a202042726f776e2c33370a0a",
+      "stderr_hex": "",
+      "stdout": "id,name,age\n1,Bob \"Billy\" Smith,42\n2,Jane\n  Brown,37\n\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "unicode-fs-rs-2.awk",
+    "c": {
+      "stdout_hex": "69642c6e616d652c6167650a4a616e650a202042726f776e2c33370a2c0a",
+      "stderr_hex": "",
+      "stdout": "id,name,age\nJane\n  Brown,37\n,\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "69642c6e616d652c6167650a4a616e650a202042726f776e2c33370a2c0a",
+      "stderr_hex": "",
+      "stdout": "id,name,age\nJane\n  Brown,37\n,\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  },
+  {
+    "case": "unicode-null-match.awk",
+    "c": {
+      "stdout_hex": "342058e358815882580a",
+      "stderr_hex": "",
+      "stdout": "4 X\\xe3X\\x81X\\x82X\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "rust": {
+      "stdout_hex": "342058e358815882580a",
+      "stderr_hex": "",
+      "stdout": "4 X\\xe3X\\x81X\\x82X\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false
+    },
+    "same_output_and_status": true
+  }
+]

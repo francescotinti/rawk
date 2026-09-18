@@ -1,57 +1,56 @@
-# rawk 🦅
-A blazing-fast, high-fidelity port of the historic AWK data extraction and reporting tool from C to Rust.
+# rawk
 
-Built cooperatively by **Francesco Tinti** and **Antigravity (Google Deepmind)**.
+Porting sperimentale di AWK da C a Rust. Il riferimento di compatibilità è il sorgente nella cartella adiacente `c_awk`; il runtime Rust esegue autonomamente i programmi.
 
-## 🚀 Features
-`rawk` is a fully functional interpreter that mimics POSIX AWK and parts of GNU Awk (`gawk`) while bringing modern memory safety, performance, and deterministic parsing thanks to Rust.
+Il profilo verificato è orientato ai byte, con `LC_ALL=C`. La suite comprende il nucleo AWK e alcune estensioni (RT, BEGINFILE/ENDFILE, builtin temporali e bitwise). Non costituisce una certificazione di conformità POSIX o gawk. Stato, risultati e limiti sono nel [rapporto di consolidamento](diary/2026-09-19-remediation.md).
 
-- **Formal Grammar Parsing**: Replaced historical Yacc/Lex combinations with modern PEG (Parsing Expression Grammars) using the `pest` crate, including a fully compliant `PrattParser` for operator precedence.
-- **Dynamic Typing**: `rawk` intelligently manages numeric and string types, fully replicating AWK's famous implicit coercion capabilities.
-- **Flow Control & User Functions**: Complete support for `if/else`, `while`, `do/while`, `for (in)`, `break`, `continue`, `next`, `return`, `exit`, and user-defined functions with local scoping support.
-- **Extended Built-ins**:
-  - Math: `sin`, `cos`, `exp`, `log`, `sqrt`, `int`, `rand`, `srand`, `atan2`
-  - Bitwise (gawk extension): `and`, `or`, `xor`, `lshift`, `rshift`
-  - Time (gawk extension): `systime`, `strftime`
-  - Strings: `length`, `tolower`, `toupper`, `substr`, `index`, `split`, `sub`, `gsub`, `match` (updates `RSTART`/`RLENGTH`), `sprintf`
-- **Advanced I/O & Pipes**: Native support for output redirects (`> file`, `>> file`), pipeline execution to bash children (`print "hello" | "cat -n"`), and extended `getline` with streaming file cache.
-- **Global Magic Variables**: Built-in support for `FS`, `OFS`, `RS`, `ORS`, `NR`, `FNR`, `NF`, `SUBSEP`, `ARGC`, `ARGV`, and dynamic environment capturing in `ENVIRON`.
-- **Associative Arrays**: True hash map arrays supporting multi-dimensional key simulation via `SUBSEP` and item removal (`delete`).
-
-## 🛠 Project Architecture
-- `cli.rs`: CLI argument parsing via `clap`.
-- `awk.pest`: The definitive PEG grammar for the language.
-- `parser.rs`: Transforms token pairs into an Abstract Syntax Tree.
-- `ast.rs`: The typed AST enumerations modeling the language structures.
-- `types.rs`: Holds the evaluation context, dynamic types, I/O caches, and the random number generator.
-- `runner.rs`: The virtual machine executing the AST natively in Rust.
-
-## 📦 Usage
-Just like traditional AWK:
-```bash
-# Direct scripts
-echo "foo,bar" | cargo run -- -F "," '{ print $2 }'
-
-# Script files
-cargo run -- -f my_script.awk input.txt
-
-# Pipe outputs to system commands!
-echo "1\n2\n3" | cargo run -- '{ print $0 | "cat -n" }'
-```
-
-## Build & Test
+## Build e utilizzo
 
 ```bash
-cargo build --release
-cargo test                                        # 109 testcase XML + property test + integrazione
-cargo run -- -f program.awk file.txt
-cargo run --bin diffrun -- tests/testsuite.xml    # confronto vs /usr/bin/awk
+cargo build --locked --release --bins
+printf 'foo,bar\n' | target/release/rawk -F ',' '{ print $2 }'
+target/release/rawk -f programma.awk input.txt
+target/release/rawk --csv '{ print $2 }' dati.csv
+target/release/rawk --safe 'BEGIN { print "hello" }'
 ```
 
-**Quality gates:**
-- `cargo clippy --all-targets -- -D warnings`
-- `cargo fmt --check`
-- `bash scripts/checks.sh` (tutti i verification gate del piano di adeguamento idiomatico)
+Safe mode blocca comandi di sistema, pipe e redirezioni di output e non espone ENVIRON. Non è una sandbox generale.
 
-## 📜 Authors
-This code was written as part of an iterative AI pair-programming project aiming to explore limits in translating untyped, legacy C CLI utilities to deterministic Rust ecosystems.
+## Verifica
+
+Compilare prima il riferimento C, dalla radice di questo repository:
+
+```bash
+make -C ../c_awk
+cargo test --locked
+bash scripts/checks.sh
+python3 scripts/audit_regressions.py
+python3 scripts/historical_audit.py
+python3 scripts/benchmark.py
+```
+
+`cargo test` e `diffrun` usano per default `../c_awk/a.out`; `RAWK_REFERENCE` permette di scegliere il riferimento dei test Rust. Il corpus storico richiede anche i sorgenti adiacenti in `c_awk/bugs-fixed`. Le annotazioni XML sono relative alla versione del C verificata, non a qualsiasi AWK installato.
+
+```bash
+target/release/diffrun tests/testsuite.xml --awk ../c_awk/a.out --rawk target/release/rawk
+cargo fmt --check
+cargo clippy --all-targets -- -D warnings
+```
+
+Il confronto controlla byte di stdout, stderr e codice di uscita, in directory temporanee separate, con timeout. Le differenze deliberate hanno aspettative esplicite; un riferimento mancante è un errore. L'ordine delle righe è ignorato soltanto nei casi che lo dichiarano. Gli script Python di audit riportano separatamente il confronto stdout/status e conservano le diagnostiche.
+
+## Architettura
+
+- `awk.pest`, `parser.rs`, `ast.rs`: grammatica PEG, parsing e AST.
+- `validation.rs`: vincoli statici, arità, safe mode e parametri array.
+- `runner/`: interpretazione, builtin, formattazione e I/O.
+- `types.rs`: valori, conversioni, scope e contesto di esecuzione.
+- `input.rs`: lettura condivisa tra ciclo principale e getline, RS dinamico e CSV.
+- `ere.rs`: ricerca a byte con scelta del match più lungo alla prima posizione; DFA Rust per i pattern non letterali.
+- `test_support.rs`: infrastruttura condivisa di verifica.
+
+## Limiti noti
+
+Il corpus storico aggiunto evidenzia cinque differenze: formato printf `%a`, tuple `(i,j) in array`, grafia di Inf/NaN, limite delle ripetizioni regex e troncamento C di OFMT a precisione estrema. Anche formati dinamici con `*`, semantica completa delle locale/Unicode e l'intera sintassi regex del C richiedono ulteriore lavoro. Le regex hanno un limite di memoria del DFA di 4 MiB.
+
+I benchmark locali mostrano Rust più lento e con maggiore memoria rispetto al C sui tre carichi misurati. L'ottimizzazione rimane una fase successiva alla compatibilità.

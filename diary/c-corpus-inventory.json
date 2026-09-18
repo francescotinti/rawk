@@ -1,0 +1,1862 @@
+[
+  {
+    "path": "bugs-fixed/a-format.awk",
+    "status": "open-difference",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/concat-assign-same.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/decr-NF.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/fmt-overflow.awk",
+    "status": "open-difference",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/fs-overflow.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/getline-corruption.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/getline-numeric.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/inf-nan-torture.awk",
+    "status": "open-difference",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/matchop-deref.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/missing-precision.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/negative-nf.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/nf-self-assign.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/numeric-fs.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/numeric-output-seps.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/numeric-rs.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/numeric-subsep.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/ofs-rebuild.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/pfile-overflow.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/repetition-no-atom.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/repetition-overflow.awk",
+    "status": "open-difference",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/rs_underflow.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/rstart-rlength.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/space.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/split-fs-from-array.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/string-conv.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/subsep-overflow.awk",
+    "status": "open-difference",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/system-status.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/unary-plus.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/unicode-fs-rs-1.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/unicode-fs-rs-2.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "bugs-fixed/unicode-null-match.awk",
+    "status": "included-regression",
+    "reason": "See historical-results.json; original source unchanged."
+  },
+  {
+    "path": "testdir/Compare.T1",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/Compare.drek",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/Compare.p",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/Compare.t",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/Compare.tt",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/NOTES",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/README.TESTS",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/REGRESS",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/T.-f-f",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.argv",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.arnold",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.beebe",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.builtin",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.chem",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.close",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.clv",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.csconcat",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.csv",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.delete",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.errmsg",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.expr",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.exprconv",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.flags",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.func",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.gawk",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.getline",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.int-expr",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.latin1",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.lilly",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.main",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.misc",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.nextfile",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.overflow",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.re",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.recache",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.redir",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.split",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.sub",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.system",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.utf",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/T.utfre",
+    "status": "not-imported",
+    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+  },
+  {
+    "path": "testdir/arnold-fixes.tar",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/beebe.tar",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/bib",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/bundle.awk",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/chem.awk",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/cleanup",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/countries",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/ctimes",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/devnull",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/echo",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/echo.c",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo.even",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo.in",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo.odd",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo.sh",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo.td",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo0",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo1",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo1t",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo2",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo2t",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo3",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo4",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo5",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/foo6",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/footot",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/funstack.awk",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/funstack.in",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/funstack.ok",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/glop",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/glop1",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/glop2",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/ind",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/latin1",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/lilly.diff",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/lilly.ifile",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/lilly.out",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/lilly.progs",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/lsd1.p",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/p.1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.10",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.11",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.12",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.13",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.14",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.15",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.16",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.17",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.18",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.19",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.20",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.21",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.21a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.22",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.23",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.24",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.25",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.26",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.26a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.27",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.28",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.29",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.30",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.31",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.32",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.33",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.34",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.35",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.36",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.37",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.38",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.39",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.4",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.40",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.41",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.42",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.43",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.44",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.45",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.46",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.47",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.48",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.48a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.48b",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.49",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.5",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.50",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.51",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.52",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.5a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.6",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.7",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.8",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.9",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/p.table",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/penicil.p",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/res.p",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/sgi.ctimes",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/t.0",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.0a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.1.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.2.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.3.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.4",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.4.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.5.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.6",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.6.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.6a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.6b",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.8.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.8.y",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.NF",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.addops",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.aeiou",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.aeiouy",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.arith",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.array",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.array1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.array2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.assert",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.avg",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.b.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.be",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.beginexit",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.beginnext",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.break",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.break1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.break2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.break3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.bug1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.builtins",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.cat",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.cat1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.cat2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.cmp",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.coerce",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.coerce2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.comment",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.comment1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.concat",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.cond",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.contin",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.count",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.crlf",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.cum",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.d.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.delete0",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.delete1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.delete2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.delete3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.do",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.e",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.else",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.exit",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.exit1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.f",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.f.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.f0",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.f1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.f2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.f3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.f4",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.for",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.for1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.for2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.for3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.format4",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.fun",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.fun0",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.fun1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.fun2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.fun3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.fun4",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.fun5",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.getline1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.getval",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.gsub",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.gsub1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.gsub3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.gsub4",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.i.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.if",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.in",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.in1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.in2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.in3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.incr",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.incr2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.incr3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.index",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.intest",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.intest2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.j.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.longstr",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.makef",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.match",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.match1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.max",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.mod",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.monotone",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.nameval",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.next",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.not",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.null0",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.ofmt",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.ofs",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.ors",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.pat",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.pipe",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.pp",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.pp1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.pp2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.printf",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.printf2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.quote",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.randk",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.re1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.re1a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.re2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.re3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.re4",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.re5",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.re7",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.reFS",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.rec",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.redir1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.reg",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.roff",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.sep",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.seqno",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.set0",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.set0a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.set0b",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.set1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.set2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.set3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.split1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.split2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.split2a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.split3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.split4",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.split8",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.split9",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.split9a",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.stately",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.strcmp",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.strcmp1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.strnum",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.sub0",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.sub1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.sub2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.sub3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.substr",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.substr1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.time",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.vf",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.vf1",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.vf2",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.vf3",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/t.x",
+    "status": "not-imported",
+    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+  },
+  {
+    "path": "testdir/td.1",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/tempbig",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/tempsmall",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/test.countries",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/test.data",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/time",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/time.c",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/try",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/tt.01",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.02",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.02a",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.03",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.03a",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.04",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.05",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.06",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.07",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.08",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.09",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.10",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.10a",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.11",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.12",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.13",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.13a",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.14",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.15",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.16",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/tt.big",
+    "status": "not-imported",
+    "reason": "Not imported: historical timing workload; three bounded workloads benchmarked separately."
+  },
+  {
+    "path": "testdir/u.main",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/unbundle.awk",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  },
+  {
+    "path": "testdir/yc",
+    "status": "not-imported",
+    "reason": "Support data, driver, archive or documentation; not counted as an independent regression."
+  }
+]
