@@ -8,6 +8,7 @@ mod ast;
 mod cli;
 mod ere;
 mod input;
+mod number_format;
 mod parser;
 mod runner;
 mod types;

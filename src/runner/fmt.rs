@@ -4,9 +4,9 @@
  * Description: Engine printf/sprintf di rawk. Phase 7.5 — byte-aware.
  *              `awk_sprintf(fmt: &[u8], args: &[AwkValue]) -> Vec<u8>`
  *              processa lo string format AWK byte-by-byte. Conversion
- *              numeriche (d/i/o/u/x/X/e/E/f/g/G) delegano a sprintf::sprintf!
- *              su ASCII puro e poi a Vec<u8>. %c emette il primo byte raw
- *              dell'argomento stringa. %s emette i byte raw senza UTF-8
+ *              intere delegano a sprintf::sprintf!; quelle decimali usano
+ *              number_format e quelle esadecimali hex_float. %c distingue
+ *              valori numerici (anche StrNum) da stringhe esplicite. %s emette i byte raw senza UTF-8
  *              round-trip; width/precision applicati byte-aware.
  */
 
@@ -76,6 +76,12 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
     // Lo spec è ASCII puro per costruzione (% + flags `-+ #0` + digit + `.` +
     // conversion byte). `from_utf8` è O(spec.len) ma piccolo (raramente >10B).
     let spec = std::str::from_utf8(spec_bytes).expect("awk_sprintf: format spec must be ASCII");
+    // BWK normalizes numeric temporaries to +0, while a numeric conversion
+    // of a string such as "-0" retains its sign.
+    let number = match arg {
+        AwkValue::Number(n) => *n + 0.0,
+        _ => arg.as_number(),
+    };
     match conv {
         b'd' | b'i' => {
             let s = sprintf::sprintf!(spec, arg.as_number() as i64).unwrap_or_default();
@@ -85,35 +91,31 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
             let s = sprintf::sprintf!(spec, arg.as_number() as u64).unwrap_or_default();
             out.extend_from_slice(s.as_bytes());
         }
-        b'a' | b'A' => out.extend(hex_float(spec_bytes, arg.as_number())),
+        b'a' | b'A' => out.extend(hex_float(spec_bytes, number)),
         b'e' | b'E' | b'f' | b'g' | b'G' => {
-            let s = sprintf::sprintf!(spec, arg.as_number()).unwrap_or_default();
+            let s = crate::number_format::format(spec, number).unwrap_or_default();
             out.extend_from_slice(s.as_bytes());
         }
         b'c' => {
-            // Phase 7.5: %c emette il PRIMO BYTE raw dell'argomento stringa.
-            // Se non-stringa (Number/Uninitialized), si converte il numero a u32
-            // e si emette il byte basso (parità col comportamento legacy).
-            let byte: u8 = match arg {
-                AwkValue::String(s) | AwkValue::StrNum(s, _) if !s.is_empty() => s[0],
-                _ => arg.as_number() as u32 as u8,
+            // Numeric input fields are StrNum: %c converts their numeric value,
+            // whereas an explicit string contributes its first byte.
+            let byte = match arg {
+                AwkValue::String(s) => s.first().copied().unwrap_or(0),
+                _ => arg.as_number() as i64 as u8,
             };
-            if spec_bytes.len() == 2 {
-                // Fast path: spec esattamente `%c` → emetti il byte raw.
-                out.push(byte);
-            } else if byte < 0x80 {
-                // Spec con width/flags su byte ASCII → delega a sprintf!.
-                let spec_s: String = spec
-                    .chars()
-                    .map(|ch| if ch == 'c' { 's' } else { ch })
-                    .collect();
-                let one = (byte as char).to_string();
-                let s = sprintf::sprintf!(&spec_s, one).unwrap_or_default();
-                out.extend_from_slice(s.as_bytes());
-            } else {
-                // Spec con width/flags su byte alto → emetti raw (caso edge,
-                // perdita width formatting ma byte preservato).
-                out.push(byte);
+            let (width, _, left, zero) = parse_s_flags(spec_bytes);
+            let padding = width.saturating_sub(1);
+            if !left {
+                let pad = if zero && cfg!(target_os = "macos") {
+                    b'0'
+                } else {
+                    b' '
+                };
+                out.extend(std::iter::repeat_n(pad, padding));
+            }
+            out.push(byte);
+            if left {
+                out.extend(std::iter::repeat_n(b' ', padding));
             }
         }
         b's' => {
@@ -195,7 +197,6 @@ fn parse_s_flags(spec_bytes: &[u8]) -> (usize, Option<usize>, bool, bool) {
 // Precision follows the reference libc: Darwin resolves exact ties toward
 // zero; other targets use ties to even.
 fn hex_float(spec: &[u8], value: f64) -> Vec<u8> {
-    let value = value + 0.0; // BWK setfval normalizes negative zero.
     let (width, precision, left, zero) = parse_s_flags(spec);
     let upper = spec.last() == Some(&b'A');
     let sign = if value.is_sign_negative() {

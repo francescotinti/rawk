@@ -752,6 +752,10 @@ pub fn decode_string_escapes(raw: &str) -> Vec<u8> {
                 chars.next();
                 out.push(b'"');
             }
+            Some('&') => {
+                chars.next();
+                out.push(b'&');
+            }
             Some('/') => {
                 chars.next();
                 out.push(b'/');

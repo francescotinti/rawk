@@ -270,7 +270,10 @@ fn format_number_unbounded(n: f64, fmt: &str) -> String {
         result.truncate(result.len().min(255));
         return result;
     }
-    // Path C: usa fmt richiesto, strip dot orfani (esistente)
+    if let Some(text) = crate::number_format::format(fmt, n) {
+        return text;
+    }
+    // Fallback for nonstandard conversion formats.
     let s = sprintf::sprintf!(fmt, n).unwrap_or_else(|_| n.to_string());
     // Fix 1 (Step 12-bis): trailing dot in fixed notation, "X." -> "X"
     let s = if s.ends_with('.') {
@@ -434,14 +437,14 @@ impl EvalContext {
         Ok(())
     }
 
-    /// Get $N. If n == 0, returns $0 (the whole record). If n > NF, returns Uninitialized.
+    /// Get $N. If n == 0, returns $0 (the whole record). If n > NF, returns an empty string (not an uninitialized scalar).
     pub(crate) fn get_field(&self, n: usize) -> AwkValue {
         if n == 0 {
             AwkValue::from_str_num(self.record.clone())
         } else if n <= self.nf {
             self.fields[n - 1].clone()
         } else {
-            AwkValue::Uninitialized
+            AwkValue::String(Vec::new())
         }
     }
 

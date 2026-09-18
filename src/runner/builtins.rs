@@ -19,21 +19,25 @@ fn expand_awk_replacement(repl: &[u8], whole: &[u8]) -> Vec<u8> {
     let mut i = 0;
     while i < repl.len() {
         match repl[i] {
-            b'\\' if i + 1 < repl.len() => match repl[i + 1] {
-                b'&' => {
-                    out.push(b'&');
-                    i += 2;
-                }
-                b'\\' => {
+            b'\\' if repl.get(i + 1) == Some(&b'\\') => {
+                if repl.get(i + 2..i + 4) == Some(b"\\&") {
+                    out.extend_from_slice(b"\\&");
+                    i += 4;
+                } else if repl.get(i + 2) == Some(&b'&') {
                     out.push(b'\\');
                     i += 2;
-                }
-                other => {
+                } else {
                     out.push(b'\\');
-                    out.push(other);
+                    if std::env::var_os("POSIXLY_CORRECT").is_none() {
+                        out.push(b'\\');
+                    }
                     i += 2;
                 }
-            },
+            }
+            b'\\' if repl.get(i + 1) == Some(&b'&') => {
+                out.push(b'&');
+                i += 2;
+            }
             b'&' => {
                 out.extend_from_slice(whole);
                 i += 1;
