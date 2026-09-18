@@ -1,0 +1,71 @@
+[
+  {
+    "case": "T.argv",
+    "c": {
+      "stdout_hex": "542e617267763a206d697363207465737473206f66206172676320616e6420617267760a",
+      "stderr_hex": "",
+      "stdout": "T.argv: misc tests of argc and argv\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e617267763a206d697363207465737473206f66206172676320616e6420617267760a",
+      "stderr_hex": "",
+      "stdout": "T.argv: misc tests of argc and argv\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    }
+  },
+  {
+    "case": "T.clv",
+    "c": {
+      "stdout_hex": "542e636c763a20636865636b20636f6d6d616e642d6c696e65207661726961626c65730a",
+      "stderr_hex": "",
+      "stdout": "T.clv: check command-line variables\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e636c763a20636865636b20636f6d6d616e642d6c696e65207661726961626c65730a",
+      "stderr_hex": "",
+      "stdout": "T.clv: check command-line variables\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    }
+  },
+  {
+    "case": "T.delete",
+    "c": {
+      "stdout_hex": "542e64656c6574653a206d697363207465737473206f662061727261792064656c6574696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.delete: misc tests of array deletion\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e64656c6574653a206d697363207465737473206f662061727261792064656c6574696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.delete: misc tests of array deletion\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    }
+  }
+]

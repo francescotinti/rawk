@@ -1,0 +1,12 @@
+p.43 divergence stdout_hex
+p.48b divergence stdout_hex
+t.arith divergence stdout_hex
+t.gsub4 divergence stdout_hex,normalized_stderr_hex,code
+t.in2 divergence stdout_hex
+t.intest2 divergence stdout_hex
+t.null0 divergence stdout_hex
+t.printf2 divergence stdout_hex
+t.randk divergence stdout_hex
+t.split3 divergence stdout_hex,normalized_stderr_hex,code
+t.sub0 divergence stdout_hex
+{'match': 214, 'divergence': 11} total 225

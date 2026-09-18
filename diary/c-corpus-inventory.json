@@ -1,158 +1,158 @@
 [
   {
     "path": "bugs-fixed/a-format.awk",
-    "status": "open-difference",
-    "reason": "See historical-results.json; original source unchanged."
+    "status": "included-regression",
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/concat-assign-same.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/decr-NF.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/fmt-overflow.awk",
-    "status": "open-difference",
-    "reason": "See historical-results.json; original source unchanged."
+    "status": "included-regression",
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/fs-overflow.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/getline-corruption.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/getline-numeric.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/inf-nan-torture.awk",
-    "status": "open-difference",
-    "reason": "See historical-results.json; original source unchanged."
+    "status": "included-regression",
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/matchop-deref.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/missing-precision.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/negative-nf.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/nf-self-assign.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/numeric-fs.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/numeric-output-seps.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/numeric-rs.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/numeric-subsep.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/ofs-rebuild.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/pfile-overflow.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/repetition-no-atom.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/repetition-overflow.awk",
-    "status": "open-difference",
-    "reason": "See historical-results.json; original source unchanged."
+    "status": "included-regression",
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/rs_underflow.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/rstart-rlength.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/space.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/split-fs-from-array.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/string-conv.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/subsep-overflow.awk",
-    "status": "open-difference",
-    "reason": "See historical-results.json; original source unchanged."
+    "status": "included-regression",
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/system-status.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/unary-plus.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/unicode-fs-rs-1.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/unicode-fs-rs-2.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "bugs-fixed/unicode-null-match.awk",
     "status": "included-regression",
-    "reason": "See historical-results.json; original source unchanged."
+    "reason": "31/31 original fixtures agree on stdout/status; positive cases compare streams, errors assert status 2 and diagnostic."
   },
   {
     "path": "testdir/Compare.T1",
@@ -201,8 +201,8 @@
   },
   {
     "path": "testdir/T.argv",
-    "status": "not-imported",
-    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+    "status": "included-adapted-driver",
+    "reason": "Runs in temporary directory; documented path, fixture, array-order and diagnostic adaptations. Both interpreters pass."
   },
   {
     "path": "testdir/T.arnold",
@@ -231,8 +231,8 @@
   },
   {
     "path": "testdir/T.clv",
-    "status": "not-imported",
-    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+    "status": "included-adapted-driver",
+    "reason": "Runs in temporary directory; documented path, fixture, array-order and diagnostic adaptations. Both interpreters pass."
   },
   {
     "path": "testdir/T.csconcat",
@@ -246,8 +246,8 @@
   },
   {
     "path": "testdir/T.delete",
-    "status": "not-imported",
-    "reason": "Not imported: shell driver with own environment, paths and expected diagnostics requires isolation/adaptation."
+    "status": "included-adapted-driver",
+    "reason": "Runs in temporary directory; documented path, fixture, array-order and diagnostic adaptations. Both interpreters pass."
   },
   {
     "path": "testdir/T.errmsg",
@@ -561,293 +561,293 @@
   },
   {
     "path": "testdir/p.1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.10",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.11",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.12",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.13",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.14",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.15",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.16",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.17",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.18",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.19",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.20",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.21",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.21a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.22",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.23",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.24",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.25",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.26",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.26a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.27",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.28",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.29",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.30",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.31",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.32",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.33",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.34",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.35",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.36",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.37",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.38",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.39",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.4",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.40",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.41",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.42",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.43",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.44",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.45",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.46",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.47",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.48",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.48a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.48b",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.49",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.5",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.50",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.51",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.52",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.5a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.6",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.7",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.8",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.9",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/p.table",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/penicil.p",
@@ -866,838 +866,838 @@
   },
   {
     "path": "testdir/t.0",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.0a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.1.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.2.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.3.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.4",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.4.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.5.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.6",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.6.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.6a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.6b",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.8.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.8.y",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.NF",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.addops",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.aeiou",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.aeiouy",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.arith",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.array",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.array1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.array2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.assert",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.avg",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.b.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.be",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.beginexit",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.beginnext",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.break",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.break1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.break2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.break3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.bug1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.builtins",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.cat",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.cat1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.cat2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.cmp",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.coerce",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.coerce2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.comment",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.comment1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.concat",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.cond",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.contin",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.count",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.crlf",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.cum",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.d.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.delete0",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.delete1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.delete2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.delete3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.do",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.e",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.else",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.exit",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.exit1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.f",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.f.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.f0",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.f1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.f2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.f3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.f4",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.for",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.for1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.for2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.for3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.format4",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.fun",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.fun0",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.fun1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.fun2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.fun3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.fun4",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.fun5",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.getline1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.getval",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.gsub",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.gsub1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.gsub3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.gsub4",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.i.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.if",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.in",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.in1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.in2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.in3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.incr",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.incr2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.incr3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.index",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.intest",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.intest2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.j.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.longstr",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.makef",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.match",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.match1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.max",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.mod",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.monotone",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.nameval",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.next",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.not",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.null0",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.ofmt",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.ofs",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.ors",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.pat",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.pipe",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.pp",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.pp1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.pp2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.printf",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.printf2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.quote",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.randk",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.re1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.re1a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.re2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.re3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.re4",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.re5",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.re7",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.reFS",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.rec",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.redir1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.reg",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.roff",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.sep",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.seqno",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.set0",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.set0a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.set0b",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.set1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.set2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.set3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.split1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.split2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.split2a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.split3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.split4",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.split8",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.split9",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.split9a",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.stately",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.strcmp",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.strcmp1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.strnum",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.sub0",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "open-difference",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.sub1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.sub2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.sub3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.substr",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.substr1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.time",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.vf",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.vf1",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.vf2",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.vf3",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/t.x",
-    "status": "not-imported",
-    "reason": "Not imported: requires fixture/data mapping from Compare scripts; coverage not claimed."
+    "status": "included-regression",
+    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
   },
   {
     "path": "testdir/td.1",

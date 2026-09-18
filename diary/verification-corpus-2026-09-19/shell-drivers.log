@@ -1,0 +1,3 @@
+T.argv {'c': True, 'rust': True}
+T.clv {'c': True, 'rust': True}
+T.delete {'c': True, 'rust': True}
