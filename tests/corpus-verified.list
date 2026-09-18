@@ -77,6 +77,7 @@ t.a
 t.addops
 t.aeiou
 t.aeiouy
+t.arith
 t.array
 t.array1
 t.array2
@@ -140,6 +141,7 @@ t.getval
 t.gsub
 t.gsub1
 t.gsub3
+t.gsub4
 t.i.x
 t.if
 t.in
@@ -161,6 +163,7 @@ t.monotone
 t.nameval
 t.next
 t.not
+t.null0
 t.ofmt
 t.ofs
 t.ors
@@ -194,6 +197,7 @@ t.set3
 t.split1
 t.split2
 t.split2a
+t.split3
 t.split4
 t.split8
 t.split9
@@ -202,6 +206,7 @@ t.stately
 t.strcmp
 t.strcmp1
 t.strnum
+t.sub0
 t.sub1
 t.sub2
 t.sub3
