@@ -6,9 +6,12 @@
 
 mod ast;
 mod cli;
+mod ere;
+mod input;
 mod parser;
 mod runner;
 mod types;
+mod validation;
 
 use cli::Config;
 

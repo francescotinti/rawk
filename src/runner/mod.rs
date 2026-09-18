@@ -13,30 +13,14 @@ use crate::parser;
 use crate::types::EvalContext;
 use anyhow::Context;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
 
 mod builtins;
 mod fmt;
 mod io;
 
-fn trim_leading_newlines(b: &[u8]) -> &[u8] {
-    let mut i = 0;
-    while i < b.len() && b[i] == b'\n' {
-        i += 1;
-    }
-    &b[i..]
-}
-
-fn trim_trailing_newlines(b: &[u8]) -> &[u8] {
-    let mut j = b.len();
-    while j > 0 && b[j - 1] == b'\n' {
-        j -= 1;
-    }
-    &b[..j]
-}
-
 pub enum CompiledPattern {
     Expr(Expr),
+    Range(Expr, Expr),
     Begin,
     End,
     BeginFile,
@@ -57,6 +41,13 @@ pub enum FlowControl {
     NextFile,
     Return(AwkValue),
     Exit(i32),
+    Error(String),
+}
+
+impl From<anyhow::Error> for FlowControl {
+    fn from(error: anyhow::Error) -> Self {
+        Self::Error(format!("{error:#}"))
+    }
 }
 
 pub fn run(config: Config) -> anyhow::Result<i32> {
@@ -69,6 +60,7 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
     };
 
     let mut context = EvalContext::new(fs.as_bytes());
+    context.csv = config.csv;
 
     context.set_var(
         "ARGC",
@@ -84,6 +76,9 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
         );
     }
     for (key, val) in std::env::vars() {
+        if config.safe {
+            break;
+        }
         context.set_array_var(
             "ENVIRON",
             key.as_bytes(),
@@ -107,11 +102,13 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
     }
 
     let program = parser::parse(&program_text)?;
+    crate::validation::validate(&program, config.safe)?;
 
     let mut compiled_rules = Vec::new();
     for rule in &program.rules {
         let pattern = match &rule.pattern {
             Some(Pattern::Expr(e)) => Some(CompiledPattern::Expr(e.clone())),
+            Some(Pattern::Range(a, b)) => Some(CompiledPattern::Range(a.clone(), b.clone())),
             Some(Pattern::Begin) => Some(CompiledPattern::Begin),
             Some(Pattern::End) => Some(CompiledPattern::End),
             Some(Pattern::BeginFile) => Some(CompiledPattern::BeginFile),
@@ -124,103 +121,161 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
         });
     }
 
+    context.array_params = crate::validation::array_parameters(&program);
     for f in program.functions {
         context.functions.insert(f.name, (f.params, f.body));
     }
 
     for v in &config.variables {
-        if let Some(eq_pos) = v.find('=') {
-            let name = v[..eq_pos].to_string();
-            let raw_value = &v[eq_pos + 1..];
-            let decoded = crate::parser::decode_string_escapes(raw_value);
-            context.set_var(&name, AwkValue::from_str_num(decoded));
-        } else {
-            eprintln!("rawk: invalid -v assignment '{}': expected name=value", v);
-            return Ok(2);
+        if !assignment(&mut context, v) {
+            anyhow::bail!("invalid -v assignment '{v}': expected name=value");
         }
     }
 
-    // Execute BEGIN blocks
-    let fc = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::Begin);
-    if let FlowControl::Exit(code) = fc {
-        return Ok(code);
-    }
-
-    let argc_val = context.get_var("ARGC").as_number() as i64;
-    let mut files_to_process: Vec<String> = Vec::new();
-    for i in 1..argc_val {
-        if let Some(arr) = context.arrays.get("ARGV")
-            && let Some(val) = arr.get(i.to_string().as_bytes())
-        {
-            let filename = val.as_string();
-            if !filename.is_empty() {
-                // Path file: resta String (design R3).
-                files_to_process.push(String::from_utf8_lossy(&filename).into_owned());
-            }
-        }
-    }
-
-    if files_to_process.is_empty() {
-        context.set_var("FILENAME", AwkValue::String(b"-".to_vec()));
-        if let FlowControl::Exit(code) =
-            execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile)
-        {
-            return Ok(code);
-        }
-        let stdin = std::io::stdin();
-        let reader = stdin.lock();
-        if let FlowControl::Exit(code) = process_lines(reader, &mut context, &compiled_rules)? {
-            return Ok(code);
-        }
-        if let FlowControl::Exit(code) =
-            execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::EndFile)
-        {
-            return Ok(code);
-        }
-    } else {
-        for filename in files_to_process {
-            context.set_var("FILENAME", AwkValue::String(filename.clone().into_bytes()));
-            if let FlowControl::Exit(code) =
-                execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::BeginFile)
-            {
-                return Ok(code);
-            }
-            if filename == "-" {
-                let stdin = std::io::stdin();
-                let reader = stdin.lock();
-                if let FlowControl::Exit(code) =
-                    process_lines(reader, &mut context, &compiled_rules)?
-                {
-                    return Ok(code);
+    context.rules = std::rc::Rc::new(compiled_rules);
+    let rules = context.rules.clone();
+    let mut flow = execute_special_blocks(&rules, &mut context, SpecialBlock::Begin);
+    if flow == FlowControl::None
+        && rules
+            .iter()
+            .any(|r| !matches!(r.pattern, Some(CompiledPattern::Begin)))
+    {
+        loop {
+            match read_main(&mut context) {
+                Ok(Some(record)) => {
+                    if let Err(error) = context.update_record(&record) {
+                        flow = error;
+                        break;
+                    }
                 }
-            } else {
-                let file = File::open(&filename)?;
-                let reader = BufReader::new(file);
-                if let FlowControl::Exit(code) =
-                    process_lines(reader, &mut context, &compiled_rules)?
-                {
-                    return Ok(code);
+                Ok(None) => break,
+                Err(signal) => {
+                    flow = signal;
+                    break;
                 }
             }
-            if let FlowControl::Exit(code) =
-                execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::EndFile)
-            {
-                return Ok(code);
+            flow = run_rules_on_record(&rules, &mut context);
+            match flow {
+                FlowControl::None | FlowControl::Next => {}
+                FlowControl::NextFile => {
+                    flow = end_file(&mut context);
+                    if flow != FlowControl::None {
+                        break;
+                    }
+                }
+                _ => break,
             }
-            context.fnr = 0;
         }
     }
-
-    // Execute END blocks
-    let fc = execute_special_blocks(&compiled_rules, &mut context, SpecialBlock::End);
-    if let FlowControl::Exit(code) = fc {
-        return Ok(code);
+    if matches!(
+        flow,
+        FlowControl::None | FlowControl::Next | FlowControl::NextFile | FlowControl::Exit(_)
+    ) {
+        if let FlowControl::Exit(code) = flow {
+            context.exit_code = code;
+        }
+        flow = execute_special_blocks(&rules, &mut context, SpecialBlock::End);
     }
-
-    // Final cleanup: flush tutto, wait() su pipe children
     io::flush_and_close_all(&mut context);
+    match flow {
+        FlowControl::None => Ok(context.exit_code),
+        FlowControl::Exit(code) => Ok(code),
+        FlowControl::Error(error) => Err(anyhow::anyhow!(error)),
+        other => Err(anyhow::anyhow!("invalid control flow: {other:?}")),
+    }
+}
 
-    Ok(0)
+fn assignment(context: &mut EvalContext, text: &str) -> bool {
+    let Some((name, value)) = text.split_once('=') else {
+        return false;
+    };
+    let mut chars = name.chars();
+    if !chars
+        .next()
+        .is_some_and(|c| c.is_ascii_alphabetic() || c == '_')
+        || !chars.all(|c| c.is_ascii_alphanumeric() || c == '_')
+    {
+        return false;
+    }
+    context.set_var(
+        name,
+        AwkValue::from_str_num(parser::decode_string_escapes(value)),
+    );
+    true
+}
+
+fn end_file(context: &mut EvalContext) -> FlowControl {
+    context.input.reader = None;
+    let rules = context.rules.clone();
+    execute_special_blocks(&rules, context, SpecialBlock::EndFile)
+}
+
+fn read_main(context: &mut EvalContext) -> Result<Option<Vec<u8>>, FlowControl> {
+    loop {
+        if context.input.reader.is_none() {
+            let mut filename = None;
+            while context.input.next_arg < context.get_var("ARGC").as_number() as usize {
+                let arg = context
+                    .get_array_var("ARGV", context.input.next_arg.to_string().as_bytes())
+                    .as_string();
+                context.input.next_arg += 1;
+                let arg = String::from_utf8_lossy(&arg);
+                if arg.is_empty() || assignment(context, &arg) {
+                    continue;
+                }
+                filename = Some(arg.into_owned());
+                break;
+            }
+            let filename = match filename {
+                Some(name) => name,
+                None if !context.input.opened => "-".to_owned(),
+                None => return Ok(None),
+            };
+            context.input.reader = Some(if filename == "-" {
+                crate::input::RecordReader::new(std::io::stdin())
+            } else {
+                crate::input::RecordReader::new(
+                    File::open(&filename)
+                        .map_err(|e| FlowControl::Error(format!("input {filename}: {e}")))?,
+                )
+            });
+            context.input.opened = true;
+            context.fnr = 0;
+            context.set_var("FILENAME", AwkValue::String(filename.into_bytes()));
+            let rules = context.rules.clone();
+            match execute_special_blocks(&rules, context, SpecialBlock::BeginFile) {
+                FlowControl::None => {}
+                FlowControl::NextFile => {
+                    let flow = end_file(context);
+                    if flow != FlowControl::None {
+                        return Err(flow);
+                    }
+                    continue;
+                }
+                flow => return Err(flow),
+            }
+        }
+        let rs = context.get_var("RS").as_string();
+        let Some(reader) = context.input.reader.as_mut() else {
+            continue;
+        };
+        let record = (if context.csv {
+            reader.next_csv()
+        } else {
+            reader.next(&rs)
+        })
+        .map_err(|e| FlowControl::Error(e.to_string()))?;
+        if let Some((record, rt)) = record {
+            context.nr += 1;
+            context.fnr += 1;
+            context.set_var("RT", AwkValue::String(rt));
+            return Ok(Some(record));
+        }
+        let flow = end_file(context);
+        if flow != FlowControl::None {
+            return Err(flow);
+        }
+    }
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -247,7 +302,7 @@ fn execute_special_blocks(
 
         if is_match {
             let fc = execute_action(&rule.action, context);
-            if let FlowControl::Exit(_) = fc {
+            if fc != FlowControl::None {
                 return fc;
             }
         }
@@ -256,286 +311,168 @@ fn execute_special_blocks(
 }
 
 fn run_rules_on_record(rules: &[CompiledRule], context: &mut EvalContext) -> FlowControl {
-    for rule in rules {
-        let should_execute = match &rule.pattern {
-            Some(CompiledPattern::Expr(e)) => eval_expr(e, context).is_truthy(),
-            Some(CompiledPattern::Begin)
-            | Some(CompiledPattern::End)
-            | Some(CompiledPattern::BeginFile)
-            | Some(CompiledPattern::EndFile) => false,
-            None => true,
-        };
-
-        if should_execute {
-            let fc = execute_action(&rule.action, context);
-            if fc == FlowControl::Next {
-                break; // break the rule loop, process next line
-            }
-            if fc == FlowControl::NextFile {
-                return FlowControl::NextFile;
-            }
-            if matches!(fc, FlowControl::Exit(_)) {
-                return fc;
-            }
-            if context.nextfile_pending {
-                return FlowControl::NextFile;
-            }
-            if let Some(code) = context.exit_pending {
-                return FlowControl::Exit(code);
+    for (index, rule) in rules.iter().enumerate() {
+        let matches = (|| -> Result<bool, FlowControl> {
+            Ok(match &rule.pattern {
+                None => true,
+                Some(CompiledPattern::Expr(expr)) => eval_expr(expr, context)?.is_truthy(),
+                Some(CompiledPattern::Range(start, end)) => {
+                    let active =
+                        context.ranges.contains(&index) || eval_expr(start, context)?.is_truthy();
+                    if active {
+                        if eval_expr(end, context)?.is_truthy() {
+                            context.ranges.remove(&index);
+                        } else {
+                            context.ranges.insert(index);
+                        }
+                    }
+                    active
+                }
+                _ => false,
+            })
+        })();
+        match matches {
+            Err(flow) => return flow,
+            Ok(false) => {}
+            Ok(true) => {
+                let flow = execute_action(&rule.action, context);
+                if flow != FlowControl::None {
+                    return flow;
+                }
             }
         }
     }
     FlowControl::None
 }
 
-fn process_single_byte<R: BufRead>(
-    mut reader: R,
-    delim: u8,
-    context: &mut EvalContext,
-    rules: &[CompiledRule],
-) -> anyhow::Result<FlowControl> {
-    let mut buffer = Vec::new();
-
-    loop {
-        buffer.clear();
-        let bytes_read = reader.read_until(delim, &mut buffer)?;
-        if bytes_read == 0 {
-            break;
-        }
-
-        // Strip trailing record terminator (delim, plus optional CR for "\r\n") on raw bytes.
-        let mut end = buffer.len();
-        let mut rt_bytes: Vec<u8> = Vec::new();
-        if end > 0 && buffer[end - 1] == delim {
-            end -= 1;
-            rt_bytes.push(delim);
-            if delim == b'\n' && end > 0 && buffer[end - 1] == b'\r' {
-                end -= 1;
-                rt_bytes.clear();
-                rt_bytes.extend_from_slice(b"\r\n");
-            }
-        } else if delim == b'\n' && end >= 2 && &buffer[end - 2..end] == b"\r\n" {
-            end -= 2;
-            rt_bytes.extend_from_slice(b"\r\n");
-        } else if delim == b'\n' && end > 0 && buffer[end - 1] == b'\n' {
-            end -= 1;
-            rt_bytes.push(b'\n');
-        }
-        let line_bytes = &buffer[..end];
-
-        context.set_var("RT", AwkValue::String(rt_bytes));
-        context.update_record(line_bytes);
-
-        let fc = run_rules_on_record(rules, context);
-        if matches!(fc, FlowControl::Exit(_)) {
-            return Ok(fc);
-        }
-        if fc == FlowControl::NextFile {
-            return Ok(FlowControl::None);
-        }
-    }
-
-    Ok(FlowControl::None)
+#[derive(Clone)]
+enum Target {
+    Variable(String),
+    Array(String, Vec<u8>),
+    Field(usize),
 }
 
-fn process_paragraph<R: BufRead>(
-    mut reader: R,
-    context: &mut EvalContext,
-    rules: &[CompiledRule],
-) -> anyhow::Result<FlowControl> {
-    let mut all: Vec<u8> = Vec::new();
-    reader.read_to_end(&mut all)?;
-    let trimmed = trim_leading_newlines(&all);
-    let re = regex::bytes::RegexBuilder::new(r"\n\n+")
-        .unicode(false)
-        .build()
-        .unwrap();
-    let mut last_end = 0;
-    for mat in re.find_iter(trimmed) {
-        let record = &trimmed[last_end..mat.start()];
-        if !record.is_empty() {
-            context.set_var("RT", AwkValue::String(mat.as_bytes().to_vec()));
-            context.update_record(record);
-            let fc = run_rules_on_record(rules, context);
-            if matches!(fc, FlowControl::Exit(_)) {
-                return Ok(fc);
+fn target(expr: &Expr, context: &mut EvalContext) -> Result<Target, FlowControl> {
+    match expr {
+        Expr::Variable(name) => Ok(Target::Variable(name.clone())),
+        Expr::ArrayAccess(name, keys) => {
+            context.ensure_array(name)?;
+            Ok(Target::Array(name.clone(), eval_array_key(keys, context)?))
+        }
+        Expr::Field(index) => {
+            let index = eval_expr(index, context)?.as_number();
+            if !index.is_finite() || index < 0.0 {
+                return Err(FlowControl::Error("invalid field index".into()));
             }
-            if fc == FlowControl::NextFile {
-                return Ok(FlowControl::None);
+            Ok(Target::Field(index as usize))
+        }
+        _ => Err(FlowControl::Error("expression is not assignable".into())),
+    }
+}
+impl Target {
+    fn get(&self, context: &mut EvalContext) -> AwkValue {
+        match self {
+            Self::Variable(name) => context.get_var(name),
+            Self::Array(name, key) => context.read_array(name, key),
+            Self::Field(index) => context.get_field(*index),
+        }
+    }
+    fn set(&self, context: &mut EvalContext, value: AwkValue) -> Result<(), FlowControl> {
+        match self {
+            Self::Variable(name) => {
+                if name == "NF" && (!value.as_number().is_finite() || value.as_number() < 0.0) {
+                    return Err(FlowControl::Error(
+                        "NF must be nonnegative and finite".into(),
+                    ));
+                }
+                if context.array(name).is_some() {
+                    return Err(FlowControl::Error(format!("{name} is an array")));
+                }
+                context.set_var(name, value);
             }
+            Self::Array(name, key) => context.set_array_var(name, key, value),
+            Self::Field(index) => context.set_field(*index, value)?,
         }
-        last_end = mat.end();
+        Ok(())
     }
-    let last = trim_trailing_newlines(&trimmed[last_end..]);
-    if !last.is_empty() {
-        context.set_var("RT", AwkValue::String(Vec::new()));
-        context.update_record(last);
-        let fc = run_rules_on_record(rules, context);
-        if matches!(fc, FlowControl::Exit(_)) {
-            return Ok(fc);
-        }
-        if fc == FlowControl::NextFile {
-            return Ok(FlowControl::None);
-        }
-    }
-    Ok(FlowControl::None)
-}
-
-fn process_regex_rs<R: BufRead>(
-    mut reader: R,
-    rs: &[u8],
-    context: &mut EvalContext,
-    rules: &[CompiledRule],
-) -> anyhow::Result<FlowControl> {
-    let mut all: Vec<u8> = Vec::new();
-    reader.read_to_end(&mut all)?;
-    // RS may contain raw high bytes (e.g. `RS = "\xC3+"` after AWK string
-    // interpretation). The regex crate requires `&str` patterns; we promote
-    // each non-ASCII byte to `\xNN` so it matches the literal byte in the
-    // haystack. Unicode mode is disabled so escapes match raw bytes
-    // regardless of UTF-8 validity.
-    let pat = crate::types::regex_pattern_from_bytes(rs);
-    let re = match regex::bytes::RegexBuilder::new(&pat).unicode(false).build() {
-        Ok(r) => r,
-        Err(_) => return Ok(FlowControl::None),
-    };
-    let mut last_end = 0;
-    for mat in re.find_iter(&all) {
-        let record = &all[last_end..mat.start()];
-        context.set_var("RT", AwkValue::String(mat.as_bytes().to_vec()));
-        context.update_record(record);
-        let fc = run_rules_on_record(rules, context);
-        if matches!(fc, FlowControl::Exit(_)) {
-            return Ok(fc);
-        }
-        if fc == FlowControl::NextFile {
-            return Ok(FlowControl::None);
-        }
-        last_end = mat.end();
-    }
-    let last = &all[last_end..];
-    if !last.is_empty() {
-        context.set_var("RT", AwkValue::String(Vec::new()));
-        context.update_record(last);
-        let fc = run_rules_on_record(rules, context);
-        if matches!(fc, FlowControl::Exit(_)) {
-            return Ok(fc);
-        }
-        if fc == FlowControl::NextFile {
-            return Ok(FlowControl::None);
-        }
-    }
-    Ok(FlowControl::None)
-}
-
-fn process_lines<R: BufRead>(
-    reader: R,
-    context: &mut EvalContext,
-    rules: &[CompiledRule],
-) -> anyhow::Result<FlowControl> {
-    let rs_val = context.get_var("RS").as_string();
-    let res = if rs_val.is_empty() {
-        process_paragraph(reader, context, rules)
-    } else if rs_val.len() == 1 {
-        process_single_byte(reader, rs_val[0], context, rules)
-    } else {
-        process_regex_rs(reader, &rs_val, context, rules)
-    };
-    context.nextfile_pending = false;
-    res
 }
 
 /// Compone la chiave di un array AWK: valuta i sotto-indici e li unisce con SUBSEP.
 /// Phase 7.3: chiave byte-pulita, nessuna conversione lossy.
-fn eval_array_key(key_exprs: &[Expr], context: &mut EvalContext) -> Vec<u8> {
+fn eval_array_key(key_exprs: &[Expr], context: &mut EvalContext) -> Result<Vec<u8>, FlowControl> {
     let mut parts: Vec<Vec<u8>> = Vec::new();
     for k in key_exprs {
-        parts.push(eval_expr(k, context).as_string());
+        parts.push(eval_expr(k, context)?.as_string_convfmt(&context.convfmt));
     }
     let subsep = context.get_var("SUBSEP").as_string();
-    parts.join(subsep.as_slice())
+    Ok(parts.join(subsep.as_slice()))
 }
 
-fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
-    match expr {
-        Expr::Field(e) => {
-            let idx = eval_expr(e, context).as_number() as usize;
-            context.get_field(idx)
-        }
+fn eval_expr(expr: &Expr, context: &mut EvalContext) -> Result<AwkValue, FlowControl> {
+    Ok(match expr {
+        Expr::Field(_) => target(expr, context)?.get(context),
         Expr::NumberLiteral(n) => AwkValue::Number(*n),
         Expr::StringLiteral(s) => AwkValue::String(s.clone()),
         Expr::Concat(parts) => {
             let convfmt = context.convfmt.clone();
             let mut s: Vec<u8> = Vec::new();
             for e in parts {
-                s.extend(eval_expr(e, context).as_string_convfmt(&convfmt));
+                s.extend(eval_expr(e, context)?.as_string_convfmt(&convfmt));
             }
             AwkValue::String(s)
         }
         Expr::RegexLiteral(re) => {
             let record = context.get_field(0).as_string();
-            let regex = context.compile_or_get_regex(re);
+            let regex = context.compile_or_get_regex(re)?;
             AwkValue::Number(if regex.is_match(&record) { 1.0 } else { 0.0 })
         }
-        Expr::Variable(v) => context.get_var(v),
+        Expr::Variable(v) => {
+            if context.array(v).is_some() {
+                return Err(FlowControl::Error(format!("{v} is an array")));
+            }
+            context.get_var(v)
+        }
         Expr::ArrayAccess(arr_name, key_exprs) => {
-            let key = eval_array_key(key_exprs, context);
-            context.get_array_var(arr_name, &key)
+            context.ensure_array(arr_name)?;
+            let key = eval_array_key(key_exprs, context)?;
+            context.read_array(arr_name, &key)
         }
         Expr::Getline(var_opt, source) => {
-            let mut line: Vec<u8> = Vec::new();
-            let mut read_success = false;
-
-            match source {
-                GetlineSource::Main => {
-                    let mut stdin = std::io::stdin().lock();
-                    if let Ok(n) = stdin.read_until(b'\n', &mut line)
-                        && n > 0
-                    {
-                        read_success = true;
-                    }
-                }
-                GetlineSource::File(file_expr) => {
-                    // Path file: resta String (design R3).
-                    let filename =
-                        String::from_utf8_lossy(&eval_expr(file_expr, context).as_string())
-                            .into_owned();
-                    io::ensure_input_file(&filename, context);
-                    if let Some(stream) = context.in_files.get_mut(&filename)
-                        && let Ok(n) = stream.reader().read_until(b'\n', &mut line)
-                        && n > 0
-                    {
-                        read_success = true;
-                    }
-                }
-                GetlineSource::Pipe(cmd_expr) => {
-                    let cmd = String::from_utf8_lossy(&eval_expr(cmd_expr, context).as_string())
+            let record = match source {
+                GetlineSource::Main => read_main(context)?,
+                GetlineSource::File(expr) | GetlineSource::Pipe(expr) => {
+                    let target = String::from_utf8_lossy(&eval_expr(expr, context)?.as_string())
                         .into_owned();
-                    if !io::ensure_input_pipe(&cmd, context) {
-                        return AwkValue::Number(-1.0);
-                    }
-                    if let Some(stream) = context.in_files.get_mut(&cmd) {
-                        match stream.reader().read_until(b'\n', &mut line) {
-                            Ok(0) => read_success = false,
-                            Ok(_) => read_success = true,
-                            Err(_) => return AwkValue::Number(-1.0),
+                    match source {
+                        GetlineSource::File(_) => io::ensure_input_file(&target, context),
+                        GetlineSource::Pipe(_) => {
+                            io::ensure_input_pipe(&target, context);
                         }
+                        _ => unreachable!(),
+                    }
+                    let rs = context.get_var("RS").as_string();
+                    let Some(stream) = context.in_files.get_mut(&target) else {
+                        return Ok(AwkValue::Number(-1.0));
+                    };
+                    match if context.csv {
+                        stream.reader().next_csv()
+                    } else {
+                        stream.reader().next(&rs)
+                    } {
+                        Ok(Some((record, rt))) => {
+                            context.set_var("RT", AwkValue::String(rt));
+                            Some(record)
+                        }
+                        Ok(None) => None,
+                        Err(_) => return Ok(AwkValue::Number(-1.0)),
                     }
                 }
-            }
-
-            if read_success {
-                // Strip trailing \n and optional \r on bytes.
-                if line.last() == Some(&b'\n') {
-                    line.pop();
-                }
-                if line.last() == Some(&b'\r') {
-                    line.pop();
-                }
+            };
+            if let Some(record) = record {
                 if let Some(var) = var_opt {
-                    context.set_var(var, AwkValue::from_str_num(line));
+                    context.set_var(var, AwkValue::from_str_num(record));
                 } else {
-                    context.update_record(&line);
+                    context.update_record(&record)?;
                 }
                 AwkValue::Number(1.0)
             } else {
@@ -543,139 +480,177 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
             }
         }
         Expr::FunctionCall(name, args) => {
-            if let Some(val) = builtins::dispatch_builtin(name, args, context) {
-                return val;
+            if let Some(val) = builtins::dispatch_builtin(name, args, context)? {
+                return Ok(val);
             }
             // Not a builtin: user-defined function fallback (semantica invariata).
             if let Some((params, body)) = context.functions.get(name).cloned() {
+                if args.len() > params.len() {
+                    return Err(FlowControl::Error(format!("too many arguments to {name}")));
+                }
                 let mut local_scope = std::collections::HashMap::new();
+                let mut aliases = std::collections::HashMap::new();
+                let mut owned = Vec::new();
                 for (i, param) in params.iter().enumerate() {
-                    let arg_val = if i < args.len() {
-                        eval_expr(&args[i], context)
+                    let is_array = context
+                        .array_params
+                        .get(name)
+                        .is_some_and(|set| set.contains(param))
+                        || matches!(args.get(i),Some(Expr::Variable(v)) if context.array(v).is_some());
+                    if is_array {
+                        let actual = if let Some(arg) = args.get(i) {
+                            let Expr::Variable(v) = arg else {
+                                return Err(FlowControl::Error(format!(
+                                    "{name}: array argument required"
+                                )));
+                            };
+                            if context.get_var(v) != AwkValue::Uninitialized {
+                                return Err(FlowControl::Error(format!("{v} is a scalar")));
+                            }
+                            context.array_name(v)
+                        } else {
+                            let name = format!("@{}:{param}", context.local_scopes.len());
+                            owned.push(name.clone());
+                            name
+                        };
+                        context.arrays.entry(actual.clone()).or_default();
+                        aliases.insert(param.clone(), actual);
                     } else {
-                        AwkValue::Uninitialized
-                    };
-                    local_scope.insert(param.clone(), arg_val);
+                        let value = if let Some(arg) = args.get(i) {
+                            eval_expr(arg, context)?
+                        } else {
+                            AwkValue::Uninitialized
+                        };
+                        local_scope.insert(param.clone(), value);
+                    }
                 }
                 context.local_scopes.push(local_scope);
+                context.array_scopes.push(aliases);
                 let fc = execute_action(&body, context);
                 context.local_scopes.pop();
-                if let FlowControl::Return(val) = fc {
-                    return val;
+                context.array_scopes.pop();
+                for name in owned {
+                    context.arrays.remove(&name);
                 }
-                if matches!(fc, FlowControl::Exit(_) | FlowControl::NextFile) {
-                    if let FlowControl::Exit(code) = fc {
-                        context.exit_pending = Some(code);
-                    } else {
-                        context.nextfile_pending = true;
-                    }
+                if let FlowControl::Return(val) = fc {
+                    return Ok(val);
+                }
+                if fc != FlowControl::None {
+                    return Err(fc);
                 }
                 AwkValue::Uninitialized
             } else {
-                eprintln!(
-                    "rawk: warning: unknown function '{}' (returning empty)",
-                    name
-                );
-                AwkValue::Uninitialized
+                return Err(FlowControl::Error(format!("unknown function '{name}'")));
             }
         }
         Expr::Ternary(cond, true_expr, false_expr) => {
-            if eval_expr(cond, context).is_truthy() {
-                eval_expr(true_expr, context)
+            if eval_expr(cond, context)?.is_truthy() {
+                eval_expr(true_expr, context)?
             } else {
-                eval_expr(false_expr, context)
+                eval_expr(false_expr, context)?
             }
         }
-        Expr::PreInc(e) => {
-            let val = eval_expr(e, context);
-            let new_val = val.add(&AwkValue::Number(1.0));
-            if let Expr::Variable(v) = &**e {
-                context.set_var(v, new_val.clone());
-            } else if let Expr::ArrayAccess(arr, ks) = &**e {
-                let key = eval_array_key(ks, context);
-                context.set_array_var(arr, &key, new_val.clone());
-            }
-            new_val
+        Expr::Assign(lhs, op, rhs) => {
+            let target = target(lhs, context)?;
+            let old = target.get(context);
+            let value = eval_expr(rhs, context)?;
+            let value = match op {
+                None => value,
+                Some(BinaryOperator::Add) => old.add(&value),
+                Some(BinaryOperator::Sub) => old.sub(&value),
+                Some(BinaryOperator::Mul) => old.mul(&value),
+                Some(BinaryOperator::Div) if value.as_number() == 0.0 => {
+                    return Err(FlowControl::Error("division by zero".into()));
+                }
+                Some(BinaryOperator::Div) => old.div(&value),
+                Some(BinaryOperator::Mod) if value.as_number() == 0.0 => {
+                    return Err(FlowControl::Error("division by zero in mod".into()));
+                }
+                Some(BinaryOperator::Mod) => old.rem(&value),
+                Some(BinaryOperator::Pow) => old.pow(&value),
+                _ => unreachable!(),
+            };
+            target.set(context, value.clone())?;
+            value
         }
-        Expr::PostInc(e) => {
-            let val = eval_expr(e, context);
-            let new_val = val.add(&AwkValue::Number(1.0));
-            if let Expr::Variable(v) = &**e {
-                context.set_var(v, new_val);
-            } else if let Expr::ArrayAccess(arr, ks) = &**e {
-                let key = eval_array_key(ks, context);
-                context.set_array_var(arr, &key, new_val);
+        Expr::PreInc(e) | Expr::PostInc(e) | Expr::PreDec(e) | Expr::PostDec(e) => {
+            let target = target(e, context)?;
+            let old = target.get(context);
+            let increment = if matches!(expr, Expr::PreDec(_) | Expr::PostDec(_)) {
+                -1.0
+            } else {
+                1.0
+            };
+            let value = old.add(&AwkValue::Number(increment));
+            target.set(context, value.clone())?;
+            if matches!(expr, Expr::PostInc(_) | Expr::PostDec(_)) {
+                old
+            } else {
+                value
             }
-            val
-        }
-        Expr::PreDec(e) => {
-            let val = eval_expr(e, context);
-            let new_val = val.sub(&AwkValue::Number(1.0));
-            if let Expr::Variable(v) = &**e {
-                context.set_var(v, new_val.clone());
-            } else if let Expr::ArrayAccess(arr, ks) = &**e {
-                let key = eval_array_key(ks, context);
-                context.set_array_var(arr, &key, new_val.clone());
-            }
-            new_val
-        }
-        Expr::PostDec(e) => {
-            let val = eval_expr(e, context);
-            let new_val = val.sub(&AwkValue::Number(1.0));
-            if let Expr::Variable(v) = &**e {
-                context.set_var(v, new_val);
-            } else if let Expr::ArrayAccess(arr, ks) = &**e {
-                let key = eval_array_key(ks, context);
-                context.set_array_var(arr, &key, new_val);
-            }
-            val
         }
         Expr::Not(e) => {
-            let val = eval_expr(e, context);
+            let val = eval_expr(e, context)?;
             AwkValue::Number(if val.is_truthy() { 0.0 } else { 1.0 })
         }
         Expr::UnaryMinus(e) => {
-            let val = eval_expr(e, context).as_number();
+            let val = eval_expr(e, context)?.as_number();
             AwkValue::Number(-val)
         }
         Expr::UnaryPlus(e) => {
-            let val = eval_expr(e, context).as_number();
+            let val = eval_expr(e, context)?.as_number();
             AwkValue::Number(val)
         }
         Expr::BinaryOp(lhs, op, rhs) => {
-            let l_val = eval_expr(lhs, context);
-            let r_val = eval_expr(rhs, context);
+            let l_val = eval_expr(lhs, context)?;
+            if *op == BinaryOperator::And && !l_val.is_truthy() {
+                return Ok(AwkValue::Number(0.0));
+            }
+            if *op == BinaryOperator::Or && l_val.is_truthy() {
+                return Ok(AwkValue::Number(1.0));
+            }
+            let r_val = if *op == BinaryOperator::In {
+                AwkValue::Uninitialized
+            } else {
+                eval_expr(rhs, context)?
+            };
             match op {
                 BinaryOperator::Add => l_val.add(&r_val),
                 BinaryOperator::Sub => l_val.sub(&r_val),
                 BinaryOperator::Mul => l_val.mul(&r_val),
+                BinaryOperator::Div if r_val.as_number() == 0.0 => {
+                    return Err(FlowControl::Error("division by zero".into()));
+                }
                 BinaryOperator::Div => l_val.div(&r_val),
+                BinaryOperator::Mod if r_val.as_number() == 0.0 => {
+                    return Err(FlowControl::Error("division by zero in mod".into()));
+                }
                 BinaryOperator::Mod => l_val.rem(&r_val),
                 BinaryOperator::Pow => l_val.pow(&r_val),
-                BinaryOperator::Eq => l_val.is_eq(&r_val),
-                BinaryOperator::Neq => {
-                    AwkValue::Number(if l_val.is_eq(&r_val).as_number() == 1.0 {
+                BinaryOperator::Eq => l_val.is_eq(&r_val, &context.convfmt),
+                BinaryOperator::Neq => AwkValue::Number(
+                    if l_val.is_eq(&r_val, &context.convfmt).as_number() == 1.0 {
                         0.0
                     } else {
                         1.0
-                    })
-                }
-                BinaryOperator::Lt => l_val.is_lt(&r_val),
-                BinaryOperator::Gt => l_val.is_gt(&r_val),
-                BinaryOperator::Lte => {
-                    AwkValue::Number(if l_val.is_gt(&r_val).as_number() == 1.0 {
+                    },
+                ),
+                BinaryOperator::Lt => l_val.is_lt(&r_val, &context.convfmt),
+                BinaryOperator::Gt => l_val.is_gt(&r_val, &context.convfmt),
+                BinaryOperator::Lte => AwkValue::Number(
+                    if l_val.is_gt(&r_val, &context.convfmt).as_number() == 1.0 {
                         0.0
                     } else {
                         1.0
-                    })
-                }
-                BinaryOperator::Gte => {
-                    AwkValue::Number(if l_val.is_lt(&r_val).as_number() == 1.0 {
+                    },
+                ),
+                BinaryOperator::Gte => AwkValue::Number(
+                    if l_val.is_lt(&r_val, &context.convfmt).as_number() == 1.0 {
                         0.0
                     } else {
                         1.0
-                    })
-                }
+                    },
+                ),
                 BinaryOperator::And => {
                     AwkValue::Number(if l_val.is_truthy() && r_val.is_truthy() {
                         1.0
@@ -694,7 +669,7 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                     } else {
                         std::borrow::Cow::Owned(r_val.as_string())
                     };
-                    let re = context.compile_or_get_regex(&re_bytes);
+                    let re = context.compile_or_get_regex(&re_bytes)?;
                     let subject = l_val.as_string();
                     AwkValue::Number(if re.is_match(&subject) { 1.0 } else { 0.0 })
                 }
@@ -704,21 +679,21 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                     } else {
                         std::borrow::Cow::Owned(r_val.as_string())
                     };
-                    let re = context.compile_or_get_regex(&re_bytes);
+                    let re = context.compile_or_get_regex(&re_bytes)?;
                     let subject = l_val.as_string();
                     AwkValue::Number(if re.is_match(&subject) { 0.0 } else { 1.0 })
                 }
                 BinaryOperator::In => {
-                    let key = l_val.as_string();
+                    let key = l_val.as_string_convfmt(&context.convfmt);
                     let arr_name = if let Expr::Variable(v) = &**rhs {
                         v.clone()
                     } else {
                         "".to_string()
                     };
+                    context.ensure_array(&arr_name)?;
                     AwkValue::Number(
                         if context
-                            .arrays
-                            .get(&arr_name)
+                            .array(&arr_name)
                             .map(|a| a.contains_key(key.as_slice()))
                             .unwrap_or(false)
                         {
@@ -730,41 +705,41 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> AwkValue {
                 }
             }
         }
-    }
+    })
 }
 
 fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowControl {
-    for stmt in action {
-        if context.nextfile_pending {
-            return FlowControl::NextFile;
-        }
-        if let Some(code) = context.exit_pending {
-            return FlowControl::Exit(code);
-        }
+    execute_action_inner(action, context).unwrap_or_else(|flow| flow)
+}
 
+fn execute_action_inner(
+    action: &[Statement],
+    context: &mut EvalContext,
+) -> Result<FlowControl, FlowControl> {
+    for stmt in action {
         match stmt {
-            Statement::Break => return FlowControl::Break,
-            Statement::Continue => return FlowControl::Continue,
-            Statement::Next => return FlowControl::Next,
-            Statement::NextFile => return FlowControl::NextFile,
+            Statement::Break => return Ok(FlowControl::Break),
+            Statement::Continue => return Ok(FlowControl::Continue),
+            Statement::Next => return Ok(FlowControl::Next),
+            Statement::NextFile => return Ok(FlowControl::NextFile),
             Statement::Return(expr_opt) => {
                 let val = if let Some(expr) = expr_opt {
-                    eval_expr(expr, context)
+                    eval_expr(expr, context)?
                 } else {
                     AwkValue::Uninitialized
                 };
-                return FlowControl::Return(val);
+                return Ok(FlowControl::Return(val));
             }
             Statement::Exit(expr_opt) => {
                 let code = if let Some(expr) = expr_opt {
-                    eval_expr(expr, context).as_number() as i32
+                    eval_expr(expr, context)?.as_number() as i32
                 } else {
-                    0
+                    context.exit_code
                 };
-                return FlowControl::Exit(code);
+                return Ok(FlowControl::Exit(code));
             }
             Statement::While(cond, block) => {
-                while eval_expr(cond, context).is_truthy() {
+                while eval_expr(cond, context)?.is_truthy() {
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break {
                         break;
@@ -773,10 +748,13 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                         continue;
                     }
                     if fc == FlowControl::Next || fc == FlowControl::NextFile {
-                        return fc;
+                        return Ok(fc);
                     }
-                    if let FlowControl::Exit(_) = fc {
-                        return fc;
+                    if matches!(
+                        fc,
+                        FlowControl::Exit(_) | FlowControl::Return(_) | FlowControl::Error(_)
+                    ) {
+                        return Ok(fc);
                     }
                 }
             }
@@ -786,19 +764,22 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                     break;
                 }
                 if fc == FlowControl::Next || fc == FlowControl::NextFile {
-                    return fc;
+                    return Ok(fc);
                 }
-                if let FlowControl::Exit(_) = fc {
-                    return fc;
+                if matches!(
+                    fc,
+                    FlowControl::Exit(_) | FlowControl::Return(_) | FlowControl::Error(_)
+                ) {
+                    return Ok(fc);
                 }
-                if !eval_expr(cond, context).is_truthy() {
+                if !eval_expr(cond, context)?.is_truthy() {
                     break;
                 }
             },
             Statement::ForIn(key_name, arr_name, block) => {
+                context.ensure_array(arr_name)?;
                 let keys: Vec<Vec<u8>> = context
-                    .arrays
-                    .get(arr_name)
+                    .array(arr_name)
                     .map(|arr| arr.keys().cloned().collect())
                     .unwrap_or_default();
 
@@ -812,20 +793,26 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                         continue;
                     }
                     if fc == FlowControl::Next || fc == FlowControl::NextFile {
-                        return fc;
+                        return Ok(fc);
                     }
-                    if let FlowControl::Exit(_) = fc {
-                        return fc;
+                    if matches!(
+                        fc,
+                        FlowControl::Exit(_) | FlowControl::Return(_) | FlowControl::Error(_)
+                    ) {
+                        return Ok(fc);
                     }
                 }
             }
             Statement::For(init, cond, step, block) => {
                 if let Some(i) = init {
-                    execute_action(&[i.as_ref().clone()], context);
+                    let flow = execute_action(std::slice::from_ref(i), context);
+                    if flow != FlowControl::None {
+                        return Ok(flow);
+                    }
                 }
                 loop {
                     if let Some(c) = cond
-                        && !eval_expr(c, context).is_truthy()
+                        && !eval_expr(c, context)?.is_truthy()
                     {
                         break;
                     }
@@ -837,86 +824,80 @@ fn execute_action(action: &[Statement], context: &mut EvalContext) -> FlowContro
                         || fc == FlowControl::Next
                         || fc == FlowControl::NextFile
                     {
-                        return fc;
+                        return Ok(fc);
                     }
-                    if let FlowControl::Exit(_) = fc {
-                        return fc;
+                    if matches!(
+                        fc,
+                        FlowControl::Exit(_) | FlowControl::Return(_) | FlowControl::Error(_)
+                    ) {
+                        return Ok(fc);
                     }
                     // FlowControl::Continue just continues
                     if let Some(s) = step {
-                        execute_action(&[s.as_ref().clone()], context);
+                        let flow = execute_action(std::slice::from_ref(s), context);
+                        if flow != FlowControl::None {
+                            return Ok(flow);
+                        }
                     }
                 }
             }
             Statement::IfElse(cond, true_branch, false_branch) => {
-                let cond_val = eval_expr(cond, context);
+                let cond_val = eval_expr(cond, context)?;
                 if cond_val.is_truthy() {
                     let fc = execute_action(true_branch, context);
                     if fc != FlowControl::None {
-                        return fc;
+                        return Ok(fc);
                     }
                 } else if let Some(fb) = false_branch {
                     let fc = execute_action(fb, context);
                     if fc != FlowControl::None {
-                        return fc;
+                        return Ok(fc);
                     }
                 }
             }
             Statement::Printf(exprs, redirect) => {
                 if !exprs.is_empty() {
-                    let format_str = eval_expr(&exprs[0], context).as_string();
-                    let args: Vec<AwkValue> =
-                        exprs[1..].iter().map(|e| eval_expr(e, context)).collect();
-                    let formatted: Vec<u8> = fmt::awk_sprintf(&format_str, &args);
-                    if let Err(e) = io::handle_output(&formatted, redirect, context) {
-                        eprintln!("rawk: {e:#}");
-                        return FlowControl::Exit(2);
-                    }
+                    let format_str = eval_expr(&exprs[0], context)?.as_string();
+                    let args: Vec<AwkValue> = exprs[1..]
+                        .iter()
+                        .map(|e| eval_expr(e, context))
+                        .collect::<Result<_, _>>()?;
+                    let formatted: Vec<u8> =
+                        fmt::awk_sprintf(&format_str, &args, &context.convfmt)?;
+                    io::handle_output(&formatted, redirect, context)?;
                 }
             }
             Statement::Print(exprs, redirect) => {
                 let mut out: Vec<Vec<u8>> = Vec::new();
                 let ofmt = context.ofmt.clone();
                 for e in exprs {
-                    out.push(eval_expr(e, context).as_string_convfmt(&ofmt));
+                    out.push(eval_expr(e, context)?.as_string_convfmt(&ofmt));
                 }
                 let ofs = context.get_var("OFS").as_string();
                 let ors = context.get_var("ORS").as_string();
                 let mut output = out.join(ofs.as_slice());
                 output.extend_from_slice(&ors);
-                if let Err(e) = io::handle_output(&output, redirect, context) {
-                    eprintln!("rawk: {e:#}");
-                    return FlowControl::Exit(2);
-                }
-            }
-            Statement::Assign(var_name, expr) => {
-                let val = eval_expr(expr, context);
-                context.set_var(var_name, val);
-            }
-            Statement::AssignArray(arr_name, key_exprs, val_expr) => {
-                let key = eval_array_key(key_exprs, context);
-                let val = eval_expr(val_expr, context);
-                context.set_array_var(arr_name, &key, val);
-            }
-            Statement::AssignField(field_expr, val_expr) => {
-                let f_idx = eval_expr(field_expr, context).as_number() as usize;
-                let val = eval_expr(val_expr, context);
-                context.set_field(f_idx, val);
+                io::handle_output(&output, redirect, context)?;
             }
             Statement::Delete(arr_name, keys_opt) => {
+                context.ensure_array(arr_name)?;
                 if let Some(keys) = keys_opt {
-                    let key = eval_array_key(keys, context);
-                    if let Some(arr) = context.arrays.get_mut(arr_name) {
+                    let key = eval_array_key(keys, context)?;
+                    if let Some(arr) = context.arrays.get_mut(&context.array_name(arr_name)) {
                         arr.remove(&key);
                     }
                 } else {
-                    context.arrays.remove(arr_name);
+                    context
+                        .arrays
+                        .entry(context.array_name(arr_name))
+                        .or_default()
+                        .clear();
                 }
             }
             Statement::Expr(e) => {
-                eval_expr(e, context);
+                eval_expr(e, context)?;
             }
         }
     }
-    FlowControl::None
+    Ok(FlowControl::None)
 }

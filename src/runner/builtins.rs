@@ -11,8 +11,8 @@
 use crate::ast::Expr;
 use crate::types::{AwkValue, EvalContext, InputStream, OutputStream};
 
-use super::eval_expr;
 use super::fmt::awk_sprintf;
+use super::{FlowControl, eval_expr};
 
 fn expand_awk_replacement(repl: &[u8], whole: &[u8]) -> Vec<u8> {
     let mut out = Vec::with_capacity(repl.len() + whole.len());
@@ -51,14 +51,14 @@ pub(super) fn dispatch_builtin(
     name: &str,
     args: &[Expr],
     context: &mut EvalContext,
-) -> Option<AwkValue> {
+) -> Result<Option<AwkValue>, FlowControl> {
     let value = match name {
         "length" => {
             // length() POSIX byte-count: opera direttamente sui byte.
             let n = if args.is_empty() {
                 context.record.len()
             } else {
-                eval_expr(&args[0], context).as_string().len()
+                eval_expr(&args[0], context)?.as_string().len()
             };
             AwkValue::Number(n as f64)
         }
@@ -66,7 +66,7 @@ pub(super) fn dispatch_builtin(
             let s = if args.is_empty() {
                 Vec::new()
             } else {
-                eval_expr(&args[0], context).as_string()
+                eval_expr(&args[0], context)?.as_string()
             };
             AwkValue::String(s.to_ascii_lowercase())
         }
@@ -74,15 +74,15 @@ pub(super) fn dispatch_builtin(
             let s = if args.is_empty() {
                 Vec::new()
             } else {
-                eval_expr(&args[0], context).as_string()
+                eval_expr(&args[0], context)?.as_string()
             };
             AwkValue::String(s.to_ascii_uppercase())
         }
         "substr" => {
-            let s = eval_expr(&args[0], context).as_string();
-            let start = eval_expr(&args[1], context).as_number() as usize;
+            let s = eval_expr(&args[0], context)?.as_string();
+            let start = eval_expr(&args[1], context)?.as_number() as usize;
             let len = if args.len() > 2 {
-                eval_expr(&args[2], context).as_number() as usize
+                eval_expr(&args[2], context)?.as_number() as usize
             } else {
                 s.len()
             };
@@ -92,8 +92,8 @@ pub(super) fn dispatch_builtin(
             AwkValue::String(sub)
         }
         "index" => {
-            let s = eval_expr(&args[0], context).as_string();
-            let t = eval_expr(&args[1], context).as_string();
+            let s = eval_expr(&args[0], context)?.as_string();
+            let t = eval_expr(&args[1], context)?.as_string();
             // index byte-based: ricerca sub-slice sui byte (design Phase 7).
             let idx = if t.is_empty() {
                 1
@@ -105,15 +105,15 @@ pub(super) fn dispatch_builtin(
             };
             AwkValue::Number(idx as f64)
         }
-        "sin" => AwkValue::Number(eval_expr(&args[0], context).as_number().sin()),
-        "cos" => AwkValue::Number(eval_expr(&args[0], context).as_number().cos()),
-        "exp" => AwkValue::Number(eval_expr(&args[0], context).as_number().exp()),
-        "log" => AwkValue::Number(eval_expr(&args[0], context).as_number().ln()),
-        "sqrt" => AwkValue::Number(eval_expr(&args[0], context).as_number().sqrt()),
-        "int" => AwkValue::Number(eval_expr(&args[0], context).as_number().trunc()),
+        "sin" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().sin()),
+        "cos" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().cos()),
+        "exp" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().exp()),
+        "log" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().ln()),
+        "sqrt" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().sqrt()),
+        "int" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().trunc()),
         "atan2" => {
-            let y = eval_expr(&args[0], context).as_number();
-            let x = eval_expr(&args[1], context).as_number();
+            let y = eval_expr(&args[0], context)?.as_number();
+            let x = eval_expr(&args[1], context)?.as_number();
             AwkValue::Number(y.atan2(x))
         }
         "rand" => {
@@ -130,7 +130,7 @@ pub(super) fn dispatch_builtin(
                     .unwrap()
                     .as_secs()
             } else {
-                eval_expr(&args[0], context).as_number() as u64
+                eval_expr(&args[0], context)?.as_number() as u64
             };
             context.rng = rand::rngs::StdRng::seed_from_u64(new_seed);
             context.set_var("RAND_SEED", AwkValue::Number(new_seed as f64));
@@ -147,10 +147,10 @@ pub(super) fn dispatch_builtin(
             let format = if args.is_empty() {
                 "%Y-%m-%d %H:%M:%S".to_string()
             } else {
-                String::from_utf8_lossy(&eval_expr(&args[0], context).as_string()).into_owned()
+                String::from_utf8_lossy(&eval_expr(&args[0], context)?.as_string()).into_owned()
             };
             let timestamp = if args.len() > 1 {
-                eval_expr(&args[1], context).as_number() as i64
+                eval_expr(&args[1], context)?.as_number() as i64
             } else {
                 std::time::SystemTime::now()
                     .duration_since(std::time::UNIX_EPOCH)
@@ -158,43 +158,57 @@ pub(super) fn dispatch_builtin(
                     .as_secs() as i64
             };
             if let Some(dt) = chrono::DateTime::from_timestamp(timestamp, 0) {
-                AwkValue::String(dt.format(&format).to_string().into_bytes())
+                {
+                    use std::fmt::Write;
+                    let mut result = String::new();
+                    write!(&mut result, "{}", dt.format(&format))
+                        .map_err(|_| FlowControl::Error("invalid strftime format".into()))?;
+                    AwkValue::String(result.into_bytes())
+                }
             } else {
                 AwkValue::String(Vec::new())
             }
         }
         "and" => {
-            let v1 = eval_expr(&args[0], context).as_number() as i64;
-            let v2 = eval_expr(&args[1], context).as_number() as i64;
+            let v1 = eval_expr(&args[0], context)?.as_number() as i64;
+            let v2 = eval_expr(&args[1], context)?.as_number() as i64;
             AwkValue::Number((v1 & v2) as f64)
         }
         "or" => {
-            let v1 = eval_expr(&args[0], context).as_number() as i64;
-            let v2 = eval_expr(&args[1], context).as_number() as i64;
+            let v1 = eval_expr(&args[0], context)?.as_number() as i64;
+            let v2 = eval_expr(&args[1], context)?.as_number() as i64;
             AwkValue::Number((v1 | v2) as f64)
         }
         "xor" => {
-            let v1 = eval_expr(&args[0], context).as_number() as i64;
-            let v2 = eval_expr(&args[1], context).as_number() as i64;
+            let v1 = eval_expr(&args[0], context)?.as_number() as i64;
+            let v2 = eval_expr(&args[1], context)?.as_number() as i64;
             AwkValue::Number((v1 ^ v2) as f64)
         }
         "lshift" => {
-            let v1 = eval_expr(&args[0], context).as_number() as i64;
-            let v2 = eval_expr(&args[1], context).as_number() as i64;
-            AwkValue::Number((v1 << v2) as f64)
+            let v1 = eval_expr(&args[0], context)?.as_number() as i64;
+            let v2 = eval_expr(&args[1], context)?.as_number() as i64;
+            AwkValue::Number(
+                v1.checked_shl(u32::try_from(v2).unwrap_or(u32::MAX))
+                    .ok_or_else(|| FlowControl::Error("invalid shift count".into()))?
+                    as f64,
+            )
         }
         "rshift" => {
-            let v1 = eval_expr(&args[0], context).as_number() as i64;
-            let v2 = eval_expr(&args[1], context).as_number() as i64;
-            AwkValue::Number((v1 >> v2) as f64)
+            let v1 = eval_expr(&args[0], context)?.as_number() as i64;
+            let v2 = eval_expr(&args[1], context)?.as_number() as i64;
+            AwkValue::Number(
+                v1.checked_shr(u32::try_from(v2).unwrap_or(u32::MAX))
+                    .ok_or_else(|| FlowControl::Error("invalid shift count".into()))?
+                    as f64,
+            )
         }
         "system" => {
             if args.is_empty() {
-                return Some(AwkValue::Number(0.0));
+                return Ok(Some(AwkValue::Number(0.0)));
             }
             // Comando shell: convertito a String per Command::arg.
             let cmd =
-                String::from_utf8_lossy(&eval_expr(&args[0], context).as_string()).into_owned();
+                String::from_utf8_lossy(&eval_expr(&args[0], context)?.as_string()).into_owned();
             use std::io::Write;
             let _ = std::io::stdout().flush();
             let status = std::process::Command::new("sh")
@@ -202,18 +216,18 @@ pub(super) fn dispatch_builtin(
                 .arg(&cmd)
                 .status();
             let code = match status {
-                Ok(s) => s.code().unwrap_or(-1),
+                Ok(s) => process_status(s),
                 Err(_) => -1,
             };
             AwkValue::Number(code as f64)
         }
         "close" => {
             if args.is_empty() {
-                return Some(AwkValue::Number(-1.0));
+                return Ok(Some(AwkValue::Number(-1.0)));
             }
             // Chiave file/pipe: resta String (path domain, design R3).
             let target =
-                String::from_utf8_lossy(&eval_expr(&args[0], context).as_string()).into_owned();
+                String::from_utf8_lossy(&eval_expr(&args[0], context)?.as_string()).into_owned();
             let mut status: i32 = 0;
             let mut found = false;
 
@@ -255,7 +269,7 @@ pub(super) fn dispatch_builtin(
             let target = if args.is_empty() {
                 String::new()
             } else {
-                String::from_utf8_lossy(&eval_expr(&args[0], context).as_string()).into_owned()
+                String::from_utf8_lossy(&eval_expr(&args[0], context)?.as_string()).into_owned()
             };
 
             if target.is_empty() {
@@ -278,20 +292,23 @@ pub(super) fn dispatch_builtin(
         }
         "sprintf" => {
             if args.is_empty() {
-                return Some(AwkValue::String(Vec::new()));
+                return Ok(Some(AwkValue::String(Vec::new())));
             }
-            let fmt = eval_expr(&args[0], context).as_string();
-            let vals: Vec<AwkValue> = args[1..].iter().map(|e| eval_expr(e, context)).collect();
-            AwkValue::String(awk_sprintf(&fmt, &vals))
+            let fmt = eval_expr(&args[0], context)?.as_string();
+            let vals: Vec<AwkValue> = args[1..]
+                .iter()
+                .map(|e| eval_expr(e, context))
+                .collect::<Result<_, _>>()?;
+            AwkValue::String(awk_sprintf(&fmt, &vals, &context.convfmt)?)
         }
         "match" => {
-            let s = eval_expr(&args[0], context).as_string();
+            let s = eval_expr(&args[0], context)?.as_string();
             let re_bytes: std::borrow::Cow<[u8]> = if let Expr::RegexLiteral(re) = &args[1] {
                 std::borrow::Cow::Borrowed(re.as_slice())
             } else {
-                std::borrow::Cow::Owned(eval_expr(&args[1], context).as_string())
+                std::borrow::Cow::Owned(eval_expr(&args[1], context)?.as_string())
             };
-            let re = context.compile_or_get_regex(&re_bytes);
+            let re = context.compile_or_get_regex(&re_bytes)?;
             if let Some(m) = re.find(&s) {
                 context.set_var("RSTART", AwkValue::Number(m.start() as f64 + 1.0));
                 context.set_var("RLENGTH", AwkValue::Number(m.len() as f64));
@@ -303,23 +320,32 @@ pub(super) fn dispatch_builtin(
             }
         }
         "split" => {
-            let s = eval_expr(&args[0], context).as_string();
+            let s = eval_expr(&args[0], context)?.as_string();
             let arr_name = if let Expr::Variable(v) = &args[1] {
                 v.clone()
             } else {
-                "err".to_string()
+                return Err(FlowControl::Error("split requires an array name".into()));
             };
+            context.ensure_array(&arr_name)?;
             let fs_bytes: Vec<u8> = if args.len() > 2 {
                 if let Expr::RegexLiteral(re) = &args[2] {
                     re.clone()
                 } else {
-                    eval_expr(&args[2], context).as_string()
+                    eval_expr(&args[2], context)?.as_string()
                 }
             } else {
                 context.fs.clone()
             };
-            let re = context.compile_or_get_regex(&fs_bytes);
-            let parts: Vec<&[u8]> = re.split(&s).filter(|x| !x.is_empty()).collect();
+            let parts = if context.csv && args.len() == 2 {
+                crate::input::csv_fields(&s)
+            } else {
+                crate::ere::split(&s, &fs_bytes).map_err(FlowControl::Error)?
+            };
+            context
+                .arrays
+                .entry(context.array_name(&arr_name))
+                .or_default()
+                .clear();
             let count = parts.len();
             for (i, p) in parts.iter().enumerate() {
                 let key = format!("{}", i + 1);
@@ -335,57 +361,62 @@ pub(super) fn dispatch_builtin(
             let r_bytes: Vec<u8> = if let Expr::RegexLiteral(re) = &args[0] {
                 re.clone()
             } else {
-                eval_expr(&args[0], context).as_string()
+                eval_expr(&args[0], context)?.as_string()
             };
-            let s_bytes = eval_expr(&args[1], context).as_string();
+            let s_bytes = eval_expr(&args[1], context)?.as_string();
             let is_gsub = name == "gsub";
-            let target: Vec<u8> = if args.len() > 2 {
-                eval_expr(&args[2], context).as_string()
+            let destination = if let Some(expr) = args.get(2) {
+                super::target(expr, context)?
             } else {
-                context.record.clone()
+                super::Target::Field(0)
             };
-            let re = context.compile_or_get_regex(&r_bytes);
-
-            let new_val: Vec<u8> = if is_gsub {
-                re.replace_all(&target, |caps: &regex::bytes::Captures| {
-                    expand_awk_replacement(&s_bytes, caps.get(0).unwrap().as_bytes())
-                })
-                .into_owned()
-            } else {
-                re.replace(&target, |caps: &regex::bytes::Captures| {
-                    expand_awk_replacement(&s_bytes, caps.get(0).unwrap().as_bytes())
-                })
-                .into_owned()
-            };
-            let changed = new_val != target;
-
-            if args.len() > 2 {
-                match &args[2] {
-                    Expr::Variable(v) => context.set_var(v, AwkValue::String(new_val)),
-                    Expr::Field(e) => {
-                        let f_idx = eval_expr(e, context).as_number() as usize;
-                        context.set_field(f_idx, AwkValue::String(new_val));
-                    }
-                    Expr::ArrayAccess(arr, ks) => {
-                        let mut joined: Vec<u8> = Vec::new();
-                        let subsep = context.get_var("SUBSEP").as_string();
-                        for (i, k) in ks.iter().enumerate() {
-                            if i > 0 {
-                                joined.extend_from_slice(&subsep);
-                            }
-                            joined.extend_from_slice(&eval_expr(k, context).as_string());
-                        }
-                        context.set_array_var(arr, &joined, AwkValue::String(new_val));
-                    }
-                    _ => {}
+            let target = destination.get(context).as_string();
+            let re = context.compile_or_get_regex(&r_bytes)?;
+            let mut new_val = Vec::new();
+            let mut last = 0;
+            let mut search = 0;
+            let mut count = 0;
+            let mut previous_nonempty_end = None;
+            while search <= target.len() {
+                let Some(m) = re.find_at(&target, search) else {
+                    break;
+                };
+                // An empty match immediately following a nonempty one is not a second replacement.
+                if m.is_empty() && previous_nonempty_end == Some(m.start()) {
+                    search = m.end() + 1;
+                    continue;
                 }
-            } else {
-                context.update_record(&new_val);
+                new_val.extend_from_slice(&target[last..m.start()]);
+                new_val.extend(expand_awk_replacement(&s_bytes, m.as_bytes()));
+                count += 1;
+                last = m.end();
+                previous_nonempty_end = if m.is_empty() { None } else { Some(m.end()) };
+                search = m.end() + usize::from(m.is_empty());
+                if !is_gsub {
+                    break;
+                }
             }
-
-            AwkValue::Number(if changed { 1.0 } else { 0.0 })
+            new_val.extend_from_slice(&target[last..]);
+            if count > 0 {
+                destination.set(context, AwkValue::String(new_val))?;
+            }
+            AwkValue::Number(count as f64)
         }
-        _ => return None,
+        _ => return Ok(None),
     };
-    Some(value)
+    Ok(Some(value))
+}
+
+fn process_status(status: std::process::ExitStatus) -> i32 {
+    if let Some(code) = status.code() {
+        return code;
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::process::ExitStatusExt;
+        if let Some(signal) = status.signal() {
+            return 256 + signal + if status.core_dumped() { 256 } else { 0 };
+        }
+    }
+    -1
 }

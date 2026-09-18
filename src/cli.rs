@@ -43,6 +43,14 @@ pub struct Config {
 
 impl Config {
     pub fn parse_cli() -> Self {
-        Config::parse()
+        let args =
+            std::env::args_os().map(|arg| if arg == "-safe" { "--safe".into() } else { arg });
+        let mut config = Config::parse_from(args);
+        if !config.program_files.is_empty()
+            && let Some(first_input) = config.program.take()
+        {
+            config.input_files.insert(0, first_input);
+        }
+        config
     }
 }

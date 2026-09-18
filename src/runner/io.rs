@@ -22,12 +22,12 @@ pub(super) fn handle_output(
     output: &[u8],
     redirect: &Option<(String, Expr)>,
     context: &mut EvalContext,
-) -> anyhow::Result<()> {
+) -> Result<(), super::FlowControl> {
     use std::io::Write;
     if let Some((op, file_expr)) = redirect {
         // Path file: resta String (design R3 — i path non sono dati AWK osservabili).
         let filename =
-            String::from_utf8_lossy(&eval_expr(file_expr, context).as_string()).into_owned();
+            String::from_utf8_lossy(&eval_expr(file_expr, context)?.as_string()).into_owned();
         use std::collections::hash_map::Entry;
         use std::fs::OpenOptions;
         let stream = match context.out_files.entry(filename.clone()) {
@@ -85,7 +85,7 @@ pub(super) fn handle_output(
 
 /// Assicura che esista uno stream di input per `filename`. Se assente, prova
 /// ad aprire il file: in caso di errore lo stream resta non registrato e
-/// `getline < filename` ritornerà 0 al chiamante (semantica POSIX awk).
+/// `getline < filename` ritornerà -1 al chiamante.
 pub(super) fn ensure_input_file(filename: &str, context: &mut EvalContext) {
     if context.in_files.contains_key(filename) {
         return;
@@ -93,7 +93,7 @@ pub(super) fn ensure_input_file(filename: &str, context: &mut EvalContext) {
     if let Ok(file) = std::fs::File::open(filename) {
         context.in_files.insert(
             filename.to_string(),
-            InputStream::File(Box::new(std::io::BufReader::new(file))),
+            InputStream::File(Box::new(crate::input::RecordReader::new(file))),
         );
     }
 }
@@ -116,7 +116,7 @@ pub(super) fn ensure_input_pipe(cmd: &str, context: &mut EvalContext) -> bool {
                 .stdout
                 .take()
                 .expect("Stdio::piped garantisce stdout disponibile");
-            let reader = std::io::BufReader::new(stdout);
+            let reader = crate::input::RecordReader::new(stdout);
             context.in_files.insert(
                 cmd.to_string(),
                 InputStream::Pipe {

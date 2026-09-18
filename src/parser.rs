@@ -68,6 +68,7 @@ fn parse_function_decl(pair: Pair<Rule>) -> FunctionDecl {
 fn parse_rule(pair: Pair<Rule>) -> AstRule {
     let mut pattern = None;
     let mut action = Vec::new();
+    let mut has_action = false;
 
     for inner in pair.into_inner() {
         match inner.as_rule() {
@@ -75,6 +76,7 @@ fn parse_rule(pair: Pair<Rule>) -> AstRule {
                 pattern = Some(parse_pattern(inner));
             }
             Rule::action_block => {
+                has_action = true;
                 action = parse_action_block(inner);
             }
             _ => {}
@@ -82,7 +84,7 @@ fn parse_rule(pair: Pair<Rule>) -> AstRule {
     }
 
     // If no action block but we have a pattern, standard awk does print $0
-    if action.is_empty() && pattern.is_some() {
+    if !has_action && pattern.is_some() {
         action.push(Statement::Print(
             vec![Expr::Field(Box::new(Expr::StringLiteral(b"0".to_vec())))],
             None,
@@ -108,6 +110,14 @@ fn parse_pattern(pair: Pair<Rule>) -> Pattern {
         .into_inner()
         .next()
         .expect("pest: Rule::pattern non-special ha sempre un figlio expr o regex_pattern");
+    if inner.as_rule() == Rule::range_pattern {
+        let mut parts = inner.into_inner();
+        return Pattern::Range(
+            parse_expr(parts.next().unwrap()),
+            parse_expr(parts.next().unwrap()),
+        );
+    }
+
     if inner.as_rule() == Rule::regex_pattern {
         let re = inner
             .into_inner()
@@ -304,6 +314,13 @@ fn parse_statement(pair: Pair<Rule>) -> Statement {
                             exprs.push(parse_expr(e));
                         }
                     }
+                    Rule::paren_print_args => {
+                        if let Some(list) = p.into_inner().next() {
+                            for e in list.into_inner() {
+                                exprs.push(parse_expr(e));
+                            }
+                        }
+                    }
                     Rule::redirect => {
                         let p_str = p.as_str();
                         let mut r_inners = p.into_inner();
@@ -359,7 +376,7 @@ fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
         .next()
         .expect("pest: Rule::assign_stmt richiede sempre un operatore di assegnamento")
         .as_str();
-    let mut expr = parse_expr(
+    let expr = parse_expr(
         inners
             .next()
             .expect("pest: Rule::assign_stmt richiede sempre un'expr a destra"),
@@ -375,6 +392,8 @@ fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
         "-=" => Some(BinaryOperator::Sub),
         "*=" => Some(BinaryOperator::Mul),
         "/=" => Some(BinaryOperator::Div),
+        "%=" => Some(BinaryOperator::Mod),
+        "^=" => Some(BinaryOperator::Pow),
         _ => None,
     };
 
@@ -407,24 +426,24 @@ fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
         _ => Expr::Variable("err".to_string()),
     };
 
-    if let Some(op) = op {
-        expr = Expr::BinaryOp(Box::new(target_expr.clone()), op, Box::new(expr));
-    }
-
-    match target_expr {
-        Expr::Variable(v) => Statement::Assign(v, expr),
-        Expr::ArrayAccess(arr, ks) => Statement::AssignArray(arr, ks, expr),
-        Expr::Field(e) => Statement::AssignField(e, expr),
-        _ => Statement::Expr(expr),
-    }
+    Statement::Expr(Expr::Assign(Box::new(target_expr), op, Box::new(expr)))
 }
 
 fn parse_expr(pair: Pair<Rule>) -> Expr {
-    parse_ternary_expr(
-        pair.into_inner()
-            .next()
-            .expect("pest: Rule::expr avvolge sempre un ternary_expr"),
-    )
+    let inner = pair.into_inner().next().unwrap();
+    if matches!(
+        inner.as_rule(),
+        Rule::assignment_expr | Rule::print_assignment_expr
+    ) {
+        if inner.clone().into_inner().next().unwrap().as_rule() == Rule::assignable {
+            if let Statement::Expr(expr) = parse_assign_stmt(inner) {
+                return expr;
+            }
+            unreachable!();
+        }
+        return parse_ternary_expr(inner.into_inner().next().unwrap());
+    }
+    parse_ternary_expr(inner)
 }
 
 fn parse_ternary_expr(pair: Pair<Rule>) -> Expr {
@@ -595,13 +614,13 @@ fn parse_add_expr(pair: Pair<Rule>) -> Expr {
 
 fn parse_mul_expr(pair: Pair<Rule>) -> Expr {
     let mut inners = pair.into_inner();
-    let mut lhs = parse_pow_expr(
+    let mut lhs = parse_unary_expr(
         inners
             .next()
             .expect("pest: Rule::mul_expr inizia sempre con un pow_expr"),
     );
     while let Some(op) = inners.next() {
-        let rhs = parse_pow_expr(
+        let rhs = parse_unary_expr(
             inners
                 .next()
                 .expect("pest: Rule::mul_expr con op_mul/div/mod richiede sempre un rhs"),
@@ -617,6 +636,21 @@ fn parse_mul_expr(pair: Pair<Rule>) -> Expr {
     lhs
 }
 
+fn parse_unary_expr(pair: Pair<Rule>) -> Expr {
+    let mut parts = pair.into_inner();
+    let first = parts.next().unwrap();
+    if first.as_rule() == Rule::pow_expr {
+        return parse_pow_expr(first);
+    }
+    let value = Box::new(parse_unary_expr(parts.next().unwrap()));
+    match first.as_rule() {
+        Rule::op_minus => Expr::UnaryMinus(value),
+        Rule::op_plus => Expr::UnaryPlus(value),
+        Rule::op_not => Expr::Not(value),
+        _ => unreachable!(),
+    }
+}
+
 fn parse_pow_expr(pair: Pair<Rule>) -> Expr {
     let mut inners = pair.into_inner();
     let mut lhs = parse_term(
@@ -625,7 +659,7 @@ fn parse_pow_expr(pair: Pair<Rule>) -> Expr {
             .expect("pest: Rule::pow_expr inizia sempre con un term"),
     );
     if inners.next().is_some() {
-        let rhs = parse_pow_expr(
+        let rhs = parse_unary_expr(
             inners
                 .next()
                 .expect("pest: Rule::pow_expr con op_pow richiede sempre un rhs"),

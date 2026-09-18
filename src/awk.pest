@@ -20,9 +20,10 @@ action_block = { "{" ~ nl* ~ (statement ~ nl*)* ~ "}" }
 function_decl = { "function" ~ ident ~ "(" ~ nl* ~ ident_list? ~ nl* ~ ")" ~ nl* ~ action_block }
 ident_list = { ident ~ (nl* ~ "," ~ nl* ~ ident)* }
 
-pattern = { "BEGINFILE" | "ENDFILE" | "BEGIN" | "END" | regex_pattern | expr }
+pattern = { "BEGINFILE" | "ENDFILE" | "BEGIN" | "END" | range_pattern | expr }
+range_pattern = { expr ~ "," ~ expr }
 regex_pattern = ${ "/" ~ regex_inner ~ "/" }
-regex_inner = @{ (!"/" ~ ANY)* }
+regex_inner = @{ ("\\" ~ ANY | !"/" ~ ANY)* }
 
 statement = {
     (if_stmt |
@@ -52,8 +53,8 @@ for_init = { assign_stmt | expr }
 for_cond = { expr }
 for_step = { assign_stmt | expr }
 delete_stmt = { "delete" ~ ident ~ ("[" ~ nl* ~ expr_list ~ nl* ~ "]")? }
-print_stmt = { "print" ~ print_expr_list? ~ redirect? }
-printf_stmt = { "printf" ~ print_expr_list? ~ redirect? }
+print_stmt = { "print" ~ (print_expr_list | paren_print_args)? ~ redirect? }
+printf_stmt = { "printf" ~ (print_expr_list | paren_print_args)? ~ redirect? }
 break_stmt = { "break" }
 continue_stmt = { "continue" }
 nextfile_stmt = { "nextfile" }
@@ -62,7 +63,7 @@ return_stmt = { "return" ~ expr? }
 exit_stmt = { "exit" ~ expr? }
 redirect = { (">>" | ">" | "|") ~ expr }
 assign_stmt = { assignable ~ assign_op ~ nl* ~ expr }
-assign_op = { "+=" | "-=" | "*=" | "/=" | "=" }
+assign_op = { "+=" | "-=" | "*=" | "/=" | "%=" | "^=" | ("=" ~ !"=") }
 expr_stmt = { expr }
 
 block_or_stmt = { action_block | statement }
@@ -71,7 +72,8 @@ assignable = { array_access | field | ident }
 
 expr_list = { expr ~ (nl* ~ "," ~ nl* ~ expr)* }
 
-expr           = { ternary_expr }
+expr = { assignment_expr }
+assignment_expr = { (assignable ~ assign_op ~ expr) | ternary_expr }
 ternary_expr   = { logical_or ~ (nl* ~ "?" ~ nl* ~ expr ~ nl* ~ ":" ~ nl* ~ expr)? }
 logical_or     = { logical_and ~ (nl* ~ op_or ~ nl* ~ logical_and)* }
 logical_and    = { in_expr ~ (nl* ~ op_and ~ nl* ~ in_expr)* }
@@ -81,7 +83,8 @@ rel_expr       = { concat_expr ~ (nl* ~ rel_op ~ nl* ~ concat_expr)* }
 rel_op         = _{ op_eq | op_neq | op_ge | op_le | op_gt | op_lt }
 
 print_expr_list = { print_expr ~ (nl* ~ "," ~ nl* ~ print_expr)* }
-print_expr = { print_ternary_expr }
+print_expr = { print_assignment_expr }
+print_assignment_expr = { (assignable ~ assign_op ~ print_expr) | print_ternary_expr }
 print_ternary_expr = { print_logical_or ~ (nl* ~ "?" ~ nl* ~ print_expr ~ nl* ~ ":" ~ nl* ~ print_expr)? }
 print_logical_or = { print_logical_and ~ (nl* ~ op_or ~ nl* ~ print_logical_and)* }
 print_logical_and = { print_in_expr ~ (nl* ~ op_and ~ nl* ~ print_in_expr)* }
@@ -91,9 +94,10 @@ print_rel_expr = { concat_expr ~ (nl* ~ print_rel_op ~ nl* ~ concat_expr)* }
 print_rel_op = _{ op_eq | op_neq | op_le | op_lt }
 concat_expr    = { add_expr ~ add_expr* }
 add_expr       = { mul_expr ~ (nl* ~ (op_add | op_sub) ~ nl* ~ mul_expr)* }
-mul_expr       = { pow_expr ~ (nl* ~ (op_mul | op_div | op_mod) ~ nl* ~ pow_expr)* }
-pow_expr       = { term ~ (nl* ~ op_pow ~ nl* ~ pow_expr)? }
-term           = { (prefix_op ~ nl*)? ~ primary ~ (nl* ~ postfix_op)? }
+mul_expr = { unary_expr ~ (nl* ~ (op_mul | op_div | op_mod) ~ nl* ~ unary_expr)* }
+unary_expr = { ((op_minus | op_plus | op_not) ~ nl* ~ unary_expr) | pow_expr }
+pow_expr       = { term ~ (nl* ~ op_pow ~ nl* ~ unary_expr)? }
+term           = { ((op_inc | op_dec) ~ nl*)? ~ primary ~ (nl* ~ postfix_op)? }
 
 non_getline_primary = { field | func_call | array_access | number | string_literal | regex_pattern | ident | ("(" ~ nl* ~ expr ~ nl* ~ ")") }
 primary = { getline_expr | non_getline_primary }
@@ -129,12 +133,14 @@ op_mod = { "%" }
 op_pow = { "**" | "^" }
 
 op_not = { "!" }
-op_plus = { "+" }
-op_minus = { "-" }
+op_plus = { "+" ~ !"+" }
+op_minus = { "-" ~ !"-" }
 op_inc = { "++" }
 op_dec = { "--" }
 
-ident = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "_")* }
-number = @{ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT*)? ~ (("e" | "E") ~ ("+" | "-")? ~ ASCII_DIGIT+)? }
+ident = @{ !("in" ~ !(ASCII_ALPHANUMERIC | "_")) ~ (ASCII_ALPHA | "_") ~ (ASCII_ALPHANUMERIC | "_")* }
+number = @{ (ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT*)? | "." ~ ASCII_DIGIT+) ~ (("e" | "E") ~ ("+" | "-")? ~ ASCII_DIGIT+)? }
 string_literal = ${ "\"" ~ inner_string ~ "\"" }
-inner_string = @{ (!"\"" ~ ANY)* }
+inner_string = @{ ("\\" ~ ANY | !"\"" ~ ANY)* }
+
+paren_print_args = { "(" ~ nl* ~ expr_list? ~ nl* ~ ")" }

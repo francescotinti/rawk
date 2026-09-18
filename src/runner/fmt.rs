@@ -14,8 +14,12 @@ use crate::types::AwkValue;
 
 /// Sostituisce le sequenze `%…` in `fmt` con i valori convertiti di `args`.
 /// Byte-aware: input e output sono `&[u8]` / `Vec<u8>`. Spec format string
-/// non valido (conversion byte non in `diouxXeEfgGcs`) viene emesso letterale.
-pub(super) fn awk_sprintf(fmt: &[u8], args: &[AwkValue]) -> Vec<u8> {
+/// non valido viene segnalato come errore del programma AWK.
+pub(super) fn awk_sprintf(
+    fmt: &[u8],
+    args: &[AwkValue],
+    convfmt: &[u8],
+) -> Result<Vec<u8>, super::FlowControl> {
     let mut out: Vec<u8> = Vec::with_capacity(fmt.len());
     let mut i = 0;
     let mut arg_idx = 0;
@@ -43,28 +47,32 @@ pub(super) fn awk_sprintf(fmt: &[u8], args: &[AwkValue]) -> Vec<u8> {
                 conv = Some(c);
                 break;
             }
+            if !b"-+ #0.123456789".contains(&c) {
+                return Err(super::FlowControl::Error(
+                    "unsupported printf format".into(),
+                ));
+            }
         }
         let spec_bytes = &fmt[spec_start..i];
         match conv {
             None => {
                 // EOF dentro lo spec — emetti letterale e termina.
-                out.extend_from_slice(spec_bytes);
-                return out;
+                return Err(super::FlowControl::Error("incomplete printf format".into()));
             }
             Some(c) => {
                 let arg = args
                     .get(arg_idx)
                     .cloned()
-                    .unwrap_or(AwkValue::Uninitialized);
+                    .ok_or_else(|| super::FlowControl::Error("missing printf argument".into()))?;
                 arg_idx += 1;
-                format_one(spec_bytes, c, &arg, &mut out);
+                format_one(spec_bytes, c, &arg, convfmt, &mut out);
             }
         }
     }
-    out
+    Ok(out)
 }
 
-fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, out: &mut Vec<u8>) {
+fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: &mut Vec<u8>) {
     // Lo spec è ASCII puro per costruzione (% + flags `-+ #0` + digit + `.` +
     // conversion byte). `from_utf8` è O(spec.len) ma piccolo (raramente >10B).
     let spec = std::str::from_utf8(spec_bytes).expect("awk_sprintf: format spec must be ASCII");
@@ -108,9 +116,9 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, out: &mut Vec<u8>) {
             }
         }
         b's' => {
-            // Phase 7.5: %s emette `arg.as_string()` integro come bytes raw.
+            // Phase 7.5: %s emette `arg.as_string_convfmt(convfmt)` integro come bytes raw.
             // Width/precision applicati byte-aware.
-            let s_bytes = arg.as_string();
+            let s_bytes = arg.as_string_convfmt(convfmt);
             if spec_bytes.len() == 2 {
                 // Fast path: spec esattamente `%s` → emetti tutto raw.
                 out.extend_from_slice(&s_bytes);

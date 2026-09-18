@@ -44,6 +44,7 @@ pub enum GetlineSource {
 /// di funzione, operatori e i tre tipi di `getline`.
 #[derive(Debug, Clone, PartialEq)]
 pub enum Expr {
+    Assign(Box<Expr>, Option<BinaryOperator>, Box<Expr>),
     Field(Box<Expr>),
     NumberLiteral(f64),
     StringLiteral(Vec<u8>),
@@ -70,10 +71,7 @@ pub enum Expr {
 pub enum Statement {
     Print(Vec<Expr>, Option<(String, Expr)>),
     Printf(Vec<Expr>, Option<(String, Expr)>),
-    Assign(String, Expr),
-    AssignArray(String, Vec<Expr>, Expr), // a[key1, key2] = value
-    AssignField(Box<Expr>, Expr),         // $i = value
-    Delete(String, Option<Vec<Expr>>),    // delete a[key] or delete a
+    Delete(String, Option<Vec<Expr>>), // delete a[key] or delete a
     IfElse(Expr, Vec<Statement>, Option<Vec<Statement>>),
     ForIn(String, String, Vec<Statement>),
     For(
@@ -107,6 +105,7 @@ pub struct FunctionDecl {
 #[derive(Debug, Clone)]
 pub enum Pattern {
     Expr(Expr),
+    Range(Expr, Expr),
     Begin,
     End,
     BeginFile,

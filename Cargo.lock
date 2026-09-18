@@ -687,8 +687,10 @@ dependencies = [
  "quick-xml",
  "rand 0.10.1",
  "regex",
+ "regex-automata",
  "serde",
  "sprintf",
+ "tempfile",
 ]
 
 [[package]]
