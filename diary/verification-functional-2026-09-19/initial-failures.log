@@ -1,0 +1,51 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.48s
+     Running tests/remaining_contract.rs (target/debug/deps/remaining_contract-b1b75947af021c11)
+
+running 4 tests
+test descending_bracket_ranges_follow_original_c ... FAILED
+test numeric_rounding_uses_the_exact_binary_value ... FAILED
+test missing_fields_are_empty_strings_not_uninitialized_variables ... FAILED
+test replacement_escapes_have_separate_lexical_and_runtime_stages ... FAILED
+
+failures:
+
+---- descending_bracket_ranges_follow_original_c stdout ----
+
+thread 'descending_bracket_ranges_follow_original_c' (7471005) panicked at tests/remaining_contract.rs:20:5:
+assertion `left == right` failed: {s=$0;print match(s,/[z-a]/),RSTART,RLENGTH;print gsub(/[z-a]/,"!",s),s;print split($0,a,/[z-a]/)}, input=[97, 45, 98, 99, 81, 83, 85, 122, 48, 49, 57, 93, 10, 10, 120, 121, 122, 10], posix=false
+  left: Outcome { stdout: [], stderr: [114, 97, 119, 107, 58, 32, 114, 101, 103, 101, 120, 32, 112, 97, 114, 115, 101, 32, 101, 114, 114, 111, 114, 58, 10, 32, 32, 32, 32, 91, 122, 45, 97, 93, 10, 32, 32, 32, 32, 32, 94, 94, 94, 10, 101, 114, 114, 111, 114, 58, 32, 105, 110, 118, 97, 108, 105, 100, 32, 99, 104, 97, 114, 97, 99, 116, 101, 114, 32, 99, 108, 97, 115, 115, 32, 114, 97, 110, 103, 101, 44, 32, 116, 104, 101, 32, 115, 116, 97, 114, 116, 32, 109, 117, 115, 116, 32, 98, 101, 32, 60, 61, 32, 116, 104, 101, 32, 101, 110, 100, 10], code: Some(2), timed_out: false }
+ right: Outcome { stdout: [49, 32, 49, 32, 48, 10, 49, 51, 32, 33, 97, 33, 45, 33, 98, 33, 99, 33, 81, 33, 83, 33, 85, 33, 122, 33, 48, 33, 49, 33, 57, 33, 93, 33, 10, 49, 10, 49, 32, 49, 32, 48, 10, 49, 32, 33, 10, 48, 10, 49, 32, 49, 32, 48, 10, 52, 32, 33, 120, 33, 121, 33, 122, 33, 10, 49, 10], stderr: [], code: Some(0), timed_out: false }
+
+---- numeric_rounding_uses_the_exact_binary_value stdout ----
+
+thread 'numeric_rounding_uses_the_exact_binary_value' (7471007) panicked at tests/remaining_contract.rs:20:5:
+assertion `left == right` failed: BEGIN {x=10409/8;printf "%.6g\n",x;OFMT="%.6g";CONVFMT=OFMT; print x; printf "%s\n", x}, input=[], posix=false
+  left: Outcome { stdout: [49, 51, 48, 49, 46, 49, 51, 10, 49, 51, 48, 49, 46, 49, 51, 10, 49, 51, 48, 49, 46, 49, 51, 10], stderr: [], code: Some(0), timed_out: false }
+ right: Outcome { stdout: [49, 51, 48, 49, 46, 49, 50, 10, 49, 51, 48, 49, 46, 49, 50, 10, 49, 51, 48, 49, 46, 49, 50, 10], stderr: [], code: Some(0), timed_out: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- missing_fields_are_empty_strings_not_uninitialized_variables stdout ----
+
+thread 'missing_fields_are_empty_strings_not_uninitialized_variables' (7471006) panicked at tests/remaining_contract.rs:20:5:
+assertion `left == right` failed: BEGIN {FS=":"} { print NF, ($5==0), ($5==""), (x==0), (x==""), ($1==0); y=$5; print (y==0), (y==""); $7="v";print ($5==0),($5=="");NF=1;print ($5==0),($5=="") }, input=[10, 97, 58, 58, 98, 10, 48, 58, 58, 10], posix=false
+  left: Outcome { stdout: [48, 32, 49, 32, 49, 32, 49, 32, 49, 32, 49, 10, 49, 32, 49, 10, 48, 32, 49, 10, 49, 32, 49, 10, 51, 32, 49, 32, 49, 32, 49, 32, 49, 32, 48, 10, 49, 32, 49, 10, 48, 32, 49, 10, 49, 32, 49, 10, 51, 32, 49, 32, 49, 32, 49, 32, 49, 32, 49, 10, 49, 32, 49, 10, 48, 32, 49, 10, 49, 32, 49, 10], stderr: [], code: Some(0), timed_out: false }
+ right: Outcome { stdout: [48, 32, 48, 32, 49, 32, 49, 32, 49, 32, 48, 10, 48, 32, 49, 10, 48, 32, 49, 10, 48, 32, 49, 10, 51, 32, 48, 32, 49, 32, 49, 32, 49, 32, 48, 10, 48, 32, 49, 10, 48, 32, 49, 10, 48, 32, 49, 10, 51, 32, 48, 32, 49, 32, 49, 32, 49, 32, 49, 10, 48, 32, 49, 10, 48, 32, 49, 10, 48, 32, 49, 10], stderr: [], code: Some(0), timed_out: false }
+
+---- replacement_escapes_have_separate_lexical_and_runtime_stages stdout ----
+
+thread 'replacement_escapes_have_separate_lexical_and_runtime_stages' (7471008) panicked at tests/remaining_contract.rs:20:5:
+assertion `left == right` failed: BEGIN {s="aba"; print gsub(/a/, "\&", s),s}, input=[], posix=false
+  left: Outcome { stdout: [50, 32, 38, 98, 38, 10], stderr: [], code: Some(0), timed_out: false }
+ right: Outcome { stdout: [50, 32, 97, 98, 97, 10], stderr: [], code: Some(0), timed_out: false }
+
+
+failures:
+    descending_bracket_ranges_follow_original_c
+    missing_fields_are_empty_strings_not_uninitialized_variables
+    numeric_rounding_uses_the_exact_binary_value
+    replacement_escapes_have_separate_lexical_and_runtime_stages
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+
+error: test failed, to rerun pass `--test remaining_contract`

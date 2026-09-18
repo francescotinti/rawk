@@ -976,8 +976,8 @@
   },
   {
     "path": "testdir/t.arith",
-    "status": "open-difference",
-    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
+    "status": "included-regression",
+    "reason": "Corrected in functional follow-up; exact streams, status and generated files match original C. See 2026-09-19-functional-fixes.md."
   },
   {
     "path": "testdir/t.array",
@@ -1296,8 +1296,8 @@
   },
   {
     "path": "testdir/t.gsub4",
-    "status": "open-difference",
-    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
+    "status": "included-regression",
+    "reason": "Corrected in functional follow-up; exact streams, status and generated files match original C. See 2026-09-19-functional-fixes.md."
   },
   {
     "path": "testdir/t.i.x",
@@ -1416,8 +1416,8 @@
   },
   {
     "path": "testdir/t.null0",
-    "status": "open-difference",
-    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
+    "status": "included-regression",
+    "reason": "Corrected in functional follow-up; exact streams, status and generated files match original C. See 2026-09-19-functional-fixes.md."
   },
   {
     "path": "testdir/t.ofmt",
@@ -1596,8 +1596,8 @@
   },
   {
     "path": "testdir/t.split3",
-    "status": "open-difference",
-    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
+    "status": "included-regression",
+    "reason": "Corrected in functional follow-up; exact streams, status and generated files match original C. See 2026-09-19-functional-fixes.md."
   },
   {
     "path": "testdir/t.split4",
@@ -1641,8 +1641,8 @@
   },
   {
     "path": "testdir/t.sub0",
-    "status": "open-difference",
-    "reason": "Compare.p/t fixture conventions; exact streams, status and generated files. See corpus-results.json and corpus expansion report."
+    "status": "included-regression",
+    "reason": "Corrected in functional follow-up; exact streams, status and generated files match original C. See 2026-09-19-functional-fixes.md."
   },
   {
     "path": "testdir/t.sub1",

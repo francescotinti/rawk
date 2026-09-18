@@ -1,0 +1,26 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.63s
+     Running tests/printf_sanity.rs (target/debug/deps/printf_sanity-16ab64c54c4e53f9)
+
+running 5 tests
+test e_scientific ... ok
+test f_precision ... ok
+test x_hex ... ok
+test s_truncate ... ok
+test d_padding ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.54s
+
+     Running tests/remaining_contract.rs (target/debug/deps/remaining_contract-b1b75947af021c11)
+
+running 7 tests
+test bracket_normalization_preserves_the_binary_profile ... ok
+test missing_fields_are_empty_strings_not_uninitialized_variables ... ok
+test character_format_distinguishes_numeric_fields_from_literal_strings ... ok
+test descending_bracket_ranges_follow_original_c ... ok
+test generated_rational_values_and_float_formats ... ok
+test replacement_escapes_have_separate_lexical_and_runtime_stages ... ok
+test numeric_rounding_uses_the_exact_binary_value ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.87s
+

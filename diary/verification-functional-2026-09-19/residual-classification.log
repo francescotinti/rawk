@@ -1,0 +1,5 @@
+p.43: equal line multisets
+t.in2: equal line multisets
+t.intest2: equal line multisets
+t.printf2: exact equality after removing only Rust NUL bytes
+These diagnostic comparisons do not change the exact corpus comparisons.
