@@ -9,10 +9,10 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def run(binary, arguments, cwd):
+def run(binary, arguments, cwd, environment=None):
     child = subprocess.Popen([str(binary), *arguments], stdin=subprocess.DEVNULL,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                             cwd=cwd, env=dict(os.environ, LC_ALL='C'), start_new_session=True)
+                             cwd=cwd, env=dict(os.environ, LC_ALL='C') | (environment or {}), start_new_session=True)
     timeout = False
     try:
         stdout, stderr = child.communicate(timeout=3)
