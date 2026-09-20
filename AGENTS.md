@@ -39,8 +39,9 @@
 - Per sole modifiche documentali verificare diff e link: non serve ripetere
   la suite runtime. Non ripetere test già verdi senza una ragione nuova.
 - Il gate richiede Python 3, compilatore C, fixture originali e locale dei test.
-  Linux nativo è sospeso finché non è disponibile un ambiente: `cargo check`
-  per il target non dimostra linking o correttezza della libc su Linux.
+  Per Linux usare i runner nativi GitHub x86-64/ARM64 del workflow compatibility;
+  `cargo check` per il target non dimostra linking o correttezza della libc.
+  Il gate Linux corrente non include Shift-JIS né prepara `ja_JP.SJIS`.
 - Non alterare log/evidenze storiche per ripulirli. Escludere build, cache e
   metadati AppleDouble dai commit; eliminare soltanto artefatti identificati.
 

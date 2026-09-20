@@ -5,16 +5,24 @@ Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 ## Base e ambito verificato
 
 - Repository: `francescotinti/rawk`, branch di coordinamento `master`.
-- Ultimo commit pubblicato verificato: `6bd0c0f` (prima consegna Shift-JIS e regola commit/push).
+- Commit runtime pubblicato verificato: `a118616` (correzione CI Linux, tutti i job verdi).
   Eseguire `git status` e `git log` per lo stato corrente; questo non è un puntatore dinamico.
 - Fasi 1–7 chiuse nel profilo C su Darwin ARM64; successivamente aggiunti UTF-8,
   conversioni/classi ISO-8859-1/9 e ottimizzazione delle regex booleane UTF-8.
 - Il residuo RS Shift-JIS è corretto nella consegna successiva a `6bd0c0f`;
   dettagli, evidenze e perimetro nel [rapporto RS](diary/2026-09-20-shift-jis-rs.md).
-- Verifica corrente: **144 test debug e 144 release passati, nessun ignorato**.
-  XML invariato; fmt/Clippy e controlli Rust Linux glibc dei due target superati.
-  Gate: solo igiene AppleDouble inizialmente fallita, riparata e riverificata.
-  [Evidenze RS](diary/verification-shift-jis-rs-2026-09-20/summary.json).
+- Verifica corrente: **148 test debug e 148 release passati su Darwin ARM64**, nessun ignorato.
+  XML 97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED; fmt e Clippy passati.
+  CI macOS verde, inclusi gate e audit originali/UTF-8.
+- **Linux glibc x86-64 e ARM64 nativi verdi in CI**: 75 test debug + 75 release
+  su ciascun runner, nessun ignorato; fmt, Clippy e build release passati.
+  Corretti cast `wchar_t`, precisione dinamica negativa, unsigned negativi x86-64
+  e zero-padding di `%s`, preservando Darwin e i percorsi binari/multibyte.
+  [CI verificata](https://github.com/francescotinti/rawk/actions/runs/35507960469),
+  [consegna Linux](diary/2026-09-20-linux-ci.md),
+  [evidenze](diary/verification-linux-ci-2026-09-20/summary.json).
+  Il gate locale ha segnalato solo metadati AppleDouble, rimossi con controllo
+  di igiene riverificato; gli esiti originali restano conservati.
 - Verifica precedente: 132 test debug/release, 300 casi originali UTF-8;
   XML 97 MATCH, 12 EXPECTED, 0 UNEXPECTED, 0 SKIPPED.
   [Evidenze storiche](diary/verification-legacy-2026-09-20/summary.json).
@@ -37,9 +45,9 @@ Non è una certificazione generale di tutte le codifiche o piattaforme.
 
 ## Attività aperte
 
-- Linux glibc x86-64/ARM64: CI predisposta e controlli Rust dei target passati;
-  verifica nativa sospesa per assenza del runtime locale. Dopo i push la CI
-  potrebbe essere partita: il suo esito remoto non è stato verificato qui.
+- Shift-JIS su Linux resta da convalidare: il gate Linux corrente non include
+  `tests/shift_jis.rs` e non prepara `ja_JP.SJIS`. La CI verde non certifica
+  questa codifica né l'intero inventario dei driver originali su Linux.
 - Altre codifiche, macOS Intel nativo, nomi di file non UTF-8 e ulteriori
   ottimizzazioni: attività distinte da delimitare, non parte implicita di Shift-JIS.
 

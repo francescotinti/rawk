@@ -1,0 +1,32 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.99s
+     Running tests/dynamic_format.rs (target/debug/deps/dynamic_format-dc2803db40b3264c)
+
+running 8 tests
+test string_and_literal_range_errors_do_not_discard_arithmetic_subnormals ... ok
+test negative_precision_keeps_binary_and_multibyte_paths ... ok
+test missing_star_arguments_are_errors ... ok
+test zero_padded_strings_match_native_oracle ... ok
+test unsigned_conversion_matches_native_oracle ... ok
+test dynamic_width_precision_and_consumption ... ok
+test integer_flags_precision_and_signs ... ok
+test negative_dynamic_precision_preserves_flags_and_argument_consumption ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.48s
+
+     Running tests/unicode_contract.rs (target/debug/deps/unicode_contract-ff53360e0ff39268)
+
+running 10 tests
+test binary_nul_extension_and_case_conversion_errors ... ok
+test unicode_formatting_and_source_escapes ... ok
+test required_locales_are_active_in_both_interpreters ... ok
+test repeated_matches_and_index_inside_a_multibyte_unit ... ok
+test utf8_record_separators_across_buffers ... ok
+test utf8_regex_empty_matches_and_mixed_bytes ... ok
+test locale_precedence_and_character_operations ... ok
+test unicode_classes_ranges_and_anchors ... ok
+test boolean_regex_search_preserves_rune_alignment_and_empty_matches ... ok
+test original_utf8_drivers ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.83s
+

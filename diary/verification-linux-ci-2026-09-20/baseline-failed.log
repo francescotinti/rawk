@@ -1,0 +1,580 @@
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	﻿2026-09-20T10:32:14.8704563Z ##[group]Run set -o pipefail
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8705050Z [36;1mset -o pipefail[0m
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8705428Z [36;1mbash scripts/check_portability.sh 2>&1 | tee diary/portability-ci.log[0m
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8753211Z shell: /usr/bin/bash -e {0}
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8753496Z env:
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8753821Z   LC_ALL: C
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8754023Z   CARGO_INCREMENTAL: 0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8754287Z   RUSTUP_TOOLCHAIN: 1.96.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8754558Z ##[endgroup]
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8837760Z Linux runnervmec22z 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:12:01 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:14.8915709Z rustc 1.96.0 (ac68faa20 2026-05-25)
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.0460548Z     Updating crates.io index
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.2468804Z  Downloading crates ...
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.3936969Z   Downloaded generic-array v0.14.7
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.3958541Z   Downloaded anstyle-parse v1.0.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.3971478Z   Downloaded anstyle v1.0.14
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.3982149Z   Downloaded anstream v1.0.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.3999282Z   Downloaded anstyle-query v1.1.5
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4011465Z   Downloaded aho-corasick v1.1.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4047653Z   Downloaded getrandom v0.4.2
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4072232Z   Downloaded chacha20 v0.10.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4089350Z   Downloaded version_check v0.9.5
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4098972Z   Downloaded block-buffer v0.10.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4107891Z   Downloaded wait-timeout v0.2.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4119105Z   Downloaded iana-time-zone v0.1.65
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4137532Z   Downloaded typenum v1.20.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4163693Z   Downloaded utf8parse v0.2.2
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4170261Z   Downloaded memchr v2.8.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4203776Z   Downloaded serde_derive v1.0.228
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4228294Z   Downloaded quick-error v1.2.3
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4236241Z   Downloaded clap_lex v1.1.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4245818Z   Downloaded rusty-fork v0.3.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4258572Z   Downloaded thiserror v2.0.18
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4294493Z   Downloaded ucd-trie v0.1.7
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4304409Z   Downloaded pest_generator v2.8.6
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4319479Z   Downloaded serde_core v1.0.228
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4337756Z   Downloaded proc-macro2 v1.0.106
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4359487Z   Downloaded serde v1.0.228
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4382319Z   Downloaded rand v0.9.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4407371Z   Downloaded rand v0.10.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4432444Z   Downloaded pest_meta v2.8.6
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4449593Z   Downloaded pest v2.8.6
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4489217Z   Downloaded regex v1.12.3
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4511127Z   Downloaded quick-xml v0.39.2
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4548573Z   Downloaded syn v2.0.117
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4610979Z   Downloaded proptest v1.11.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4663368Z   Downloaded clap_builder v4.6.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4701412Z   Downloaded zerocopy v0.8.48
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4808155Z   Downloaded clap v4.6.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4854947Z   Downloaded pest_derive v2.8.6
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4869384Z   Downloaded num-traits v0.2.19
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4884914Z   Downloaded autocfg v1.5.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4895971Z   Downloaded once_cell v1.21.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4910541Z   Downloaded clap_derive v4.6.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4924504Z   Downloaded thiserror-impl v2.0.18
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4933343Z   Downloaded rand_core v0.10.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.4942959Z   Downloaded rustix v1.1.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5079536Z   Downloaded rand_core v0.9.5
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5087782Z   Downloaded colorchoice v1.0.5
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5094443Z   Downloaded cfg-if v1.0.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5102596Z   Downloaded strsim v0.11.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5110727Z   Downloaded sprintf v0.4.3
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5119797Z   Downloaded sha2 v0.10.9
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5133884Z   Downloaded rand_chacha v0.9.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5141955Z   Downloaded regex-automata v0.4.14
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5227156Z   Downloaded ppv-lite86 v0.2.21
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5235453Z   Downloaded is_terminal_polyfill v1.70.2
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5242137Z   Downloaded bit-vec v0.8.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5252110Z   Downloaded rand_xorshift v0.4.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5258665Z   Downloaded unicode-ident v1.0.24
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5274304Z   Downloaded unarray v0.1.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5282217Z   Downloaded tempfile v3.27.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5296208Z   Downloaded heck v0.5.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5304014Z   Downloaded cpufeatures v0.2.17
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5312029Z   Downloaded regex-syntax v0.8.10
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5356158Z   Downloaded quote v1.0.45
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5370629Z   Downloaded digest v0.10.7
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5381346Z   Downloaded fnv v1.0.7
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5386381Z   Downloaded libc v0.2.186
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5588328Z   Downloaded fastrand v2.4.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5596924Z   Downloaded chrono v0.4.44
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5637594Z   Downloaded bit-set v0.8.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5645455Z   Downloaded getrandom v0.3.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5664219Z   Downloaded errno v0.3.14
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5672789Z   Downloaded crypto-common v0.1.7
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5679017Z   Downloaded bitflags v2.11.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5700763Z   Downloaded anyhow v1.0.102
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.5777224Z   Downloaded linux-raw-sys v0.12.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.6539567Z    Compiling proc-macro2 v1.0.106
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.6548874Z    Compiling unicode-ident v1.0.24
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.6569252Z    Compiling libc v0.2.186
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.6573564Z    Compiling quote v1.0.45
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.7218941Z     Checking cfg-if v1.0.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.7391496Z     Checking rand_core v0.10.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.7999885Z    Compiling getrandom v0.4.2
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.8225776Z    Compiling autocfg v1.5.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:15.9559385Z    Compiling rustix v1.1.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.0764288Z     Checking memchr v2.8.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.2889380Z    Compiling syn v2.0.117
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.3309898Z    Compiling num-traits v0.2.19
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.3555973Z     Checking bitflags v2.11.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.4273690Z    Compiling ucd-trie v0.1.7
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.4604321Z    Compiling serde_core v1.0.228
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.5136706Z    Compiling getrandom v0.3.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.5811515Z     Checking linux-raw-sys v0.12.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.7249388Z     Checking utf8parse v0.2.2
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.7489475Z     Checking anstyle-parse v1.0.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.8589490Z     Checking regex-syntax v0.8.10
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:16.9639379Z    Compiling pest v2.8.6
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.5483655Z     Checking anstyle v1.0.14
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.6369253Z     Checking fastrand v2.4.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.7119083Z     Checking anstyle-query v1.1.5
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.7359199Z    Compiling serde v1.0.228
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.7732067Z     Checking colorchoice v1.0.5
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.8081308Z     Checking is_terminal_polyfill v1.70.2
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.8319967Z     Checking once_cell v1.21.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.8555417Z    Compiling thiserror v2.0.18
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.9059014Z     Checking tempfile v3.27.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:17.9239422Z     Checking anstream v1.0.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:18.0180074Z    Compiling pest_meta v2.8.6
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:18.4188798Z     Checking aho-corasick v1.1.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:18.8450060Z    Compiling serde_derive v1.0.228
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:18.8749316Z    Compiling thiserror-impl v2.0.18
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:19.2939558Z     Checking strsim v0.11.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:19.3492304Z    Compiling heck v0.5.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:19.3893314Z    Compiling anyhow v1.0.102
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:19.4867837Z    Compiling zerocopy v0.8.48
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:19.5849535Z     Checking clap_lex v1.1.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:19.6404648Z     Checking clap_builder v4.6.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:19.7741408Z    Compiling clap_derive v4.6.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:19.8862141Z     Checking regex-automata v0.4.14
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:20.5764751Z    Compiling pest_generator v2.8.6
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:20.9949562Z     Checking rand_core v0.9.5
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.0279451Z     Checking chacha20 v0.10.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.1129444Z     Checking iana-time-zone v0.1.65
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.1559447Z     Checking chrono v0.4.44
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.2539464Z     Checking quick-xml v0.39.2
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.2719334Z     Checking regex v1.12.3
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.4319338Z     Checking rand v0.10.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.7129570Z    Compiling pest_derive v2.8.6
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.7316129Z     Checking clap v4.6.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.7547009Z     Checking sprintf v0.4.3
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.9249482Z     Checking wait-timeout v0.2.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.9639154Z     Checking fnv v1.0.7
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:21.9829238Z     Checking quick-error v1.2.3
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:22.0039313Z     Checking bit-vec v0.8.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:22.0097396Z     Checking rusty-fork v0.3.1
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:22.0244772Z     Checking rawk v0.1.0 (/home/runner/work/rawk/rawk/rawk)
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:22.0984203Z     Checking bit-set v0.8.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:22.1052930Z     Checking rand v0.9.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:22.1599282Z     Checking rand_xorshift v0.4.0
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:22.1820026Z     Checking unarray v0.1.4
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3264474Z error: casting to the same type is unnecessary (`u32` -> `u32`)
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3265106Z   --> src/text.rs:93:28
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3265438Z    |
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3265763Z 93 |                 towupper_l(wc as u32, handle)
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3266105Z    |                            ^^^^^^^^^ help: try: `wc`
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3266724Z    |
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3267378Z    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#unnecessary_cast
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3273540Z    = note: `-D clippy::unnecessary-cast` implied by `-D clippy::all`
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3274499Z    = help: to override `-D clippy::all` add `#[allow(clippy::unnecessary_cast)]`
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3274941Z 
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3275604Z error: casting to the same type is unnecessary (`u32` -> `u32`)
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3276129Z   --> src/text.rs:95:28
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3276364Z    |
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3276581Z 95 |                 towlower_l(wc as u32, handle)
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3277001Z    |                            ^^^^^^^^^ help: try: `wc`
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3277315Z    |
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3277821Z    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#unnecessary_cast
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3278482Z 
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3878569Z error: could not compile `rawk` (bin "rawk") due to 2 previous errors
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:23.3879064Z warning: build failed, waiting for other jobs to finish...
+linux-portability (ubuntu-24.04-arm)	Native portability gate (debug and release)	2026-09-20T10:32:24.1431086Z ##[error]Process completed with exit code 101.
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	﻿2026-09-20T10:32:24.1487732Z ##[group]Run python3 scripts/full_driver_audit.py --output diary/linux-driver-results-ci.json
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:24.1488779Z [36;1mpython3 scripts/full_driver_audit.py --output diary/linux-driver-results-ci.json[0m
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:24.1530905Z shell: /usr/bin/bash -e {0}
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:24.1531207Z env:
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:24.1531538Z   LC_ALL: C
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:24.1531754Z   CARGO_INCREMENTAL: 0
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:24.1532072Z   RUSTUP_TOOLCHAIN: 1.96.0
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:24.1532375Z ##[endgroup]
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2598771Z Traceback (most recent call last):
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2599407Z   File "/home/runner/work/rawk/rawk/rawk/scripts/full_driver_audit.py", line 127, in <module>
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2599971Z     rows = audit(args.rawk.resolve(), drivers, args.output, args.locale)
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2600437Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2600903Z   File "/home/runner/work/rawk/rawk/rawk/scripts/full_driver_audit.py", line 85, in audit
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2601860Z     tests, tooling, fixture = prepare(work, executable)
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2602273Z                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2602753Z   File "/home/runner/work/rawk/rawk/rawk/scripts/full_driver_audit.py", line 33, in prepare
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2603222Z     shutil.copyfile(binary, work / 'a.out')
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2603642Z   File "/usr/lib/python3.12/shutil.py", line 260, in copyfile
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2605904Z     with open(src, 'rb') as fsrc:
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2606551Z          ^^^^^^^^^^^^^^^
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2607184Z FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/rawk/rawk/rawk/target/release/rawk'
+linux-portability (ubuntu-24.04-arm)	Inventory original drivers on this platform	2026-09-20T10:32:25.2760928Z ##[error]Process completed with exit code 1.
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	﻿2026-09-20T10:32:13.0436032Z ##[group]Run set -o pipefail
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0436398Z [36;1mset -o pipefail[0m
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0436770Z [36;1mbash scripts/check_portability.sh 2>&1 | tee diary/portability-ci.log[0m
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0473054Z shell: /usr/bin/bash -e {0}
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0473302Z env:
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0473480Z   LC_ALL: C
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0473668Z   CARGO_INCREMENTAL: 0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0473888Z   RUSTUP_TOOLCHAIN: 1.96.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0474113Z ##[endgroup]
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0550415Z Linux runnervmlun5p 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.0658830Z rustc 1.96.0 (ac68faa20 2026-05-25)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.2628358Z     Updating crates.io index
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.6946050Z  Downloading crates ...
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9235350Z   Downloaded anstyle-query v1.1.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9307283Z   Downloaded anstream v1.0.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9340283Z   Downloaded anstyle-parse v1.0.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9360262Z   Downloaded anstyle v1.0.14
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9392339Z   Downloaded anyhow v1.0.102
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9499455Z   Downloaded generic-array v0.14.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9517154Z   Downloaded regex v1.12.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9582343Z   Downloaded heck v0.5.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9598513Z   Downloaded cfg-if v1.0.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9612835Z   Downloaded getrandom v0.4.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9661825Z   Downloaded strsim v0.11.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9677683Z   Downloaded bit-set v0.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9692152Z   Downloaded is_terminal_polyfill v1.70.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9702786Z   Downloaded cpufeatures v0.2.17
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9726466Z   Downloaded wait-timeout v0.2.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9744223Z   Downloaded unarray v0.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9757863Z   Downloaded autocfg v1.5.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9783561Z   Downloaded rusty-fork v0.3.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9800601Z   Downloaded block-buffer v0.10.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9811643Z   Downloaded bitflags v2.11.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9862844Z   Downloaded version_check v0.9.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9877476Z   Downloaded thiserror v2.0.18
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9975502Z   Downloaded rand_core v0.9.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:13.9989963Z   Downloaded iana-time-zone v0.1.65
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0019420Z   Downloaded getrandom v0.3.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0057767Z   Downloaded rand_core v0.10.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0078754Z   Downloaded ucd-trie v0.1.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0093157Z   Downloaded once_cell v1.21.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0120970Z   Downloaded thiserror-impl v2.0.18
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0142096Z   Downloaded unicode-ident v1.0.24
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0174129Z   Downloaded pest_meta v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0200864Z   Downloaded serde_core v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0236240Z   Downloaded typenum v1.20.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0276689Z   Downloaded serde v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0316761Z   Downloaded rand v0.10.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0359203Z   Downloaded rand v0.9.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0402704Z   Downloaded pest v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0453626Z   Downloaded memchr v2.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0517633Z   Downloaded proc-macro2 v1.0.106
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0550724Z   Downloaded clap_builder v4.6.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0620188Z   Downloaded quick-xml v0.39.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0680819Z   Downloaded proptest v1.11.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0783431Z   Downloaded chrono v0.4.44
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0852833Z   Downloaded serde_derive v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.0884846Z   Downloaded zerocopy v0.8.48
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1113832Z   Downloaded syn v2.0.117
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1223377Z   Downloaded clap_derive v4.6.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1246324Z   Downloaded tempfile v3.27.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1274123Z   Downloaded regex-syntax v0.8.10
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1346954Z   Downloaded pest_derive v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1372382Z   Downloaded num-traits v0.2.19
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1400340Z   Downloaded rustix v1.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1679858Z   Downloaded ppv-lite86 v0.2.21
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1693813Z   Downloaded pest_generator v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1709684Z   Downloaded clap v4.6.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1809362Z   Downloaded chacha20 v0.10.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1833724Z   Downloaded bit-vec v0.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1850376Z   Downloaded rand_chacha v0.9.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1863727Z   Downloaded sprintf v0.4.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1877227Z   Downloaded rand_xorshift v0.4.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1888309Z   Downloaded quick-error v1.2.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.1901181Z   Downloaded regex-automata v0.4.14
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2045382Z   Downloaded clap_lex v1.1.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2056288Z   Downloaded utf8parse v0.2.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2066885Z   Downloaded sha2 v0.10.9
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2093038Z   Downloaded quote v1.0.45
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2125102Z   Downloaded colorchoice v1.0.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2134714Z   Downloaded fnv v1.0.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2143456Z   Downloaded libc v0.2.186
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2546021Z   Downloaded errno v0.3.14
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2561446Z   Downloaded digest v0.10.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2579471Z   Downloaded crypto-common v0.1.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2588628Z   Downloaded cpufeatures v0.3.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2604248Z   Downloaded fastrand v2.4.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2618306Z   Downloaded aho-corasick v1.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.2839418Z   Downloaded linux-raw-sys v0.12.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.3823420Z    Compiling proc-macro2 v1.0.106
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.3824349Z    Compiling libc v0.2.186
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.3837412Z    Compiling quote v1.0.45
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.3871299Z    Compiling unicode-ident v1.0.24
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.4408790Z     Checking cfg-if v1.0.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.4639699Z    Compiling getrandom v0.4.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.5485273Z     Checking rand_core v0.10.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.5827979Z     Checking memchr v2.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.6299482Z    Compiling rustix v1.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:14.8432830Z    Compiling autocfg v1.5.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.1493987Z    Compiling num-traits v0.2.19
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.2193706Z    Compiling syn v2.0.117
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.2384476Z     Checking utf8parse v0.2.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.2417841Z     Checking bitflags v2.11.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.3403614Z    Compiling serde_core v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.5260431Z    Compiling getrandom v0.3.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.5308437Z     Checking linux-raw-sys v0.12.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.7113438Z    Compiling ucd-trie v0.1.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.8840171Z    Compiling pest v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:15.9093229Z     Checking anstyle-parse v1.0.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:16.0763519Z     Checking anstyle v1.0.14
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:16.2083466Z     Checking fastrand v2.4.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:16.3223251Z     Checking once_cell v1.21.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:16.4243167Z    Compiling serde v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:16.5873249Z     Checking regex-syntax v0.8.10
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:17.0320988Z    Compiling thiserror v2.0.18
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:17.1303723Z     Checking is_terminal_polyfill v1.70.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:17.1603230Z     Checking colorchoice v1.0.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:17.1923225Z     Checking anstyle-query v1.1.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:17.2303703Z     Checking anstream v1.0.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:17.2542886Z     Checking tempfile v3.27.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:17.3583465Z    Compiling pest_meta v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:18.0959916Z     Checking aho-corasick v1.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:18.8093511Z    Compiling anyhow v1.0.102
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:18.9083247Z    Compiling serde_derive v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:19.0070409Z    Compiling thiserror-impl v2.0.18
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:19.0764012Z    Compiling zerocopy v0.8.48
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:19.3276449Z     Checking clap_lex v1.1.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:19.4028781Z    Compiling heck v0.5.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:19.5613186Z     Checking strsim v0.11.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:19.6583275Z     Checking cpufeatures v0.3.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:19.6793120Z     Checking chacha20 v0.10.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:19.8163249Z     Checking clap_builder v4.6.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:19.8563527Z    Compiling clap_derive v4.6.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:20.2383297Z     Checking regex-automata v0.4.14
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:21.2303283Z     Checking rand_core v0.9.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:21.3323225Z    Compiling pest_generator v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:21.7353518Z     Checking iana-time-zone v0.1.65
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:21.7983163Z     Checking chrono v0.4.44
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:22.0565775Z    Compiling pest_derive v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:22.3063144Z     Checking regex v1.12.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:22.3893641Z     Checking quick-xml v0.39.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:22.5283079Z     Checking clap v4.6.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:22.6963023Z     Checking sprintf v0.4.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:22.7883465Z     Checking rand v0.10.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.2093479Z     Checking wait-timeout v0.2.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.2623793Z     Checking fnv v1.0.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.2914120Z     Checking bit-vec v0.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.2958705Z     Checking quick-error v1.2.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.3303890Z     Checking rusty-fork v0.3.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.4229595Z     Checking rand_xorshift v0.4.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.4262068Z     Checking bit-set v0.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.4383767Z     Checking rawk v0.1.0 (/home/runner/work/rawk/rawk/rawk)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.4734659Z     Checking rand v0.9.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:23.5103757Z     Checking unarray v0.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:25.1475324Z     Checking ppv-lite86 v0.2.21
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:25.3086466Z     Checking rand_chacha v0.9.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:25.3764459Z     Checking proptest v1.11.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:28.3061748Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 15.07s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:28.4280629Z    Compiling proc-macro2 v1.0.106
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:28.4282706Z    Compiling quote v1.0.45
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:28.4284264Z    Compiling unicode-ident v1.0.24
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:28.4284704Z    Compiling memchr v2.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:28.4820543Z    Compiling libc v0.2.186
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:28.7175779Z    Compiling ucd-trie v0.1.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:28.8694288Z    Compiling rand_core v0.10.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:28.9593240Z    Compiling cfg-if v1.0.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.1575246Z    Compiling syn v2.0.117
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.1853237Z    Compiling autocfg v1.5.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.2033243Z    Compiling getrandom v0.4.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.3113218Z    Compiling utf8parse v0.2.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.3573667Z    Compiling serde_core v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.4789182Z    Compiling num-traits v0.2.19
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.5283016Z    Compiling anstyle-parse v1.0.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.5633229Z    Compiling pest v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.7123272Z    Compiling serde v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:29.8583018Z    Compiling anstyle v1.0.14
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:30.0793283Z    Compiling is_terminal_polyfill v1.70.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:30.1143156Z    Compiling rustix v1.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:30.3123100Z    Compiling colorchoice v1.0.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:30.3603224Z    Compiling thiserror v2.0.18
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:30.5313246Z    Compiling anstyle-query v1.1.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:30.5743341Z    Compiling anstream v1.0.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:30.7353218Z    Compiling pest_meta v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:31.0553171Z    Compiling aho-corasick v1.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:32.3657758Z    Compiling heck v0.5.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:32.5102608Z    Compiling anyhow v1.0.102
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:32.6883679Z    Compiling bitflags v2.11.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:32.8213427Z    Compiling serde_derive v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:33.0293278Z    Compiling thiserror-impl v2.0.18
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:33.4493135Z    Compiling linux-raw-sys v0.12.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:33.7703276Z    Compiling regex-syntax v0.8.10
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:34.1453192Z    Compiling cpufeatures v0.3.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:34.1743334Z    Compiling clap_lex v1.1.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:34.4533228Z    Compiling strsim v0.11.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:35.3009999Z    Compiling clap_builder v4.6.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:36.4313223Z    Compiling regex-automata v0.4.14
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:37.8803051Z    Compiling chacha20 v0.10.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:41.0484653Z    Compiling clap_derive v4.6.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:42.2533275Z    Compiling pest_generator v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:42.9303045Z    Compiling once_cell v1.21.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:43.1033235Z    Compiling iana-time-zone v0.1.65
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:43.5313267Z    Compiling fastrand v2.4.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:44.1393538Z    Compiling tempfile v3.27.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:45.0883173Z    Compiling chrono v0.4.44
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:45.5503229Z    Compiling pest_derive v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:45.6993477Z    Compiling clap v4.6.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:46.3650735Z    Compiling regex v1.12.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:47.8853305Z    Compiling sprintf v0.4.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:48.0043351Z    Compiling rand v0.10.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:48.5003351Z    Compiling quick-xml v0.39.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:32:50.7025762Z    Compiling rawk v0.1.0 (/home/runner/work/rawk/rawk/rawk)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.0857151Z     Finished `release` profile [optimized] target(s) in 32.73s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.1737199Z    Compiling cfg-if v1.0.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.1738036Z    Compiling libc v0.2.186
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.1738956Z    Compiling memchr v2.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.1773436Z    Compiling rand_core v0.10.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.2049601Z    Compiling ucd-trie v0.1.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.2630391Z    Compiling utf8parse v0.2.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.3092962Z    Compiling linux-raw-sys v0.12.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.4303046Z    Compiling bitflags v2.11.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.5953297Z    Compiling anstyle-parse v1.0.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.6151427Z    Compiling rustix v1.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.7133277Z    Compiling pest v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:01.9592790Z    Compiling anstyle v1.0.14
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:02.1000243Z    Compiling getrandom v0.4.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:02.1293921Z    Compiling regex-syntax v0.8.10
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:02.2374945Z    Compiling colorchoice v1.0.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:02.2783358Z    Compiling fastrand v2.4.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:02.4313234Z    Compiling once_cell v1.21.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:02.5823259Z    Compiling anstyle-query v1.1.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:02.6229129Z    Compiling is_terminal_polyfill v1.70.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:02.6553391Z    Compiling anstream v1.0.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:02.9060097Z    Compiling pest_meta v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:03.0483054Z    Compiling tempfile v3.27.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:03.4375668Z    Compiling getrandom v0.3.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:03.4803775Z    Compiling num-traits v0.2.19
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:03.5753426Z    Compiling aho-corasick v1.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:04.1673063Z    Compiling serde_core v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:04.6643346Z    Compiling clap_lex v1.1.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:04.8269203Z    Compiling strsim v0.11.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:05.1550222Z    Compiling cpufeatures v0.3.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:05.1852625Z    Compiling chacha20 v0.10.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:05.2374121Z    Compiling clap_builder v4.6.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:05.3811172Z    Compiling thiserror v2.0.18
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:05.4253644Z    Compiling regex-automata v0.4.14
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:06.0173151Z    Compiling pest_generator v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:06.5733423Z    Compiling serde v1.0.228
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:06.7453197Z    Compiling rand_core v0.9.5
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:06.8823335Z    Compiling iana-time-zone v0.1.65
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:07.0883293Z    Compiling quick-xml v0.39.2
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:07.1273299Z    Compiling chrono v0.4.44
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:08.7583241Z    Compiling regex v1.12.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:08.7703152Z    Compiling clap v4.6.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:08.7994142Z    Compiling pest_derive v2.8.6
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:08.9723167Z    Compiling sprintf v0.4.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:09.2074135Z    Compiling rand v0.10.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:09.2132930Z    Compiling anyhow v1.0.102
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:09.5513378Z    Compiling zerocopy v0.8.48
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:09.5843759Z    Compiling wait-timeout v0.2.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:09.8107131Z    Compiling fnv v1.0.7
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:09.8437500Z    Compiling bit-vec v0.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:09.8464047Z    Compiling quick-error v1.2.3
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:09.8843155Z    Compiling rusty-fork v0.3.1
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:10.0043865Z    Compiling bit-set v0.8.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:10.1057819Z    Compiling rawk v0.1.0 (/home/runner/work/rawk/rawk/rawk)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:10.2193229Z    Compiling rand v0.9.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:10.7143193Z    Compiling rand_xorshift v0.4.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:10.7873382Z    Compiling unarray v0.1.4
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:12.4248462Z    Compiling ppv-lite86 v0.2.21
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:12.6333919Z    Compiling rand_chacha v0.9.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:12.8724075Z    Compiling proptest v1.11.0
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3324300Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 16.23s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3382435Z      Running unittests src/lib.rs (target/debug/deps/rawk-2af64ff39be528ba)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3393348Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3393661Z running 0 tests
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3394096Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3394606Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3395429Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3395747Z      Running unittests src/bin/diffrun.rs (target/debug/deps/diffrun-994f4b85fc4f3254)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3404764Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3404932Z running 0 tests
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3405420Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3405797Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3406388Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3407113Z      Running unittests src/main.rs (target/debug/deps/rawk-95b1893c01abdb10)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3417976Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3418122Z running 4 tests
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3449559Z test unicode_ere::tests::encoding_preserves_offsets_and_invalid_bytes_without_sentinels ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3553177Z test unicode_ere::tests::compiled_intervals_cover_only_the_requested_runes ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3594576Z test input::tests::separators_are_independent_of_read_boundaries ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3782011Z test ere::stream::tests::physical_short_reads_do_not_change_bwk_lookahead ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3782783Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3783240Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3783817Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3785434Z      Running tests/bytes_array_keys.rs (target/debug/deps/bytes_array_keys-9114eb559bd3fc79)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3795057Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3795206Z running 3 tests
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3872389Z test for_in_returns_all_distinct_byte_keys ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3872864Z test distinct_high_byte_keys_do_not_collide ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3874116Z test nul_embedded_key_round_trips ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3874397Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3874668Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3875030Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3876934Z      Running tests/bytes_printf.rs (target/debug/deps/bytes_printf-cc7330dc1e13afd2)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3885975Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3886153Z running 6 tests
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3953206Z test field_split_with_high_byte_fs ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.3953887Z test print_with_high_byte_ofs ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4017537Z test printf_s_preserves_high_byte ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4017886Z test sprintf_high_byte_round_trip ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4153945Z test printf_c_emits_first_byte_raw ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4155687Z test printf_format_string_with_high_bytes ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4156063Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4156459Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4157020Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4157576Z      Running tests/bytes_regex_match.rs (target/debug/deps/bytes_regex_match-97728d2c0dfc372b)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4166240Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4166422Z running 6 tests
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4233842Z test match_distinguishes_high_bytes ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4247606Z test match_builtin_high_byte_pattern_position ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4248234Z test gsub_ampersand_includes_whole_match ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4248802Z test nul_inside_subject_with_rs_regex ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4312701Z test sub_replaces_high_byte_run ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4313510Z test rs_regex_high_byte_separator_splits_correctly ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4313972Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4314390Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4314797Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4315581Z      Running tests/data_contract.rs (target/debug/deps/data_contract-cd61b34734f48d5d)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4325109Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4325346Z running 6 tests
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4394978Z test csv_handles_quoted_delimiters_newlines_and_escaped_quotes ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4396300Z test invalid_regex_is_reported ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4445669Z test fields_accept_regex_separator ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4446020Z test regex_uses_leftmost_longest ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4464156Z test split_preserves_empty_fields_and_clears_array ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4464909Z test substitutions_report_count_not_changed_text ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4465382Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4465791Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4466205Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4467066Z      Running tests/driver_regressions.rs (target/debug/deps/driver_regressions-20f0cb45f6026201)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4476541Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4476826Z running 6 tests
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4576184Z test multifile_syntax_error_names_offending_source ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4611591Z test field_index_beyond_reference_integer_range_is_an_error ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4619771Z test getline_comparison_is_not_part_of_filename ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4735993Z test invalid_function_parameters_are_errors_before_execution ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4891083Z test redirected_stdin_shares_buffer_with_main_input ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4990718Z test stdin_program_and_empty_statements ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4991133Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4991638Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4992425Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.4993546Z      Running tests/dynamic_format.rs (target/debug/deps/dynamic_format-27b8cdc066ca99a2)
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.5002821Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.5002955Z running 4 tests
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.5142896Z test string_and_literal_range_errors_do_not_discard_arithmetic_subnormals ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.5158036Z test missing_star_arguments_are_errors ... ok
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:17.5185435Z test dynamic_width_precision_and_consumption ... FAILED
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1765815Z test integer_flags_precision_and_signs ... FAILED
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1766335Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1766439Z failures:
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1766565Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1766751Z ---- dynamic_width_precision_and_consumption stdout ----
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1767131Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1767564Z thread 'dynamic_width_precision_and_consumption' (7073) panicked at tests/dynamic_format.rs:11:5:
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1768379Z assertion `left == right` failed: BEGIN{printf "[%*.*d] %d\n",-9,-3,1.25,73;print sprintf("[%*.*d]",-9,-3,1.25)}
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1769193Z   left: Outcome { stdout: [91, 49, 32, 32, 93, 32, 55, 51, 10, 91, 49, 32, 32, 93, 10], stderr: [], code: Some(0), timed_out: false }
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1770097Z  right: Outcome { stdout: [91, 37, 45, 57, 46, 48, 45, 51, 106, 100, 93, 32, 55, 51, 10, 91, 37, 45, 57, 46, 48, 45, 51, 106, 100, 93, 10], stderr: [], code: Some(0), timed_out: false }
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1770905Z note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1771275Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1771428Z ---- integer_flags_precision_and_signs stdout ----
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1771689Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1771990Z thread 'integer_flags_precision_and_signs' (7074) panicked at tests/dynamic_format.rs:11:5:
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1772915Z assertion `left == right` failed: BEGIN { for(i=-3;i<=3;i++) printf "[%9u]\n",i }
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1774147Z   left: Outcome { stdout: [91, 32, 32, 32, 32, 32, 32, 32, 32, 48, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 48, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 48, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 48, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 49, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 50, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 51, 93, 10], stderr: [], code: Some(0), timed_out: false }
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1776032Z  right: Outcome { stdout: [91, 49, 56, 52, 52, 54, 55, 52, 52, 48, 55, 51, 55, 48, 57, 53, 53, 49, 54, 49, 51, 93, 10, 91, 49, 56, 52, 52, 54, 55, 52, 52, 48, 55, 51, 55, 48, 57, 53, 53, 49, 54, 49, 52, 93, 10, 91, 49, 56, 52, 52, 54, 55, 52, 52, 48, 55, 51, 55, 48, 57, 53, 53, 49, 54, 49, 53, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 48, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 49, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 50, 93, 10, 91, 32, 32, 32, 32, 32, 32, 32, 32, 51, 93, 10], stderr: [], code: Some(0), timed_out: false }
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1777648Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1777652Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1777728Z failures:
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1777945Z     dynamic_width_precision_and_consumption
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1778245Z     integer_flags_precision_and_signs
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1778424Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1778683Z test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.68s
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1779026Z 
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1779174Z error: test failed, to rerun pass `--test dynamic_format`
+linux-portability (ubuntu-24.04)	Native portability gate (debug and release)	2026-09-20T10:33:18.1821178Z ##[error]Process completed with exit code 101.

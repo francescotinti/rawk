@@ -1,0 +1,108 @@
+{
+  "runtime_commit": "a1186164dc452d47f8623ff19b582730c48c19c5",
+  "oracle_commit": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "ci": {
+    "url": "https://github.com/francescotinti/rawk/actions/runs/35507960469",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "compatibility",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "linux-portability (ubuntu-24.04)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "linux-portability (ubuntu-24.04-arm)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "darwin_local": {
+    "debug_passed": 148,
+    "release_passed": 148,
+    "failed": 0,
+    "ignored": 0,
+    "aggregate_gate_exit": 1,
+    "only_failed_check": "check_no_macos_forks",
+    "metadata_recheck_exit": 0,
+    "release_exit": 0
+  },
+  "linux_native": {
+    "x86_64": {
+      "debug_passed": 75,
+      "release_passed": 75,
+      "failed": 0,
+      "ignored": 0
+    },
+    "aarch64": {
+      "debug_passed": 75,
+      "release_passed": 75,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  "xml": {
+    "match": 97,
+    "expected": 12,
+    "unexpected": 0,
+    "skipped": 0
+  },
+  "limits": [
+    "Linux gate excludes shift_jis and does not generate ja_JP.SJIS",
+    "Linux full driver inventory is diagnostic, without --check",
+    "Unsigned negative conversion evidence is platform-specific, not portable C semantics"
+  ],
+  "historical_runs": [
+    35505321310,
+    35507585695,
+    35507782295
+  ],
+  "sha256": {
+    "arm-clippy.log": "dd3ac66cc361a18b446ad7a542daa6ee0f8587452621db96cea1ae384c6c8b08",
+    "baseline-failed.log": "422777555cead29e95447b15068187239969360c3c77d2388306e332a8b8f71a",
+    "ci-final.json": "02fa2ae312cf321b8a044e6e3137ac15e92f0d21356f8c1ea9d525c3d7d1b199",
+    "ci-final.log": "1d6d610047cb76ae85e435e87333ed0deab5643e7b9fd9a9ea9effe4cf3a5cf9",
+    "darwin-oracle.json": "ebbe9c03e4bb3a2a7d24a56d3889c011977d7d0d80b6dcdb61b8851a68c35f83",
+    "dynamic-after.log": "5d8940975e658d93c58a7aa75b6d0b1af381204a62fb58f75a1e8c561bdb5699",
+    "dynamic-before.log": "4586b4e774b47e6067ac4007f8dee56d786bc1b1c64fc1f5e8d46e086818b1c0",
+    "dynamic-binary.log": "2e56d0b1792608acc2442f2571166f34c404df114ebb7a6b68ae248846736a53",
+    "final-arm64/format-platform-ci.json": "0239b2b75a220b92d9b8dacd2ad9d2c28599e3d88a587f4c6da725a029e58eb7",
+    "final-arm64/linux-driver-results-ci.json": "0cf15c69b4869725b153485d0faa761806b63b7c3f03454fe5eea2a8cd388be8",
+    "final-arm64/portability-ci.log": "ccc32facd6b717c42d06f0ba236bf7c98b8711b6ac43ab5b4d750b3183b92f6c",
+    "final-macos/full-driver-results-ci.json": "113fee618aaf923ac51b3aebed69fb6838096e28d7b31f9cac26472bc272fd9b",
+    "final-macos/unicode-driver-results-ci.json": "319ba794bac6208a112e23a1a690e0943b65e50201c5b261f89b65bdd2c92c8a",
+    "final-x86_64/format-platform-ci.json": "0009a5a282c4e997889feada3379c3c584b69f4048e832a8c4ae22a369072cfd",
+    "final-x86_64/linux-driver-results-ci.json": "a73a5256a456f109994a185a739c81b5bd0b453c85608bcb2f7825a932ce169a",
+    "final-x86_64/portability-ci.log": "0dbaaae8e41a834df7afbfbd1d5d0cb5f1b3902ac54841f0a517093dbc7233bd",
+    "format-arm64/format-platform-ci.json": "0239b2b75a220b92d9b8dacd2ad9d2c28599e3d88a587f4c6da725a029e58eb7",
+    "format-arm64/linux-driver-results-ci.json": "4b172335c42fc92a229c71169db912126e46766fe43f101ed5b7eb8bba13ed3b",
+    "format-arm64/portability-ci.log": "f9b3ba35ffd58f7ef9b413f9ea7d7be070391c8e890c4cb9158a5e394c51e758",
+    "format-unicode-final.log": "7045db660900996d23d13d1f327169a41e27a2aacf89cf0ceaadfc4b62b21bac",
+    "format-x86_64/format-platform-ci.json": "0009a5a282c4e997889feada3379c3c584b69f4048e832a8c4ae22a369072cfd",
+    "format-x86_64/linux-driver-results-ci.json": "9c3b2dc700d52e20adba75453005c1bc67db66f6c93219acce1e9a3a24df3222",
+    "format-x86_64/portability-ci.log": "f3d8c5303c7ad965f02527e1c2d0dbfea61b228047242f0ed1b4a6ae9c27679e",
+    "gate-final.log": "fe211d9dc43aeff4619b5e93e191738b19823f18cde44b503fd851e3bd5e1880",
+    "gate.log": "e48369e6f8caf4360a44ce4599f9546b132d06fca84e6aa185971acea88e9d98",
+    "local-final.json": "106a870846bed2556b151474138d19690a126d471a528043cebf9fa7824d03a9",
+    "probe-arm64/format-platform-ci.json": "0239b2b75a220b92d9b8dacd2ad9d2c28599e3d88a587f4c6da725a029e58eb7",
+    "probe-arm64/linux-driver-results-ci.json": "00c83c0b848edb4aae775ddb17622d04bcec61523dfa88bc34af658db5f566c6",
+    "probe-arm64/portability-ci.log": "01f6f1ca662e539997a3eb192d9f03688b32c4943e035dd848837442ada1527f",
+    "probe-x86_64/format-platform-ci.json": "0009a5a282c4e997889feada3379c3c584b69f4048e832a8c4ae22a369072cfd",
+    "probe-x86_64/linux-driver-results-ci.json": "b228716679edea6208b41b38885e636db4e7f88734c0a745b6a5221a62c0f3d5",
+    "probe-x86_64/portability-ci.log": "09e6657c51737a2832c1e2c5a9673641d8fc5ada7b46781e2d70e778754fd9f4",
+    "release-final.log": "6261d47e5c4d986e6319827be456535a3378f4f9a9e6641fc0fe02e9911e4d79",
+    "release.log": "79441ff9ab673ca0152fb437f27a69278ceeb38df6108c4494b8969f5825e1a7",
+    "shift-jis-cast.log": "9e7cdd46ce77679839e88a4f4fb71546bd66d3bd437d31a9c0b19de1f7b3e00e",
+    "../../src/text.rs": "fe7156ea661f2745ab697b6e23a892e3a1cca2d78f467f9d3fa3704adbf84267",
+    "../../src/runner/fmt.rs": "63688a3d0ba9ddbd4895e4492efa516ec1a01b49c0b8eabb24f3579583399093",
+    "../../tests/dynamic_format.rs": "976bd65a043b3e301c928ef0ea45d71431b74706e099fca285156da57187e3fb",
+    "../../scripts/format_platform_probe.py": "54b3d6b7ea7753b3d7dbced4c83ab67af90ad90aa6d4d59ad5af64744bb13460",
+    "../../.github/workflows/compatibility.yml": "ea10aea71ce422dc559fa372472a20e2ca167aad76a1bd701add89f577bacd1b",
+    "../../Cargo.lock": "b5913ceb7df57dd055cfb3e5ea9715842464a205764e6ec521b074b1536d1ebe"
+  }
+}

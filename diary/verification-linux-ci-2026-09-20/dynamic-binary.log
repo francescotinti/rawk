@@ -1,0 +1,15 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.65s
+     Running tests/dynamic_format.rs (target/debug/deps/dynamic_format-dc2803db40b3264c)
+
+running 7 tests
+test negative_precision_keeps_binary_and_multibyte_paths ... ok
+test string_and_literal_range_errors_do_not_discard_arithmetic_subnormals ... ok
+test missing_star_arguments_are_errors ... ok
+test unsigned_conversion_matches_native_oracle ... ok
+test dynamic_width_precision_and_consumption ... ok
+test integer_flags_precision_and_signs ... ok
+test negative_dynamic_precision_preserves_flags_and_argument_consumption ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.09s
+

@@ -258,3 +258,25 @@ Linux nativo e altre piattaforme restano attività distinte e sospese.
 Verifica finale RS: 144 test debug e release, nessun ignorato; XML invariato,
 fmt/Clippy e controlli Rust Linux dei due target passati. Solo l'igiene dei
 metadati AppleDouble ha richiesto pulizia e riverifica; Linux nativo sospeso.
+
+
+## CI Linux nativa — 20 settembre 2026
+
+Superata la sospensione storica per assenza di runtime Linux locale grazie ai
+runner GitHub nativi x86-64/ARM64. Runtime `a118616`: tutti i job della
+[CI](https://github.com/francescotinti/rawk/actions/runs/35507960469) verdi.
+Corretti Clippy su `wchar_t` ARM64, precisione dinamica negativa glibc,
+unsigned negativi x86-64 e padding di `%s`. Conservati Darwin, NUL, byte alti,
+stampa atomica, home, sorgenti C ed expected esistenti.
+
+Verificati 75 test debug + 75 release per runner Linux; Darwin locale 148 debug
++ 148 release, nessun ignorato. XML 97 MATCH / 12 EXPECTED / 0 UNEXPECTED /
+0 SKIPPED. Il gate macOS remoto comprende anche gli audit originali e UTF-8.
+Metadati AppleDouble locali rimossi e controllo di igiene riverificato;
+i fallimenti intermedi sono conservati nelle evidenze.
+
+Il gate Linux mantiene le suite selezionate: non include Shift-JIS e non
+prepara `ja_JP.SJIS`; l'inventario completo dei driver è diagnostico, senza
+`--check`. Restano da delimitare convalida Shift-JIS Linux, altre codifiche,
+macOS Intel nativo e ulteriori domini numerici. Nessuna certificazione generale.
+[Consegna ed evidenze](../diary/2026-09-20-linux-ci.md).

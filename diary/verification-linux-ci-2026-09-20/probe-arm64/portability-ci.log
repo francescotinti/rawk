@@ -1,0 +1,363 @@
+Linux runnervmec22z 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:12:01 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+rustc 1.96.0 (ac68faa20 2026-05-25)
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded anstream v1.0.0
+  Downloaded anstyle-parse v1.0.0
+  Downloaded cfg-if v1.0.4
+  Downloaded anstyle-query v1.1.5
+  Downloaded anyhow v1.0.102
+  Downloaded anstyle v1.0.14
+  Downloaded aho-corasick v1.1.4
+  Downloaded iana-time-zone v0.1.65
+  Downloaded is_terminal_polyfill v1.70.2
+  Downloaded bit-set v0.8.0
+  Downloaded unicode-ident v1.0.24
+  Downloaded version_check v0.9.5
+  Downloaded cpufeatures v0.2.17
+  Downloaded utf8parse v0.2.2
+  Downloaded rand_core v0.9.5
+  Downloaded thiserror v2.0.18
+  Downloaded ucd-trie v0.1.7
+  Downloaded tempfile v3.27.0
+  Downloaded wait-timeout v0.2.1
+  Downloaded thiserror-impl v2.0.18
+  Downloaded typenum v1.20.0
+  Downloaded rand v0.9.4
+  Downloaded rand v0.10.1
+  Downloaded pest v2.8.6
+  Downloaded memchr v2.8.0
+  Downloaded quick-xml v0.39.2
+  Downloaded regex v1.12.3
+  Downloaded clap_builder v4.6.0
+  Downloaded libc v0.2.186
+  Downloaded proptest v1.11.0
+  Downloaded zerocopy v0.8.48
+  Downloaded rustix v1.1.4
+  Downloaded syn v2.0.117
+  Downloaded chrono v0.4.44
+  Downloaded serde_core v1.0.228
+  Downloaded regex-syntax v0.8.10
+  Downloaded num-traits v0.2.19
+  Downloaded chacha20 v0.10.0
+  Downloaded serde_derive v1.0.228
+  Downloaded rand_core v0.10.1
+  Downloaded proc-macro2 v1.0.106
+  Downloaded pest_meta v2.8.6
+  Downloaded pest_derive v2.8.6
+  Downloaded bit-vec v0.8.0
+  Downloaded autocfg v1.5.0
+  Downloaded ppv-lite86 v0.2.21
+  Downloaded colorchoice v1.0.5
+  Downloaded regex-automata v0.4.14
+  Downloaded bitflags v2.11.1
+  Downloaded rand_xorshift v0.4.0
+  Downloaded strsim v0.11.1
+  Downloaded sha2 v0.10.9
+  Downloaded pest_generator v2.8.6
+  Downloaded getrandom v0.4.2
+  Downloaded getrandom v0.3.4
+  Downloaded fnv v1.0.7
+  Downloaded clap_derive v4.6.1
+  Downloaded clap v4.6.1
+  Downloaded rand_chacha v0.9.0
+  Downloaded quote v1.0.45
+  Downloaded once_cell v1.21.4
+  Downloaded generic-array v0.14.7
+  Downloaded digest v0.10.7
+  Downloaded heck v0.5.0
+  Downloaded block-buffer v0.10.4
+  Downloaded unarray v0.1.4
+  Downloaded sprintf v0.4.3
+  Downloaded quick-error v1.2.3
+  Downloaded errno v0.3.14
+  Downloaded crypto-common v0.1.7
+  Downloaded clap_lex v1.1.0
+  Downloaded serde v1.0.228
+  Downloaded rusty-fork v0.3.1
+  Downloaded fastrand v2.4.1
+  Downloaded linux-raw-sys v0.12.1
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling libc v0.2.186
+   Compiling quote v1.0.45
+    Checking cfg-if v1.0.4
+    Checking rand_core v0.10.1
+   Compiling getrandom v0.4.2
+   Compiling rustix v1.1.4
+   Compiling autocfg v1.5.0
+    Checking memchr v2.8.0
+   Compiling num-traits v0.2.19
+   Compiling ucd-trie v0.1.7
+   Compiling syn v2.0.117
+    Checking bitflags v2.11.1
+    Checking linux-raw-sys v0.12.1
+    Checking utf8parse v0.2.2
+   Compiling getrandom v0.3.4
+   Compiling serde_core v1.0.228
+    Checking anstyle-parse v1.0.0
+    Checking colorchoice v1.0.5
+    Checking is_terminal_polyfill v1.70.2
+   Compiling serde v1.0.228
+   Compiling pest v2.8.6
+    Checking fastrand v2.4.1
+    Checking once_cell v1.21.4
+    Checking regex-syntax v0.8.10
+    Checking anstyle v1.0.14
+   Compiling thiserror v2.0.18
+    Checking anstyle-query v1.1.5
+    Checking anstream v1.0.0
+   Compiling pest_meta v2.8.6
+    Checking tempfile v3.27.0
+    Checking aho-corasick v1.1.4
+    Checking strsim v0.11.1
+   Compiling zerocopy v0.8.48
+   Compiling thiserror-impl v2.0.18
+   Compiling serde_derive v1.0.228
+    Checking clap_lex v1.1.0
+   Compiling heck v0.5.0
+   Compiling anyhow v1.0.102
+   Compiling clap_derive v4.6.1
+    Checking clap_builder v4.6.0
+    Checking regex-automata v0.4.14
+    Checking rand_core v0.9.5
+   Compiling pest_generator v2.8.6
+    Checking chacha20 v0.10.0
+    Checking iana-time-zone v0.1.65
+   Compiling pest_derive v2.8.6
+    Checking chrono v0.4.44
+    Checking regex v1.12.3
+    Checking rand v0.10.1
+    Checking quick-xml v0.39.2
+    Checking clap v4.6.1
+    Checking sprintf v0.4.3
+    Checking wait-timeout v0.2.1
+    Checking quick-error v1.2.3
+    Checking bit-vec v0.8.0
+    Checking fnv v1.0.7
+    Checking rusty-fork v0.3.1
+    Checking bit-set v0.8.0
+    Checking rand v0.9.4
+    Checking rand_xorshift v0.4.0
+    Checking unarray v0.1.4
+    Checking rawk v0.1.0 (/home/runner/work/rawk/rawk/rawk)
+    Checking ppv-lite86 v0.2.21
+    Checking rand_chacha v0.9.0
+    Checking proptest v1.11.0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 12.20s
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.45
+   Compiling libc v0.2.186
+   Compiling memchr v2.8.0
+   Compiling utf8parse v0.2.2
+   Compiling serde_core v1.0.228
+   Compiling rand_core v0.10.1
+   Compiling ucd-trie v0.1.7
+   Compiling getrandom v0.4.2
+   Compiling cfg-if v1.0.4
+   Compiling syn v2.0.117
+   Compiling autocfg v1.5.0
+   Compiling pest v2.8.6
+   Compiling num-traits v0.2.19
+   Compiling anstyle-parse v1.0.0
+   Compiling thiserror v2.0.18
+   Compiling serde v1.0.228
+   Compiling anstyle-query v1.1.5
+   Compiling rustix v1.1.4
+   Compiling colorchoice v1.0.5
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling anstyle v1.0.14
+   Compiling anstream v1.0.0
+   Compiling pest_meta v2.8.6
+   Compiling aho-corasick v1.1.4
+   Compiling strsim v0.11.1
+   Compiling serde_derive v1.0.228
+   Compiling thiserror-impl v2.0.18
+   Compiling clap_lex v1.1.0
+   Compiling heck v0.5.0
+   Compiling anyhow v1.0.102
+   Compiling linux-raw-sys v0.12.1
+   Compiling regex-syntax v0.8.10
+   Compiling bitflags v2.11.1
+   Compiling regex-automata v0.4.14
+   Compiling clap_derive v4.6.1
+   Compiling clap_builder v4.6.0
+   Compiling pest_generator v2.8.6
+   Compiling chacha20 v0.10.0
+   Compiling iana-time-zone v0.1.65
+   Compiling fastrand v2.4.1
+   Compiling once_cell v1.21.4
+   Compiling tempfile v3.27.0
+   Compiling chrono v0.4.44
+   Compiling clap v4.6.1
+   Compiling rand v0.10.1
+   Compiling regex v1.12.3
+   Compiling pest_derive v2.8.6
+   Compiling quick-xml v0.39.2
+   Compiling sprintf v0.4.3
+   Compiling rawk v0.1.0 (/home/runner/work/rawk/rawk/rawk)
+    Finished `release` profile [optimized] target(s) in 25.45s
+   Compiling cfg-if v1.0.4
+   Compiling libc v0.2.186
+   Compiling memchr v2.8.0
+   Compiling rand_core v0.10.1
+   Compiling utf8parse v0.2.2
+   Compiling linux-raw-sys v0.12.1
+   Compiling ucd-trie v0.1.7
+   Compiling bitflags v2.11.1
+   Compiling pest v2.8.6
+   Compiling rustix v1.1.4
+   Compiling anstyle-parse v1.0.0
+   Compiling colorchoice v1.0.5
+   Compiling anstyle-query v1.1.5
+   Compiling getrandom v0.4.2
+   Compiling regex-syntax v0.8.10
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling once_cell v1.21.4
+   Compiling fastrand v2.4.1
+   Compiling anstyle v1.0.14
+   Compiling pest_meta v2.8.6
+   Compiling anstream v1.0.0
+   Compiling tempfile v3.27.0
+   Compiling getrandom v0.3.4
+   Compiling num-traits v0.2.19
+   Compiling serde_core v1.0.228
+   Compiling aho-corasick v1.1.4
+   Compiling strsim v0.11.1
+   Compiling clap_lex v1.1.0
+   Compiling clap_builder v4.6.0
+   Compiling regex-automata v0.4.14
+   Compiling serde v1.0.228
+   Compiling thiserror v2.0.18
+   Compiling rand_core v0.9.5
+   Compiling pest_generator v2.8.6
+   Compiling chacha20 v0.10.0
+   Compiling iana-time-zone v0.1.65
+   Compiling clap v4.6.1
+   Compiling chrono v0.4.44
+   Compiling pest_derive v2.8.6
+   Compiling rand v0.10.1
+   Compiling regex v1.12.3
+   Compiling sprintf v0.4.3
+   Compiling quick-xml v0.39.2
+   Compiling anyhow v1.0.102
+   Compiling zerocopy v0.8.48
+   Compiling wait-timeout v0.2.1
+   Compiling bit-vec v0.8.0
+   Compiling fnv v1.0.7
+   Compiling quick-error v1.2.3
+   Compiling rawk v0.1.0 (/home/runner/work/rawk/rawk/rawk)
+   Compiling rusty-fork v0.3.1
+   Compiling bit-set v0.8.0
+   Compiling rand_xorshift v0.4.0
+   Compiling rand v0.9.4
+   Compiling unarray v0.1.4
+   Compiling ppv-lite86 v0.2.21
+   Compiling rand_chacha v0.9.0
+   Compiling proptest v1.11.0
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.47s
+     Running unittests src/lib.rs (target/debug/deps/rawk-cf2e1085fda57426)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/diffrun.rs (target/debug/deps/diffrun-3b6e51535cd91098)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/rawk-992d587babbada91)
+
+running 4 tests
+test unicode_ere::tests::encoding_preserves_offsets_and_invalid_bytes_without_sentinels ... ok
+test unicode_ere::tests::compiled_intervals_cover_only_the_requested_runes ... ok
+test input::tests::separators_are_independent_of_read_boundaries ... ok
+test ere::stream::tests::physical_short_reads_do_not_change_bwk_lookahead ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/bytes_array_keys.rs (target/debug/deps/bytes_array_keys-8912e42706625c48)
+
+running 3 tests
+test for_in_returns_all_distinct_byte_keys ... ok
+test distinct_high_byte_keys_do_not_collide ... ok
+test nul_embedded_key_round_trips ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/bytes_printf.rs (target/debug/deps/bytes_printf-d8adb88f194b5935)
+
+running 6 tests
+test printf_c_emits_first_byte_raw ... ok
+test printf_format_string_with_high_bytes ... ok
+test print_with_high_byte_ofs ... ok
+test field_split_with_high_byte_fs ... ok
+test printf_s_preserves_high_byte ... ok
+test sprintf_high_byte_round_trip ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/bytes_regex_match.rs (target/debug/deps/bytes_regex_match-42c23aa5e737afa6)
+
+running 6 tests
+test gsub_ampersand_includes_whole_match ... ok
+test match_builtin_high_byte_pattern_position ... ok
+test nul_inside_subject_with_rs_regex ... ok
+test match_distinguishes_high_bytes ... ok
+test rs_regex_high_byte_separator_splits_correctly ... ok
+test sub_replaces_high_byte_run ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/data_contract.rs (target/debug/deps/data_contract-65cc91f870523ded)
+
+running 6 tests
+test invalid_regex_is_reported ... ok
+test csv_handles_quoted_delimiters_newlines_and_escaped_quotes ... ok
+test fields_accept_regex_separator ... ok
+test regex_uses_leftmost_longest ... ok
+test substitutions_report_count_not_changed_text ... ok
+test split_preserves_empty_fields_and_clears_array ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/driver_regressions.rs (target/debug/deps/driver_regressions-7b3f66b843422112)
+
+running 6 tests
+test multifile_syntax_error_names_offending_source ... ok
+test field_index_beyond_reference_integer_range_is_an_error ... ok
+test getline_comparison_is_not_part_of_filename ... ok
+test invalid_function_parameters_are_errors_before_execution ... ok
+test redirected_stdin_shares_buffer_with_main_input ... ok
+test stdin_program_and_empty_statements ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/dynamic_format.rs (target/debug/deps/dynamic_format-da660803ed5b773d)
+
+running 4 tests
+test string_and_literal_range_errors_do_not_discard_arithmetic_subnormals ... ok
+test dynamic_width_precision_and_consumption ... FAILED
+test missing_star_arguments_are_errors ... ok
+test integer_flags_precision_and_signs ... ok
+
+failures:
+
+---- dynamic_width_precision_and_consumption stdout ----
+
+thread 'dynamic_width_precision_and_consumption' (6967) panicked at tests/dynamic_format.rs:11:5:
+assertion `left == right` failed: BEGIN{printf "[%*.*d] %d\n",-9,-3,1.25,73;print sprintf("[%*.*d]",-9,-3,1.25)}
+  left: Outcome { stdout: [91, 49, 32, 32, 93, 32, 55, 51, 10, 91, 49, 32, 32, 93, 10], stderr: [], code: Some(0), timed_out: false }
+ right: Outcome { stdout: [91, 37, 45, 57, 46, 48, 45, 51, 106, 100, 93, 32, 55, 51, 10, 91, 37, 45, 57, 46, 48, 45, 51, 106, 100, 93, 10], stderr: [], code: Some(0), timed_out: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    dynamic_width_precision_and_consumption
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.98s
+
+error: test failed, to rerun pass `--test dynamic_format`

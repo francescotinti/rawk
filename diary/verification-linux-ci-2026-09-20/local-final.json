@@ -1,0 +1,40 @@
+{
+  "commit": "a1186164dc452d47f8623ff19b582730c48c19c5",
+  "removed_appledouble": [
+    "tests/._dynamic_format.rs",
+    "diary/verification-linux-ci-2026-09-20/._gate.log",
+    "diary/verification-linux-ci-2026-09-20/._release.log",
+    "diary/verification-linux-ci-2026-09-20/._format-arm64",
+    "diary/verification-linux-ci-2026-09-20/._dynamic-binary.log",
+    "diary/verification-linux-ci-2026-09-20/._format-pass-failed.log",
+    "diary/verification-linux-ci-2026-09-20/._format-x86_64",
+    "diary/verification-linux-ci-2026-09-20/._format-unicode-final.log",
+    "diary/verification-linux-ci-2026-09-20/format-arm64/._format-platform-ci.json",
+    "diary/verification-linux-ci-2026-09-20/format-arm64/._portability-ci.log",
+    "diary/verification-linux-ci-2026-09-20/format-arm64/._linux-driver-results-ci.json",
+    "diary/verification-linux-ci-2026-09-20/format-x86_64/._portability-ci.log",
+    "diary/verification-linux-ci-2026-09-20/format-x86_64/._linux-driver-results-ci.json",
+    "diary/verification-linux-ci-2026-09-20/format-x86_64/._format-platform-ci.json",
+    "src/runner/._fmt.rs"
+  ],
+  "commands": [
+    {
+      "command": [
+        "bash",
+        "scripts/checks.sh"
+      ],
+      "exit_code": 1,
+      "log": "gate-final.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--release"
+      ],
+      "exit_code": 0,
+      "log": "release-final.log"
+    }
+  ]
+}
