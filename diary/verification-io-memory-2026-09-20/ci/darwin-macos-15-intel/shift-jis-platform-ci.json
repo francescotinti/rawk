@@ -1,0 +1,64 @@
+{
+  "platform": "macOS-15.7.9-x86_64-i386-64bit-Mach-O",
+  "machine": "x86_64",
+  "libc": [
+    "",
+    ""
+  ],
+  "locale": "ja_JP.SJIS",
+  "codeset": "SJIS",
+  "oracle_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "rawk_revision": "36492979de6a222c54d4110f9c06b14b53fa85ac",
+  "valid_double_byte_pairs": 15240,
+  "conversion_match": true,
+  "binary_sha256": {
+    "c": "87be459c19497aa01aa3cb7897c8c2c844a475f1b0c8840736fcdf7522193548",
+    "rust": "a7481acc28c908378e41b19bfe3c8f5c67394cec1366e0ac32022b0d82399239"
+  },
+  "encodable_pairs": {
+    "toupper": 15240,
+    "tolower": 15240
+  },
+  "unencodable_mappings": {
+    "toupper": [],
+    "tolower": []
+  },
+  "cases": [
+    {
+      "operation": "toupper",
+      "pairs": 15240,
+      "match": true,
+      "input_sha256": "21ebc7d97cd2f6f051d47555b8c0890faf76b0fac5ebc7266e726f35fe78f934",
+      "outcomes": {
+        "c": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "614e1a1506b6574bfeaa4f923414bde9305876e02bf06a82624eff715e1b2a4b"
+        },
+        "rust": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "614e1a1506b6574bfeaa4f923414bde9305876e02bf06a82624eff715e1b2a4b"
+        }
+      }
+    },
+    {
+      "operation": "tolower",
+      "pairs": 15240,
+      "match": true,
+      "input_sha256": "21ebc7d97cd2f6f051d47555b8c0890faf76b0fac5ebc7266e726f35fe78f934",
+      "outcomes": {
+        "c": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "83aa322092fa797457062857fe715ebc55cd608df4050d01322a206429dbf8b2"
+        },
+        "rust": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "83aa322092fa797457062857fe715ebc55cd608df4050d01322a206429dbf8b2"
+        }
+      }
+    }
+  ]
+}

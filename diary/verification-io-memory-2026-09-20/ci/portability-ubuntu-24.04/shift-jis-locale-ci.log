@@ -1,0 +1,5 @@
+locale=ja_JP.SJIS codeset=SHIFT_JIS MB_CUR_MAX=2 wchar_t=4
+decode=2 wchar=0xff41
+encode=2
+truncated=incomplete
+invalid=error errno=84

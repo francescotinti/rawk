@@ -354,7 +354,7 @@ Sequenza autorizzata; questa tranche esegue soltanto la prima priorità.
    Nessuna promessa di parità col C; conservare anche eventuali risultati negativi.
 2. **Regex e sostituzioni UTF-8 — completata**: match/gsub, ricerche brevi e senza match;
    preservare il vantaggio del percorso booleano su righe lunghe.
-3. **I/O e memoria su input grandi**: copie, allocazioni, buffering e picco RSS,
+3. **I/O e memoria su input grandi — completata**: copie, allocazioni, buffering e picco RSS,
    preservando pipe, getline, RS e stream condivisi.
 4. **Misure multipiattaforma e regressioni**: Linux e macOS Intel/ARM64,
    corpus più rappresentativo e monitoraggio riproducibile. La correttezza
@@ -391,7 +391,7 @@ La priorità 3 è la prossima; non è stata implementata in questa tranche.
 [Riproduzione, verifiche e limiti](../diary/2026-09-20-regex-search.md).
 
 
-### Terza priorità: I/O e memoria su input grandi — in convalida
+### Terza priorità: I/O e memoria su input grandi — completata
 
 Tranche autorizzata sulla consegna `61009df`. Rust/Cargo locali 1.98.1,
 baseline ricostruita prima di modificare il runtime e stessa toolchain per
@@ -408,7 +408,9 @@ universalmente inferiore: +1,94 MiB nel caso da 1 MiB e +1,38 MiB CSV.
 Conservata anche una variante senza riserva CSV, con RSS variabile.
 
 Test mirati e gate locali passati: 160 debug + 160 release, zero ignorati,
-fmt/Clippy/XML verdi. CI nativa sulle quattro piattaforme in attesa di pubblicazione. La CI conserva Rust 1.96.0 per correttezza; non è un confronto di
-velocità con la 1.98.1 locale. Una differenza EOF/$0 preesistente con RS regex
+fmt/Clippy/XML verdi. Runtime `3649297`, CI nativa tutta verde: macOS Intel/ARM64
+160 debug + 160 release per runner, Linux x86-64/ARM64 98+98. Driver, contratti,
+stream e codifiche verdi su tutte le piattaforme. La CI conserva Rust 1.96.0
+per correttezza; non è un confronto di velocità con la 1.98.1 locale. Una differenza EOF/$0 preesistente con RS regex
 è registrata separatamente, senza modificarne gli expected o il runtime.
 La priorità 4 resta non avviata. [Consegna e prove](../diary/2026-09-20-io-memory.md).

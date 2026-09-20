@@ -5,7 +5,15 @@ Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 ## Base e ambito verificato
 
 - Repository: `francescotinti/rawk`, branch di coordinamento `master`.
-- Ultima convalida runtime: **`aa6ce2e`**, regex e sostituzioni.
+- Ultima convalida runtime: **`3649297`**, scansione incrementale dei record
+  lunghi e preallocazione CSV. **160 debug + 160 release** per runner macOS
+  Intel/ARM64 e locale; **98 debug + 98 release** per runner Linux x86-64/ARM64,
+  zero ignorati. XML, driver, contratti, stream e codifiche verdi.
+  [CI completa](https://github.com/francescotinti/rawk/actions/runs/35531551546),
+  [consegna I/O e memoria](diary/2026-09-20-io-memory.md).
+  Misure locali prima/dopo ricostruite con Rust 1.98.1; CI di correttezza
+  ancora fissata alla 1.96.0. Nessuna attribuzione di velocità alle altre piattaforme.
+- Convalida regex precedente: **`aa6ce2e`**, regex e sostituzioni.
   **156 debug + 156 release** per runner macOS Intel/ARM64 e locale;
   **94 debug + 94 release** per runner Linux x86-64/ARM64, zero ignorati.
   XML, driver, contratti, stream e codifiche tutti verdi.
@@ -105,7 +113,7 @@ Benefici misurati solo sul Mac ARM64 locale, non sulle altre piattaforme.
 [Rapporto e limiti](diary/2026-09-20-core-performance.md).
 
 Priorità ordinate: (1) campi/valori/aggregazione, completata;
-(2) regex e sostituzioni UTF-8, completata; (3) I/O e memoria su input grandi, in convalida finale;
+(2) regex e sostituzioni UTF-8, completata; (3) I/O e memoria su input grandi, completata;
 (4) misure prestazionali multipiattaforma e monitoraggio. Le successive
 priorità non sono avviate automaticamente. La correttezza sulle quattro
 piattaforme rimane requisito della prima.
@@ -122,7 +130,7 @@ RSS vicino alla baseline, con +16 KiB di mediana in due controlli. Nessuna
 attribuzione di questi benefici alle piattaforme non misurate. [Rapporto](diary/2026-09-20-regex-search.md).
 La priorità 3 è descritta sotto; la priorità 4 resta successiva.
 
-## Prestazioni: terza priorità in convalida finale
+## Prestazioni: terza priorità completata
 
 Base `61009df`, baseline ricostruita con Rust/Cargo **1.98.1** come il dopo;
 nessun beneficio attribuito al cambio dalla precedente 1.96.0. Scansione
@@ -133,8 +141,9 @@ Righe corte da 128 MiB +3,2%; RSS non universalmente migliore (+1,94 MiB
 con record da 1 MiB, +1,38 MiB CSV nella sessione principale). Ridotti i
 conteggi di riallocazione CSV, senza equipararli alla memoria residente.
 Test mirati e gate locali verdi: 160 debug + 160 release, zero ignorati;
-fmt, Clippy e XML 97/12/0/0 verdi. CI nativa in attesa di pubblicazione. Nessuna misura di velocità
-su Intel/Linux. La CI conserva il pin di correttezza Rust 1.96.0.
+fmt, Clippy e XML 97/12/0/0 verdi. CI nativa tutta verde su `3649297`: macOS
+Intel/ARM64 160+160 test, Linux x86-64/ARM64 98+98; driver, stream e codifiche
+verdi. Nessuna misura di velocità su Intel/Linux. La CI conserva il pin di correttezza Rust 1.96.0.
 [Consegna, distribuzioni e limiti](diary/2026-09-20-io-memory.md).
 
 ## Attività aperte
