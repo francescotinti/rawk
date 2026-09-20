@@ -96,6 +96,8 @@ jobs:
         run: |
           set -o pipefail
           bash scripts/check_portability.sh 2>&1 | tee diary/portability-ci.log
+      - name: Compare all native libc-valid Shift-JIS pairs
+        run: python3 scripts/shift_jis_platform_probe.py --output diary/shift-jis-platform-ci.json
       - name: Inventory original drivers on this platform
         if: always()
         run: python3 scripts/full_driver_audit.py --output diary/linux-driver-results-ci.json
@@ -105,6 +107,7 @@ jobs:
         with:
           name: portability-${{ matrix.os }}
           path: |
+            rawk/diary/shift-jis-platform-ci.json
             rawk/diary/shift-jis-locale-ci.log
             rawk/diary/format-platform-ci.json
             rawk/diary/portability-ci.log
