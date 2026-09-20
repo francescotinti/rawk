@@ -172,3 +172,19 @@ XML, driver, contratti, stream e codifiche conservano tutti i gate.
 Sono misure prestazionali locali e verifiche di correttezza multipiattaforma,
 non una promessa di velocità su macchine non misurate.
 [Baseline, profiling, risultati e consegna](../diary/2026-09-20-core-performance.md).
+
+
+## Regex e sostituzioni — seconda priorità completata
+
+Il runtime `aa6ce2e` evita la ricerca implicita su $0 del RHS letterale di
+~ / !~, riduce le riallocazioni iniziali della codifica Unicode ed espande
+le sostituzioni direttamente nel risultato. Restano identici valutazione
+delle regex dinamiche, decoder, DFA, allineamento e regole di sostituzione.
+
+Su Apple M4/macOS 26.6.2: tempi -38,4% nei booleani brevi, -35,9% senza
+match, -28,7% nei booleani lunghi, -16,3% match e -19,7% gsub. Controlli byte
+circa invariati; RSS vicino alla baseline, con +16 KiB in due controlli.
+CI nativa verde: 156 test debug/release per runner macOS, 94 per profilo Linux;
+invariati XML, driver, contratti, stream e codifiche. I benefici prestazionali
+non sono estesi a piattaforme non misurate.
+[Profiling, benchmark e consegna](../diary/2026-09-20-regex-search.md).

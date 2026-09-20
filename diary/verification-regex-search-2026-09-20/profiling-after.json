@@ -1,0 +1,22 @@
+[
+  {
+    "name": "boolean",
+    "program": "{n+=($0 ~ /\u00e9|\u00e9\ud83d\ude00/)} END{print n}",
+    "input_sha256": "84af4bf736940ec92eaa33d0fdd180dbc1dd501d224ebaeabe9023445cf88bbf",
+    "stdout": "10000000\n",
+    "exit": 0,
+    "sampling": "sample PID 5 1",
+    "binary_sha256": "c09a3ca7c0dcbd5128d2e4d11f797789046607ea89d7827ab32c9ec63dcb09fa",
+    "locale": "en_US.UTF-8"
+  },
+  {
+    "name": "gsub",
+    "program": "{n+=gsub(/./,\"x\")} END{print n}",
+    "input_sha256": "ea3100d34077d99c90ba4f1b91e0bf031b7ba10f13aa1bcef19a2d5152cb15f0",
+    "stdout": "40000000\n",
+    "exit": 0,
+    "sampling": "sample PID 5 1",
+    "binary_sha256": "c09a3ca7c0dcbd5128d2e4d11f797789046607ea89d7827ab32c9ec63dcb09fa",
+    "locale": "en_US.UTF-8"
+  }
+]

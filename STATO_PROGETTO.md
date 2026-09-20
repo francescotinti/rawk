@@ -5,7 +5,13 @@ Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 ## Base e ambito verificato
 
 - Repository: `francescotinti/rawk`, branch di coordinamento `master`.
-- Ultima convalida runtime: **`42f35e6`**, riuso dei buffer dei campi FS spazio.
+- Ultima convalida runtime: **`aa6ce2e`**, regex e sostituzioni.
+  **156 debug + 156 release** per runner macOS Intel/ARM64 e locale;
+  **94 debug + 94 release** per runner Linux x86-64/ARM64, zero ignorati.
+  XML, driver, contratti, stream e codifiche tutti verdi.
+  [CI completa](https://github.com/francescotinti/rawk/actions/runs/35528862123),
+  [consegna regex](diary/2026-09-20-regex-search.md).
+- Convalida campi precedente: **`42f35e6`**, riuso dei buffer dei campi FS spazio.
   **154 debug + 154 release** per runner macOS Intel/ARM64 e locale;
   **92 debug + 92 release** per runner Linux x86-64/ARM64, zero ignorati.
   Tutti i gate driver/stream, XML e codifiche restano verdi.
@@ -24,13 +30,13 @@ Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 - Runtime precedente verificato: `b1adc82` (alias degli stream standard e gestione errori
   matematici glibc; audit driver Linux). Eseguire `git status` e `git log` per
   lo stato corrente; questo non è un puntatore dinamico.
-- Ultima convalida Linux: **89 debug + 89 release per runner** x86-64/ARM64,
+- Convalida Linux precedente: **89 debug + 89 release per runner** x86-64/ARM64,
   zero ignorati; **27/27 driver ammessi**, **275/275 contratti individuali** e
   **20/20 sonde stream** in entrambi i profili. Gli errori runtime sono corretti,
   le differenze deliberate e diagnostiche hanno contratti espliciti.
   Darwin locale **151 debug + 151 release**; macOS CI **151 debug**, XML
   97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED e audit verdi.
-  La CI macOS non esegue l'intera suite release.
+  In quella convalida la CI macOS non eseguiva l'intera suite release.
   [CI tutta verde](https://github.com/francescotinti/rawk/actions/runs/35510218505),
   [consegna e classificazione](diary/2026-09-20-linux-drivers.md).
 - Convalida precedente: `3b9facf` (infrastruttura/test Shift-JIS, runtime
@@ -98,18 +104,22 @@ runtime `42f35e6`, con 154+154 test macOS e 92+92 Linux per runner.
 Benefici misurati solo sul Mac ARM64 locale, non sulle altre piattaforme.
 [Rapporto e limiti](diary/2026-09-20-core-performance.md).
 
-Priorità ordinate: (1) campi/valori/aggregazione, questa tranche;
-(2) regex e sostituzioni UTF-8; (3) I/O e memoria su input grandi;
+Priorità ordinate: (1) campi/valori/aggregazione, completata;
+(2) regex e sostituzioni UTF-8, completata; (3) I/O e memoria su input grandi;
 (4) misure prestazionali multipiattaforma e monitoraggio. Le successive
 priorità non sono avviate automaticamente. La correttezza sulle quattro
 piattaforme rimane requisito della prima.
 
-## Prestazioni: seconda priorità in verifica
+## Prestazioni: seconda priorità completata
 
 Proseguimento autorizzato su base `bab2f7c`: eliminazione della ricerca
 ridondante del RHS regex letterale, minori riallocazioni Unicode e sostituzioni
 senza buffer temporaneo per match. Benchmark completati; gate locale verde
-con 156 test debug e 156 release, zero ignorati. CI nativa da completare. [Rapporto](diary/2026-09-20-regex-search.md).
+con 156 test debug e 156 release, zero ignorati. CI nativa tutta verde sul runtime `aa6ce2e`.
+Sul Mac ARM64 locale: -38,4% booleano breve, -35,9% senza match, -28,7%
+booleano lungo, -16,3% match e -19,7% gsub. Carichi byte circa invariati;
+RSS vicino alla baseline, con +16 KiB di mediana in due controlli. Nessuna
+attribuzione di questi benefici alle piattaforme non misurate. [Rapporto](diary/2026-09-20-regex-search.md).
 Le priorità 3 (I/O/memoria) e 4 (misure multipiattaforma) restano successive.
 
 ## Attività aperte

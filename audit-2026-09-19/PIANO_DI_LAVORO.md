@@ -352,7 +352,7 @@ Sequenza autorizzata; questa tranche esegue soltanto la prima priorità.
    intercalato prima/dopo/C con output controllato, distribuzioni e RSS; gate
    locali e CI nativa sulle quattro piattaforme prima della consegna runtime.
    Nessuna promessa di parità col C; conservare anche eventuali risultati negativi.
-2. **Regex e sostituzioni UTF-8**: match/gsub, ricerche brevi e senza match;
+2. **Regex e sostituzioni UTF-8 — completata**: match/gsub, ricerche brevi e senza match;
    preservare il vantaggio del percorso booleano su righe lunghe.
 3. **I/O e memoria su input grandi**: copie, allocazioni, buffering e picco RSS,
    preservando pipe, getline, RS e stream condivisi.
@@ -373,7 +373,7 @@ XML, driver, stream e codifiche. La priorità 2 è la prossima, non è stata
 implementata in questa tranche. [Misure, verifiche e limiti](../diary/2026-09-20-core-performance.md).
 
 
-### Seconda priorità avviata
+### Seconda priorità completata
 
 Dopo la consegna `bab2f7c`, l'utente ha autorizzato il proseguimento. La tranche
 corrente profila regex UTF-8 e sostituzioni sulla nuova baseline; comprende
@@ -381,3 +381,11 @@ l'eliminazione della ricerca implicita ridondante del RHS letterale di ~ / !~,
 la capacità iniziale della codifica Unicode e l'espansione delle sostituzioni
 nel buffer finale. Accettazione: misure intercalate, controlli lunghi/byte,
 regressioni e gate sulle quattro piattaforme. Priorità 3 e 4 non avviate.
+
+Esito: runtime `aa6ce2e`, CI nativa tutta verde su macOS Intel/ARM64
+(156 debug + 156 release per runner) e Linux x86-64/ARM64 (94+94).
+Nel profilo locale Apple M4: booleani UTF-8 brevi -38,4%, senza match -35,9%,
+lunghi -28,7%; match -16,3%, gsub -19,7%. Controlli byte -0,4%–+0,1%;
+RSS vicino alla baseline, con +16 KiB di mediana in due controlli.
+La priorità 3 è la prossima; non è stata implementata in questa tranche.
+[Riproduzione, verifiche e limiti](../diary/2026-09-20-regex-search.md).

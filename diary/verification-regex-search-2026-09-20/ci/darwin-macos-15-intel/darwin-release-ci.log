@@ -1,0 +1,368 @@
+   Compiling num-traits v0.2.19
+   Compiling getrandom v0.3.4
+   Compiling zerocopy v0.8.48
+   Compiling wait-timeout v0.2.1
+   Compiling rand_core v0.9.5
+   Compiling bit-vec v0.8.0
+   Compiling quick-error v1.2.3
+   Compiling fnv v1.0.7
+   Compiling bit-set v0.8.0
+   Compiling rusty-fork v0.3.1
+   Compiling rand v0.9.4
+   Compiling chrono v0.4.44
+   Compiling rand_xorshift v0.4.0
+   Compiling unarray v0.1.4
+   Compiling rawk v0.1.0 (/Users/runner/work/rawk/rawk/rawk)
+   Compiling ppv-lite86 v0.2.21
+   Compiling rand_chacha v0.9.0
+   Compiling proptest v1.11.0
+    Finished `release` profile [optimized] target(s) in 1m 51s
+     Running unittests src/lib.rs (target/release/deps/rawk-c15f558537628c02)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/diffrun.rs (target/release/deps/diffrun-e73f233a2f842257)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/rawk-89691518eb7cb3e6)
+
+running 4 tests
+test unicode_ere::tests::encoding_preserves_offsets_and_invalid_bytes_without_sentinels ... ok
+test unicode_ere::tests::compiled_intervals_cover_only_the_requested_runes ... ok
+test input::tests::separators_are_independent_of_read_boundaries ... ok
+test ere::stream::tests::physical_short_reads_do_not_change_bwk_lookahead ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/builtins_sanity.rs (target/release/deps/builtins_sanity-ac16a06e56cb337f)
+
+running 5 tests
+test split_basic ... ok
+test length_string ... ok
+test match_basic ... ok
+test sprintf_int ... ok
+test substr_basic ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/bytes_array_keys.rs (target/release/deps/bytes_array_keys-b61f896d3847f528)
+
+running 3 tests
+test for_in_returns_all_distinct_byte_keys ... ok
+test nul_embedded_key_round_trips ... ok
+test distinct_high_byte_keys_do_not_collide ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/bytes_printf.rs (target/release/deps/bytes_printf-8af19a7184fa2ac6)
+
+running 6 tests
+test printf_format_string_with_high_bytes ... ok
+test print_with_high_byte_ofs ... ok
+test printf_c_emits_first_byte_raw ... ok
+test field_split_with_high_byte_fs ... ok
+test printf_s_preserves_high_byte ... ok
+test sprintf_high_byte_round_trip ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/bytes_regex_match.rs (target/release/deps/bytes_regex_match-a60e72259b281080)
+
+running 6 tests
+test nul_inside_subject_with_rs_regex ... ok
+test gsub_ampersand_includes_whole_match ... ok
+test match_distinguishes_high_bytes ... ok
+test match_builtin_high_byte_pattern_position ... ok
+test rs_regex_high_byte_separator_splits_correctly ... ok
+test sub_replaces_high_byte_run ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/cli_contract.rs (target/release/deps/cli_contract-acd378c0dc252776)
+
+running 5 tests
+test file_program_keeps_all_input_files ... ok
+test arrays_and_scalars_cannot_be_interchanged ... ok
+test invalid_builtin_arity_is_a_language_error ... ok
+test malformed_formats_and_invalid_runtime_arguments_do_not_panic ... ok
+test safe_mode_rejects_even_unexecuted_forbidden_operations ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+
+     Running tests/compatibility.rs (target/release/deps/compatibility-eac621d788503622)
+
+running 8 tests
+test braces_in_bracket_expressions_are_not_repetitions ... ok
+test arrays_forwarding_recursion_and_local_parameters ... ok
+test composed_input_and_control_flow ... ok
+test numeric_conversion_matches_original_buffer_limit ... ok
+test tuple_membership_uses_current_subsep_between_components ... ok
+test regex_compositions_match_original ... ok
+test generated_record_array_function_programs ... ok
+test hex_floats_precision_flags_and_boundaries ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.70s
+
+     Running tests/corpus.rs (target/release/deps/corpus-e33a4de8723e6def)
+
+running 1 test
+test original_small_programs ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.60s
+
+     Running tests/corpus_contracts.rs (target/release/deps/corpus_contracts-78fea44aae1f3cf2)
+
+running 3 tests
+test rng_is_bounded_repeatable_and_srand_returns_previous_seed ... ok
+test contracts_reject_new_differences ... ok
+test entire_small_corpus_obeys_explicit_contracts ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.82s
+
+     Running tests/data_contract.rs (target/release/deps/data_contract-1a8a55d84edfec5c)
+
+running 9 tests
+test regex_uses_leftmost_longest ... ok
+test csv_handles_quoted_delimiters_newlines_and_escaped_quotes ... ok
+test invalid_regex_is_reported ... ok
+test fields_accept_regex_separator ... ok
+test reused_whitespace_fields_preserve_nul_bytes ... ok
+test substitutions_report_count_not_changed_text ... ok
+test split_preserves_empty_fields_and_clears_array ... ok
+test successive_whitespace_records_preserve_values_and_numeric_types ... ok
+test whitespace_reuse_handles_resplit_getline_and_separator_changes ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s
+
+     Running tests/diffrun_buckets.rs (target/release/deps/diffrun_buckets-0db6b91c5f48a9b8)
+
+running 3 tests
+test diffrun_exits_nonzero_when_unexpected_divergences_present ... ok
+test diffrun_emits_four_bucket_summary ... ok
+test diffrun_step23_target_counts ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.50s
+
+     Running tests/driver_regressions.rs (target/release/deps/driver_regressions-58bdf590a9ec7873)
+
+running 8 tests
+test field_index_beyond_reference_integer_range_is_an_error ... ok
+test getline_comparison_is_not_part_of_filename ... ok
+test invalid_function_parameters_are_errors_before_execution ... ok
+test multifile_syntax_error_names_offending_source ... ok
+test redirected_stdin_shares_buffer_with_main_input ... ok
+test stdin_program_and_empty_statements ... ok
+test standard_output_aliases_share_streams_and_lifecycle ... ok
+test checked_math_matches_native_oracle ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.31s
+
+     Running tests/dynamic_format.rs (target/release/deps/dynamic_format-4c74b299b41d20da)
+
+running 8 tests
+test missing_star_arguments_are_errors ... ok
+test negative_precision_keeps_binary_and_multibyte_paths ... ok
+test string_and_literal_range_errors_do_not_discard_arithmetic_subnormals ... ok
+test unsigned_conversion_matches_native_oracle ... ok
+test zero_padded_strings_match_native_oracle ... ok
+test dynamic_width_precision_and_consumption ... ok
+test integer_flags_precision_and_signs ... ok
+test negative_dynamic_precision_preserves_flags_and_argument_consumption ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.59s
+
+     Running tests/error_messages.rs (target/release/deps/error_messages-66ef7ba6c4cbd1ea)
+
+running 2 tests
+test missing_program_file_mentions_filename ... ok
+test output_to_unwritable_path_mentions_filename ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/exit_codes.rs (target/release/deps/exit_codes-c38cbb856521b362)
+
+running 4 tests
+test exit_from_end_block ... ok
+test exit_with_value ... ok
+test exit_zero_default ... ok
+test syntax_error_nonzero ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/harness.rs (target/release/deps/harness-9c9bcfe4d351eb42)
+
+running 5 tests
+test annotation_does_not_accept_new_failures ... ok
+test preserves_bytes_whitespace_and_status ... ok
+test aggregate_gate_reports_an_intermediate_failure ... ok
+test each_run_has_a_fresh_directory ... ok
+test timeout_kills_descendants ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests/historical.rs (target/release/deps/historical-e180c7c9f8880e3f)
+
+running 2 tests
+test original_invalid_programs_are_rejected_without_panicking ... ok
+test original_positive_regressions ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.04s
+
+     Running tests/input_contract.rs (target/release/deps/input_contract-4e3df98feb04f887)
+
+running 5 tests
+test getline_uses_main_stream_and_counts_every_read ... ok
+test rewriting_record_does_not_count_a_read ... ok
+test file_getline_and_interleaved_assignments ... ok
+test missing_getline_file_is_an_error_not_eof ... ok
+test rs_changes_apply_to_unconsumed_input ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/language_contract.rs (target/release/deps/language_contract-5f69a237b38c041c)
+
+running 7 tests
+test array_parameters_are_references ... ok
+test array_reads_create_entries ... ok
+test expressions_and_escapes ... ok
+test convfmt_is_used_for_comparisons_fields_and_keys ... ok
+test lvalue_indices_are_evaluated_once ... ok
+test numeric_and_string_values_keep_their_types ... ok
+test range_patterns_and_empty_actions ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/legacy_locale.rs (target/release/deps/legacy_locale-e79eb76b689936ea)
+
+running 6 tests
+test byte_positions_ranges_splits_and_substitution_match_c ... ok
+test every_nonzero_byte_case_conversion_matches_c ... ok
+test nul_preservation_remains_an_explicit_rust_extension ... ok
+test legacy_locale_selection_obeys_precedence_and_is_fixed_at_startup ... ok
+test required_single_byte_locales_are_active ... ok
+test every_nonzero_byte_in_each_posix_class_matches_c ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.68s
+
+     Running tests/phase7_closure.rs (target/release/deps/phase7_closure-9a9cea9401bd5b4c)
+
+running 7 tests
+test closed_output_pipe_reports_language_error ... ok
+test contracts_reject_mutations ... ok
+test raw_source_bytes_survive_inline_file_and_stdin ... ok
+test keyword_prefixes_and_integral_precision ... ok
+test generated_octal_regex_atoms_and_literal_operators ... ok
+test separators_keep_string_and_regex_semantics ... ok
+test individual_driver_contracts ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.92s
+
+     Running tests/printf_sanity.rs (target/release/deps/printf_sanity-998849273a3091de)
+
+running 5 tests
+test f_precision ... ok
+test d_padding ... ok
+test s_truncate ... ok
+test e_scientific ... ok
+test x_hex ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/proptest_diff.rs (target/release/deps/proptest_diff-d5f112b35007626a)
+
+running 6 tests
+test template_concat_string ... ok
+test template_printf_float ... ok
+test template_multiply ... ok
+test template_add ... ok
+test template_scientific_no_orphan_dot ... ok
+test template_printf_int ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.19s
+
+     Running tests/remaining_contract.rs (target/release/deps/remaining_contract-b21ae38935d51efa)
+
+running 7 tests
+test bracket_normalization_preserves_the_binary_profile ... ok
+test missing_fields_are_empty_strings_not_uninitialized_variables ... ok
+test character_format_distinguishes_numeric_fields_from_literal_strings ... ok
+test descending_bracket_ranges_follow_original_c ... ok
+test generated_rational_values_and_float_formats ... ok
+test replacement_escapes_have_separate_lexical_and_runtime_stages ... ok
+test numeric_rounding_uses_the_exact_binary_value ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.08s
+
+     Running tests/runtime_contract.rs (target/release/deps/runtime_contract-657e250005689c8c)
+
+running 3 tests
+test return_escapes_all_loop_forms ... ok
+test exit_executes_end_and_interrupts_expressions ... ok
+test short_circuit_preserves_side_effects ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/shell_drivers.rs (target/release/deps/shell_drivers-0507bd58d50d3133)
+
+running 3 tests
+test shell_driver_gate_rejects_missing_interpreter_output ... ok
+test original_cli_and_array_shell_drivers ... ok
+test admitted_original_shell_drivers has been running for over 60 seconds
+test admitted_original_shell_drivers ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 94.50s
+
+     Running tests/shift_jis.rs (target/release/deps/shift_jis-cf18f9e725aaae7c)
+
+running 12 tests
+test embedded_nul_preserves_the_rust_binary_extension ... ok
+test conversion_failure_preserves_atomic_print_contract ... ok
+test decoded_character_with_unencodable_case_mapping_matches_c ... ok
+test regex_rs_with_three_or_four_byte_structural_units_matches_c ... ok
+test required_sjis_locale_has_observable_case_mapping ... ok
+test record_separators_and_locale_precedence_match_c ... ok
+test streaming_rs_keeps_binary_data_distinct_from_eof ... ok
+test regex_rs_sjis_refill_across_input_buffers_and_getline_matches_c ... ok
+test structural_units_regex_fields_and_formatting_match_c ... ok
+test valid_case_conversion_and_truncated_suffixes_match_c ... ok
+test regex_rs_refill_restart_longest_and_anchors_match_c ... ok
+test single_bytes_and_lead_trail_boundaries_match_c ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 40.97s
+
+     Running tests/unicode_contract.rs (target/release/deps/unicode_contract-65d91fbbb5a5dfa7)
+
+running 12 tests
+test binary_nul_extension_and_case_conversion_errors ... ok
+test match_rhs_literals_and_dynamic_patterns_keep_their_distinct_evaluation ... ok
+test repeated_matches_and_index_inside_a_multibyte_unit ... ok
+test required_locales_are_active_in_both_interpreters ... ok
+test locale_precedence_and_character_operations ... ok
+test boolean_regex_search_preserves_rune_alignment_and_empty_matches ... ok
+test unicode_formatting_and_source_escapes ... ok
+test substitution_expansion_preserves_prefixes_escapes_and_empty_matches ... ok
+test utf8_record_separators_across_buffers ... ok
+test utf8_regex_empty_matches_and_mixed_bytes ... ok
+test unicode_classes_ranges_and_anchors ... ok
+test original_utf8_drivers ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 21.69s
+
+     Running tests/xml_runner_test.rs (target/release/deps/xml_runner_test-ec9488da4022b950)
+
+running 1 test
+test run_xml_testsuite ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.91s
+
+   Doc-tests rawk
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

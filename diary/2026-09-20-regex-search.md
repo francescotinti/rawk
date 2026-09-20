@@ -5,7 +5,8 @@
 Proseguimento autorizzato dopo la consegna dei campi. Base `bab2f7c`, runtime
 precedente `42f35e6`, working tree inizialmente pulita. Questa tranche riguarda
 la priorità 2; I/O/memoria generale e misure multipiattaforma restano successive.
-Stato: misure e convalida in corso.
+Stato: **seconda priorità completata**, con benefici locali misurati e CI
+nativa verde sulle quattro piattaforme.
 
 ## Profiling e modifiche
 
@@ -63,7 +64,8 @@ con wrapper e alimentazione stdin; RSS da `/usr/bin/time -l`. Nessuna build,
 suite o sessione di profiling locale contemporanea ai benchmark.
 
 ```sh
-python3 scripts/benchmark.py --profile utf8 --scale 5 --runs 9 --output /tmp/baseline.json
+python3 scripts/benchmark.py --profile utf8 --scale 5 --runs 9 \
+  --rawk /tmp/rawk-before-regex-search-2026-09-20 --output /tmp/baseline.json
 python3 scripts/benchmark.py --profile utf8 --scale 5 --runs 9 \
   --before /tmp/rawk-before-regex-search-2026-09-20 --output /tmp/after-utf8.json
 python3 scripts/benchmark.py --profile utf8-mixed --scale 5 --runs 9 \
@@ -78,6 +80,11 @@ python3 scripts/benchmark.py --profile byte --scale 20 --runs 9 \
 [profilo gsub](verification-regex-search-2026-09-20/profile-gsub-before.log).
 I profili usano dieci milioni di record da file, `sample PID 8 1` e locale
 `en_US.UTF-8`; non sono misure di velocità da confrontare con i benchmark.
+Sul runtime finale sono conservati anche i [profili successivi](verification-regex-search-2026-09-20/profiling-after.json),
+con lo stesso input e campionamento di cinque secondi:
+[booleano](verification-regex-search-2026-09-20/profile-boolean-after.log),
+[gsub](verification-regex-search-2026-09-20/profile-gsub-after.log).
+Le durate diverse non vengono usate per calcolare un'accelerazione.
 
 ## Verifiche e risultati
 
@@ -123,15 +130,42 @@ ripristina esattamente lo SHA-256 del binario misurato dopo la build dei test.
 [Gate](verification-regex-search-2026-09-20/checks.log),
 [release](verification-regex-search-2026-09-20/release.log),
 [esiti e impronta](verification-regex-search-2026-09-20/local-summary.json).
-CI sulle quattro piattaforme ancora da completare.
+La [CI del runtime `aa6ce2e`](https://github.com/francescotinti/rawk/actions/runs/35528862123)
+è tutta verde sui quattro runner nativi:
+
+| Profilo | Debug | Release | Coppie Shift-JIS |
+|---|---:|---:|---:|
+| macOS 15.7.9 ARM64 | 156 | 156 | 15.240 |
+| macOS 15.7.9 Intel | 156 | 156 | 15.240 |
+| Linux glibc 2.39 x86-64 | 94 | 94 | 6.879 |
+| Linux glibc 2.39 ARM64 | 94 | 94 | 6.879 |
+
+Zero fallimenti o ignorati. XML macOS 97 MATCH / 12 EXPECTED /
+0 UNEXPECTED / 0 SKIPPED, fmt/Clippy e igiene verdi. Per piattaforma e profilo:
+27 driver, 275 contratti senza divergenze nuove e 20 sonde stream identiche
+al C. Verificati i driver UTF-8 originali. Inventari grezzi invariati:
+Darwin 27 pass / 2 open / 4 reference-failure; Linux 27 / 3 / 3. Restano le
+differenze storiche documentate, non riclassificate come equivalenza integrale.
+Il lower Shift-JIS glibc `81 f0` conserva l'errore di ricodifica atteso.
+
+[Conteggi verificati e SHA-256 degli artefatti](verification-regex-search-2026-09-20/ci-summary.json),
+[stato remoto dei job](verification-regex-search-2026-09-20/ci-final.json).
+I quattro insiemi di artefatti originali sono versionati nella sottocartella
+`ci/`. Le misure di velocità restano locali ad Apple M4/macOS 26.6.2;
+la CI dimostra la correttezza sui profili eseguiti, non la stessa accelerazione
+su Intel o Linux.
 
 ## Git e pubblicazione
 
-Branch `master`, base `bab2f7c`; pubblicazione runtime e CI da completare.
-L'hash della consegna documentale verrà riportato nella risposta finale.
+Branch `master`, base `bab2f7c`. Runtime, test, benchmark e prime evidenze
+pubblicati in `aa6ce2e1ac05202af285d1a0772bda69e51d6807`, verificato su
+`origin/master`. La CI sopra convalida esattamente questo commit.
+La consegna successiva contiene solo documentazione/evidenze e usa `[skip ci]`;
+hash effettivo, remoto e working tree sono riportati nella risposta finale.
 
 ## Passaggio al prossimo task
 
-Prossima priorità dopo la convalida: I/O e memoria su input grandi. Le misure
+Prossima priorità: I/O e memoria su input grandi, con baseline runtime
+`aa6ce2e` e conservazione dei contratti RS/getline/pipe/stream. Le misure
 locali ARM64 non sono attribuibili a Intel o Linux. Non è una promessa di
 parità generale con il C né una certificazione completa del linguaggio.
