@@ -88,11 +88,14 @@ fn convert_shift_jis(bytes: &[u8], upper: bool) -> Result<Vec<u8>, String> {
         // Unlike C strings, Rust's deliberate binary extension continues
         // beyond NUL. mbrtowc consumes that byte but returns zero.
         offset += n.max(1);
+        // wchar_t is signed on Darwin/x86-64 and unsigned on Linux ARM64.
+        // Preserve its 32 bits without a redundant cast on unsigned targets.
+        let wc = u32::from_ne_bytes(wc.to_ne_bytes());
         let mapped = unsafe {
             if upper {
-                towupper_l(wc as u32, handle)
+                towupper_l(wc, handle)
             } else {
-                towlower_l(wc as u32, handle)
+                towlower_l(wc, handle)
             }
         };
         // Shift-JIS emits at most two bytes; leave MB_LEN_MAX-sized room
