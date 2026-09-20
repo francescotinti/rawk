@@ -7,7 +7,15 @@ permissions:
   contents: read
 jobs:
   compatibility:
-    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-15
+            architecture: arm64
+          - os: macos-15-intel
+            architecture: x86_64
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     defaults:
       run:
@@ -30,8 +38,30 @@ jobs:
           git -C ../c_awk checkout --detach FETCH_HEAD
           make -C ../c_awk
           ../c_awk/a.out --version
-      - name: Complete correctness gate
-        run: bash scripts/checks.sh
+      - name: Verify and record native Darwin environment
+        run: |
+          set -o pipefail
+          bash scripts/darwin_native_environment.sh "${{ matrix.architecture }}" 2>&1 | tee diary/darwin-environment-ci.log
+          cc -std=c11 -Wall -Wextra -Werror scripts/shift_jis_locale_probe.c -o /tmp/rawk-sjis-locale-probe
+          /tmp/rawk-sjis-locale-probe 2>&1 | tee diary/shift-jis-locale-ci.log
+          python3 scripts/format_platform_probe.py --output diary/format-platform-ci.json
+      - name: Complete correctness gate (debug)
+        run: |
+          set -o pipefail
+          bash scripts/checks.sh 2>&1 | tee diary/darwin-debug-ci.log
+      - name: Complete release test suite
+        run: |
+          set -o pipefail
+          cargo test --locked --release 2>&1 | tee diary/darwin-release-ci.log
+      - name: Compare all native libc-valid Shift-JIS pairs
+        run: python3 scripts/shift_jis_platform_probe.py --output diary/shift-jis-platform-ci.json
+      - name: Check original driver contracts and standard streams (debug and release)
+        run: |
+          python3 scripts/test_closure_contracts.py
+          for profile in debug release; do
+            python3 scripts/full_driver_audit.py --rawk "target/$profile/rawk" --verified --check --output "diary/darwin-drivers-verified-$profile-ci.json"
+            python3 scripts/linux_driver_probe.py --rawk "target/$profile/rawk" --check --output "diary/darwin-driver-probe-$profile-ci.json"
+          done
       - name: Audit all original shell drivers (includes documented diagnostic and locale differences)
         if: always()
         run: python3 scripts/full_driver_audit.py --output diary/full-driver-results-ci.json
@@ -42,8 +72,13 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: original-driver-audit
+          name: darwin-${{ matrix.os }}
           path: |
+            rawk/diary/darwin-*-ci.log
+            rawk/diary/darwin-*-ci.json
+            rawk/diary/format-platform-ci.json
+            rawk/diary/shift-jis-platform-ci.json
+            rawk/diary/shift-jis-locale-ci.log
             rawk/diary/full-driver-results-ci.json
             rawk/diary/unicode-driver-results-ci.json
           if-no-files-found: error
