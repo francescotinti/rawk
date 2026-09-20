@@ -101,6 +101,9 @@ jobs:
       - name: Inventory original drivers on this platform
         if: always()
         run: python3 scripts/full_driver_audit.py --output diary/linux-driver-results-ci.json
+      - name: Diagnose original driver subcases and standard streams
+        if: always()
+        run: python3 scripts/linux_driver_probe.py --output diary/linux-driver-probe-ci.json
       - name: Retain platform evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -112,4 +115,5 @@ jobs:
             rawk/diary/format-platform-ci.json
             rawk/diary/portability-ci.log
             rawk/diary/linux-driver-results-ci.json
+            rawk/diary/linux-driver-probe-ci.json
           if-no-files-found: error
