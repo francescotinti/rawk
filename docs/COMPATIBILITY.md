@@ -125,3 +125,34 @@ sotto `LC_ALL=C` restano visibili. T.utf/T.utfre sono verificati separatamente
 in UTF-8. Il gate certifica questi contratti espliciti, non l'identità di
 ogni diagnostica o una conformità AWK generale.
 [Diagnosi, verifiche e limiti](../diary/2026-09-20-linux-drivers.md).
+
+
+## macOS Intel nativo — 20 settembre 2026
+
+Convalidato **macOS 15.7.9 / Darwin 24.6.0 x86-64**, runner `macos-15-intel`
+con CPU Intel, Rust 1.96.0, Apple Clang 17 e oracolo compilato nativamente
+alla revisione fissata. Il workflow rifiuta architettura errata o Rosetta;
+registra toolchain, locale effettive e collegamento alla libSystem del runner.
+
+Corretto `%u`/`%o`/`%x` per valori negativi in `[-2^63, 0)`: l'oracolo Intel
+produce il risultato della conversione signed reinterpretato unsigned;
+ARM64 mantiene la saturazione a zero. La regressione copre printf, sprintf,
+valori frazionari, grandi e confini dell'intervallo. Non è una regola generale
+per cast C fuori intervallo o per piattaforme non verificate.
+
+Entrambi i runner macOS Intel/ARM64 eseguono ora **151 test debug e 151 release**,
+zero ignorati; XML 97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED.
+Per ogni profilo passano 27 driver, 275 contratti (173 esatti, 99 diagnostiche,
+tre deliberati) e 20 sonde stream; verificati anche i 300 casi originali UTF-8.
+L'inventario Darwin resta 27 pass / 2 open / 4 reference-failure, con motivi
+storici conservati: i contratti espliciti sono il gate, non tutti i grep originali.
+
+In `ja_JP.SJIS` la libc di macOS 15.7.9 accetta **15.240 coppie**, tutte
+confrontate per upper/lower con il C su ciascuna architettura. Questo dato
+non sostituisce le 11.280 del precedente profilo locale Darwin ARM64 né
+le 6.879 glibc. Conversioni ISO-8859-1/9, UTF-8, byte/NUL, RS e stampa atomica
+restano coperti dalle suite complete. La gestione matematica Darwin è invariata.
+
+Linux x86-64/ARM64 resta verde con 89 test debug e 89 release per runner.
+[CI verificata](https://github.com/francescotinti/rawk/actions/runs/35523117465),
+[ambiente, diagnosi, evidenze e limiti](../diary/2026-09-20-macos-intel.md).

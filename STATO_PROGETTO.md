@@ -5,7 +5,17 @@ Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 ## Base e ambito verificato
 
 - Repository: `francescotinti/rawk`, branch di coordinamento `master`.
-- Runtime pubblicato verificato: `b1adc82` (alias degli stream standard e gestione errori
+- Ultima convalida: **macOS 15.7.9 Intel x86-64 nativo**, runtime `11d7313`.
+  Corretta la formattazione unsigned negativa su Intel; ARM64 invariato.
+  **151 debug + 151 release** su ciascun runner macOS Intel/ARM64; XML
+  97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED. Per profilo: 27 driver,
+  275 contratti, 20 sonde stream; audit originali UTF-8 verdi.
+  **15.240 coppie Shift-JIS** verificate su ciascun runner macOS 15.7.9;
+  il precedente conteggio locale 11.280 appartiene a un altro profilo libc/OS.
+  Linux x86-64/ARM64: 89 debug + 89 release per runner, tutti i gate verdi.
+  [CI completa](https://github.com/francescotinti/rawk/actions/runs/35523117465),
+  [consegna Intel](diary/2026-09-20-macos-intel.md).
+- Runtime precedente verificato: `b1adc82` (alias degli stream standard e gestione errori
   matematici glibc; audit driver Linux). Eseguire `git status` e `git log` per
   lo stato corrente; questo non è un puntatore dinamico.
 - Ultima convalida Linux: **89 debug + 89 release per runner** x86-64/ARM64,
@@ -72,7 +82,7 @@ runtime necessaria. [Consegna Linux Shift-JIS](diary/2026-09-20-shift-jis-linux.
 
 ## Attività aperte
 
-- Altre codifiche, macOS Intel nativo, nomi di file non UTF-8 e ulteriori
+- Altre codifiche, ulteriori versioni/profili macOS, nomi di file non UTF-8 e ulteriori
   ottimizzazioni: attività distinte da delimitare, non parte implicita di Shift-JIS.
 
 ## Regole e documenti utili
@@ -84,8 +94,8 @@ runtime necessaria. [Consegna Linux Shift-JIS](diary/2026-09-20-shift-jis-linux.
   [compatibilità](docs/COMPATIBILITY.md).
 - [Modello di consegna](docs/CONSEGNA_TASK.md).
 
-Le priorità trasversali restano nella conversazione di coordinamento; Shift-JIS ha un task dedicato.
-Non avviare altri writer sulla stessa checkout mentre quel task modifica il codice.
+Le priorità trasversali restano nella conversazione di coordinamento.
+La convalida macOS Intel è chiusa nel profilo documentato; evitare writer concorrenti sulla stessa checkout.
 
 Commit e push a fine attività sono ora autorizzati in modo permanente;
 seguire la regola di chiusura in [AGENTS.md](AGENTS.md).

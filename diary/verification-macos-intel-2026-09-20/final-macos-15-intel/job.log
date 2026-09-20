@@ -1,0 +1,1548 @@
+﻿2026-09-20T16:34:06.6869950Z Current runner version: '2.337.0'
+2026-09-20T16:34:06.6899990Z ##[group]Runner Image Provisioner
+2026-09-20T16:34:06.6901100Z Hosted Compute Agent
+2026-09-20T16:34:06.6901860Z Version: 20260819.586
+2026-09-20T16:34:06.6902680Z Commit: 3cc4a88dfa507ef76119ad1bb3eccc6378bb2b76
+2026-09-20T16:34:06.6903680Z Build Date: 2026-08-18T23:20:18Z
+2026-09-20T16:34:06.6904580Z Worker ID: {382430e4-1ae7-48cf-8e40-bacae9944631}
+2026-09-20T16:34:06.6905560Z Azure Region: westus
+2026-09-20T16:34:06.6906300Z ##[endgroup]
+2026-09-20T16:34:06.6909080Z ##[group]Operating System
+2026-09-20T16:34:06.6909910Z macOS
+2026-09-20T16:34:06.6910550Z 15.7.9
+2026-09-20T16:34:06.6911700Z 24G830
+2026-09-20T16:34:06.6912410Z ##[endgroup]
+2026-09-20T16:34:06.6913110Z ##[group]Runner Image
+2026-09-20T16:34:06.6914070Z Image: macos-15
+2026-09-20T16:34:06.6914820Z Version: 20260824.0482.1
+2026-09-20T16:34:06.6916600Z Included Software: https://github.com/actions/runner-images/blob/macos-15/20260824.0482/images/macos/macos-15-Readme.md
+2026-09-20T16:34:06.6918960Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15%2F20260824.0482
+2026-09-20T16:34:06.6920430Z ##[endgroup]
+2026-09-20T16:34:06.6922020Z ##[group]GITHUB_TOKEN Permissions
+2026-09-20T16:34:06.6924910Z Contents: read
+2026-09-20T16:34:06.6925660Z Metadata: read
+2026-09-20T16:34:06.6926370Z ##[endgroup]
+2026-09-20T16:34:06.6929190Z Secret source: Actions
+2026-09-20T16:34:06.6930400Z Cache mode: write
+2026-09-20T16:34:06.6931690Z Prepare workflow directory
+2026-09-20T16:34:06.7530470Z Prepare all required actions
+2026-09-20T16:34:06.7598160Z Getting action download info
+2026-09-20T16:34:07.0449460Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2026-09-20T16:34:07.3014480Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-09-20T16:34:07.6641060Z Complete job name: compatibility (macos-15-intel, x86_64)
+2026-09-20T16:34:07.7678350Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-20T16:34:07.7693820Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-09-20T16:34:07.7695350Z with:
+2026-09-20T16:34:07.7696000Z   path: rawk
+2026-09-20T16:34:07.7696700Z   repository: francescotinti/rawk
+2026-09-20T16:34:07.7704780Z   token: ***
+2026-09-20T16:34:07.7705520Z   ssh-strict: true
+2026-09-20T16:34:07.7706210Z   ssh-user: git
+2026-09-20T16:34:07.7706910Z   persist-credentials: true
+2026-09-20T16:34:07.7707690Z   clean: true
+2026-09-20T16:34:07.7708400Z   sparse-checkout-cone-mode: true
+2026-09-20T16:34:07.7709250Z   fetch-depth: 1
+2026-09-20T16:34:07.7709940Z   fetch-tags: false
+2026-09-20T16:34:07.7710710Z   show-progress: true
+2026-09-20T16:34:07.7711440Z   lfs: false
+2026-09-20T16:34:07.7712100Z   submodules: false
+2026-09-20T16:34:07.7712820Z   set-safe-directory: true
+2026-09-20T16:34:07.7714120Z env:
+2026-09-20T16:34:07.7714750Z   LC_ALL: C
+2026-09-20T16:34:07.7715410Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:34:07.7716150Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:34:07.7716910Z ##[endgroup]
+2026-09-20T16:34:08.1716260Z Syncing repository: francescotinti/rawk
+2026-09-20T16:34:08.1719300Z ##[group]Getting Git version info
+2026-09-20T16:34:08.1720600Z Working directory is '/Users/runner/work/rawk/rawk/rawk'
+2026-09-20T16:34:08.1723030Z [command]/usr/local/bin/git version
+2026-09-20T16:34:08.2117550Z git version 2.55.0
+2026-09-20T16:34:08.2158120Z ##[endgroup]
+2026-09-20T16:34:08.2172370Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/6c1a0341-ddd0-4e5b-a0dc-dc4b8c8ec627/.gitconfig'
+2026-09-20T16:34:08.2192450Z Temporarily overriding HOME='/Users/runner/work/_temp/6c1a0341-ddd0-4e5b-a0dc-dc4b8c8ec627' before making global git config changes
+2026-09-20T16:34:08.2200100Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-20T16:34:08.2207260Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/rawk/rawk/rawk
+2026-09-20T16:34:08.2341030Z ##[group]Initializing the repository
+2026-09-20T16:34:08.2348880Z [command]/usr/local/bin/git init /Users/runner/work/rawk/rawk/rawk
+2026-09-20T16:34:08.2774040Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-20T16:34:08.2813020Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-20T16:34:08.2841250Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-20T16:34:08.2844810Z hint: call:
+2026-09-20T16:34:08.2847240Z hint:
+2026-09-20T16:34:08.2849800Z hint: 	git config --global init.defaultBranch <name>
+2026-09-20T16:34:08.2854590Z hint:
+2026-09-20T16:34:08.2858340Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-20T16:34:08.2862390Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-20T16:34:08.2868600Z hint:
+2026-09-20T16:34:08.2873290Z hint: 	git branch -m <name>
+2026-09-20T16:34:08.2875990Z hint:
+2026-09-20T16:34:08.2878660Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-20T16:34:08.2881720Z Initialized empty Git repository in /Users/runner/work/rawk/rawk/rawk/.git/
+2026-09-20T16:34:08.2886270Z [command]/usr/local/bin/git remote add origin https://github.com/francescotinti/rawk
+2026-09-20T16:34:08.2966960Z ##[endgroup]
+2026-09-20T16:34:08.2968720Z ##[group]Disabling automatic garbage collection
+2026-09-20T16:34:08.2970280Z [command]/usr/local/bin/git config --local gc.auto 0
+2026-09-20T16:34:08.3119450Z ##[endgroup]
+2026-09-20T16:34:08.3125110Z ##[group]Setting up auth
+2026-09-20T16:34:08.3137190Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-20T16:34:08.3268180Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-20T16:34:08.5371520Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-20T16:34:08.5547380Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-20T16:34:08.6879500Z [command]/usr/local/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-20T16:34:08.6998490Z ##[endgroup]
+2026-09-20T16:34:08.7001220Z ##[group]Fetching the repository
+2026-09-20T16:34:08.7009980Z [command]/usr/local/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +11d73134b9403d27ba00b2bf1be4ffe8b1c0f53c:refs/remotes/origin/master
+2026-09-20T16:34:09.6941210Z From https://github.com/francescotinti/rawk
+2026-09-20T16:34:09.6945250Z  * [new ref]         11d73134b9403d27ba00b2bf1be4ffe8b1c0f53c -> origin/master
+2026-09-20T16:34:09.6949450Z ##[endgroup]
+2026-09-20T16:34:09.6951010Z ##[group]Determining the checkout info
+2026-09-20T16:34:09.6952600Z ##[endgroup]
+2026-09-20T16:34:09.6953760Z [command]/usr/local/bin/git sparse-checkout disable
+2026-09-20T16:34:09.7082780Z [command]/usr/local/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-20T16:34:09.7186850Z ##[group]Checking out the ref
+2026-09-20T16:34:09.7192480Z [command]/usr/local/bin/git checkout --progress --force -B master refs/remotes/origin/master
+2026-09-20T16:34:09.9014040Z Reset branch 'master'
+2026-09-20T16:34:09.9020860Z branch 'master' set up to track 'origin/master'.
+2026-09-20T16:34:09.9035610Z ##[endgroup]
+2026-09-20T16:34:09.9167690Z [command]/usr/local/bin/git log -1 --format=%H
+2026-09-20T16:34:09.9269820Z 11d73134b9403d27ba00b2bf1be4ffe8b1c0f53c
+2026-09-20T16:34:09.9587020Z ##[group]Run rustup toolchain install 1.96.0 --profile minimal --component rustfmt --component clippy
+2026-09-20T16:34:09.9589620Z [36;1mrustup toolchain install 1.96.0 --profile minimal --component rustfmt --component clippy[0m
+2026-09-20T16:34:09.9661740Z shell: /bin/bash -e {0}
+2026-09-20T16:34:09.9662760Z env:
+2026-09-20T16:34:09.9663630Z   LC_ALL: C
+2026-09-20T16:34:09.9664540Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:34:09.9665530Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:34:09.9666530Z ##[endgroup]
+2026-09-20T16:34:10.0547210Z info: syncing channel updates for 1.96.0-x86_64-apple-darwin
+2026-09-20T16:34:10.3226490Z info: latest update on 2026-05-28 for version 1.96.0 (ac68faa20 2026-05-25)
+2026-09-20T16:34:10.3227780Z info: downloading 5 components
+2026-09-20T16:34:23.1023760Z 
+2026-09-20T16:34:23.1281750Z info: self-update is disabled for this build of rustup
+2026-09-20T16:34:23.1283230Z info: any updates to rustup will need to be fetched with your system package manager
+2026-09-20T16:34:23.1284810Z   1.96.0-x86_64-apple-darwin installed - rustc 1.96.0 (ac68faa20 2026-05-25)
+2026-09-20T16:34:23.1285590Z 
+2026-09-20T16:34:23.1534360Z ##[group]Run git init ../c_awk
+2026-09-20T16:34:23.1534920Z [36;1mgit init ../c_awk[0m
+2026-09-20T16:34:23.1535710Z [36;1mgit -C ../c_awk remote add origin https://github.com/onetrueawk/awk.git[0m
+2026-09-20T16:34:23.1537310Z [36;1mgit -C ../c_awk fetch --depth 1 origin 5739fd79bcfc75ba7526773d0cf634521f8aca3c[0m
+2026-09-20T16:34:23.1538350Z [36;1mgit -C ../c_awk checkout --detach FETCH_HEAD[0m
+2026-09-20T16:34:23.1539030Z [36;1mmake -C ../c_awk[0m
+2026-09-20T16:34:23.1539550Z [36;1m../c_awk/a.out --version[0m
+2026-09-20T16:34:23.1605880Z shell: /bin/bash -e {0}
+2026-09-20T16:34:23.1606360Z env:
+2026-09-20T16:34:23.1606710Z   LC_ALL: C
+2026-09-20T16:34:23.1607070Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:34:23.1607560Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:34:23.1608060Z ##[endgroup]
+2026-09-20T16:34:23.2037990Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-20T16:34:23.2044510Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-20T16:34:23.2046340Z Initialized empty Git repository in /Users/runner/work/rawk/rawk/c_awk/.git/
+2026-09-20T16:34:23.2055040Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-20T16:34:23.2057800Z hint: call:
+2026-09-20T16:34:23.2059610Z hint:
+2026-09-20T16:34:23.2109080Z hint: 	git config --global init.defaultBranch <name>
+2026-09-20T16:34:23.2199220Z hint:
+2026-09-20T16:34:23.2216180Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-20T16:34:23.2226850Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-20T16:34:23.2241230Z hint:
+2026-09-20T16:34:23.2292870Z hint: 	git branch -m <name>
+2026-09-20T16:34:23.2306040Z hint:
+2026-09-20T16:34:23.2308270Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-20T16:34:24.3129390Z From https://github.com/onetrueawk/awk
+2026-09-20T16:34:24.3131420Z  * branch            5739fd79bcfc75ba7526773d0cf634521f8aca3c -> FETCH_HEAD
+2026-09-20T16:34:24.5269360Z HEAD is now at 5739fd7 updated.
+2026-09-20T16:34:26.1211490Z bison -d  awkgram.y
+2026-09-20T16:34:27.5691140Z awkgram.y: conflicts: 44 shift/reduce, 85 reduce/reduce
+2026-09-20T16:34:27.7009050Z cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o awkgram.tab.o awkgram.tab.c
+2026-09-20T16:34:30.4624060Z cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o b.o b.c
+2026-09-20T16:34:31.1136470Z cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o main.o main.c
+2026-09-20T16:34:31.3618510Z cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o parse.o parse.c
+2026-09-20T16:34:31.5395130Z cc -g -Wall -pedantic -Wcast-qual -O2 maketab.c -o maketab
+2026-09-20T16:34:32.6057870Z ./maketab awkgram.tab.h >proctab.c
+2026-09-20T16:34:32.6192190Z cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o proctab.o proctab.c
+2026-09-20T16:34:32.6992500Z cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o tran.o tran.c
+2026-09-20T16:34:32.9327220Z cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o lib.o lib.c
+2026-09-20T16:34:33.0641740Z lib.c:758:11: warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
+2026-09-20T16:34:33.0643360Z   758 | void error()
+2026-09-20T16:34:33.0644060Z       |           ^
+2026-09-20T16:34:33.0644700Z       |            void
+2026-09-20T16:34:33.2928220Z 1 warning generated.
+2026-09-20T16:34:33.2972840Z cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o run.o run.c
+2026-09-20T16:34:33.5006820Z run.c:1981:6: warning: variable 'unused' set but not used [-Wunused-but-set-variable]
+2026-09-20T16:34:33.5007940Z  1981 |         int unused;
+2026-09-20T16:34:33.5008450Z       |             ^
+2026-09-20T16:34:34.2628280Z 1 warning generated.
+2026-09-20T16:34:34.2682250Z cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o lex.o lex.c
+2026-09-20T16:34:34.5731190Z cc -g -Wall -pedantic -Wcast-qual   -O2 awkgram.tab.o b.o main.o parse.o proctab.o tran.o lib.o run.o lex.o   -lm
+2026-09-20T16:34:34.7057360Z awk version 20260426
+2026-09-20T16:34:34.7182750Z ##[group]Run set -o pipefail
+2026-09-20T16:34:34.7183410Z [36;1mset -o pipefail[0m
+2026-09-20T16:34:34.7184450Z [36;1mbash scripts/darwin_native_environment.sh "x86_64" 2>&1 | tee diary/darwin-environment-ci.log[0m
+2026-09-20T16:34:34.7186010Z [36;1mpython3 scripts/format_platform_probe.py --output diary/format-platform-ci.json[0m
+2026-09-20T16:34:34.7256190Z shell: /bin/bash -e {0}
+2026-09-20T16:34:34.7256730Z env:
+2026-09-20T16:34:34.7257130Z   LC_ALL: C
+2026-09-20T16:34:34.7257590Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:34:34.7258110Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:34:34.7258640Z ##[endgroup]
+2026-09-20T16:34:34.7779820Z Darwin sat12-jr310-028e5a14-4aaa-466a-a00e-e3688db98b57-B29575F26C87.local 24.6.0 Darwin Kernel Version 24.6.0: Tue Jul 21 20:50:07 PDT 2026; root:xnu-11417.140.69.711.44~1/RELEASE_X86_64 x86_64
+2026-09-20T16:34:34.8079480Z i386ProductName:		macOS
+2026-09-20T16:34:34.8080510Z ProductVersion:		15.7.9
+2026-09-20T16:34:34.8081500Z BuildVersion:		24G830
+2026-09-20T16:34:34.8089410Z sysctl.proc_translated=unavailable (native)
+2026-09-20T16:34:34.8141260Z machdep.cpu.brand_string: Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz
+2026-09-20T16:34:34.8144170Z ImageOS=macos15 ImageVersion=20260824.0482.1
+2026-09-20T16:34:34.8722750Z rustc 1.96.0 (ac68faa20 2026-05-25)
+2026-09-20T16:34:34.8723690Z binary: rustc
+2026-09-20T16:34:34.8724430Z commit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96
+2026-09-20T16:34:34.8725400Z commit-date: 2026-05-25
+2026-09-20T16:34:34.8725950Z host: x86_64-apple-darwin
+2026-09-20T16:34:34.8726470Z release: 1.96.0
+2026-09-20T16:34:34.8746650Z LLVM version: 22.1.2
+2026-09-20T16:34:34.9978860Z cargo 1.96.0 (30a34c682 2026-05-25)
+2026-09-20T16:34:35.0379360Z Apple clang version 17.0.0 (clang-1700.0.13.5)
+2026-09-20T16:34:35.0380410Z Target: x86_64-apple-darwin24.6.0
+2026-09-20T16:34:35.0381110Z Thread model: posix
+2026-09-20T16:34:35.0382260Z InstalledDir: /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+2026-09-20T16:34:35.0916990Z Python 3.14.7
+2026-09-20T16:34:35.1040360Z fa_IR
+2026-09-20T16:34:35.1047690Z ca_AD.UTF-8
+2026-09-20T16:34:35.1053880Z en_NZ
+2026-09-20T16:34:35.1070620Z en_SG.ISO8859-1
+2026-09-20T16:34:35.1075140Z nl_NL.UTF-8
+2026-09-20T16:34:35.1083040Z lv_LV.UTF-8
+2026-09-20T16:34:35.1088230Z pt_BR.UTF-8
+2026-09-20T16:34:35.1094010Z ca_FR.ISO8859-15
+2026-09-20T16:34:35.1100120Z fr_CH.ISO8859-15
+2026-09-20T16:34:35.1107410Z eu_ES.ISO8859-15
+2026-09-20T16:34:35.1108260Z en_US.US-ASCII
+2026-09-20T16:34:35.1109960Z af_ZA
+2026-09-20T16:34:35.1117580Z bg_BG
+2026-09-20T16:34:35.1123350Z en_IE.ISO8859-1
+2026-09-20T16:34:35.1132040Z en_HK
+2026-09-20T16:34:35.1137400Z es_MX.UTF-8
+2026-09-20T16:34:35.1147050Z cs_CZ.UTF-8
+2026-09-20T16:34:35.1154130Z fi_FI
+2026-09-20T16:34:35.1166140Z zh_CN.UTF-8
+2026-09-20T16:34:35.1174310Z eu_ES
+2026-09-20T16:34:35.1177880Z sk_SK.ISO8859-2
+2026-09-20T16:34:35.1182970Z nl_BE
+2026-09-20T16:34:35.1187490Z fr_BE
+2026-09-20T16:34:35.1194830Z sv_FI.UTF-8
+2026-09-20T16:34:35.1195920Z sk_SK
+2026-09-20T16:34:35.1200250Z se_NO.UTF-8
+2026-09-20T16:34:35.1201570Z en_US.UTF-8
+2026-09-20T16:34:35.1206560Z nb_NO.ISO8859-15
+2026-09-20T16:34:35.1227070Z en_NZ.ISO8859-1
+2026-09-20T16:34:35.1228390Z de_CH
+2026-09-20T16:34:35.1230470Z sk_SK.UTF-8
+2026-09-20T16:34:35.1231680Z de_DE.UTF-8
+2026-09-20T16:34:35.1236350Z am_ET.UTF-8
+2026-09-20T16:34:35.1246540Z zh_HK
+2026-09-20T16:34:35.1249080Z be_BY.UTF-8
+2026-09-20T16:34:35.1254530Z uk_UA
+2026-09-20T16:34:35.1259430Z pt_PT.ISO8859-1
+2026-09-20T16:34:35.1265780Z en_AU.US-ASCII
+2026-09-20T16:34:35.1273020Z kk_KZ.PT154
+2026-09-20T16:34:35.1277810Z en_US
+2026-09-20T16:34:35.1283970Z en_ZA.UTF-8
+2026-09-20T16:34:35.1293600Z ca_IT
+2026-09-20T16:34:35.1299220Z nl_BE.ISO8859-15
+2026-09-20T16:34:35.1299860Z fa_IR.UTF-8
+2026-09-20T16:34:35.1306080Z de_AT.ISO8859-1
+2026-09-20T16:34:35.1311960Z hr_HR.ISO8859-2
+2026-09-20T16:34:35.1318070Z fr_FR.ISO8859-1
+2026-09-20T16:34:35.1323520Z af_ZA.UTF-8
+2026-09-20T16:34:35.1324080Z am_ET
+2026-09-20T16:34:35.1332250Z sv_FI.ISO8859-1
+2026-09-20T16:34:35.1333040Z fi_FI.ISO8859-1
+2026-09-20T16:34:35.1337640Z ro_RO.UTF-8
+2026-09-20T16:34:35.1341770Z ar_AE
+2026-09-20T16:34:35.1343050Z af_ZA.ISO8859-15
+2026-09-20T16:34:35.1348490Z en_NZ.UTF-8
+2026-09-20T16:34:35.1353130Z fi_FI.UTF-8
+2026-09-20T16:34:35.1360630Z hi_IN.UTF-8
+2026-09-20T16:34:35.1362360Z C.UTF-8
+2026-09-20T16:34:35.1363760Z hr_HR.UTF-8
+2026-09-20T16:34:35.1369310Z da_DK.UTF-8
+2026-09-20T16:34:35.1375090Z ca_ES.ISO8859-1
+2026-09-20T16:34:35.1381070Z en_AU.ISO8859-15
+2026-09-20T16:34:35.1386170Z ro_RO.ISO8859-2
+2026-09-20T16:34:35.1388630Z de_AT.UTF-8
+2026-09-20T16:34:35.1390120Z pt_PT.ISO8859-15
+2026-09-20T16:34:35.1394580Z sv_SE
+2026-09-20T16:34:35.1398790Z fr_CA.ISO8859-1
+2026-09-20T16:34:35.1407410Z fr_BE.ISO8859-1
+2026-09-20T16:34:35.1408350Z en_US.ISO8859-15
+2026-09-20T16:34:35.1413990Z it_CH.ISO8859-1
+2026-09-20T16:34:35.1419310Z en_NZ.ISO8859-15
+2026-09-20T16:34:35.1420060Z en_AU.UTF-8
+2026-09-20T16:34:35.1424560Z ar_MA
+2026-09-20T16:34:35.1426280Z lv_LV.ISO8859-13
+2026-09-20T16:34:35.1431420Z de_AT.ISO8859-15
+2026-09-20T16:34:35.1432010Z af_ZA.ISO8859-1
+2026-09-20T16:34:35.1444070Z hu_HU.UTF-8
+2026-09-20T16:34:35.1450560Z ca_AD.ISO8859-1
+2026-09-20T16:34:35.1455240Z et_EE.UTF-8
+2026-09-20T16:34:35.1463870Z es_AR.ISO8859-1
+2026-09-20T16:34:35.1474370Z he_IL.UTF-8
+2026-09-20T16:34:35.1480380Z uk_UA.KOI8-U
+2026-09-20T16:34:35.1480980Z uk_UA.CP1251
+2026-09-20T16:34:35.1491130Z be_BY
+2026-09-20T16:34:35.1491800Z kk_KZ
+2026-09-20T16:34:35.1492450Z hu_HU.ISO8859-2
+2026-09-20T16:34:35.1493950Z it_CH
+2026-09-20T16:34:35.1500290Z pt_BR
+2026-09-20T16:34:35.1504730Z ko_KR
+2026-09-20T16:34:35.1516490Z it_IT
+2026-09-20T16:34:35.1521050Z fr_BE.UTF-8
+2026-09-20T16:34:35.1527710Z ru_RU.ISO8859-5
+2026-09-20T16:34:35.1534180Z et_EE.ISO8859-1
+2026-09-20T16:34:35.1539430Z se_FI.UTF-8
+2026-09-20T16:34:35.1546870Z zh_TW
+2026-09-20T16:34:35.1551780Z es_CR
+2026-09-20T16:34:35.1557570Z sr_RS
+2026-09-20T16:34:35.1561970Z nb_NO
+2026-09-20T16:34:35.1571900Z zh_CN.GB2312
+2026-09-20T16:34:35.1578190Z no_NO.ISO8859-15
+2026-09-20T16:34:35.1583250Z ar_JO
+2026-09-20T16:34:35.1584000Z sv_FI.ISO8859-15
+2026-09-20T16:34:35.1584900Z ca_AD
+2026-09-20T16:34:35.1586240Z de_DE.ISO8859-15
+2026-09-20T16:34:35.1592530Z en_IN.UTF-8
+2026-09-20T16:34:35.1600050Z en_CA
+2026-09-20T16:34:35.1601210Z fr_CH.UTF-8
+2026-09-20T16:34:35.1605720Z sl_SI.UTF-8
+2026-09-20T16:34:35.1606630Z uk_UA.ISO8859-5
+2026-09-20T16:34:35.1607560Z pt_PT
+2026-09-20T16:34:35.1608120Z hr_HR
+2026-09-20T16:34:35.1613430Z cs_CZ
+2026-09-20T16:34:35.1614340Z ca_FR.UTF-8
+2026-09-20T16:34:35.1620220Z fr_CH
+2026-09-20T16:34:35.1620890Z he_IL
+2026-09-20T16:34:35.1622210Z en_HK.ISO8859-1
+2026-09-20T16:34:35.1628180Z zh_CN.GBK
+2026-09-20T16:34:35.1634120Z zh_CN.GB18030
+2026-09-20T16:34:35.1636010Z fr_CA
+2026-09-20T16:34:35.1636690Z en_IE.ISO8859-15
+2026-09-20T16:34:35.1643020Z pl_PL.UTF-8
+2026-09-20T16:34:35.1648100Z ja_JP.SJIS
+2026-09-20T16:34:35.1648870Z hi_IN
+2026-09-20T16:34:35.1654950Z sr_YU.ISO8859-5
+2026-09-20T16:34:35.1655830Z be_BY.CP1251
+2026-09-20T16:34:35.1656560Z sr_YU.ISO8859-2
+2026-09-20T16:34:35.1663740Z sv_SE.UTF-8
+2026-09-20T16:34:35.1664620Z se_NO
+2026-09-20T16:34:35.1670480Z sr_YU.UTF-8
+2026-09-20T16:34:35.1676840Z de_CH.UTF-8
+2026-09-20T16:34:35.1677450Z sl_SI
+2026-09-20T16:34:35.1683320Z ar_QA
+2026-09-20T16:34:35.1684050Z en_IN
+2026-09-20T16:34:35.1684850Z pt_PT.UTF-8
+2026-09-20T16:34:35.1685600Z ro_RO
+2026-09-20T16:34:35.1686360Z en_NZ.US-ASCII
+2026-09-20T16:34:35.1687100Z ja_JP
+2026-09-20T16:34:35.1688230Z zh_CN
+2026-09-20T16:34:35.1688830Z fr_CH.ISO8859-1
+2026-09-20T16:34:35.1701360Z ko_KR.eucKR
+2026-09-20T16:34:35.1706550Z nn_NO.ISO8859-1
+2026-09-20T16:34:35.1707160Z be_BY.ISO8859-5
+2026-09-20T16:34:35.1713020Z nl_NL.ISO8859-15
+2026-09-20T16:34:35.1719180Z en_GB.ISO8859-1
+2026-09-20T16:34:35.1724980Z en_CA.US-ASCII
+2026-09-20T16:34:35.1725690Z nb_NO.UTF-8
+2026-09-20T16:34:35.1726310Z ca_FR.ISO8859-1
+2026-09-20T16:34:35.1733210Z is_IS.ISO8859-1
+2026-09-20T16:34:35.1737850Z ru_RU.CP866
+2026-09-20T16:34:35.1738580Z nl_NL
+2026-09-20T16:34:35.1740030Z ca_IT.ISO8859-15
+2026-09-20T16:34:35.1740870Z se_FI
+2026-09-20T16:34:35.1745750Z fr_CA.ISO8859-15
+2026-09-20T16:34:35.1746280Z sv_SE.ISO8859-15
+2026-09-20T16:34:35.1754220Z hy_AM
+2026-09-20T16:34:35.1754780Z es_MX.ISO8859-1
+2026-09-20T16:34:35.1756080Z ar_JO.UTF-8
+2026-09-20T16:34:35.1756880Z en_CA.ISO8859-15
+2026-09-20T16:34:35.1757590Z en_US.ISO8859-1
+2026-09-20T16:34:35.1758300Z zh_TW.Big5
+2026-09-20T16:34:35.1769080Z ca_ES.UTF-8
+2026-09-20T16:34:35.1769800Z ru_RU.CP1251
+2026-09-20T16:34:35.1778620Z en_GB.UTF-8
+2026-09-20T16:34:35.1779380Z ar_AE.UTF-8
+2026-09-20T16:34:35.1785290Z sr_RS.ISO8859-5
+2026-09-20T16:34:35.1786030Z en_GB.US-ASCII
+2026-09-20T16:34:35.1792970Z ru_RU.UTF-8
+2026-09-20T16:34:35.1793710Z sr_RS.UTF-8
+2026-09-20T16:34:35.1795410Z eu_ES.UTF-8
+2026-09-20T16:34:35.1799670Z es_ES.ISO8859-1
+2026-09-20T16:34:35.1800730Z hu_HU
+2026-09-20T16:34:35.1807760Z el_GR.ISO8859-7
+2026-09-20T16:34:35.1808420Z en_AU
+2026-09-20T16:34:35.1809090Z ar_SA
+2026-09-20T16:34:35.1809790Z it_CH.UTF-8
+2026-09-20T16:34:35.1810750Z en_GB
+2026-09-20T16:34:35.1811430Z sl_SI.ISO8859-2
+2026-09-20T16:34:35.1811920Z ru_RU.KOI8-R
+2026-09-20T16:34:35.1817430Z ga_IE.UTF-8
+2026-09-20T16:34:35.1818140Z ga_IE
+2026-09-20T16:34:35.1818790Z nl_BE.UTF-8
+2026-09-20T16:34:35.1819430Z et_EE
+2026-09-20T16:34:35.1820160Z fr_FR.ISO8859-15
+2026-09-20T16:34:35.1820940Z cs_CZ.ISO8859-2
+2026-09-20T16:34:35.1827570Z es_MX
+2026-09-20T16:34:35.1834230Z lt_LT.UTF-8
+2026-09-20T16:34:35.1836220Z en_ZA
+2026-09-20T16:34:35.1841340Z pl_PL.ISO8859-2
+2026-09-20T16:34:35.1842210Z fr_BE.ISO8859-15
+2026-09-20T16:34:35.1847310Z is_IS.UTF-8
+2026-09-20T16:34:35.1851360Z tr_TR.ISO8859-9
+2026-09-20T16:34:35.1857100Z da_DK.ISO8859-1
+2026-09-20T16:34:35.1865000Z en_HK.UTF-8
+2026-09-20T16:34:35.1868580Z en_ZA.ISO8859-1
+2026-09-20T16:34:35.1869210Z lt_LT.ISO8859-4
+2026-09-20T16:34:35.1869880Z lt_LT.ISO8859-13
+2026-09-20T16:34:35.1870840Z en_SG
+2026-09-20T16:34:35.1877570Z zh_TW.UTF-8
+2026-09-20T16:34:35.1878400Z bg_BG.CP1251
+2026-09-20T16:34:35.1885550Z el_GR.UTF-8
+2026-09-20T16:34:35.1886050Z en_PH
+2026-09-20T16:34:35.1887790Z be_BY.CP1131
+2026-09-20T16:34:35.1888790Z ar_MA.UTF-8
+2026-09-20T16:34:35.1889320Z da_DK.ISO8859-15
+2026-09-20T16:34:35.1890750Z is_IS.ISO8859-15
+2026-09-20T16:34:35.1891800Z no_NO.ISO8859-1
+2026-09-20T16:34:35.1892890Z nl_NL.ISO8859-1
+2026-09-20T16:34:35.1894180Z nl_BE.ISO8859-1
+2026-09-20T16:34:35.1895550Z sv_SE.ISO8859-1
+2026-09-20T16:34:35.1896030Z lv_LV
+2026-09-20T16:34:35.1896400Z pt_BR.ISO8859-1
+2026-09-20T16:34:35.1896790Z es_AR
+2026-09-20T16:34:35.1903460Z zh_CN.eucCN
+2026-09-20T16:34:35.1904090Z it_IT.UTF-8
+2026-09-20T16:34:35.1904680Z en_CA.UTF-8
+2026-09-20T16:34:35.1910580Z uk_UA.UTF-8
+2026-09-20T16:34:35.1911120Z nn_NO.ISO8859-15
+2026-09-20T16:34:35.1912040Z de_CH.ISO8859-15
+2026-09-20T16:34:35.1913140Z ca_FR
+2026-09-20T16:34:35.1914300Z de_DE.ISO8859-1
+2026-09-20T16:34:35.1915520Z ca_ES
+2026-09-20T16:34:35.1916770Z sr_YU
+2026-09-20T16:34:35.1917370Z hy_AM.ARMSCII-8
+2026-09-20T16:34:35.1917950Z ru_RU
+2026-09-20T16:34:35.1918530Z zh_HK.UTF-8
+2026-09-20T16:34:35.1919130Z eu_ES.ISO8859-1
+2026-09-20T16:34:35.1925450Z is_IS
+2026-09-20T16:34:35.1931420Z bg_BG.UTF-8
+2026-09-20T16:34:35.1942480Z ja_JP.UTF-8
+2026-09-20T16:34:35.1946330Z ar_EG
+2026-09-20T16:34:35.1947100Z it_CH.ISO8859-15
+2026-09-20T16:34:35.1947600Z fr_FR.UTF-8
+2026-09-20T16:34:35.1954510Z mn_MN.UTF-8
+2026-09-20T16:34:35.1955440Z mn_MN
+2026-09-20T16:34:35.1960580Z ko_KR.UTF-8
+2026-09-20T16:34:35.1962270Z et_EE.ISO8859-15
+2026-09-20T16:34:35.1963210Z ar_QA.UTF-8
+2026-09-20T16:34:35.1970360Z es_AR.UTF-8
+2026-09-20T16:34:35.1970960Z nn_NO
+2026-09-20T16:34:35.1972110Z en_ZA.ISO8859-15
+2026-09-20T16:34:35.1972760Z kk_KZ.UTF-8
+2026-09-20T16:34:35.1973360Z ca_ES.ISO8859-15
+2026-09-20T16:34:35.1974600Z en_IE.UTF-8
+2026-09-20T16:34:35.1975740Z ca_AD.ISO8859-15
+2026-09-20T16:34:35.1977170Z es_ES
+2026-09-20T16:34:35.1978510Z de_CH.ISO8859-1
+2026-09-20T16:34:35.1980130Z nb_NO.ISO8859-1
+2026-09-20T16:34:35.1981590Z en_ZA.US-ASCII
+2026-09-20T16:34:35.1983130Z en_CA.ISO8859-1
+2026-09-20T16:34:35.1984900Z es_ES.ISO8859-15
+2026-09-20T16:34:35.1985620Z en_AU.ISO8859-1
+2026-09-20T16:34:35.1986250Z el_GR
+2026-09-20T16:34:35.1987080Z da_DK
+2026-09-20T16:34:35.1990120Z no_NO
+2026-09-20T16:34:35.1991570Z ar_EG.UTF-8
+2026-09-20T16:34:35.1992720Z ca_IT.UTF-8
+2026-09-20T16:34:35.1993110Z it_IT.ISO8859-1
+2026-09-20T16:34:35.1994940Z en_IE
+2026-09-20T16:34:35.1995320Z zh_HK.Big5HKSCS
+2026-09-20T16:34:35.1995710Z hi_IN.ISCII-DEV
+2026-09-20T16:34:35.2000730Z ja_JP.eucJP
+2026-09-20T16:34:35.2001980Z it_IT.ISO8859-15
+2026-09-20T16:34:35.2003110Z pl_PL
+2026-09-20T16:34:35.2004350Z ko_KR.CP949
+2026-09-20T16:34:35.2008710Z en_PH.UTF-8
+2026-09-20T16:34:35.2009950Z fr_CA.UTF-8
+2026-09-20T16:34:35.2010360Z fi_FI.ISO8859-15
+2026-09-20T16:34:35.2011030Z en_GB.ISO8859-15
+2026-09-20T16:34:35.2012200Z fr_FR
+2026-09-20T16:34:35.2012880Z hy_AM.UTF-8
+2026-09-20T16:34:35.2014200Z no_NO.UTF-8
+2026-09-20T16:34:35.2015330Z nn_NO.UTF-8
+2026-09-20T16:34:35.2030600Z ca_IT.ISO8859-1
+2026-09-20T16:34:35.2031040Z es_ES.UTF-8
+2026-09-20T16:34:35.2031390Z en_SG.UTF-8
+2026-09-20T16:34:35.2031720Z de_AT
+2026-09-20T16:34:35.2032040Z sv_FI
+2026-09-20T16:34:35.2032360Z tr_TR.UTF-8
+2026-09-20T16:34:35.2033940Z fa_AF
+2026-09-20T16:34:35.2034570Z de_DE
+2026-09-20T16:34:35.2034960Z ar_SA.UTF-8
+2026-09-20T16:34:35.2035540Z lt_LT
+2026-09-20T16:34:35.2036120Z es_CR.UTF-8
+2026-09-20T16:34:35.2036720Z fa_AF.UTF-8
+2026-09-20T16:34:35.2037310Z tr_TR
+2026-09-20T16:34:35.2037880Z sr_RS.UTF-8@latin
+2026-09-20T16:34:35.2038530Z C
+2026-09-20T16:34:35.2039060Z POSIX
+2026-09-20T16:34:35.3378580Z active locale: C codeset: US-ASCII
+2026-09-20T16:34:35.3379240Z active locale: en_US.UTF-8 codeset: UTF-8
+2026-09-20T16:34:35.3379910Z active locale: tr_TR.UTF-8 codeset: UTF-8
+2026-09-20T16:34:35.3380790Z active locale: en_US.ISO8859-1 codeset: ISO8859-1
+2026-09-20T16:34:35.3381860Z active locale: tr_TR.ISO8859-9 codeset: ISO8859-9
+2026-09-20T16:34:35.3382830Z active locale: ja_JP.SJIS codeset: SJIS
+2026-09-20T16:34:35.3567060Z 11d73134b9403d27ba00b2bf1be4ffe8b1c0f53c
+2026-09-20T16:34:35.3708730Z 5739fd79bcfc75ba7526773d0cf634521f8aca3c
+2026-09-20T16:34:35.3836480Z ../c_awk/a.out: Mach-O 64-bit executable x86_64
+2026-09-20T16:34:37.8679750Z ../c_awk/a.out:
+2026-09-20T16:34:37.8681210Z 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)
+2026-09-20T16:34:40.3382220Z Recorded 220 native oracle cases in diary/format-platform-ci.json
+2026-09-20T16:34:40.3640590Z ##[group]Run set -o pipefail
+2026-09-20T16:34:40.3641390Z [36;1mset -o pipefail[0m
+2026-09-20T16:34:40.3642270Z [36;1mbash scripts/checks.sh 2>&1 | tee diary/darwin-debug-ci.log[0m
+2026-09-20T16:34:40.3722650Z shell: /bin/bash -e {0}
+2026-09-20T16:34:40.3723290Z env:
+2026-09-20T16:34:40.3723770Z   LC_ALL: C
+2026-09-20T16:34:40.3724210Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:34:40.3724660Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:34:40.3725790Z ##[endgroup]
+2026-09-20T16:35:35.1361530Z check_clippy                   OK
+2026-09-20T16:35:35.3891430Z check_diffrun_no_unexpected       Compiling proc-macro2 v1.0.106
+2026-09-20T16:35:35.3945380Z    Compiling quote v1.0.45
+2026-09-20T16:35:35.3946450Z    Compiling unicode-ident v1.0.24
+2026-09-20T16:35:35.3995720Z    Compiling libc v0.2.186
+2026-09-20T16:35:35.5887790Z    Compiling memchr v2.8.0
+2026-09-20T16:35:35.8508490Z    Compiling rand_core v0.10.1
+2026-09-20T16:35:36.1443690Z    Compiling ucd-trie v0.1.7
+2026-09-20T16:35:36.5539820Z    Compiling serde_core v1.0.228
+2026-09-20T16:35:37.6846390Z    Compiling getrandom v0.4.2
+2026-09-20T16:35:38.0223430Z    Compiling autocfg v1.5.0
+2026-09-20T16:35:38.1344230Z    Compiling syn v2.0.117
+2026-09-20T16:35:38.5521840Z    Compiling cfg-if v1.0.4
+2026-09-20T16:35:38.6253980Z    Compiling utf8parse v0.2.2
+2026-09-20T16:35:38.7262500Z    Compiling num-traits v0.2.19
+2026-09-20T16:35:38.7510210Z    Compiling anstyle-parse v1.0.0
+2026-09-20T16:35:39.0496820Z    Compiling pest v2.8.6
+2026-09-20T16:35:39.2217620Z    Compiling rustix v1.1.4
+2026-09-20T16:35:39.2521530Z    Compiling thiserror v2.0.18
+2026-09-20T16:35:39.7778390Z    Compiling is_terminal_polyfill v1.70.2
+2026-09-20T16:35:39.7831360Z    Compiling anstyle v1.0.14
+2026-09-20T16:35:39.9049470Z    Compiling serde v1.0.228
+2026-09-20T16:35:40.3155000Z    Compiling colorchoice v1.0.5
+2026-09-20T16:35:40.3759020Z    Compiling anstyle-query v1.1.5
+2026-09-20T16:35:40.4698430Z    Compiling anstream v1.0.0
+2026-09-20T16:35:42.9428820Z    Compiling errno v0.3.14
+2026-09-20T16:35:43.1035100Z    Compiling aho-corasick v1.1.4
+2026-09-20T16:35:43.6885420Z    Compiling pest_meta v2.8.6
+2026-09-20T16:35:48.4792690Z    Compiling heck v0.5.0
+2026-09-20T16:35:48.8631300Z    Compiling regex-syntax v0.8.10
+2026-09-20T16:35:49.7937480Z    Compiling anyhow v1.0.102
+2026-09-20T16:35:49.9299400Z    Compiling thiserror-impl v2.0.18
+2026-09-20T16:35:50.3450270Z    Compiling serde_derive v1.0.228
+2026-09-20T16:35:52.4546990Z    Compiling clap_lex v1.1.0
+2026-09-20T16:35:53.0608120Z    Compiling core-foundation-sys v0.8.7
+2026-09-20T16:35:53.4188040Z    Compiling strsim v0.11.1
+2026-09-20T16:35:55.4528780Z    Compiling cpufeatures v0.3.0
+2026-09-20T16:35:55.7379240Z    Compiling bitflags v2.11.1
+2026-09-20T16:36:00.2292470Z    Compiling chacha20 v0.10.0
+2026-09-20T16:36:00.6981510Z    Compiling regex-automata v0.4.14
+2026-09-20T16:36:00.7702070Z    Compiling clap_builder v4.6.0
+2026-09-20T16:36:02.3453670Z    Compiling iana-time-zone v0.1.65
+2026-09-20T16:36:03.3285580Z    Compiling clap_derive v4.6.1
+2026-09-20T16:36:07.5945170Z    Compiling pest_generator v2.8.6
+2026-09-20T16:36:11.6268770Z    Compiling fastrand v2.4.1
+2026-09-20T16:36:11.9882290Z    Compiling once_cell v1.21.4
+2026-09-20T16:36:12.1330830Z    Compiling chrono v0.4.44
+2026-09-20T16:36:12.3284690Z    Compiling tempfile v3.27.0
+2026-09-20T16:36:17.1856200Z    Compiling regex v1.12.3
+2026-09-20T16:36:20.8406920Z    Compiling pest_derive v2.8.6
+2026-09-20T16:36:21.3482140Z    Compiling clap v4.6.1
+2026-09-20T16:36:22.2573200Z    Compiling sprintf v0.4.3
+2026-09-20T16:36:22.8649980Z    Compiling rand v0.10.1
+2026-09-20T16:36:23.2965430Z    Compiling quick-xml v0.39.2
+2026-09-20T16:36:30.7734120Z    Compiling rawk v0.1.0 (/Users/runner/work/rawk/rawk/rawk)
+2026-09-20T16:36:57.7532450Z     Finished `release` profile [optimized] target(s) in 1m 22s
+2026-09-20T16:36:57.7920490Z Reference awk: /Users/runner/work/rawk/rawk/c_awk/a.out
+2026-09-20T16:36:57.7921680Z Total testcase: 109
+2026-09-20T16:37:04.6927320Z   MATCH: 97
+2026-09-20T16:37:04.6929290Z   EXPECTED-DIVERGE: 12
+2026-09-20T16:37:04.6930720Z   UNEXPECTED-DIVERGE: 0
+2026-09-20T16:37:04.6932520Z   SKIPPED: 0
+2026-09-20T16:37:04.6936550Z OK
+2026-09-20T16:37:05.0800200Z check_fmt                      OK
+2026-09-20T16:37:05.1018710Z check_no_exit_outside_main     OK
+2026-09-20T16:37:05.1399170Z check_no_macos_forks           OK
+2026-09-20T16:37:05.1400990Z check_no_scratch_root          OK
+2026-09-20T16:37:05.1401930Z check_runner_split             OK
+2026-09-20T16:37:05.3763520Z check_tests                       Compiling libc v0.2.186
+2026-09-20T16:37:05.5205910Z    Compiling cfg-if v1.0.4
+2026-09-20T16:37:05.7146870Z    Compiling memchr v2.8.0
+2026-09-20T16:37:05.7413350Z    Compiling rand_core v0.10.1
+2026-09-20T16:37:05.7425430Z    Compiling utf8parse v0.2.2
+2026-09-20T16:37:05.7572920Z    Compiling ucd-trie v0.1.7
+2026-09-20T16:37:05.7590460Z    Compiling bitflags v2.11.1
+2026-09-20T16:37:06.3700670Z    Compiling anstyle-parse v1.0.0
+2026-09-20T16:37:06.4240470Z    Compiling anstyle v1.0.14
+2026-09-20T16:37:06.6380730Z    Compiling once_cell v1.21.4
+2026-09-20T16:37:06.8635820Z    Compiling pest v2.8.6
+2026-09-20T16:37:07.0549570Z    Compiling errno v0.3.14
+2026-09-20T16:37:07.0781690Z    Compiling getrandom v0.4.2
+2026-09-20T16:37:07.2287270Z    Compiling rustix v1.1.4
+2026-09-20T16:37:07.3280440Z    Compiling is_terminal_polyfill v1.70.2
+2026-09-20T16:37:07.4492830Z    Compiling regex-syntax v0.8.10
+2026-09-20T16:37:07.4670040Z    Compiling anstyle-query v1.1.5
+2026-09-20T16:37:07.5447730Z    Compiling colorchoice v1.0.5
+2026-09-20T16:37:07.7012960Z    Compiling fastrand v2.4.1
+2026-09-20T16:37:07.9867710Z    Compiling anstream v1.0.0
+2026-09-20T16:37:08.6122410Z    Compiling getrandom v0.3.4
+2026-09-20T16:37:08.8463680Z    Compiling aho-corasick v1.1.4
+2026-09-20T16:37:09.8754890Z    Compiling pest_meta v2.8.6
+2026-09-20T16:37:10.0918180Z    Compiling tempfile v3.27.0
+2026-09-20T16:37:10.9727810Z    Compiling num-traits v0.2.19
+2026-09-20T16:37:12.9775790Z    Compiling serde_core v1.0.228
+2026-09-20T16:37:13.7971770Z    Compiling clap_lex v1.1.0
+2026-09-20T16:37:14.1610970Z    Compiling core-foundation-sys v0.8.7
+2026-09-20T16:37:14.1614090Z    Compiling strsim v0.11.1
+2026-09-20T16:37:14.2442010Z    Compiling cpufeatures v0.3.0
+2026-09-20T16:37:14.3677220Z    Compiling chacha20 v0.10.0
+2026-09-20T16:37:14.5909800Z    Compiling iana-time-zone v0.1.65
+2026-09-20T16:37:14.7859330Z    Compiling clap_builder v4.6.0
+2026-09-20T16:37:14.9228580Z    Compiling thiserror v2.0.18
+2026-09-20T16:37:14.9589580Z    Compiling pest_generator v2.8.6
+2026-09-20T16:37:15.0447880Z    Compiling regex-automata v0.4.14
+2026-09-20T16:37:16.8943430Z    Compiling rand_core v0.9.5
+2026-09-20T16:37:17.2818450Z    Compiling pest_derive v2.8.6
+2026-09-20T16:37:17.7228410Z    Compiling sprintf v0.4.3
+2026-09-20T16:37:18.2338940Z    Compiling anyhow v1.0.102
+2026-09-20T16:37:18.9923050Z    Compiling rand v0.10.1
+2026-09-20T16:37:20.0785930Z    Compiling serde v1.0.228
+2026-09-20T16:37:20.7689740Z    Compiling clap v4.6.1
+2026-09-20T16:37:20.8583490Z    Compiling chrono v0.4.44
+2026-09-20T16:37:21.4455680Z    Compiling quick-xml v0.39.2
+2026-09-20T16:37:24.8014550Z    Compiling regex v1.12.3
+2026-09-20T16:37:25.5097960Z    Compiling zerocopy v0.8.48
+2026-09-20T16:37:25.8108760Z    Compiling wait-timeout v0.2.1
+2026-09-20T16:37:25.9891450Z    Compiling fnv v1.0.7
+2026-09-20T16:37:26.0781960Z    Compiling bit-vec v0.8.0
+2026-09-20T16:37:26.3572730Z    Compiling quick-error v1.2.3
+2026-09-20T16:37:26.4641300Z    Compiling rusty-fork v0.3.1
+2026-09-20T16:37:26.5515320Z    Compiling bit-set v0.8.0
+2026-09-20T16:37:26.7801760Z    Compiling rawk v0.1.0 (/Users/runner/work/rawk/rawk/rawk)
+2026-09-20T16:37:27.2925150Z    Compiling rand_xorshift v0.4.0
+2026-09-20T16:37:27.4643260Z    Compiling rand v0.9.4
+2026-09-20T16:37:28.9244070Z    Compiling unarray v0.1.4
+2026-09-20T16:37:33.4572290Z    Compiling ppv-lite86 v0.2.21
+2026-09-20T16:37:34.2514230Z    Compiling rand_chacha v0.9.0
+2026-09-20T16:37:34.6377490Z    Compiling proptest v1.11.0
+2026-09-20T16:37:49.2354890Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 44.01s
+2026-09-20T16:37:49.2486130Z      Running unittests src/lib.rs (target/debug/deps/rawk-720bb57f2f34f793)
+2026-09-20T16:37:49.2557220Z 
+2026-09-20T16:37:49.2558600Z running 0 tests
+2026-09-20T16:37:49.2559390Z 
+2026-09-20T16:37:49.2560830Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-09-20T16:37:49.2562610Z 
+2026-09-20T16:37:49.2564630Z      Running unittests src/bin/diffrun.rs (target/debug/deps/diffrun-5432abd8bbba63ad)
+2026-09-20T16:37:49.2641280Z 
+2026-09-20T16:37:49.2642780Z running 0 tests
+2026-09-20T16:37:49.2643530Z 
+2026-09-20T16:37:49.2645110Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-09-20T16:37:49.2646230Z 
+2026-09-20T16:37:49.2647000Z      Running unittests src/main.rs (target/debug/deps/rawk-e8965df9e39c18ce)
+2026-09-20T16:37:49.2745260Z 
+2026-09-20T16:37:49.2752350Z running 4 tests
+2026-09-20T16:37:49.2764290Z test unicode_ere::tests::encoding_preserves_offsets_and_invalid_bytes_without_sentinels ... ok
+2026-09-20T16:37:49.2865960Z test unicode_ere::tests::compiled_intervals_cover_only_the_requested_runes ... ok
+2026-09-20T16:37:49.2914390Z test input::tests::separators_are_independent_of_read_boundaries ... ok
+2026-09-20T16:37:49.3254770Z test ere::stream::tests::physical_short_reads_do_not_change_bwk_lookahead ... ok
+2026-09-20T16:37:49.3255790Z 
+2026-09-20T16:37:49.3256550Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+2026-09-20T16:37:49.3257800Z 
+2026-09-20T16:37:49.3260560Z      Running tests/builtins_sanity.rs (target/debug/deps/builtins_sanity-26f8559de4a0d7f9)
+2026-09-20T16:37:49.3340650Z 
+2026-09-20T16:37:49.3343270Z running 5 tests
+2026-09-20T16:37:49.4823510Z test length_string ... ok
+2026-09-20T16:37:49.4825060Z test match_basic ... ok
+2026-09-20T16:37:49.4828220Z test split_basic ... ok
+2026-09-20T16:37:49.4999180Z test sprintf_int ... ok
+2026-09-20T16:37:49.5043570Z test substr_basic ... ok
+2026-09-20T16:37:49.5044260Z 
+2026-09-20T16:37:49.5045070Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+2026-09-20T16:37:49.5046310Z 
+2026-09-20T16:37:49.5048500Z      Running tests/bytes_array_keys.rs (target/debug/deps/bytes_array_keys-8d71d252a781bf80)
+2026-09-20T16:37:49.5141800Z 
+2026-09-20T16:37:49.5143930Z running 3 tests
+2026-09-20T16:37:49.5361970Z test for_in_returns_all_distinct_byte_keys ... ok
+2026-09-20T16:37:49.5363070Z test nul_embedded_key_round_trips ... ok
+2026-09-20T16:37:49.5413260Z test distinct_high_byte_keys_do_not_collide ... ok
+2026-09-20T16:37:49.5417790Z 
+2026-09-20T16:37:49.5419320Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+2026-09-20T16:37:49.5420440Z 
+2026-09-20T16:37:49.5421190Z      Running tests/bytes_printf.rs (target/debug/deps/bytes_printf-9640b79178946caa)
+2026-09-20T16:37:49.5505070Z 
+2026-09-20T16:37:49.5506820Z running 6 tests
+2026-09-20T16:37:49.5820150Z test field_split_with_high_byte_fs ... ok
+2026-09-20T16:37:49.5846870Z test printf_format_string_with_high_bytes ... ok
+2026-09-20T16:37:49.5854060Z test printf_c_emits_first_byte_raw ... ok
+2026-09-20T16:37:49.5855140Z test print_with_high_byte_ofs ... ok
+2026-09-20T16:37:49.6199140Z test printf_s_preserves_high_byte ... ok
+2026-09-20T16:37:49.6246110Z test sprintf_high_byte_round_trip ... ok
+2026-09-20T16:37:49.6246790Z 
+2026-09-20T16:37:49.6247570Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+2026-09-20T16:37:49.6248670Z 
+2026-09-20T16:37:49.6250790Z      Running tests/bytes_regex_match.rs (target/debug/deps/bytes_regex_match-8347b712cfccb5e2)
+2026-09-20T16:37:49.6334130Z 
+2026-09-20T16:37:49.6334680Z running 6 tests
+2026-09-20T16:37:49.6854300Z test nul_inside_subject_with_rs_regex ... ok
+2026-09-20T16:37:49.6856320Z test gsub_ampersand_includes_whole_match ... ok
+2026-09-20T16:37:49.6860260Z test match_builtin_high_byte_pattern_position ... ok
+2026-09-20T16:37:49.6861720Z test match_distinguishes_high_bytes ... ok
+2026-09-20T16:37:49.7074960Z test sub_replaces_high_byte_run ... ok
+2026-09-20T16:37:49.7224850Z test rs_regex_high_byte_separator_splits_correctly ... ok
+2026-09-20T16:37:49.7225700Z 
+2026-09-20T16:37:49.7226410Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+2026-09-20T16:37:49.7228070Z 
+2026-09-20T16:37:49.7228920Z      Running tests/cli_contract.rs (target/debug/deps/cli_contract-32d2cab1326764a7)
+2026-09-20T16:37:49.7313000Z 
+2026-09-20T16:37:49.7328420Z running 5 tests
+2026-09-20T16:37:49.7770150Z test file_program_keeps_all_input_files ... ok
+2026-09-20T16:37:49.8438210Z test arrays_and_scalars_cannot_be_interchanged ... ok
+2026-09-20T16:37:49.8772300Z test invalid_builtin_arity_is_a_language_error ... ok
+2026-09-20T16:37:49.9159670Z test malformed_formats_and_invalid_runtime_arguments_do_not_panic ... ok
+2026-09-20T16:37:49.9161300Z test safe_mode_rejects_even_unexecuted_forbidden_operations ... ok
+2026-09-20T16:37:49.9162150Z 
+2026-09-20T16:37:49.9162930Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+2026-09-20T16:37:49.9164000Z 
+2026-09-20T16:37:49.9164720Z      Running tests/compatibility.rs (target/debug/deps/compatibility-5c539173beaa3da2)
+2026-09-20T16:37:49.9251280Z 
+2026-09-20T16:37:49.9259560Z running 8 tests
+2026-09-20T16:37:49.9873370Z test braces_in_bracket_expressions_are_not_repetitions ... ok
+2026-09-20T16:37:50.2280780Z test composed_input_and_control_flow ... ok
+2026-09-20T16:37:50.2513420Z test arrays_forwarding_recursion_and_local_parameters ... ok
+2026-09-20T16:37:50.5826450Z test numeric_conversion_matches_original_buffer_limit ... ok
+2026-09-20T16:37:50.7157590Z test tuple_membership_uses_current_subsep_between_components ... ok
+2026-09-20T16:37:52.6146380Z test regex_compositions_match_original ... ok
+2026-09-20T16:37:53.6876400Z test generated_record_array_function_programs ... ok
+2026-09-20T16:37:55.4158400Z test hex_floats_precision_flags_and_boundaries ... ok
+2026-09-20T16:37:55.4159110Z 
+2026-09-20T16:37:55.4159660Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.49s
+2026-09-20T16:37:55.4160560Z 
+2026-09-20T16:37:55.4164370Z      Running tests/corpus.rs (target/debug/deps/corpus-ebc68ff03ddcb0ae)
+2026-09-20T16:37:55.4229570Z 
+2026-09-20T16:37:55.4231390Z running 1 test
+2026-09-20T16:38:12.6591840Z test original_small_programs ... ok
+2026-09-20T16:38:12.6592490Z 
+2026-09-20T16:38:12.6593690Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.23s
+2026-09-20T16:38:12.6594890Z 
+2026-09-20T16:38:12.6601150Z      Running tests/corpus_contracts.rs (target/debug/deps/corpus_contracts-ba9a897e2e00f6e1)
+2026-09-20T16:38:12.6689860Z 
+2026-09-20T16:38:12.6698180Z running 3 tests
+2026-09-20T16:38:12.7339030Z test rng_is_bounded_repeatable_and_srand_returns_previous_seed ... ok
+2026-09-20T16:38:13.4245410Z test contracts_reject_new_differences ... ok
+2026-09-20T16:38:22.4347380Z test entire_small_corpus_obeys_explicit_contracts ... ok
+2026-09-20T16:38:22.4349960Z 
+2026-09-20T16:38:22.4351740Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.76s
+2026-09-20T16:38:22.4352920Z 
+2026-09-20T16:38:22.4354010Z      Running tests/data_contract.rs (target/debug/deps/data_contract-056c85618313b998)
+2026-09-20T16:38:22.4439400Z 
+2026-09-20T16:38:22.4457350Z running 6 tests
+2026-09-20T16:38:22.4674000Z test invalid_regex_is_reported ... ok
+2026-09-20T16:38:22.4731430Z test csv_handles_quoted_delimiters_newlines_and_escaped_quotes ... ok
+2026-09-20T16:38:22.4733740Z test regex_uses_leftmost_longest ... ok
+2026-09-20T16:38:22.4734750Z test fields_accept_regex_separator ... ok
+2026-09-20T16:38:22.4967660Z test substitutions_report_count_not_changed_text ... ok
+2026-09-20T16:38:22.4969160Z test split_preserves_empty_fields_and_clears_array ... ok
+2026-09-20T16:38:22.4971390Z 
+2026-09-20T16:38:22.4972170Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+2026-09-20T16:38:22.4973060Z 
+2026-09-20T16:38:22.4973630Z      Running tests/diffrun_buckets.rs (target/debug/deps/diffrun_buckets-8ca7dbef3cbb2933)
+2026-09-20T16:38:22.5058430Z 
+2026-09-20T16:38:22.5060880Z running 3 tests
+2026-09-20T16:38:30.1633070Z test diffrun_emits_four_bucket_summary ... ok
+2026-09-20T16:38:30.2209490Z test diffrun_step23_target_counts ... ok
+2026-09-20T16:38:30.2384780Z test diffrun_exits_nonzero_when_unexpected_divergences_present ... ok
+2026-09-20T16:38:30.2385780Z 
+2026-09-20T16:38:30.2391290Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.73s
+2026-09-20T16:38:30.2392430Z 
+2026-09-20T16:38:30.2393330Z      Running tests/driver_regressions.rs (target/debug/deps/driver_regressions-a49451f0e230d799)
+2026-09-20T16:38:30.2485050Z 
+2026-09-20T16:38:30.2495240Z running 8 tests
+2026-09-20T16:38:30.2929370Z test getline_comparison_is_not_part_of_filename ... ok
+2026-09-20T16:38:30.3087460Z test field_index_beyond_reference_integer_range_is_an_error ... ok
+2026-09-20T16:38:30.3422560Z test multifile_syntax_error_names_offending_source ... ok
+2026-09-20T16:38:30.3721480Z test invalid_function_parameters_are_errors_before_execution ... ok
+2026-09-20T16:38:30.4950430Z test stdin_program_and_empty_statements ... ok
+2026-09-20T16:38:30.5416490Z test redirected_stdin_shares_buffer_with_main_input ... ok
+2026-09-20T16:38:31.1394570Z test standard_output_aliases_share_streams_and_lifecycle ... ok
+2026-09-20T16:38:31.7884760Z test checked_math_matches_native_oracle ... ok
+2026-09-20T16:38:31.7926130Z 
+2026-09-20T16:38:31.7941350Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.54s
+2026-09-20T16:38:31.8003580Z 
+2026-09-20T16:38:31.8016440Z      Running tests/dynamic_format.rs (target/debug/deps/dynamic_format-6afb6b394dedc79e)
+2026-09-20T16:38:31.8018630Z 
+2026-09-20T16:38:31.8020530Z running 8 tests
+2026-09-20T16:38:31.8810360Z test missing_star_arguments_are_errors ... ok
+2026-09-20T16:38:31.9119890Z test negative_precision_keeps_binary_and_multibyte_paths ... ok
+2026-09-20T16:38:32.0053490Z test string_and_literal_range_errors_do_not_discard_arithmetic_subnormals ... ok
+2026-09-20T16:38:32.8686220Z test unsigned_conversion_matches_native_oracle ... ok
+2026-09-20T16:38:32.9966850Z test zero_padded_strings_match_native_oracle ... ok
+2026-09-20T16:38:35.3758620Z test dynamic_width_precision_and_consumption ... ok
+2026-09-20T16:38:41.0547430Z test integer_flags_precision_and_signs ... ok
+2026-09-20T16:38:45.6437480Z test negative_dynamic_precision_preserves_flags_and_argument_consumption ... ok
+2026-09-20T16:38:45.6438630Z 
+2026-09-20T16:38:45.6439980Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.84s
+2026-09-20T16:38:45.6441270Z 
+2026-09-20T16:38:45.6442230Z      Running tests/error_messages.rs (target/debug/deps/error_messages-ff5cacaa73866461)
+2026-09-20T16:38:45.6543540Z 
+2026-09-20T16:38:45.6548300Z running 2 tests
+2026-09-20T16:38:45.6689750Z test missing_program_file_mentions_filename ... ok
+2026-09-20T16:38:45.6703580Z test output_to_unwritable_path_mentions_filename ... ok
+2026-09-20T16:38:45.6704750Z 
+2026-09-20T16:38:45.6706750Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+2026-09-20T16:38:45.6707970Z 
+2026-09-20T16:38:45.6709500Z      Running tests/exit_codes.rs (target/debug/deps/exit_codes-e79c3c6b46c94d8a)
+2026-09-20T16:38:45.6888550Z 
+2026-09-20T16:38:45.6956310Z running 4 tests
+2026-09-20T16:38:45.7179700Z test exit_from_end_block ... ok
+2026-09-20T16:38:45.7229230Z test exit_with_value ... ok
+2026-09-20T16:38:45.7435670Z test exit_zero_default ... ok
+2026-09-20T16:38:45.8420600Z test syntax_error_nonzero ... ok
+2026-09-20T16:38:45.9434950Z 
+2026-09-20T16:38:46.0445290Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+2026-09-20T16:38:46.0752790Z 
+2026-09-20T16:38:46.1362260Z      Running tests/harness.rs (target/debug/deps/harness-3e82fdc04536ed04)
+2026-09-20T16:38:46.1538670Z 
+2026-09-20T16:38:46.1575940Z running 5 tests
+2026-09-20T16:38:46.1594170Z test annotation_does_not_accept_new_failures ... ok
+2026-09-20T16:38:46.2340500Z test preserves_bytes_whitespace_and_status ... ok
+2026-09-20T16:38:46.2343140Z test each_run_has_a_fresh_directory ... ok
+2026-09-20T16:38:46.2369730Z test aggregate_gate_reports_an_intermediate_failure ... ok
+2026-09-20T16:38:46.5361510Z test timeout_kills_descendants ... ok
+2026-09-20T16:38:46.5502720Z 
+2026-09-20T16:38:46.5578520Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.67s
+2026-09-20T16:38:46.5627010Z 
+2026-09-20T16:38:46.5703110Z      Running tests/historical.rs (target/debug/deps/historical-20233729285c9f24)
+2026-09-20T16:38:46.5971290Z 
+2026-09-20T16:38:46.6033350Z running 2 tests
+2026-09-20T16:38:46.8499830Z test original_invalid_programs_are_rejected_without_panicking ... ok
+2026-09-20T16:38:49.9904450Z test original_positive_regressions ... ok
+2026-09-20T16:38:49.9907690Z 
+2026-09-20T16:38:49.9923410Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.44s
+2026-09-20T16:38:49.9936940Z 
+2026-09-20T16:38:49.9941760Z      Running tests/input_contract.rs (target/debug/deps/input_contract-29f3ab562e046f09)
+2026-09-20T16:38:50.0047210Z 
+2026-09-20T16:38:50.0063060Z running 5 tests
+2026-09-20T16:38:50.0401180Z test file_getline_and_interleaved_assignments ... ok
+2026-09-20T16:38:50.0599430Z test getline_uses_main_stream_and_counts_every_read ... ok
+2026-09-20T16:38:50.0623760Z test rewriting_record_does_not_count_a_read ... ok
+2026-09-20T16:38:50.0627060Z test missing_getline_file_is_an_error_not_eof ... ok
+2026-09-20T16:38:50.0930370Z test rs_changes_apply_to_unconsumed_input ... ok
+2026-09-20T16:38:50.0935430Z 
+2026-09-20T16:38:50.0938660Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+2026-09-20T16:38:50.0941440Z 
+2026-09-20T16:38:50.0945060Z      Running tests/language_contract.rs (target/debug/deps/language_contract-b3008c8677a59320)
+2026-09-20T16:38:50.1053090Z 
+2026-09-20T16:38:50.1067640Z running 7 tests
+2026-09-20T16:38:50.2002650Z test array_parameters_are_references ... ok
+2026-09-20T16:38:50.2231900Z test convfmt_is_used_for_comparisons_fields_and_keys ... ok
+2026-09-20T16:38:50.2234010Z test array_reads_create_entries ... ok
+2026-09-20T16:38:50.2234780Z test expressions_and_escapes ... ok
+2026-09-20T16:38:50.2235440Z test numeric_and_string_values_keep_their_types ... ok
+2026-09-20T16:38:50.2353810Z test range_patterns_and_empty_actions ... ok
+2026-09-20T16:38:50.2574980Z test lvalue_indices_are_evaluated_once ... ok
+2026-09-20T16:38:50.2580590Z 
+2026-09-20T16:38:50.2582070Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+2026-09-20T16:38:50.2584300Z 
+2026-09-20T16:38:50.2586310Z      Running tests/legacy_locale.rs (target/debug/deps/legacy_locale-a01b05032962108c)
+2026-09-20T16:38:50.2697130Z 
+2026-09-20T16:38:50.2713850Z running 6 tests
+2026-09-20T16:38:50.4435000Z test every_nonzero_byte_case_conversion_matches_c ... ok
+2026-09-20T16:38:50.6287220Z test nul_preservation_remains_an_explicit_rust_extension ... ok
+2026-09-20T16:38:50.6589540Z test byte_positions_ranges_splits_and_substitution_match_c ... ok
+2026-09-20T16:38:50.6838840Z test legacy_locale_selection_obeys_precedence_and_is_fixed_at_startup ... ok
+2026-09-20T16:38:50.7251420Z test required_single_byte_locales_are_active ... ok
+2026-09-20T16:38:52.9992280Z test every_nonzero_byte_in_each_posix_class_matches_c ... ok
+2026-09-20T16:38:52.9993560Z 
+2026-09-20T16:38:52.9994340Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.73s
+2026-09-20T16:38:52.9995210Z 
+2026-09-20T16:38:53.0006450Z      Running tests/phase7_closure.rs (target/debug/deps/phase7_closure-7bd3b6414b13cc02)
+2026-09-20T16:38:53.0108270Z 
+2026-09-20T16:38:53.0113330Z running 7 tests
+2026-09-20T16:38:53.2286720Z test closed_output_pipe_reports_language_error ... ok
+2026-09-20T16:38:53.4095460Z test contracts_reject_mutations ... ok
+2026-09-20T16:38:53.6313970Z test raw_source_bytes_survive_inline_file_and_stdin ... ok
+2026-09-20T16:38:53.9439880Z test keyword_prefixes_and_integral_precision ... ok
+2026-09-20T16:38:54.1714690Z test separators_keep_string_and_regex_semantics ... ok
+2026-09-20T16:38:54.4515130Z test generated_octal_regex_atoms_and_literal_operators ... ok
+2026-09-20T16:39:03.6270810Z test individual_driver_contracts ... ok
+2026-09-20T16:39:03.6271440Z 
+2026-09-20T16:39:03.6271930Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.61s
+2026-09-20T16:39:03.6272640Z 
+2026-09-20T16:39:03.6275890Z      Running tests/printf_sanity.rs (target/debug/deps/printf_sanity-cc5646bd1d784386)
+2026-09-20T16:39:03.6342600Z 
+2026-09-20T16:39:03.6349770Z running 5 tests
+2026-09-20T16:39:03.6627340Z test s_truncate ... ok
+2026-09-20T16:39:03.6631820Z test f_precision ... ok
+2026-09-20T16:39:03.6633520Z test d_padding ... ok
+2026-09-20T16:39:03.6663260Z test e_scientific ... ok
+2026-09-20T16:39:03.7115970Z test x_hex ... ok
+2026-09-20T16:39:03.7116250Z 
+2026-09-20T16:39:03.7116720Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+2026-09-20T16:39:03.7117610Z 
+2026-09-20T16:39:03.7118510Z      Running tests/proptest_diff.rs (target/debug/deps/proptest_diff-f0c39b110e9665ab)
+2026-09-20T16:39:03.7184680Z 
+2026-09-20T16:39:03.7186150Z running 6 tests
+2026-09-20T16:39:07.5900920Z test template_add ... ok
+2026-09-20T16:39:07.6504440Z test template_multiply ... ok
+2026-09-20T16:39:07.7179280Z test template_concat_string ... ok
+2026-09-20T16:39:07.7309480Z test template_printf_float ... ok
+2026-09-20T16:39:09.4721310Z test template_scientific_no_orphan_dot ... ok
+2026-09-20T16:39:11.6645810Z test template_printf_int ... ok
+2026-09-20T16:39:11.6646380Z 
+2026-09-20T16:39:11.6649580Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.94s
+2026-09-20T16:39:11.6650870Z 
+2026-09-20T16:39:11.6653740Z      Running tests/remaining_contract.rs (target/debug/deps/remaining_contract-436453200952ed4d)
+2026-09-20T16:39:11.6752770Z 
+2026-09-20T16:39:11.6764230Z running 7 tests
+2026-09-20T16:39:11.7223790Z test bracket_normalization_preserves_the_binary_profile ... ok
+2026-09-20T16:39:11.7837850Z test missing_fields_are_empty_strings_not_uninitialized_variables ... ok
+2026-09-20T16:39:11.8310440Z test character_format_distinguishes_numeric_fields_from_literal_strings ... ok
+2026-09-20T16:39:12.6502080Z test descending_bracket_ranges_follow_original_c ... ok
+2026-09-20T16:39:17.4609850Z test generated_rational_values_and_float_formats ... ok
+2026-09-20T16:39:19.4603870Z test replacement_escapes_have_separate_lexical_and_runtime_stages ... ok
+2026-09-20T16:39:20.6748940Z test numeric_rounding_uses_the_exact_binary_value ... ok
+2026-09-20T16:39:20.6749530Z 
+2026-09-20T16:39:20.6751590Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.00s
+2026-09-20T16:39:20.6752420Z 
+2026-09-20T16:39:20.6753600Z      Running tests/runtime_contract.rs (target/debug/deps/runtime_contract-4a22aae1c414664d)
+2026-09-20T16:39:20.6820170Z 
+2026-09-20T16:39:20.6829350Z running 3 tests
+2026-09-20T16:39:20.6991510Z test exit_executes_end_and_interrupts_expressions ... ok
+2026-09-20T16:39:20.6993020Z test return_escapes_all_loop_forms ... ok
+2026-09-20T16:39:20.6996170Z test short_circuit_preserves_side_effects ... ok
+2026-09-20T16:39:20.6996640Z 
+2026-09-20T16:39:20.6997150Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+2026-09-20T16:39:20.6997930Z 
+2026-09-20T16:39:20.6998420Z      Running tests/shell_drivers.rs (target/debug/deps/shell_drivers-e247e5452a0b2f0c)
+2026-09-20T16:39:20.7062000Z 
+2026-09-20T16:39:20.7062900Z running 3 tests
+2026-09-20T16:39:23.3152200Z test shell_driver_gate_rejects_missing_interpreter_output ... ok
+2026-09-20T16:39:25.1600840Z test original_cli_and_array_shell_drivers ... ok
+2026-09-20T16:40:20.7589060Z test admitted_original_shell_drivers has been running for over 60 seconds
+2026-09-20T16:40:55.3725980Z test admitted_original_shell_drivers ... ok
+2026-09-20T16:40:55.3726540Z 
+2026-09-20T16:40:55.3727660Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 94.62s
+2026-09-20T16:40:55.3729700Z 
+2026-09-20T16:40:55.3730560Z      Running tests/shift_jis.rs (target/debug/deps/shift_jis-3fc952ae0ee42612)
+2026-09-20T16:40:55.3792180Z 
+2026-09-20T16:40:55.3804130Z running 12 tests
+2026-09-20T16:40:55.4238430Z test embedded_nul_preserves_the_rust_binary_extension ... ok
+2026-09-20T16:40:55.4343560Z test conversion_failure_preserves_atomic_print_contract ... ok
+2026-09-20T16:40:55.4746590Z test decoded_character_with_unencodable_case_mapping_matches_c ... ok
+2026-09-20T16:40:55.5187470Z test regex_rs_with_three_or_four_byte_structural_units_matches_c ... ok
+2026-09-20T16:40:55.5668520Z test required_sjis_locale_has_observable_case_mapping ... ok
+2026-09-20T16:40:55.7585830Z test record_separators_and_locale_precedence_match_c ... ok
+2026-09-20T16:40:55.8344780Z test streaming_rs_keeps_binary_data_distinct_from_eof ... ok
+2026-09-20T16:40:56.5771820Z test regex_rs_sjis_refill_across_input_buffers_and_getline_matches_c ... ok
+2026-09-20T16:40:56.8230620Z test structural_units_regex_fields_and_formatting_match_c ... ok
+2026-09-20T16:40:57.1168490Z test valid_case_conversion_and_truncated_suffixes_match_c ... ok
+2026-09-20T16:41:05.3053250Z test regex_rs_refill_restart_longest_and_anchors_match_c ... ok
+2026-09-20T16:41:28.5144190Z test single_bytes_and_lead_trail_boundaries_match_c ... ok
+2026-09-20T16:41:28.5144930Z 
+2026-09-20T16:41:28.5145790Z test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 33.12s
+2026-09-20T16:41:28.5146660Z 
+2026-09-20T16:41:28.5147470Z      Running tests/unicode_contract.rs (target/debug/deps/unicode_contract-79f6db1d7dcf5d85)
+2026-09-20T16:41:28.5204410Z 
+2026-09-20T16:41:28.5205850Z running 10 tests
+2026-09-20T16:41:28.5500870Z test binary_nul_extension_and_case_conversion_errors ... ok
+2026-09-20T16:41:28.6900640Z test repeated_matches_and_index_inside_a_multibyte_unit ... ok
+2026-09-20T16:41:28.8451420Z test required_locales_are_active_in_both_interpreters ... ok
+2026-09-20T16:41:29.1885770Z test locale_precedence_and_character_operations ... ok
+2026-09-20T16:41:29.6803250Z test unicode_formatting_and_source_escapes ... ok
+2026-09-20T16:41:30.2567790Z test boolean_regex_search_preserves_rune_alignment_and_empty_matches ... ok
+2026-09-20T16:41:31.0867520Z test utf8_record_separators_across_buffers ... ok
+2026-09-20T16:41:31.1804860Z test utf8_regex_empty_matches_and_mixed_bytes ... ok
+2026-09-20T16:41:31.2512560Z test unicode_classes_ranges_and_anchors ... ok
+2026-09-20T16:41:42.9243650Z test original_utf8_drivers ... ok
+2026-09-20T16:41:42.9244660Z 
+2026-09-20T16:41:42.9245620Z test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.40s
+2026-09-20T16:41:42.9246620Z 
+2026-09-20T16:41:42.9247490Z      Running tests/xml_runner_test.rs (target/debug/deps/xml_runner_test-41c446961b55ba83)
+2026-09-20T16:41:42.9307830Z 
+2026-09-20T16:41:42.9308470Z running 1 test
+2026-09-20T16:41:45.8028760Z test run_xml_testsuite ... ok
+2026-09-20T16:41:45.8029350Z 
+2026-09-20T16:41:45.8030640Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.87s
+2026-09-20T16:41:45.8031370Z 
+2026-09-20T16:41:45.8031510Z    Doc-tests rawk
+2026-09-20T16:41:45.9208810Z 
+2026-09-20T16:41:45.9209350Z running 0 tests
+2026-09-20T16:41:45.9209940Z 
+2026-09-20T16:41:45.9212560Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-09-20T16:41:45.9213270Z 
+2026-09-20T16:41:45.9277880Z OK
+2026-09-20T16:41:45.9816120Z ##[group]Run set -o pipefail
+2026-09-20T16:41:45.9816720Z [36;1mset -o pipefail[0m
+2026-09-20T16:41:45.9817360Z [36;1mcargo test --locked --release 2>&1 | tee diary/darwin-release-ci.log[0m
+2026-09-20T16:41:45.9911790Z shell: /bin/bash -e {0}
+2026-09-20T16:41:45.9912300Z env:
+2026-09-20T16:41:45.9912590Z   LC_ALL: C
+2026-09-20T16:41:45.9913100Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:41:45.9913580Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:41:45.9914200Z ##[endgroup]
+2026-09-20T16:41:46.3022380Z    Compiling num-traits v0.2.19
+2026-09-20T16:41:46.4025430Z    Compiling getrandom v0.3.4
+2026-09-20T16:41:46.5037020Z    Compiling zerocopy v0.8.48
+2026-09-20T16:41:46.6048290Z    Compiling wait-timeout v0.2.1
+2026-09-20T16:41:47.1995750Z    Compiling rand_core v0.9.5
+2026-09-20T16:41:47.2625380Z    Compiling fnv v1.0.7
+2026-09-20T16:41:47.3488050Z    Compiling bit-vec v0.8.0
+2026-09-20T16:41:47.4902100Z    Compiling quick-error v1.2.3
+2026-09-20T16:41:47.5875490Z    Compiling rusty-fork v0.3.1
+2026-09-20T16:41:47.7597300Z    Compiling bit-set v0.8.0
+2026-09-20T16:41:47.9490710Z    Compiling rand v0.9.4
+2026-09-20T16:41:48.9873900Z    Compiling chrono v0.4.44
+2026-09-20T16:41:49.0442990Z    Compiling rand_xorshift v0.4.0
+2026-09-20T16:41:49.1814850Z    Compiling unarray v0.1.4
+2026-09-20T16:41:51.4295200Z    Compiling rawk v0.1.0 (/Users/runner/work/rawk/rawk/rawk)
+2026-09-20T16:41:56.0407530Z    Compiling ppv-lite86 v0.2.21
+2026-09-20T16:41:56.5327420Z    Compiling rand_chacha v0.9.0
+2026-09-20T16:41:56.7514560Z    Compiling proptest v1.11.0
+2026-09-20T16:42:26.7573520Z     Finished `release` profile [optimized] target(s) in 40.68s
+2026-09-20T16:42:26.7695450Z      Running unittests src/lib.rs (target/release/deps/rawk-c15f558537628c02)
+2026-09-20T16:42:26.7744850Z 
+2026-09-20T16:42:26.7746230Z running 0 tests
+2026-09-20T16:42:26.7746610Z 
+2026-09-20T16:42:26.7747750Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-09-20T16:42:26.7748610Z 
+2026-09-20T16:42:26.7749200Z      Running unittests src/bin/diffrun.rs (target/release/deps/diffrun-e73f233a2f842257)
+2026-09-20T16:42:26.7796860Z 
+2026-09-20T16:42:26.7798340Z running 0 tests
+2026-09-20T16:42:26.7799370Z 
+2026-09-20T16:42:26.7800830Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-09-20T16:42:26.7801900Z 
+2026-09-20T16:42:26.7802600Z      Running unittests src/main.rs (target/release/deps/rawk-89691518eb7cb3e6)
+2026-09-20T16:42:26.7879330Z 
+2026-09-20T16:42:26.7890070Z running 4 tests
+2026-09-20T16:42:26.7892440Z test unicode_ere::tests::encoding_preserves_offsets_and_invalid_bytes_without_sentinels ... ok
+2026-09-20T16:42:26.7901940Z test unicode_ere::tests::compiled_intervals_cover_only_the_requested_runes ... ok
+2026-09-20T16:42:26.7903200Z test input::tests::separators_are_independent_of_read_boundaries ... ok
+2026-09-20T16:42:26.7919670Z test ere::stream::tests::physical_short_reads_do_not_change_bwk_lookahead ... ok
+2026-09-20T16:42:26.7921140Z 
+2026-09-20T16:42:26.7922210Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-09-20T16:42:26.7923780Z 
+2026-09-20T16:42:26.7926570Z      Running tests/builtins_sanity.rs (target/release/deps/builtins_sanity-ac16a06e56cb337f)
+2026-09-20T16:42:26.7978220Z 
+2026-09-20T16:42:26.7987460Z running 5 tests
+2026-09-20T16:42:26.8189470Z test split_basic ... ok
+2026-09-20T16:42:26.8327320Z test sprintf_int ... ok
+2026-09-20T16:42:26.8329010Z test match_basic ... ok
+2026-09-20T16:42:26.8329780Z test substr_basic ... ok
+2026-09-20T16:42:26.8459940Z test length_string ... ok
+2026-09-20T16:42:26.8460360Z 
+2026-09-20T16:42:26.8461570Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+2026-09-20T16:42:26.8462460Z 
+2026-09-20T16:42:26.8463800Z      Running tests/bytes_array_keys.rs (target/release/deps/bytes_array_keys-b61f896d3847f528)
+2026-09-20T16:42:26.8517760Z 
+2026-09-20T16:42:26.8521780Z running 3 tests
+2026-09-20T16:42:26.8887670Z test for_in_returns_all_distinct_byte_keys ... ok
+2026-09-20T16:42:26.8904050Z test nul_embedded_key_round_trips ... ok
+2026-09-20T16:42:26.8906060Z test distinct_high_byte_keys_do_not_collide ... ok
+2026-09-20T16:42:26.8912770Z 
+2026-09-20T16:42:26.8914140Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+2026-09-20T16:42:26.8915200Z 
+2026-09-20T16:42:26.8915800Z      Running tests/bytes_printf.rs (target/release/deps/bytes_printf-8af19a7184fa2ac6)
+2026-09-20T16:42:26.8961050Z 
+2026-09-20T16:42:26.8969280Z running 6 tests
+2026-09-20T16:42:26.9106990Z test print_with_high_byte_ofs ... ok
+2026-09-20T16:42:26.9131840Z test printf_format_string_with_high_bytes ... ok
+2026-09-20T16:42:26.9286130Z test printf_s_preserves_high_byte ... ok
+2026-09-20T16:42:26.9466870Z test printf_c_emits_first_byte_raw ... ok
+2026-09-20T16:42:26.9469960Z test field_split_with_high_byte_fs ... ok
+2026-09-20T16:42:26.9473830Z test sprintf_high_byte_round_trip ... ok
+2026-09-20T16:42:26.9476230Z 
+2026-09-20T16:42:26.9477320Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+2026-09-20T16:42:26.9478200Z 
+2026-09-20T16:42:26.9479030Z      Running tests/bytes_regex_match.rs (target/release/deps/bytes_regex_match-a60e72259b281080)
+2026-09-20T16:42:26.9528600Z 
+2026-09-20T16:42:26.9537040Z running 6 tests
+2026-09-20T16:42:26.9713770Z test gsub_ampersand_includes_whole_match ... ok
+2026-09-20T16:42:26.9724670Z test match_builtin_high_byte_pattern_position ... ok
+2026-09-20T16:42:26.9725710Z test match_distinguishes_high_bytes ... ok
+2026-09-20T16:42:26.9813530Z test nul_inside_subject_with_rs_regex ... ok
+2026-09-20T16:42:27.0128410Z test rs_regex_high_byte_separator_splits_correctly ... ok
+2026-09-20T16:42:27.0135160Z test sub_replaces_high_byte_run ... ok
+2026-09-20T16:42:27.0135740Z 
+2026-09-20T16:42:27.0137880Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+2026-09-20T16:42:27.0138740Z 
+2026-09-20T16:42:27.0139620Z      Running tests/cli_contract.rs (target/release/deps/cli_contract-acd378c0dc252776)
+2026-09-20T16:42:27.0191940Z 
+2026-09-20T16:42:27.0205000Z running 5 tests
+2026-09-20T16:42:27.0601480Z test file_program_keeps_all_input_files ... ok
+2026-09-20T16:42:27.0804170Z test arrays_and_scalars_cannot_be_interchanged ... ok
+2026-09-20T16:42:27.0951130Z test invalid_builtin_arity_is_a_language_error ... ok
+2026-09-20T16:42:27.1640440Z test malformed_formats_and_invalid_runtime_arguments_do_not_panic ... ok
+2026-09-20T16:42:27.1794230Z test safe_mode_rejects_even_unexecuted_forbidden_operations ... ok
+2026-09-20T16:42:27.1795770Z 
+2026-09-20T16:42:27.1797050Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+2026-09-20T16:42:27.1798200Z 
+2026-09-20T16:42:27.1799200Z      Running tests/compatibility.rs (target/release/deps/compatibility-eac621d788503622)
+2026-09-20T16:42:27.1853940Z 
+2026-09-20T16:42:27.1863370Z running 8 tests
+2026-09-20T16:42:27.2486680Z test braces_in_bracket_expressions_are_not_repetitions ... ok
+2026-09-20T16:42:27.3883230Z test composed_input_and_control_flow ... ok
+2026-09-20T16:42:27.4392220Z test arrays_forwarding_recursion_and_local_parameters ... ok
+2026-09-20T16:42:27.5944800Z test numeric_conversion_matches_original_buffer_limit ... ok
+2026-09-20T16:42:27.7138910Z test tuple_membership_uses_current_subsep_between_components ... ok
+2026-09-20T16:42:29.2270110Z test regex_compositions_match_original ... ok
+2026-09-20T16:42:30.0105160Z test generated_record_array_function_programs ... ok
+2026-09-20T16:42:32.1545230Z test hex_floats_precision_flags_and_boundaries ... ok
+2026-09-20T16:42:32.1546310Z 
+2026-09-20T16:42:32.1547510Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.97s
+2026-09-20T16:42:32.1548260Z 
+2026-09-20T16:42:32.1548630Z      Running tests/corpus.rs (target/release/deps/corpus-e33a4de8723e6def)
+2026-09-20T16:42:32.1591210Z 
+2026-09-20T16:42:32.1592120Z running 1 test
+2026-09-20T16:42:43.7792130Z test original_small_programs ... ok
+2026-09-20T16:42:43.7792640Z 
+2026-09-20T16:42:43.7793150Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.61s
+2026-09-20T16:42:43.7793860Z 
+2026-09-20T16:42:43.7795550Z      Running tests/corpus_contracts.rs (target/release/deps/corpus_contracts-78fea44aae1f3cf2)
+2026-09-20T16:42:43.7839400Z 
+2026-09-20T16:42:43.7840820Z running 3 tests
+2026-09-20T16:42:43.8127800Z test rng_is_bounded_repeatable_and_srand_returns_previous_seed ... ok
+2026-09-20T16:42:44.0634380Z test contracts_reject_new_differences ... ok
+2026-09-20T16:42:49.1816620Z test entire_small_corpus_obeys_explicit_contracts ... ok
+2026-09-20T16:42:49.1818200Z 
+2026-09-20T16:42:49.1819540Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.39s
+2026-09-20T16:42:49.1820260Z 
+2026-09-20T16:42:49.1820800Z      Running tests/data_contract.rs (target/release/deps/data_contract-1a8a55d84edfec5c)
+2026-09-20T16:42:49.1868340Z 
+2026-09-20T16:42:49.1869740Z running 6 tests
+2026-09-20T16:42:49.1990300Z test csv_handles_quoted_delimiters_newlines_and_escaped_quotes ... ok
+2026-09-20T16:42:49.1992020Z test fields_accept_regex_separator ... ok
+2026-09-20T16:42:49.2044150Z test invalid_regex_is_reported ... ok
+2026-09-20T16:42:49.2154470Z test regex_uses_leftmost_longest ... ok
+2026-09-20T16:42:49.2155410Z test split_preserves_empty_fields_and_clears_array ... ok
+2026-09-20T16:42:49.2486660Z test substitutions_report_count_not_changed_text ... ok
+2026-09-20T16:42:49.2487200Z 
+2026-09-20T16:42:49.2488670Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+2026-09-20T16:42:49.2489460Z 
+2026-09-20T16:42:49.2490120Z      Running tests/diffrun_buckets.rs (target/release/deps/diffrun_buckets-0db6b91c5f48a9b8)
+2026-09-20T16:42:49.2532610Z 
+2026-09-20T16:42:49.2532980Z running 3 tests
+2026-09-20T16:42:53.8808440Z test diffrun_emits_four_bucket_summary ... ok
+2026-09-20T16:42:53.9508950Z test diffrun_exits_nonzero_when_unexpected_divergences_present ... ok
+2026-09-20T16:42:54.0358830Z test diffrun_step23_target_counts ... ok
+2026-09-20T16:42:54.0359510Z 
+2026-09-20T16:42:54.0360430Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.78s
+2026-09-20T16:42:54.0361150Z 
+2026-09-20T16:42:54.0361740Z      Running tests/driver_regressions.rs (target/release/deps/driver_regressions-58bdf590a9ec7873)
+2026-09-20T16:42:54.0406070Z 
+2026-09-20T16:42:54.0406900Z running 8 tests
+2026-09-20T16:42:54.0649630Z test field_index_beyond_reference_integer_range_is_an_error ... ok
+2026-09-20T16:42:54.0667950Z test getline_comparison_is_not_part_of_filename ... ok
+2026-09-20T16:42:54.0856780Z test multifile_syntax_error_names_offending_source ... ok
+2026-09-20T16:42:54.1246050Z test invalid_function_parameters_are_errors_before_execution ... ok
+2026-09-20T16:42:54.1467060Z test redirected_stdin_shares_buffer_with_main_input ... ok
+2026-09-20T16:42:54.1973680Z test stdin_program_and_empty_statements ... ok
+2026-09-20T16:42:54.4996180Z test standard_output_aliases_share_streams_and_lifecycle ... ok
+2026-09-20T16:42:54.9931540Z test checked_math_matches_native_oracle ... ok
+2026-09-20T16:42:54.9932050Z 
+2026-09-20T16:42:54.9932560Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.95s
+2026-09-20T16:42:54.9933260Z 
+2026-09-20T16:42:54.9933780Z      Running tests/dynamic_format.rs (target/release/deps/dynamic_format-4c74b299b41d20da)
+2026-09-20T16:42:54.9978110Z 
+2026-09-20T16:42:54.9980810Z running 8 tests
+2026-09-20T16:42:55.0531460Z test missing_star_arguments_are_errors ... ok
+2026-09-20T16:42:55.0661240Z test negative_precision_keeps_binary_and_multibyte_paths ... ok
+2026-09-20T16:42:55.0908600Z test string_and_literal_range_errors_do_not_discard_arithmetic_subnormals ... ok
+2026-09-20T16:42:55.6608240Z test unsigned_conversion_matches_native_oracle ... ok
+2026-09-20T16:42:55.7516600Z test zero_padded_strings_match_native_oracle ... ok
+2026-09-20T16:42:57.4141370Z test dynamic_width_precision_and_consumption ... ok
+2026-09-20T16:43:02.2631110Z test integer_flags_precision_and_signs ... ok
+2026-09-20T16:43:04.7133050Z test negative_dynamic_precision_preserves_flags_and_argument_consumption ... ok
+2026-09-20T16:43:04.7133930Z 
+2026-09-20T16:43:04.7134880Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.71s
+2026-09-20T16:43:04.7135760Z 
+2026-09-20T16:43:04.7136980Z      Running tests/error_messages.rs (target/release/deps/error_messages-66ef7ba6c4cbd1ea)
+2026-09-20T16:43:04.7179930Z 
+2026-09-20T16:43:04.7180620Z running 2 tests
+2026-09-20T16:43:04.7248260Z test missing_program_file_mentions_filename ... ok
+2026-09-20T16:43:04.7249370Z test output_to_unwritable_path_mentions_filename ... ok
+2026-09-20T16:43:04.7249900Z 
+2026-09-20T16:43:04.7250390Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+2026-09-20T16:43:04.7251240Z 
+2026-09-20T16:43:04.7260380Z      Running tests/exit_codes.rs (target/release/deps/exit_codes-c38cbb856521b362)
+2026-09-20T16:43:04.7295530Z 
+2026-09-20T16:43:04.7296530Z running 4 tests
+2026-09-20T16:43:04.7366460Z test exit_from_end_block ... ok
+2026-09-20T16:43:04.7367010Z test exit_with_value ... ok
+2026-09-20T16:43:04.7367490Z test syntax_error_nonzero ... ok
+2026-09-20T16:43:04.7369380Z test exit_zero_default ... ok
+2026-09-20T16:43:04.7369740Z 
+2026-09-20T16:43:04.7370210Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+2026-09-20T16:43:04.7370950Z 
+2026-09-20T16:43:04.7373170Z      Running tests/harness.rs (target/release/deps/harness-9c9bcfe4d351eb42)
+2026-09-20T16:43:04.7416810Z 
+2026-09-20T16:43:04.7419630Z running 5 tests
+2026-09-20T16:43:04.7423670Z test annotation_does_not_accept_new_failures ... ok
+2026-09-20T16:43:04.7613830Z test aggregate_gate_reports_an_intermediate_failure ... ok
+2026-09-20T16:43:04.7779200Z test preserves_bytes_whitespace_and_status ... ok
+2026-09-20T16:43:04.7916010Z test each_run_has_a_fresh_directory ... ok
+2026-09-20T16:43:05.2540010Z test timeout_kills_descendants ... ok
+2026-09-20T16:43:05.2540440Z 
+2026-09-20T16:43:05.2541750Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.51s
+2026-09-20T16:43:05.2542770Z 
+2026-09-20T16:43:05.2543740Z      Running tests/historical.rs (target/release/deps/historical-e180c7c9f8880e3f)
+2026-09-20T16:43:05.2589250Z 
+2026-09-20T16:43:05.2590400Z running 2 tests
+2026-09-20T16:43:05.4313860Z test original_invalid_programs_are_rejected_without_panicking ... ok
+2026-09-20T16:43:06.6247520Z test original_positive_regressions ... ok
+2026-09-20T16:43:06.6248200Z 
+2026-09-20T16:43:06.6248960Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.37s
+2026-09-20T16:43:06.6249810Z 
+2026-09-20T16:43:06.6250580Z      Running tests/input_contract.rs (target/release/deps/input_contract-4e3df98feb04f887)
+2026-09-20T16:43:06.6294360Z 
+2026-09-20T16:43:06.6300970Z running 5 tests
+2026-09-20T16:43:06.6419180Z test getline_uses_main_stream_and_counts_every_read ... ok
+2026-09-20T16:43:06.6419910Z test rewriting_record_does_not_count_a_read ... ok
+2026-09-20T16:43:06.6466040Z test missing_getline_file_is_an_error_not_eof ... ok
+2026-09-20T16:43:06.6555130Z test rs_changes_apply_to_unconsumed_input ... ok
+2026-09-20T16:43:06.6698710Z test file_getline_and_interleaved_assignments ... ok
+2026-09-20T16:43:06.6699190Z 
+2026-09-20T16:43:06.6699630Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+2026-09-20T16:43:06.6700320Z 
+2026-09-20T16:43:06.6701260Z      Running tests/language_contract.rs (target/release/deps/language_contract-5f69a237b38c041c)
+2026-09-20T16:43:06.6746090Z 
+2026-09-20T16:43:06.6753520Z running 7 tests
+2026-09-20T16:43:06.7190220Z test array_parameters_are_references ... ok
+2026-09-20T16:43:06.7237440Z test convfmt_is_used_for_comparisons_fields_and_keys ... ok
+2026-09-20T16:43:06.7245290Z test array_reads_create_entries ... ok
+2026-09-20T16:43:06.7250540Z test expressions_and_escapes ... ok
+2026-09-20T16:43:06.7327210Z test lvalue_indices_are_evaluated_once ... ok
+2026-09-20T16:43:06.7571770Z test numeric_and_string_values_keep_their_types ... ok
+2026-09-20T16:43:06.7596280Z test range_patterns_and_empty_actions ... ok
+2026-09-20T16:43:06.7596700Z 
+2026-09-20T16:43:06.7597150Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+2026-09-20T16:43:06.7597830Z 
+2026-09-20T16:43:06.7598740Z      Running tests/legacy_locale.rs (target/release/deps/legacy_locale-e79eb76b689936ea)
+2026-09-20T16:43:06.7650600Z 
+2026-09-20T16:43:06.7652080Z running 6 tests
+2026-09-20T16:43:06.8581090Z test every_nonzero_byte_case_conversion_matches_c ... ok
+2026-09-20T16:43:06.8854990Z test nul_preservation_remains_an_explicit_rust_extension ... ok
+2026-09-20T16:43:06.8991290Z test byte_positions_ranges_splits_and_substitution_match_c ... ok
+2026-09-20T16:43:06.9130430Z test legacy_locale_selection_obeys_precedence_and_is_fixed_at_startup ... ok
+2026-09-20T16:43:06.9379330Z test required_single_byte_locales_are_active ... ok
+2026-09-20T16:43:07.9440960Z test every_nonzero_byte_in_each_posix_class_matches_c ... ok
+2026-09-20T16:43:07.9441480Z 
+2026-09-20T16:43:07.9442390Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.18s
+2026-09-20T16:43:07.9443130Z 
+2026-09-20T16:43:07.9443590Z      Running tests/phase7_closure.rs (target/release/deps/phase7_closure-9a9cea9401bd5b4c)
+2026-09-20T16:43:07.9487320Z 
+2026-09-20T16:43:07.9488400Z running 7 tests
+2026-09-20T16:43:08.0265470Z test closed_output_pipe_reports_language_error ... ok
+2026-09-20T16:43:08.0923580Z test contracts_reject_mutations ... ok
+2026-09-20T16:43:08.2248940Z test raw_source_bytes_survive_inline_file_and_stdin ... ok
+2026-09-20T16:43:08.4607040Z test keyword_prefixes_and_integral_precision ... ok
+2026-09-20T16:43:08.5235780Z test generated_octal_regex_atoms_and_literal_operators ... ok
+2026-09-20T16:43:08.6954870Z test separators_keep_string_and_regex_semantics ... ok
+2026-09-20T16:43:13.2899010Z test individual_driver_contracts ... ok
+2026-09-20T16:43:13.2899410Z 
+2026-09-20T16:43:13.2900410Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.34s
+2026-09-20T16:43:13.2901110Z 
+2026-09-20T16:43:13.2901550Z      Running tests/printf_sanity.rs (target/release/deps/printf_sanity-998849273a3091de)
+2026-09-20T16:43:13.2946150Z 
+2026-09-20T16:43:13.2953610Z running 5 tests
+2026-09-20T16:43:13.3299150Z test s_truncate ... ok
+2026-09-20T16:43:13.3299920Z test d_padding ... ok
+2026-09-20T16:43:13.3300940Z test f_precision ... ok
+2026-09-20T16:43:13.3301830Z test e_scientific ... ok
+2026-09-20T16:43:13.3407270Z test x_hex ... ok
+2026-09-20T16:43:13.3407770Z 
+2026-09-20T16:43:13.3408600Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+2026-09-20T16:43:13.3409310Z 
+2026-09-20T16:43:13.3409780Z      Running tests/proptest_diff.rs (target/release/deps/proptest_diff-d5f112b35007626a)
+2026-09-20T16:43:13.3457190Z 
+2026-09-20T16:43:13.3457810Z running 6 tests
+2026-09-20T16:43:16.1721330Z test template_concat_string ... ok
+2026-09-20T16:43:16.3321660Z test template_multiply ... ok
+2026-09-20T16:43:16.3423850Z test template_printf_float ... ok
+2026-09-20T16:43:16.5567740Z test template_add ... ok
+2026-09-20T16:43:17.6777110Z test template_scientific_no_orphan_dot ... ok
+2026-09-20T16:43:19.0522050Z test template_printf_int ... ok
+2026-09-20T16:43:19.0522420Z 
+2026-09-20T16:43:19.0522910Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.70s
+2026-09-20T16:43:19.0523630Z 
+2026-09-20T16:43:19.0524630Z      Running tests/remaining_contract.rs (target/release/deps/remaining_contract-b21ae38935d51efa)
+2026-09-20T16:43:19.0569230Z 
+2026-09-20T16:43:19.0570300Z running 7 tests
+2026-09-20T16:43:19.0986100Z test bracket_normalization_preserves_the_binary_profile ... ok
+2026-09-20T16:43:19.1326750Z test missing_fields_are_empty_strings_not_uninitialized_variables ... ok
+2026-09-20T16:43:19.1651420Z test character_format_distinguishes_numeric_fields_from_literal_strings ... ok
+2026-09-20T16:43:19.6670940Z test descending_bracket_ranges_follow_original_c ... ok
+2026-09-20T16:43:21.8677650Z test generated_rational_values_and_float_formats ... ok
+2026-09-20T16:43:23.0409020Z test replacement_escapes_have_separate_lexical_and_runtime_stages ... ok
+2026-09-20T16:43:24.0796630Z test numeric_rounding_uses_the_exact_binary_value ... ok
+2026-09-20T16:43:24.0797130Z 
+2026-09-20T16:43:24.0797740Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.02s
+2026-09-20T16:43:24.0799170Z 
+2026-09-20T16:43:24.0799840Z      Running tests/runtime_contract.rs (target/release/deps/runtime_contract-657e250005689c8c)
+2026-09-20T16:43:24.0843150Z 
+2026-09-20T16:43:24.0844310Z running 3 tests
+2026-09-20T16:43:24.1001410Z test short_circuit_preserves_side_effects ... ok
+2026-09-20T16:43:24.1002070Z test return_escapes_all_loop_forms ... ok
+2026-09-20T16:43:24.1002720Z test exit_executes_end_and_interrupts_expressions ... ok
+2026-09-20T16:43:24.1003750Z 
+2026-09-20T16:43:24.1004850Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+2026-09-20T16:43:24.1005560Z 
+2026-09-20T16:43:24.1006010Z      Running tests/shell_drivers.rs (target/release/deps/shell_drivers-0507bd58d50d3133)
+2026-09-20T16:43:24.1047650Z 
+2026-09-20T16:43:24.1048560Z running 3 tests
+2026-09-20T16:43:26.0061200Z test shell_driver_gate_rejects_missing_interpreter_output ... ok
+2026-09-20T16:43:28.4416850Z test original_cli_and_array_shell_drivers ... ok
+2026-09-20T16:44:22.6348330Z test admitted_original_shell_drivers ... ok
+2026-09-20T16:44:22.6348750Z 
+2026-09-20T16:44:22.6349220Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 58.50s
+2026-09-20T16:44:22.6349910Z 
+2026-09-20T16:44:22.6350300Z      Running tests/shift_jis.rs (target/release/deps/shift_jis-cf18f9e725aaae7c)
+2026-09-20T16:44:22.6395390Z 
+2026-09-20T16:44:22.6399940Z running 12 tests
+2026-09-20T16:44:22.6812790Z test embedded_nul_preserves_the_rust_binary_extension ... ok
+2026-09-20T16:44:22.6960830Z test conversion_failure_preserves_atomic_print_contract ... ok
+2026-09-20T16:44:22.7444660Z test decoded_character_with_unencodable_case_mapping_matches_c ... ok
+2026-09-20T16:44:22.7927620Z test regex_rs_with_three_or_four_byte_structural_units_matches_c ... ok
+2026-09-20T16:44:22.8314130Z test required_sjis_locale_has_observable_case_mapping ... ok
+2026-09-20T16:44:22.9977410Z test record_separators_and_locale_precedence_match_c ... ok
+2026-09-20T16:44:23.0425850Z test streaming_rs_keeps_binary_data_distinct_from_eof ... ok
+2026-09-20T16:44:23.3913180Z test regex_rs_sjis_refill_across_input_buffers_and_getline_matches_c ... ok
+2026-09-20T16:44:23.8659750Z test structural_units_regex_fields_and_formatting_match_c ... ok
+2026-09-20T16:44:23.8979180Z test valid_case_conversion_and_truncated_suffixes_match_c ... ok
+2026-09-20T16:44:30.5135370Z test regex_rs_refill_restart_longest_and_anchors_match_c ... ok
+2026-09-20T16:44:55.1256950Z test single_bytes_and_lead_trail_boundaries_match_c ... ok
+2026-09-20T16:44:55.1257610Z 
+2026-09-20T16:44:55.1258090Z test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 32.47s
+2026-09-20T16:44:55.1258790Z 
+2026-09-20T16:44:55.1260070Z      Running tests/unicode_contract.rs (target/release/deps/unicode_contract-65d91fbbb5a5dfa7)
+2026-09-20T16:44:55.1314510Z 
+2026-09-20T16:44:55.1315720Z running 10 tests
+2026-09-20T16:44:55.1564170Z test binary_nul_extension_and_case_conversion_errors ... ok
+2026-09-20T16:44:55.2582240Z test repeated_matches_and_index_inside_a_multibyte_unit ... ok
+2026-09-20T16:44:55.4117150Z test required_locales_are_active_in_both_interpreters ... ok
+2026-09-20T16:44:55.4878120Z test locale_precedence_and_character_operations ... ok
+2026-09-20T16:44:55.6594450Z test unicode_formatting_and_source_escapes ... ok
+2026-09-20T16:44:56.0677830Z test boolean_regex_search_preserves_rune_alignment_and_empty_matches ... ok
+2026-09-20T16:44:57.6588600Z test utf8_record_separators_across_buffers ... ok
+2026-09-20T16:44:57.7601060Z test utf8_regex_empty_matches_and_mixed_bytes ... ok
+2026-09-20T16:44:57.9051480Z test unicode_classes_ranges_and_anchors ... ok
+2026-09-20T16:45:06.1543130Z test original_utf8_drivers ... ok
+2026-09-20T16:45:06.1543760Z 
+2026-09-20T16:45:06.1544420Z test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.02s
+2026-09-20T16:45:06.1545170Z 
+2026-09-20T16:45:06.1546150Z      Running tests/xml_runner_test.rs (target/release/deps/xml_runner_test-ec9488da4022b950)
+2026-09-20T16:45:06.1592730Z 
+2026-09-20T16:45:06.1593420Z running 1 test
+2026-09-20T16:45:09.0183660Z test run_xml_testsuite ... ok
+2026-09-20T16:45:09.0184160Z 
+2026-09-20T16:45:09.0184640Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.86s
+2026-09-20T16:45:09.0185320Z 
+2026-09-20T16:45:09.0185480Z    Doc-tests rawk
+2026-09-20T16:45:09.0915350Z 
+2026-09-20T16:45:09.0915760Z running 0 tests
+2026-09-20T16:45:09.0916000Z 
+2026-09-20T16:45:09.0916470Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-09-20T16:45:09.0917140Z 
+2026-09-20T16:45:09.1421480Z ##[group]Run python3 scripts/shift_jis_platform_probe.py --output diary/shift-jis-platform-ci.json
+2026-09-20T16:45:09.1422840Z [36;1mpython3 scripts/shift_jis_platform_probe.py --output diary/shift-jis-platform-ci.json[0m
+2026-09-20T16:45:09.1479140Z shell: /bin/bash -e {0}
+2026-09-20T16:45:09.1479510Z env:
+2026-09-20T16:45:09.1479790Z   LC_ALL: C
+2026-09-20T16:45:09.1480120Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:45:09.1480490Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:45:09.1480860Z ##[endgroup]
+2026-09-20T16:45:09.9299070Z 15240 libc-valid double-byte pairs: upper/lower MATCH
+2026-09-20T16:45:09.9513920Z ##[group]Run python3 scripts/test_closure_contracts.py
+2026-09-20T16:45:09.9514860Z [36;1mpython3 scripts/test_closure_contracts.py[0m
+2026-09-20T16:45:09.9515700Z [36;1mfor profile in debug release; do[0m
+2026-09-20T16:45:09.9517230Z [36;1m  python3 scripts/full_driver_audit.py --rawk "target/$profile/rawk" --verified --check --output "diary/darwin-drivers-verified-$profile-ci.json"[0m
+2026-09-20T16:45:09.9519560Z [36;1m  python3 scripts/linux_driver_probe.py --rawk "target/$profile/rawk" --check --output "diary/darwin-driver-probe-$profile-ci.json"[0m
+2026-09-20T16:45:09.9520950Z [36;1mdone[0m
+2026-09-20T16:45:09.9583680Z shell: /bin/bash -e {0}
+2026-09-20T16:45:09.9584160Z env:
+2026-09-20T16:45:09.9584580Z   LC_ALL: C
+2026-09-20T16:45:09.9585040Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:45:09.9585500Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:45:09.9585960Z ##[endgroup]
+2026-09-20T16:45:10.1292180Z ..
+2026-09-20T16:45:10.1293440Z ----------------------------------------------------------------------
+2026-09-20T16:45:10.1294970Z Ran 2 tests in 0.026s
+2026-09-20T16:45:10.1295380Z 
+2026-09-20T16:45:10.1295610Z OK
+2026-09-20T16:45:11.5931560Z T.-f-f pass 
+2026-09-20T16:45:13.9728720Z T.argv pass 
+2026-09-20T16:45:14.9013660Z T.arnold pass 
+2026-09-20T16:45:18.7826570Z T.beebe pass 
+2026-09-20T16:45:20.2226790Z T.chem pass 
+2026-09-20T16:45:21.4482080Z T.close pass 
+2026-09-20T16:45:24.5398650Z T.clv pass 
+2026-09-20T16:45:25.1826710Z T.csconcat pass 
+2026-09-20T16:45:26.7047590Z T.csv pass 
+2026-09-20T16:45:27.3387750Z T.delete pass 
+2026-09-20T16:45:32.6901310Z T.expr pass 
+2026-09-20T16:45:33.6695080Z T.exprconv pass 
+2026-09-20T16:45:36.2442980Z T.func pass 
+2026-09-20T16:45:44.2416590Z T.gawk pass 
+2026-09-20T16:45:45.8125750Z T.getline pass 
+2026-09-20T16:45:46.5443180Z T.int-expr pass 
+2026-09-20T16:45:47.6480360Z T.latin1 pass 
+2026-09-20T16:45:55.1847400Z T.lilly pass 
+2026-09-20T16:45:56.5994860Z T.main pass 
+2026-09-20T16:45:58.8572430Z T.nextfile pass 
+2026-09-20T16:46:02.3099690Z T.overflow pass 
+2026-09-20T16:46:10.7380560Z T.re pass 
+2026-09-20T16:46:11.3521020Z T.recache pass 
+2026-09-20T16:46:12.1143890Z T.redir pass 
+2026-09-20T16:46:14.1689730Z T.split pass 
+2026-09-20T16:46:18.6864270Z T.sub pass 
+2026-09-20T16:46:19.3452990Z T.system pass 
+2026-09-20T16:46:25.3051980Z Darwin contract mismatches: []
+2026-09-20T16:46:25.3053200Z Native contract mismatches: []
+2026-09-20T16:46:26.2600210Z T.-f-f pass 
+2026-09-20T16:46:28.2674180Z T.argv pass 
+2026-09-20T16:46:29.4484480Z T.arnold pass 
+2026-09-20T16:46:32.7261910Z T.beebe pass 
+2026-09-20T16:46:33.4521080Z T.chem pass 
+2026-09-20T16:46:34.6530970Z T.close pass 
+2026-09-20T16:46:37.5408430Z T.clv pass 
+2026-09-20T16:46:38.1742620Z T.csconcat pass 
+2026-09-20T16:46:39.6520580Z T.csv pass 
+2026-09-20T16:46:40.2784530Z T.delete pass 
+2026-09-20T16:46:45.2711000Z T.expr pass 
+2026-09-20T16:46:45.9259020Z T.exprconv pass 
+2026-09-20T16:46:47.7863000Z T.func pass 
+2026-09-20T16:46:51.4108170Z T.gawk pass 
+2026-09-20T16:46:52.4487230Z T.getline pass 
+2026-09-20T16:46:53.0378240Z T.int-expr pass 
+2026-09-20T16:46:53.9548090Z T.latin1 pass 
+2026-09-20T16:47:00.0093150Z T.lilly pass 
+2026-09-20T16:47:01.0497840Z T.main pass 
+2026-09-20T16:47:03.1643280Z T.nextfile pass 
+2026-09-20T16:47:05.5217390Z T.overflow pass 
+2026-09-20T16:47:13.0759510Z T.re pass 
+2026-09-20T16:47:13.6292370Z T.recache pass 
+2026-09-20T16:47:14.4406870Z T.redir pass 
+2026-09-20T16:47:16.3054050Z T.split pass 
+2026-09-20T16:47:19.9509930Z T.sub pass 
+2026-09-20T16:47:20.6492610Z T.system pass 
+2026-09-20T16:47:25.7626870Z Darwin contract mismatches: []
+2026-09-20T16:47:25.7627440Z Native contract mismatches: []
+2026-09-20T16:47:25.7816680Z ##[group]Run python3 scripts/full_driver_audit.py --output diary/full-driver-results-ci.json
+2026-09-20T16:47:25.7818000Z [36;1mpython3 scripts/full_driver_audit.py --output diary/full-driver-results-ci.json[0m
+2026-09-20T16:47:25.7874970Z shell: /bin/bash -e {0}
+2026-09-20T16:47:25.7875390Z env:
+2026-09-20T16:47:25.7875750Z   LC_ALL: C
+2026-09-20T16:47:25.7876120Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:47:25.7876540Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:47:25.7876980Z ##[endgroup]
+2026-09-20T16:47:26.9349360Z T.-f-f pass 
+2026-09-20T16:47:28.9415420Z T.argv pass 
+2026-09-20T16:47:29.8059770Z T.arnold pass 
+2026-09-20T16:47:33.1631110Z T.beebe pass 
+2026-09-20T16:47:34.8612540Z T.builtin reference-failure BAD: T.builtin (rand) BAD: T.builtin (toupper/tolower) for utf-8
+2026-09-20T16:47:35.6113220Z T.chem pass 
+2026-09-20T16:47:36.8056460Z T.close pass 
+2026-09-20T16:47:39.6838170Z T.clv pass 
+2026-09-20T16:47:40.3199680Z T.csconcat pass 
+2026-09-20T16:47:41.8009780Z T.csv pass 
+2026-09-20T16:47:42.4485530Z T.delete pass 
+2026-09-20T16:47:44.2768870Z T.errmsg reference-failure BAD: illegal primary in regular expression failed BAD: illegal break, continue, next or nextfile from BEGIN failed BAD: illegal break, continue, next or nextfile from END failed BAD: nextfile is illegal inside a function failed BAD: nonterminated character class failed BAD: nonterminated character class failed BAD: nonterminated character cl
+2026-09-20T16:47:49.1894810Z T.expr pass 
+2026-09-20T16:47:49.8184600Z T.exprconv pass 
+2026-09-20T16:47:50.4888940Z T.flags open T.flags: bad no program T.flags: bad can.t open program T.flags: bad can.t open program 2 T.flags: bad missing field separator
+2026-09-20T16:47:52.3394990Z T.func pass 
+2026-09-20T16:47:56.0299480Z T.gawk pass 
+2026-09-20T16:47:57.1697450Z T.getline pass 
+2026-09-20T16:47:57.7705800Z T.int-expr pass 
+2026-09-20T16:47:58.6864750Z T.latin1 pass 
+2026-09-20T16:48:04.8494290Z T.lilly pass 
+2026-09-20T16:48:05.9031590Z T.main pass 
+2026-09-20T16:48:10.5569630Z T.misc open BAD: T.misc split error BAD: T.misc hello error BAD: T.misc pile error BAD: T.misc gsub banana error BAD: T.misc sub banana error BAD: T.misc lineno BAD: T.misc can't open BAD: T.misc continuation line number BAD: T.misc syntax error line number �BAD: T.misc escape sequences in strings mishandled BAD: T.misc fcn args BAD: T.misc undefine
+2026-09-20T16:48:12.5688890Z T.nextfile pass 
+2026-09-20T16:48:14.7580100Z T.overflow pass 
+2026-09-20T16:48:22.1108600Z T.re pass 
+2026-09-20T16:48:22.6858770Z T.recache pass 
+2026-09-20T16:48:23.4304800Z T.redir pass 
+2026-09-20T16:48:25.4143580Z T.split pass 
+2026-09-20T16:48:29.0658430Z T.sub pass 
+2026-09-20T16:48:29.7972630Z T.system pass 
+2026-09-20T16:48:34.7080090Z T.utf reference-failure test 1.3 failed test 1.4 failed test 1.5 failed test 1.6 failed test 1.7 failed test 1.8 failed test 1.9 failed test 1.10 failed test 1.11 failed test 1.12 failed test 1.13 failed test 1.14 failed test 1.15 failed test 1.16 failed test 1.17 failed test 1.18 failed test 1.19 failed test 1.20 failed test 1.21 fail
+2026-09-20T16:48:39.7041720Z T.utfre reference-failure 43 fails ^λ.$ ~ λλ 51 fails ^.해 ~ め해 52 fails ^.해 ~ め해해 64 fails 해* ~  68 fails 해* ~ めめめめ 69 fails 해해* ~ 해 71 fails 해해* ~ め해 84 fails xθ+y ~ xθθy 85 fails xθ+y ~ xθθθθθθy 89 fails xθ?y ~ xy 92 fails θ?b?の? ~  93 fails θ?b?の? ~ x 106 fails [Α-Ω] !~ β 108 fails [^Α-Ω] ~ δ 119 fails [Α-ΔΦ-Ω] !~ Π 120 fails [Α-ΔΦ-Ω] !~ Σ
+2026-09-20T16:48:39.7238680Z ##[group]Run python3 scripts/full_driver_audit.py --drivers T.utf T.utfre --locale en_US.UTF-8 --check --output diary/unicode-driver-results-ci.json
+2026-09-20T16:48:39.7241090Z [36;1mpython3 scripts/full_driver_audit.py --drivers T.utf T.utfre --locale en_US.UTF-8 --check --output diary/unicode-driver-results-ci.json[0m
+2026-09-20T16:48:39.7302930Z shell: /bin/bash -e {0}
+2026-09-20T16:48:39.7303440Z env:
+2026-09-20T16:48:39.7304030Z   LC_ALL: C
+2026-09-20T16:48:39.7304960Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:48:39.7305850Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:48:39.7306960Z ##[endgroup]
+2026-09-20T16:48:45.4699650Z T.utf pass 
+2026-09-20T16:48:50.7233680Z T.utfre pass 
+2026-09-20T16:48:50.7536700Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-20T16:48:50.7541260Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-09-20T16:48:50.7542030Z with:
+2026-09-20T16:48:50.7542420Z   name: darwin-macos-15-intel
+2026-09-20T16:48:50.7544490Z   path: rawk/diary/darwin-*-ci.log
+rawk/diary/darwin-*-ci.json
+rawk/diary/format-platform-ci.json
+rawk/diary/shift-jis-platform-ci.json
+rawk/diary/shift-jis-locale-ci.log
+rawk/diary/full-driver-results-ci.json
+rawk/diary/unicode-driver-results-ci.json
+
+2026-09-20T16:48:50.7546680Z   if-no-files-found: error
+2026-09-20T16:48:50.7547140Z   compression-level: 6
+2026-09-20T16:48:50.7547610Z   overwrite: false
+2026-09-20T16:48:50.7548110Z   include-hidden-files: false
+2026-09-20T16:48:50.7548570Z env:
+2026-09-20T16:48:50.7548900Z   LC_ALL: C
+2026-09-20T16:48:50.7549270Z   CARGO_INCREMENTAL: 0
+2026-09-20T16:48:50.7549710Z   RUSTUP_TOOLCHAIN: 1.96.0
+2026-09-20T16:48:50.7550140Z ##[endgroup]
+2026-09-20T16:48:51.0462320Z (node:18799) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-09-20T16:48:51.0476250Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-09-20T16:48:51.0632950Z With the provided path, there will be 11 files uploaded
+2026-09-20T16:48:51.0636450Z Artifact name is valid!
+2026-09-20T16:48:51.0659060Z Root directory input is valid!
+2026-09-20T16:48:51.3907300Z Beginning upload of artifact content to blob storage
+2026-09-20T16:48:51.4713740Z (node:18799) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-09-20T16:48:51.7085270Z Uploaded bytes 106443
+2026-09-20T16:48:51.7550550Z Finished uploading artifact content to blob storage!
+2026-09-20T16:48:51.7552760Z SHA256 digest of uploaded artifact zip is 5a298ced5d9c6e9aeb433b31aa28fd12f605967253b60eb929477901c23451db
+2026-09-20T16:48:51.7558970Z Finalizing artifact upload
+2026-09-20T16:48:51.9757610Z Artifact darwin-macos-15-intel.zip successfully finalized. Artifact ID 10609163822
+2026-09-20T16:48:51.9761370Z Artifact darwin-macos-15-intel has been successfully uploaded! Final size is 106443 bytes. Artifact ID is 10609163822
+2026-09-20T16:48:51.9768940Z Artifact download URL: https://github.com/francescotinti/rawk/actions/runs/35523117465/artifacts/10609163822
+2026-09-20T16:48:52.0144890Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-20T16:48:52.0148160Z Post job cleanup.
+2026-09-20T16:48:52.2010710Z [command]/usr/local/bin/git version
+2026-09-20T16:48:52.2439790Z git version 2.55.0
+2026-09-20T16:48:52.2481200Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/a10f7bab-d40d-4650-b57f-8864bc48c159/.gitconfig'
+2026-09-20T16:48:52.2497170Z Temporarily overriding HOME='/Users/runner/work/_temp/a10f7bab-d40d-4650-b57f-8864bc48c159' before making global git config changes
+2026-09-20T16:48:52.2499160Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-20T16:48:52.2504760Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/rawk/rawk/rawk
+2026-09-20T16:48:52.2648270Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-20T16:48:52.2752410Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-20T16:48:52.4491030Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-20T16:48:52.4493140Z http.https://github.com/.extraheader
+2026-09-20T16:48:52.4500410Z [command]/usr/local/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-09-20T16:48:52.4825200Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-20T16:48:52.7158440Z Cleaning up orphan processes
+2026-09-20T16:48:53.4950530Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,308 @@
+{
+  "revision": "11d73134b9403d27ba00b2bf1be4ffe8b1c0f53c",
+  "oracle_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "ci_url": "https://github.com/francescotinti/rawk/actions/runs/35523117465",
+  "platforms": {
+    "final-macos-15": {
+      "debug": {
+        "verified_drivers": 27,
+        "closure_cases": 275,
+        "native_contract_mismatches": 0,
+        "streams": 20,
+        "binary_sha256": {
+          "c": "4992714bc6ffcdc60ce684e3769c3fd27cd7c0aac01bfb06f5d9b70315ec66ff",
+          "rust": "d6412a31d27282b2af7de65b6ef30aa23fa8dde9ad8e4ce261b0b1edce040716"
+        },
+        "tests": {
+          "passed": 151,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "platform": "macOS-15.7.9-arm64-arm-64bit-Mach-O",
+      "machine": "arm64",
+      "libc": [
+        "",
+        ""
+      ],
+      "release": {
+        "verified_drivers": 27,
+        "closure_cases": 275,
+        "native_contract_mismatches": 0,
+        "streams": 20,
+        "binary_sha256": {
+          "c": "4992714bc6ffcdc60ce684e3769c3fd27cd7c0aac01bfb06f5d9b70315ec66ff",
+          "rust": "5a3a6da5de8912258f0716344dfc3b25d664ffe991093d5de796073d0b6a2f43"
+        },
+        "tests": {
+          "passed": 151,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "shift_jis": {
+        "valid_double_byte_pairs": 15240,
+        "encodable_pairs": {
+          "toupper": 15240,
+          "tolower": 15240
+        },
+        "unencodable_mappings": {
+          "toupper": [],
+          "tolower": []
+        },
+        "conversion_match": true,
+        "codeset": "SJIS"
+      },
+      "raw_driver_inventory": {
+        "pass": 27,
+        "reference-failure": 4,
+        "open": 2
+      }
+    },
+    "final-macos-15-intel": {
+      "debug": {
+        "verified_drivers": 27,
+        "closure_cases": 275,
+        "native_contract_mismatches": 0,
+        "streams": 20,
+        "binary_sha256": {
+          "c": "7c78dfde76563a71e95037faee688291eb2ce157511c5caa17bf8d1f0ce8b5e3",
+          "rust": "810d8364db4cde2a013fbc4a47777aad28cdde94f47a89a7d11a7458d204ee2e"
+        },
+        "tests": {
+          "passed": 151,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "platform": "macOS-15.7.9-x86_64-i386-64bit-Mach-O",
+      "machine": "x86_64",
+      "libc": [
+        "",
+        ""
+      ],
+      "release": {
+        "verified_drivers": 27,
+        "closure_cases": 275,
+        "native_contract_mismatches": 0,
+        "streams": 20,
+        "binary_sha256": {
+          "c": "7c78dfde76563a71e95037faee688291eb2ce157511c5caa17bf8d1f0ce8b5e3",
+          "rust": "1ca0572921ffadc025c26b99d14f40858ba1019ecf4839ad9057e621dca22256"
+        },
+        "tests": {
+          "passed": 151,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "shift_jis": {
+        "valid_double_byte_pairs": 15240,
+        "encodable_pairs": {
+          "toupper": 15240,
+          "tolower": 15240
+        },
+        "unencodable_mappings": {
+          "toupper": [],
+          "tolower": []
+        },
+        "conversion_match": true,
+        "codeset": "SJIS"
+      },
+      "raw_driver_inventory": {
+        "pass": 27,
+        "reference-failure": 4,
+        "open": 2
+      }
+    },
+    "final-ubuntu-24.04": {
+      "debug": {
+        "verified_drivers": 27,
+        "closure_cases": 275,
+        "native_contract_mismatches": 0,
+        "streams": 20,
+        "binary_sha256": {
+          "c": "8fc1b1ed35ed1d1cc8357f4b14c0cb7fbcf3a9362b4232bddd40872f9da82d22",
+          "rust": "89c6b6ec42f1a7decf022c9ce3880a1725ab7cb4e33b0f46c2a09dcfeb2462be"
+        },
+        "tests": {
+          "passed": 89,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "libc": [
+        "glibc",
+        "2.39"
+      ],
+      "release": {
+        "verified_drivers": 27,
+        "closure_cases": 275,
+        "native_contract_mismatches": 0,
+        "streams": 20,
+        "binary_sha256": {
+          "c": "8fc1b1ed35ed1d1cc8357f4b14c0cb7fbcf3a9362b4232bddd40872f9da82d22",
+          "rust": "8dbfad64cbc3c602871dbc713fddc36c993a765454f8e07b4d7e46f9c6754816"
+        },
+        "tests": {
+          "passed": 89,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "shift_jis": {
+        "valid_double_byte_pairs": 6879,
+        "encodable_pairs": {
+          "toupper": 6879,
+          "tolower": 6878
+        },
+        "unencodable_mappings": {
+          "toupper": [],
+          "tolower": [
+            "81f0"
+          ]
+        },
+        "conversion_match": true,
+        "codeset": "SHIFT_JIS"
+      },
+      "raw_driver_inventory": {
+        "pass": 27,
+        "open": 3,
+        "reference-failure": 3
+      }
+    },
+    "final-ubuntu-24.04-arm": {
+      "debug": {
+        "verified_drivers": 27,
+        "closure_cases": 275,
+        "native_contract_mismatches": 0,
+        "streams": 20,
+        "binary_sha256": {
+          "c": "1d7352ab5699a5c91e8e11772257c053e1739e9ffd0e56172365d03e43ad10a2",
+          "rust": "d4fb8e2af791348a8055245b4e375260234f2f2cafdaa659e83a11bedac45a76"
+        },
+        "tests": {
+          "passed": 89,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "platform": "Linux-6.17.0-1022-azure-aarch64-with-glibc2.39",
+      "machine": "aarch64",
+      "libc": [
+        "glibc",
+        "2.39"
+      ],
+      "release": {
+        "verified_drivers": 27,
+        "closure_cases": 275,
+        "native_contract_mismatches": 0,
+        "streams": 20,
+        "binary_sha256": {
+          "c": "1d7352ab5699a5c91e8e11772257c053e1739e9ffd0e56172365d03e43ad10a2",
+          "rust": "ae284c28522138ae26090350cb235f4871a156b069caf60276eed5760d7270df"
+        },
+        "tests": {
+          "passed": 89,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "shift_jis": {
+        "valid_double_byte_pairs": 6879,
+        "encodable_pairs": {
+          "toupper": 6879,
+          "tolower": 6878
+        },
+        "unencodable_mappings": {
+          "toupper": [],
+          "tolower": [
+            "81f0"
+          ]
+        },
+        "conversion_match": true,
+        "codeset": "SHIFT_JIS"
+      },
+      "raw_driver_inventory": {
+        "pass": 27,
+        "open": 3,
+        "reference-failure": 3
+      }
+    }
+  },
+  "local_arm64": {
+    "debug": 151,
+    "release": 151,
+    "ignored": 0,
+    "checks_exit": 0,
+    "release_exit": 0,
+    "os": "macOS 26.6.2",
+    "oracle_tracked_content_unchanged": true
+  },
+  "evidence_sha256": {
+    "appledouble-removed-final.txt": "fd893b4d51a794f7719522bd1b814fd82823c084a1a371300b01ca852b44e65e",
+    "ci-before-runtime-fix.json": "f0e9aa3e975829fee6eae91bb77def614cc2b05bc75cb30eda9f47ef70173f98",
+    "ci-final.json": "e20300a92c2fa637debc442fc3dcdf9c4313af480ea352799b76926db7de1083",
+    "ci-initial.json": "df3e36610deed7ffa905aad7c924ce096259ff2b919a2cc676dfd630e1a71d48",
+    "final-macos-15/darwin-debug-ci.log": "8afe6eb72e3401ba889e0850db0d8d50797b215420e0913be30a3026726b2728",
+    "final-macos-15/darwin-driver-probe-debug-ci.json": "7d286daaccf1310e9fbbdff0bbeeb50e978d8eed32d6aa586dd9bfec6fdd8063",
+    "final-macos-15/darwin-driver-probe-release-ci.json": "6e9edafd56bcbef6c24f72342dfa502cab4b47560ca95197aeed15e119638e8b",
+    "final-macos-15/darwin-drivers-verified-debug-ci.json": "188508452b335a16d49aa2dda1812f6495df410e6d458de7565f96dfd5465985",
+    "final-macos-15/darwin-drivers-verified-release-ci.json": "cc273de74271e8b3d0e311691ef6e2347103fe97cb329e899192cc70308d5a3e",
+    "final-macos-15/darwin-environment-ci.log": "f9f1790544047493cbc048a53361e89c60ddb3c4f93c663236dd7e522f5b0e6a",
+    "final-macos-15/darwin-release-ci.log": "226ed04f47558d37a739c0b972895b4e75141c1323bda17c21321f8468d7a685",
+    "final-macos-15/format-platform-ci.json": "2d0d680263d686e374889613dc03eda62093e76d0c036abcc446fa6d3558e27a",
+    "final-macos-15/full-driver-results-ci.json": "9df5f7d10a2bb489817d3c741bcfbd6363185f70718d8b6c37a3b552043e96e9",
+    "final-macos-15/shift-jis-platform-ci.json": "f971059c6f63319005f749a9cd53ddb5ebc10f7f16c2b0096757f2a508baee39",
+    "final-macos-15/unicode-driver-results-ci.json": "319ba794bac6208a112e23a1a690e0943b65e50201c5b261f89b65bdd2c92c8a",
+    "final-macos-15-intel/darwin-debug-ci.log": "83cf565b675c6e0521a63db1138db2e0ca8b3906b603187d9ea7c6bfb13d3da0",
+    "final-macos-15-intel/darwin-driver-probe-debug-ci.json": "5585b304e4f574e5f699a52aa625152d127c8be28cef3614040fd9a01eab8c04",
+    "final-macos-15-intel/darwin-driver-probe-release-ci.json": "cb8aaf4bd702f23c134e67213cdc984dd8a6c817a93d41d341e852848f0abb46",
+    "final-macos-15-intel/darwin-drivers-verified-debug-ci.json": "5f6cc2bc0c273e1b09c47d37bb1249af5bb3f76aa94747c7aaad3d0946018705",
+    "final-macos-15-intel/darwin-drivers-verified-release-ci.json": "37f0596fb3d3f8e7caf9af58830086d3ef4f82c461c90250c9b6ee9285482568",
+    "final-macos-15-intel/darwin-environment-ci.log": "0163b74919fdfe761f39977efffd55087f86b1d640311f1144c785b583bc589d",
+    "final-macos-15-intel/darwin-release-ci.log": "8b36344a8402cf8226fb45cb7a1196915695be1bde8efa50400642b29579b1f0",
+    "final-macos-15-intel/format-platform-ci.json": "4ae8f737cd9a402fcb6f4e890a8b5c390d2a82eb2470702051f71a373d096572",
+    "final-macos-15-intel/full-driver-results-ci.json": "5e1f82efeb095d966de898604c66ea45ed6f5a48db25efa62cedb6bc8593f9a5",
+    "final-macos-15-intel/job.log": "f43fd94c46d87289a3f42288ba9e3b534f6b8770731fa9768e102b7ca4613f6e",
+    "final-macos-15-intel/shift-jis-platform-ci.json": "5aa3f0e4f04071dd7da34ebf2c9964102ba29e9fa3fad763769df7fc0d666273",
+    "final-macos-15-intel/unicode-driver-results-ci.json": "319ba794bac6208a112e23a1a690e0943b65e50201c5b261f89b65bdd2c92c8a",
+    "final-ubuntu-24.04/format-platform-ci.json": "0009a5a282c4e997889feada3379c3c584b69f4048e832a8c4ae22a369072cfd",
+    "final-ubuntu-24.04/linux-driver-probe-debug-ci.json": "5dd0c3be41cf9303d44d5b64e51fbd10e67447930a9623edbaed97fa0ea19132",
+    "final-ubuntu-24.04/linux-driver-probe-release-ci.json": "387c653b4ac4ef80eb815c7e313cdd777eb0b1bf18dceb1947082d822dc44ac7",
+    "final-ubuntu-24.04/linux-driver-results-ci.json": "c914221d6b55ddc392331e934e5d7ac9161a0158d7174253cc80720fa30856a0",
+    "final-ubuntu-24.04/linux-drivers-verified-debug-ci.json": "612400f0f088a20fbac339b0e72684e3f24b03d4b9b2788a8bb61d125b68a2d2",
+    "final-ubuntu-24.04/linux-drivers-verified-release-ci.json": "a8ee2038de88c94a1aacb5f1f5ffd48d0a32a980383c53bd21bf566ea1335be7",
+    "final-ubuntu-24.04/portability-ci.log": "646afb3453a34f3d52aee66b3f906fcdbec75162361f9aa6d4cfb29241004814",
+    "final-ubuntu-24.04/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "final-ubuntu-24.04/shift-jis-platform-ci.json": "493dd0fd514bc656ca31be01d7885ddf1d199ed14f79b73cc8acba49657acd25",
+    "final-ubuntu-24.04-arm/format-platform-ci.json": "0239b2b75a220b92d9b8dacd2ad9d2c28599e3d88a587f4c6da725a029e58eb7",
+    "final-ubuntu-24.04-arm/linux-driver-probe-debug-ci.json": "540e5573ec158e4f41c6292f99574b73734d63abacc0421e0088732d71b5b191",
+    "final-ubuntu-24.04-arm/linux-driver-probe-release-ci.json": "96a9001f6fb4d452d2f94f78f1d8b2e58eb9b9a96980664e95f94d6cfa9ca08a",
+    "final-ubuntu-24.04-arm/linux-driver-results-ci.json": "75c2183ad310f386d820eebddd990c0e4a91daee6c51661396e2eed62fe654f5",
+    "final-ubuntu-24.04-arm/linux-drivers-verified-debug-ci.json": "74d6b7b7d8954e815e99c64bc93721f99c801aa94e9fbc30f659ef25a9effb55",
+    "final-ubuntu-24.04-arm/linux-drivers-verified-release-ci.json": "3595900e720151719741c5f88f86b7eb1a9a37244410d427a2d27b9e3eb3c4e9",
+    "final-ubuntu-24.04-arm/portability-ci.log": "68072d54e2e21fcdbae0ae6a8c995a4ca22cb49876e4d5d4b947bb807dd4fd6a",
+    "final-ubuntu-24.04-arm/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "final-ubuntu-24.04-arm/shift-jis-platform-ci.json": "9c37e98a4db950859fb055086369e9bff4871938768b509b9f5aab9e2022650e",
+    "initial-arm64/darwin-environment-ci.log": "050417255cbc15e97d5bb3f36a9c95a69a9e510c018c586902af932c9fe1e360",
+    "initial-arm64/shift-jis-locale-ci.log": "bb7f6e5e882114dd7d4e6d4f3eb1b348d0ea1d37319813ab9506e9d1a588fc04",
+    "initial-intel/darwin-environment-ci.log": "25cfa4ee545d61da7e6d9925c8bc17599bc7ca481348da7999a3643f51b8ccd7",
+    "initial-intel/shift-jis-locale-ci.log": "bb7f6e5e882114dd7d4e6d4f3eb1b348d0ea1d37319813ab9506e9d1a588fc04",
+    "local-arm64/environment.log": "3ba419132493f52ed0a9388634ea2e367c250a413ddea5907af821302d9be45a",
+    "local-arm64/rawk-intel-appledouble-removed.txt": "c323608bdfe118fb2764b49f73e034c59e4d7e8e7fcfa65f12437f9783f7c304",
+    "local-arm64/rawk-intel-fix-local-targeted.log": "8afff6a9984930172319d53a0677f9557b9e979c0e7c7dffa434fab7298b7b5e",
+    "local-arm64/rawk-intel-local-checks.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "local-arm64/rawk-intel-local-checks.log": "8616e99e3753f96807b74f8a87bf29f9f9a3358ac8dbf6c9254ac49dbf82c303",
+    "local-arm64/rawk-intel-local-make.log": "9b5dea592949f0135606ea3cc2d0e5ddab5c85f490cdc9ff8a284e53616f9ded",
+    "local-arm64/rawk-intel-local-release.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "local-arm64/rawk-intel-local-release.log": "a3382922c2ab660c8def3d29e64362355bc0be314affb34a080bb09fe68a22a1",
+    "second-intel/darwin-debug-ci.log": "8078db05b59a5c445c0c0c6b3bc9b3475ea9975de032f6d84734b91262bfcb9d",
+    "second-intel/darwin-environment-ci.log": "bf51508d2816d345c2cc16c8b1240b2a232ee1380e96e231e3d3537e9802b833",
+    "second-intel/format-platform-ci.json": "4ae8f737cd9a402fcb6f4e890a8b5c390d2a82eb2470702051f71a373d096572",
+    "second-intel/full-driver-results-ci.json": "29f8ce57b8c4706ce28c91ae5487b46ce322d7a87778bcfceaf11da9665437a4",
+    "second-intel/unicode-driver-results-ci.json": "319ba794bac6208a112e23a1a690e0943b65e50201c5b261f89b65bdd2c92c8a"
+  }
+}

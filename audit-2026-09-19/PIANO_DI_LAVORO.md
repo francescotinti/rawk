@@ -322,3 +322,23 @@ Dettagli Git, evidenze e limiti nella
 [consegna del task](../diary/2026-09-20-linux-drivers.md).
 Altre codifiche, macOS Intel, ottimizzazioni e operatori/cast numerici fuori
 dal perimetro verificato rimangono separati.
+
+
+## macOS Intel nativo — completato il 20 settembre 2026
+
+Convalida reale sul runner `macos-15-intel`, macOS 15.7.9 x86-64, senza
+Rosetta. Corretto un bug di printf/sprintf unsigned negativo nel solo profilo
+Intel, con controesempio nativo, regressioni e confini verificati. Nessun
+contratto o expected originale modificato; preservati ARM64 e Linux.
+
+CI `11d7313` tutta verde: 151 debug + 151 release su ciascun runner macOS,
+XML 97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED; per profilo 27 driver,
+275 contratti e 20 sonde stream. Audit UTF-8 verde e 15.240 coppie Shift-JIS
+verificate nativamente su entrambi i runner macOS 15.7.9, senza ereditare
+il conteggio del diverso profilo locale. Linux: 89 debug + 89 release per
+runner, gate integri. Verifica locale ARM64: 151 debug + 151 release.
+
+Dettagli dell'harness, ambiente, tentativi iniziali e pubblicazione nella
+[consegna Intel](../diary/2026-09-20-macos-intel.md).
+Restano separati altre codifiche, nomi di file non UTF-8, ulteriori versioni
+macOS, ottimizzazioni e domini numerici fuori dal perimetro verificato.
