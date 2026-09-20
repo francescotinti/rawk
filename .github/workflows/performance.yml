@@ -1,0 +1,79 @@
+name: Native performance comparison
+on:
+  workflow_dispatch:
+    inputs:
+      before:
+        description: Immutable baseline revision (rebuilt on every runner)
+        required: true
+        default: '61009dff859b06e85088dd7c3548a82fad0845c7'
+      after:
+        description: Candidate revision (empty uses workflow commit)
+        default: ''
+      runs:
+        description: Repetitions per session (minimum 3)
+        default: '9'
+permissions:
+  contents: read
+jobs:
+  benchmark:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            arch: x86_64
+          - os: ubuntu-24.04-arm
+            arch: aarch64
+          - os: macos-15
+            arch: arm64
+          - os: macos-15-intel
+            arch: x86_64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    env:
+      BEFORE: ${{ inputs.before }}
+      AFTER: ${{ inputs.after || github.sha }}
+      RUNS: ${{ inputs.runs }}
+      EXPECTED_ARCH: ${{ matrix.arch }}
+      RUSTUP_TOOLCHAIN: '1.96.0'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - name: Prepare native tools
+        run: |
+          test "$(uname -m)" = "$EXPECTED_ARCH"
+          rustup toolchain install 1.96.0 --profile minimal
+          if [ "$(uname -s)" = Linux ]; then
+            sudo apt-get update
+            sudo apt-get install -y build-essential bison locales time
+            sudo localedef -i en_US -f UTF-8 en_US.UTF-8
+          fi
+      - name: Test harness
+        run: python3 -m unittest discover -s scripts -p test_benchmark_native.py -v
+      - name: Build paired revisions before measuring
+        run: python3 scripts/prepare_native_benchmark.py --before "$BEFORE" --after "$AFTER" --work "$RUNNER_TEMP/performance"
+      - name: Build clean pinned C oracle
+        run: |
+          git clone https://github.com/onetrueawk/awk.git "$RUNNER_TEMP/performance/oracle"
+          git -C "$RUNNER_TEMP/performance/oracle" checkout --detach 5739fd79bcfc75ba7526773d0cf634521f8aca3c
+          make -C "$RUNNER_TEMP/performance/oracle" CC=cc 'CFLAGS=-O2' > "$RUNNER_TEMP/performance/oracle-build.log" 2>&1
+          python3 scripts/record_benchmark_oracle.py "$RUNNER_TEMP/performance"
+      - name: Measure sequentially (no builds, tests or profiling in this step)
+        run: |
+          python3 scripts/benchmark_native.py \
+            --before "$RUNNER_TEMP/performance/before/target/release/rawk" \
+            --after "$RUNNER_TEMP/performance/after/target/release/rawk" \
+            --oracle "$RUNNER_TEMP/performance/oracle/a.out" \
+            --metadata "$RUNNER_TEMP/performance/metadata.json" \
+            --runs "$RUNS" --sessions 2 \
+            --output "$RUNNER_TEMP/performance/results.json" > "$RUNNER_TEMP/performance/measure.log" 2>&1
+      - name: Retain results and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: performance-${{ matrix.os }}
+          path: |
+            ${{ runner.temp }}/performance/*.json
+            ${{ runner.temp }}/performance/*.log
+          if-no-files-found: error
