@@ -211,3 +211,13 @@ originali UTF-8 ancora verdi. CI predisposta per generare le due locale Linux;
 controlli Rust dei target x86-64/ARM64 superati, esecuzione nativa sospesa.
 Shift-JIS e le altre codifiche rimangono aperte, senza estendere implicitamente
 il supporto a tutte le locale non UTF-8. [Rapporto](../diary/2026-09-20-legacy-locales.md).
+
+
+## Modalità operative — 20 settembre 2026
+
+Adottate regole persistenti in [AGENTS.md](../AGENTS.md), punto di ingresso
+[STATO_PROGETTO.md](../STATO_PROGETTO.md), una conversazione per obiettivo e
+[modello di consegna](../docs/CONSEGNA_TASK.md). Il prossimo obiettivo ha una
+[scheda Shift-JIS](../docs/tasks/SHIFT_JIS.md). La home mantiene struttura e
+attribuzioni originali; riscritture da concordare. Il piano canonico è questa
+copia versionata nel repository, non quella esterna.
