@@ -28,6 +28,17 @@ pub(super) fn handle_output(
         // Path file: resta String (design R3 — i path non sono dati AWK osservabili).
         let filename =
             String::from_utf8_lossy(&eval_expr(file_expr, context)?.as_string()).into_owned();
+        if op != "|"
+            && let Some(index) = standard_output_index(&filename, context)
+        {
+            if index == 0 {
+                std::io::stdout().lock().write_all(output)
+            } else {
+                std::io::stderr().lock().write_all(output)
+            }
+            .with_context(|| format!("scrittura su '{filename}'"))?;
+            return Ok(());
+        }
         use std::collections::hash_map::Entry;
         use std::fs::OpenOptions;
         let stream = match context.out_files.entry(filename.clone()) {
@@ -154,4 +165,50 @@ pub(super) fn flush_and_close_all(context: &mut EvalContext) {
             let _ = child.wait();
         }
     }
+}
+
+/// Only the exact names registered by C stdinit are aliases. Other descriptor
+/// paths and pipe commands continue through the ordinary open path.
+pub(super) fn standard_output_index(name: &str, context: &EvalContext) -> Option<usize> {
+    let index = match name {
+        "/dev/stdout" => 0,
+        "/dev/stderr" => 1,
+        _ => return None,
+    };
+    context.standard_output_open[index].then_some(index)
+}
+
+pub(super) fn flush_standard_output(index: usize) -> std::io::Result<()> {
+    use std::io::Write;
+    if index == 0 {
+        std::io::stdout().flush()
+    } else {
+        std::io::stderr().flush()
+    }
+}
+
+/// Like C closefile's freopen, keep the descriptor valid but attached to
+/// /dev/null. Normal output and inherited child descriptors must also follow it.
+pub(super) fn close_standard_output(
+    index: usize,
+    context: &mut EvalContext,
+) -> std::io::Result<()> {
+    use std::os::fd::AsRawFd;
+    flush_standard_output(index)?;
+    let null = std::fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .open("/dev/null")?;
+    let fd = if index == 0 {
+        libc::STDOUT_FILENO
+    } else {
+        libc::STDERR_FILENO
+    };
+    // SAFETY: null owns a live descriptor; dup2 atomically replaces fd without
+    // borrowing or transferring ownership of null's descriptor.
+    if unsafe { libc::dup2(null.as_raw_fd(), fd) } < 0 {
+        return Err(std::io::Error::last_os_error());
+    }
+    context.standard_output_open[index] = false;
+    Ok(())
 }

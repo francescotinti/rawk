@@ -1,0 +1,39 @@
+{
+  "profile": "Linux glibc x86-64/ARM64",
+  "differences": {
+    "T.errmsg/49": {
+      "reason": "Native glibc errcheck returns 1 with the same warning class; Rust omits C source-line context. Verified on x86-64 and ARM64.",
+      "c": {
+        "stdout_hex": "310a",
+        "stderr_hex": "3c41574b3e3a206c6f6720617267756d656e74206f7574206f6620646f6d61696e0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "310a",
+        "stderr_hex": "3c41574b3e3a206c6f6720617267756d656e74206f7574206f6620646f6d61696e0a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/50": {
+      "reason": "Native glibc errcheck returns 1 with the same warning class; Rust omits C source-line context. Verified on x86-64 and ARM64.",
+      "c": {
+        "stdout_hex": "310a",
+        "stderr_hex": "3c41574b3e3a2065787020726573756c74206f7574206f662072616e67650a20736f75726365206c696e65206e756d62657220320a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "310a",
+        "stderr_hex": "3c41574b3e3a2065787020726573756c74206f7574206f662072616e67650a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      }
+    }
+  }
+}

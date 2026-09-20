@@ -7,7 +7,10 @@ from closure_cases import ROOT, check
 class Contracts(unittest.TestCase):
     def test_each_exception_is_exact(self):
         contracts = json.loads((ROOT/'rawk/tests/closure-contracts.json').read_text())
-        for name, expected in contracts['differences'].items():
+        native = json.loads((ROOT/'rawk/tests/closure-contracts-linux-glibc.json').read_text())
+        # Exercise both profiles on every platform, including negative probes.
+        exceptions = [*contracts['differences'].items(), *native['differences'].items()]
+        for name, expected in exceptions:
             row = dict(id=name, fingerprint=contracts['cases'][name], c=expected['c'], rust=expected['rust'])
             local = dict(cases={name: row['fingerprint']}, differences={name: expected})
             self.assertEqual(check([row], local), [])
@@ -20,6 +23,7 @@ class Contracts(unittest.TestCase):
             self.assertTrue(check([changed], local))
             self.assertTrue(check([], local))
             self.assertTrue(check([row,dict(row,id='new-case')], local))
+            self.assertTrue(check([row,row], local))
 
     def test_exact_cases_cannot_be_skipped_or_timeout(self):
         result = dict(stdout_hex='',stderr_hex='',code=0,timeout=False,files={})

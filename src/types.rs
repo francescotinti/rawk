@@ -366,6 +366,8 @@ pub(crate) struct EvalContext {
     pub(crate) vars: HashMap<String, AwkValue>,
     pub(crate) arrays: HashMap<String, HashMap<Vec<u8>, AwkValue>>,
     pub(crate) out_files: HashMap<String, OutputStream>,
+    // C stdinit registers these aliases before the first redirection.
+    pub(crate) standard_output_open: [bool; 2],
     pub(crate) in_files: HashMap<String, InputStream>,
     pub(crate) rng: StdRng,
     pub(crate) array_scopes: Vec<HashMap<String, String>>,
@@ -398,6 +400,7 @@ impl EvalContext {
             vars,
             arrays: HashMap::new(),
             out_files: HashMap::new(),
+            standard_output_open: [true; 2],
             in_files: HashMap::new(),
             rng: rand::SeedableRng::seed_from_u64(0),
             array_scopes: Vec::new(),

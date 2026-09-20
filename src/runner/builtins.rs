@@ -123,9 +123,10 @@ pub(super) fn dispatch_builtin(
         }
         "sin" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().sin()),
         "cos" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().cos()),
-        "exp" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().exp()),
-        "log" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().ln()),
-        "sqrt" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().sqrt()),
+        "exp" | "log" | "sqrt" => AwkValue::Number(checked_math(
+            name,
+            eval_expr(&args[0], context)?.as_number(),
+        )),
         "int" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().trunc()),
         "atan2" => {
             if args.len() == 1 {
@@ -249,6 +250,10 @@ pub(super) fn dispatch_builtin(
             // Chiave file/pipe: resta String (path domain, design R3).
             let target =
                 String::from_utf8_lossy(&eval_expr(&args[0], context)?.as_string()).into_owned();
+            if let Some(index) = super::io::standard_output_index(&target, context) {
+                let ok = super::io::close_standard_output(index, context).is_ok();
+                return Ok(Some(AwkValue::Number(if ok { 0.0 } else { -1.0 })));
+            }
             let mut status: i32 = 0;
             let mut found = false;
 
@@ -301,7 +306,10 @@ pub(super) fn dispatch_builtin(
                     }
                 }
                 AwkValue::Number(if ok { 0.0 } else { -1.0 })
-            } else if target == "stdout" || target == "/dev/stdout" {
+            } else if let Some(index) = super::io::standard_output_index(&target, context) {
+                let r = super::io::flush_standard_output(index);
+                AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
+            } else if target == "stdout" {
                 let r = std::io::stdout().flush();
                 AwkValue::Number(if r.is_ok() { 0.0 } else { -1.0 })
             } else if let Some(stream) = context.out_files.get_mut(&target) {
@@ -457,4 +465,46 @@ fn process_status(status: std::process::ExitStatus) -> i32 {
         }
     }
     -1
+}
+
+// C checks errno for these three builtins. Rust intrinsics do not promise to
+// preserve libm's errno behavior. Keep the verified Darwin path unchanged.
+#[cfg(all(target_os = "linux", target_env = "gnu"))]
+fn checked_math(name: &str, value: f64) -> f64 {
+    #[link(name = "m")]
+    unsafe extern "C" {
+        fn log(value: f64) -> f64;
+        fn exp(value: f64) -> f64;
+        fn sqrt(value: f64) -> f64;
+    }
+    // SAFETY: errno is thread-local and each libm function accepts any double.
+    let (result, error) = unsafe {
+        *libc::__errno_location() = 0;
+        let result = match name {
+            "log" => log(value),
+            "exp" => exp(value),
+            "sqrt" => sqrt(value),
+            _ => unreachable!(),
+        };
+        let error = *libc::__errno_location();
+        *libc::__errno_location() = 0;
+        (result, error)
+    };
+    let warning = match error {
+        libc::EDOM => "argument out of domain",
+        libc::ERANGE => "result out of range",
+        _ => return result,
+    };
+    eprintln!("rawk: {name} {warning}");
+    1.0
+}
+
+#[cfg(not(all(target_os = "linux", target_env = "gnu")))]
+fn checked_math(name: &str, value: f64) -> f64 {
+    match name {
+        "log" => value.ln(),
+        "exp" => value.exp(),
+        "sqrt" => value.sqrt(),
+        _ => unreachable!(),
+    }
 }

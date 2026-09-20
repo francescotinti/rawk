@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import os
+import platform
 from pathlib import Path
 import subprocess
 import tempfile
@@ -72,8 +73,20 @@ def signature(result):
     return {key: result[key] for key in KEYS}
 
 
+def load_contracts():
+    contracts = json.loads((ROOT / 'rawk/tests/closure-contracts.json').read_text())
+    if platform.system() == 'Linux':
+        if platform.libc_ver()[0] != 'glibc' or platform.machine() not in ['x86_64', 'aarch64']:
+            raise ValueError('driver contracts require verified Linux glibc x86-64/ARM64')
+        overlay = json.loads((ROOT / 'rawk/tests/closure-contracts-linux-glibc.json').read_text())
+        if not set(overlay['differences']) <= set(contracts['cases']):
+            raise ValueError('unknown case in native contract overlay')
+        contracts['differences'].update(overlay['differences'])
+    return contracts
+
+
 def check(rows, contracts):
-    if {r['id']: r['fingerprint'] for r in rows} != contracts['cases']:
+    if len(rows) != len(contracts['cases']) or {r['id']: r['fingerprint'] for r in rows} != contracts['cases']:
         return ['case inventory or input fingerprint changed']
     errors = []
     for row in rows:
@@ -101,7 +114,7 @@ if __name__ == '__main__':
     print('cases', len(rows), 'exact', sum(not row['differences'] for row in rows))
 
     if args.check:
-        errors = check(rows, json.loads((ROOT / 'rawk/tests/closure-contracts.json').read_text()))
+        errors = check(rows, load_contracts())
         if errors:
             print('UNEXPECTED:', errors)
             raise SystemExit(1)

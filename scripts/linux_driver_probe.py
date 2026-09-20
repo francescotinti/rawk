@@ -8,7 +8,7 @@ import platform
 import subprocess
 import tempfile
 
-from closure_cases import audit, check, ROOT
+from closure_cases import audit, check, load_contracts, ROOT
 
 PROGRAMS = {
     'stdout-mixed': 'BEGIN { print "normal"; print "redirect" > "/dev/stdout"; print "after" }',
@@ -18,6 +18,8 @@ PROGRAMS = {
     'stdout-close': 'BEGIN { print "before"; s=close("/dev/stdout"); print s > "status"; print "hidden"; print "reopened" > "/dev/stdout" }',
     'stderr-close': 'BEGIN { s=close("/dev/stderr"); print s; print "hidden" > "/dev/stderr" }',
     'stdout-flush': 'BEGIN { printf "before"; print fflush("/dev/stdout"); print "after" > "/dev/stdout" }',
+    'stdout-child': 'BEGIN { close("/dev/stdout"); print system("echo hidden") > "status" }',
+    'stderr-child': 'BEGIN { close("/dev/stderr"); print system("echo hidden >&2") }',
     'stderr-flush': 'BEGIN { print fflush("/dev/stderr"); print "after" > "/dev/stderr" }',
 }
 
@@ -43,8 +45,10 @@ def streams(binary):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--rawk', type=Path, default=ROOT/'rawk/target/release/rawk')
+    parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
-    binary = ROOT/'rawk/target/release/rawk'
+    binary = args.rawk.resolve()
     rows = audit(binary)
     contracts = json.loads((ROOT/'rawk/tests/closure-contracts.json').read_text())
     data = dict(platform=platform.platform(), machine=platform.machine(), libc=platform.libc_ver(),
@@ -52,8 +56,13 @@ if __name__ == '__main__':
         oracle_revision=subprocess.check_output(['git','-C',str(ROOT/'c_awk'),'rev-parse','HEAD'],text=True).strip(),
         binary_sha256={k:hashlib.sha256(p.read_bytes()).hexdigest() for k,p in [('c',ROOT/'c_awk/a.out'),('rust',binary)]},
         closure=rows, darwin_contract_mismatches=check(rows, contracts),
+        native_contract_mismatches=check(rows, load_contracts()),
         streams={k:streams(p) for k,p in [('c',ROOT/'c_awk/a.out'),('rust',binary)]})
     args.output.write_text(json.dumps(data,indent=2)+'\n')
     print('Darwin contract mismatches:', data['darwin_contract_mismatches'])
+    print('Native contract mismatches:', data['native_contract_mismatches'])
     for c,r in zip(data['streams']['c'],data['streams']['rust']):
         if c != r: print('stream difference:',c['case'],c['mode'])
+
+    if args.check and (data['native_contract_mismatches'] or data['streams']['c'] != data['streams']['rust']):
+        raise SystemExit(1)
