@@ -5,7 +5,13 @@ Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 ## Base e ambito verificato
 
 - Repository: `francescotinti/rawk`, branch di coordinamento `master`.
-- Ultima convalida: **macOS 15.7.9 Intel x86-64 nativo**, runtime `11d7313`.
+- Ultima convalida runtime: **`42f35e6`**, riuso dei buffer dei campi FS spazio.
+  **154 debug + 154 release** per runner macOS Intel/ARM64 e locale;
+  **92 debug + 92 release** per runner Linux x86-64/ARM64, zero ignorati.
+  Tutti i gate driver/stream, XML e codifiche restano verdi.
+  [CI completa](https://github.com/francescotinti/rawk/actions/runs/35527202755),
+  [consegna prestazioni](diary/2026-09-20-core-performance.md).
+- Convalida Intel precedente: **macOS 15.7.9 Intel x86-64 nativo**, runtime `11d7313`.
   Corretta la formattazione unsigned negativa su Intel; ARM64 invariato.
   **151 debug + 151 release** su ciascun runner macOS Intel/ARM64; XML
   97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED. Per profilo: 27 driver,
@@ -80,14 +86,16 @@ runtime necessaria. [Consegna Linux Shift-JIS](diary/2026-09-20-shift-jis-linux.
   oltre ai 300 casi originali UTF-8. Non è equivalenza byte per byte delle
   diagnostiche né certificazione generale di tutti i programmi AWK.
 
-## Prestazioni: prima priorità in verifica
+## Prestazioni: prima priorità completata
 
 Baseline `aa0301a` su macOS 26.6.2 ARM64: Rust/C circa 2,7–3,0× nei
 carichi fondamentali. Il profiling individua allocazioni ripetute nei campi.
 Il riuso dei buffer per FS spazio riduce il tempo locale del 33,4% nella
 somma e del 24,0% nell'aggregazione (nove ripetizioni intercalate prima/dopo/C).
 Verifica locale: 154 test debug + 154 release, fmt/Clippy e XML verdi;
-igiene ricontrollata dopo pulizia AppleDouble. CI nativa ancora da completare.
+igiene ricontrollata dopo pulizia AppleDouble. CI nativa tutta verde sul
+runtime `42f35e6`, con 154+154 test macOS e 92+92 Linux per runner.
+Benefici misurati solo sul Mac ARM64 locale, non sulle altre piattaforme.
 [Rapporto e limiti](diary/2026-09-20-core-performance.md).
 
 Priorità ordinate: (1) campi/valori/aggregazione, questa tranche;

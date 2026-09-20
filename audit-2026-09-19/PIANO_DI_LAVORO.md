@@ -347,7 +347,7 @@ macOS, ottimizzazioni e domini numerici fuori dal perimetro verificato.
 
 Sequenza autorizzata; questa tranche esegue soltanto la prima priorità.
 
-1. **Lettura, campi, valori e aggregazione**: baseline riproducibile su `aa0301a`,
+1. **Lettura, campi, valori e aggregazione — completata**: baseline riproducibile su `aa0301a`,
    profiling locale e primo intervento circoscritto sul costo misurato. Confronto
    intercalato prima/dopo/C con output controllato, distribuzioni e RSS; gate
    locali e CI nativa sulle quattro piattaforme prima della consegna runtime.
@@ -363,3 +363,11 @@ Sequenza autorizzata; questa tranche esegue soltanto la prima priorità.
 Le misure storiche non sono una baseline dell'HEAD corrente. Il punteggio
 indicativo 35/100 non è una metrica di accettazione. Commit e push seguono
 l'autorizzazione permanente in AGENTS.md, che supera le note storiche del piano.
+
+Esito della prima priorità: `42f35e6` riutilizza i buffer dei campi FS spazio.
+Su macOS ARM64 locale, nove ripetizioni intercalate mostrano -33,4% sulla
+somma e -24,0% sull'aggregazione; input misti -25–30%, senza aumento della
+mediana RSS nei carichi misurati. CI nativa tutta verde: macOS Intel/ARM64
+154 debug +154 release, Linux x86-64/ARM64 92+92 per runner; invariati i gate
+XML, driver, stream e codifiche. La priorità 2 è la prossima, non è stata
+implementata in questa tranche. [Misure, verifiche e limiti](../diary/2026-09-20-core-performance.md).

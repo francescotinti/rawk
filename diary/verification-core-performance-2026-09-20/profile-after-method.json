@@ -1,0 +1,10 @@
+{
+  "binary_sha256": "1979794759cbb48375408979bc02b86af44c901fa466e43b2051850a8fed3cc7",
+  "input_sha256": "4922c68743e945975cc934496e9c252dca40aabad8dc5616600e721edaae1b74",
+  "program": "{s += $2} END{print s}",
+  "locale": "C",
+  "command": "sample PID 8 1 -file profile-after.log",
+  "stdout": "40000000\n",
+  "exit_code": 0,
+  "note": "Diagnostic sample on final release; no concurrent local benchmarks or tests."
+}

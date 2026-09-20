@@ -156,3 +156,19 @@ restano coperti dalle suite complete. La gestione matematica Darwin è invariata
 Linux x86-64/ARM64 resta verde con 89 test debug e 89 release per runner.
 [CI verificata](https://github.com/francescotinti/rawk/actions/runs/35523117465),
 [ambiente, diagnosi, evidenze e limiti](../diary/2026-09-20-macos-intel.md).
+
+
+## Prestazioni dei campi — prima priorità completata
+
+Il runtime `42f35e6` riutilizza i buffer dei campi con FS spazio, mantenendo
+le conversioni esistenti e i percorsi CSV/regex. Su macOS 26.6.2 ARM64 locale,
+nove ripetizioni intercalate mostrano -33,4% di tempo sulla somma e -24,0%
+sull'aggregazione; input misti -25–30%. Nessun aumento della mediana RSS nei
+carichi misurati; la capacità dei buffer può restare quella di campi precedenti.
+
+CI nativa verde sulle quattro piattaforme: 154 test debug e release per runner
+macOS Intel/ARM64, 92 per profilo su Linux x86-64/ARM64, zero ignorati;
+XML, driver, contratti, stream e codifiche conservano tutti i gate.
+Sono misure prestazionali locali e verifiche di correttezza multipiattaforma,
+non una promessa di velocità su macchine non misurate.
+[Baseline, profiling, risultati e consegna](../diary/2026-09-20-core-performance.md).

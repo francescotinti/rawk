@@ -4,7 +4,8 @@
 
 Prima priorità della sequenza prestazioni: baseline dell'HEAD `aa0301a`,
 profiling e ottimizzazione circoscritta, conservando i contratti esistenti.
-Stato: verifica in corso; risultati e pubblicazione da completare.
+Stato: **completato nel perimetro della prima priorità**, con beneficio
+misurato localmente e CI nativa verde sulle quattro piattaforme.
 
 ## Modifiche e decisioni
 
@@ -66,6 +67,12 @@ python3 scripts/benchmark.py --profile utf8 --before /tmp/rawk-before-core-2026-
 Il profiling usa `sample PID 8 1` sul binario precedente con input da file;
 [grafo](verification-core-performance-2026-09-20/profile-before.log),
 [metodo](verification-core-performance-2026-09-20/profile-method.json).
+Sul binario finale lo stesso campionamento attribuisce a `update_record`
+931/5.508 campioni sotto main (16,9%, prima 45,5%). È evidenza diagnostica
+coerente con il minor lavoro sui campi, non un rapporto di velocità fra i due
+campionamenti; le prestazioni sono misurate separatamente nei benchmark.
+[Profilo finale](verification-core-performance-2026-09-20/profile-after.log),
+[metodo e impronte](verification-core-performance-2026-09-20/profile-after-method.json).
 
 ## Verifiche e risultati
 
@@ -117,16 +124,44 @@ lo SHA-256 del binario misurato (Cargo test produce un artefatto distinto).
 [Esiti locali](verification-core-performance-2026-09-20/local-summary.json),
 [gate iniziale](verification-core-performance-2026-09-20/checks.log),
 [release](verification-core-performance-2026-09-20/release.log).
-CI nativa sulle quattro piattaforme ancora da completare.
+La [CI `42f35e6`](https://github.com/francescotinti/rawk/actions/runs/35527202755)
+è conclusa con successo su tutti e quattro i runner nativi:
+
+| Profilo | Debug | Release | Coppie Shift-JIS |
+|---|---:|---:|---:|
+| macOS 15.7.9 ARM64 | 154 | 154 | 15.240 |
+| macOS 15.7.9 Intel | 154 | 154 | 15.240 |
+| Linux glibc 2.39 x86-64 | 92 | 92 | 6.879 |
+| Linux glibc 2.39 ARM64 | 92 | 92 | 6.879 |
+
+Zero fallimenti o ignorati. Entrambi i gate macOS completi terminano verdi,
+compresa l'igiene, XML 97/12/0/0, fmt e Clippy. Ogni piattaforma verifica in
+ciascun profilo 27 driver, 275 contratti senza divergenze nuove e 20 sonde
+stream identiche al C. Verificati anche i driver originali UTF-8; gli inventari
+grezzi restano Darwin 27 pass / 2 open / 4 reference-failure e Linux
+27 pass / 3 open / 3 reference-failure. Questi esiti storici non vengono
+trasformati in corrispondenze byte per byte; il gate impone i contratti.
+Il caso glibc lower `81 f0` resta l'errore di ricodifica atteso.
+
+[Riepilogo CI e impronte degli artefatti](verification-core-performance-2026-09-20/ci-summary.json),
+[stato remoto dei quattro job](verification-core-performance-2026-09-20/ci-final.json).
+I log e gli artefatti originali sono conservati nelle quattro sottocartelle `ci/`.
+Non sono state misurate prestazioni su Intel o Linux: la CI ne convalida
+la correttezza, senza estendere i guadagni locali ad altre macchine.
 
 ## Git e pubblicazione
 
-Branch `master`, base `aa0301a`; commit runtime e CI da registrare.
-L'hash della consegna documentale verrà riportato nella risposta finale.
+Branch `master`, base `aa0301a`. Runtime, test e prime evidenze pubblicati
+in `42f35e6164f4d9987fe38221803a3205e34f0169`, verificato su `origin/master`.
+La CI sopra si riferisce esattamente a questo commit. La consegna successiva
+aggiunge soltanto documentazione ed evidenze e usa `[skip ci]`; hash effettivo,
+verifica remota e working tree sono riportati nella risposta finale.
+Home/autori, sorgenti C e fixture originali non sono stati modificati.
 
 ## Passaggio al prossimo task
 
-Prossima priorità: regex UTF-8 brevi/senza match e match/gsub, preservando
+Prossima priorità: profilare regex UTF-8 brevi/senza match e match/gsub
+sulla nuova baseline runtime `42f35e6`, preservando
 il percorso booleano lungo. I/O/memoria e misure multipiattaforma restano
 le priorità 3 e 4; la correttezza multipiattaforma è già richiesta qui.
 Le misure di velocità locali non si estendono a Intel o Linux.
