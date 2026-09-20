@@ -411,13 +411,16 @@ fn integer_format(spec: &[u8], conv: u8, value: f64) -> Vec<u8> {
     let magnitude = if signed {
         integer.unsigned_abs()
     } else if cfg!(all(
-        target_os = "linux",
-        target_env = "gnu",
-        target_arch = "x86_64"
+        target_arch = "x86_64",
+        any(
+            target_os = "macos",
+            all(target_os = "linux", target_env = "gnu")
+        )
     )) && (-9_223_372_036_854_775_808.0..0.0).contains(&value)
     {
-        // The pinned C oracle on Linux x86-64 converts negative doubles
-        // through a signed 64-bit result. ARM64 saturates to zero instead.
+        // The pinned C oracle on native Linux glibc and macOS x86-64 converts
+        // these negative doubles through a signed 64-bit result. ARM64
+        // saturates to zero instead; values outside this interval stay separate.
         // This is native compatibility, not a portable C unsigned rule.
         integer as u64
     } else {

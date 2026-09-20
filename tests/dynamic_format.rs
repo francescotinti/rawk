@@ -91,6 +91,8 @@ fn unsigned_conversion_matches_native_oracle() {
         "-3.75",
         "-2147483649",
         "-9007199254740991",
+        "-9223372036854775808",
+        "-9223372036854774784",
         "0",
         "1",
         "9007199254740991",
@@ -98,7 +100,9 @@ fn unsigned_conversion_matches_native_oracle() {
         "18446744073709549568",
     ] {
         compare(
-            &format!("BEGIN{{printf \"%u %o %x\\n\",{value},{value},{value}}}"),
+            &format!(
+                "BEGIN{{printf \"%u %o %x\\n\",{value},{value},{value};print sprintf(\"%u %o %x\",{value},{value},{value})}}"
+            ),
             b"",
         );
     }
