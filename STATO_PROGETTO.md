@@ -80,6 +80,22 @@ runtime necessaria. [Consegna Linux Shift-JIS](diary/2026-09-20-shift-jis-linux.
   oltre ai 300 casi originali UTF-8. Non è equivalenza byte per byte delle
   diagnostiche né certificazione generale di tutti i programmi AWK.
 
+## Prestazioni: prima priorità in verifica
+
+Baseline `aa0301a` su macOS 26.6.2 ARM64: Rust/C circa 2,7–3,0× nei
+carichi fondamentali. Il profiling individua allocazioni ripetute nei campi.
+Il riuso dei buffer per FS spazio riduce il tempo locale del 33,4% nella
+somma e del 24,0% nell'aggregazione (nove ripetizioni intercalate prima/dopo/C).
+Verifica locale: 154 test debug + 154 release, fmt/Clippy e XML verdi;
+igiene ricontrollata dopo pulizia AppleDouble. CI nativa ancora da completare.
+[Rapporto e limiti](diary/2026-09-20-core-performance.md).
+
+Priorità ordinate: (1) campi/valori/aggregazione, questa tranche;
+(2) regex e sostituzioni UTF-8; (3) I/O e memoria su input grandi;
+(4) misure prestazionali multipiattaforma e monitoraggio. Le successive
+priorità non sono avviate automaticamente. La correttezza sulle quattro
+piattaforme rimane requisito della prima.
+
 ## Attività aperte
 
 - Altre codifiche, ulteriori versioni/profili macOS, nomi di file non UTF-8 e ulteriori

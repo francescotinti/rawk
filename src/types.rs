@@ -440,6 +440,32 @@ impl EvalContext {
     /// Resplit a record without changing the counters for input consumption.
     pub(crate) fn update_record(&mut self, line: &[u8]) -> Result<(), crate::runner::FlowControl> {
         self.record = line.to_vec();
+        if !self.csv && self.fs == b" " {
+            // Whitespace splitting is independent of RS. Reuse each field's
+            // byte buffer and the field vector instead of building two fresh
+            // vectors per record; retain the same input-number classification.
+            let mut count = 0;
+            for bytes in line
+                .split(|b| matches!(b, b' ' | b'\t' | b'\n'))
+                .filter(|part| !part.is_empty())
+            {
+                if let Some(field) = self.fields.get_mut(count) {
+                    let mut buffer = match std::mem::replace(field, AwkValue::Uninitialized) {
+                        AwkValue::String(buffer) | AwkValue::StrNum(buffer, _) => buffer,
+                        _ => Vec::new(),
+                    };
+                    buffer.clear();
+                    buffer.extend_from_slice(bytes);
+                    *field = AwkValue::from_str_num(buffer);
+                } else {
+                    self.fields.push(AwkValue::from_str_num(bytes.to_vec()));
+                }
+                count += 1;
+            }
+            self.fields.truncate(count);
+            self.nf = count;
+            return Ok(());
+        }
         let fields = if self.csv {
             crate::input::csv_fields(line)
         } else {

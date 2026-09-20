@@ -1,0 +1,12 @@
+{
+  "binary": "/tmp/rawk-before-core-2026-09-20",
+  "program": "{s += $2} END{print s}",
+  "input": "b\"1 2 3\\n\" * 20000000",
+  "locale": "C",
+  "command": "sample PID 8 1 -file profile-before.log",
+  "stdout": "40000000\n",
+  "exit_code": 0,
+  "update_record_samples": 2817,
+  "main_samples": 6188,
+  "note": "Sampling diagnostic only, not benchmark timing. Startup samples excluded from denominator."
+}

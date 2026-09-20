@@ -1,0 +1,92 @@
+[
+  {
+    "workload": "sum_fields",
+    "before": 1.7683982080000007,
+    "after": 1.177754334000003,
+    "percent_change": -33.399936243319104,
+    "rust_over_c": 1.7917127934347583,
+    "rss_before": 7471104,
+    "rss_after": 7372800
+  },
+  {
+    "workload": "regex_fields",
+    "before": 0.2428145000000015,
+    "after": 0.23395416700000027,
+    "percent_change": -3.649013135542223,
+    "rust_over_c": 2.9107511053533925,
+    "rss_before": 8208384,
+    "rss_after": 8159232
+  },
+  {
+    "workload": "array_aggregation",
+    "before": 2.4729807909999977,
+    "after": 1.879567417000004,
+    "percent_change": -23.995874782352654,
+    "rust_over_c": 2.28996595572038,
+    "rss_before": 7520256,
+    "rss_after": 7405568
+  },
+  {
+    "workload": "mixed_fields",
+    "before": 1.021308874999999,
+    "after": 0.762492292000001,
+    "percent_change": -25.341656117499056,
+    "rust_over_c": 1.1704286740271401,
+    "rss_before": 7651328,
+    "rss_after": 7487488
+  },
+  {
+    "workload": "mixed_aggregation",
+    "before": 0.8701431250000056,
+    "after": 0.612282209,
+    "percent_change": -29.634310562415113,
+    "rust_over_c": 0.9290843243149718,
+    "rss_before": 7733248,
+    "rss_after": 7553024
+  },
+  {
+    "workload": "utf8_boolean_short",
+    "before": 0.7740989169999999,
+    "after": 0.6418276670000012,
+    "percent_change": -17.087125055362762,
+    "rust_over_c": 3.1346830914375343,
+    "rss_before": 8437760,
+    "rss_after": 8339456
+  },
+  {
+    "workload": "utf8_boolean_long",
+    "before": 0.30093499999999906,
+    "after": 0.29129233399999777,
+    "percent_change": -3.204235466131,
+    "rust_over_c": 0.6060026300374094,
+    "rss_before": 8830976,
+    "rss_after": 8749056
+  },
+  {
+    "workload": "utf8_boolean_miss",
+    "before": 0.7319795000000013,
+    "after": 0.5917834999999982,
+    "percent_change": -19.152995404926344,
+    "rust_over_c": 3.2420623330213933,
+    "rss_before": 8192000,
+    "rss_after": 8044544
+  },
+  {
+    "workload": "utf8_match",
+    "before": 0.7987711669999982,
+    "after": 0.6583090000000027,
+    "percent_change": -17.584781825255313,
+    "rust_over_c": 2.8642237160737283,
+    "rss_before": 8470528,
+    "rss_after": 8372224
+  },
+  {
+    "workload": "utf8_gsub",
+    "before": 1.171200416000005,
+    "after": 0.8801873750000055,
+    "percent_change": -24.847416123185372,
+    "rust_over_c": 2.788878522313572,
+    "rss_before": 8470528,
+    "rss_after": 8388608
+  }
+]

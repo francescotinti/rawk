@@ -1,0 +1,33 @@
+{
+  "commands": {
+    "CARGO_INCREMENTAL=0 bash scripts/checks.sh": {
+      "exit": 1,
+      "only_failure": "AppleDouble hygiene; all correctness checks passed"
+    },
+    "initial standalone hygiene check": {
+      "exit": 1,
+      "only_failure": "Redirecting log onto this filesystem recreated its AppleDouble companion"
+    },
+    "bash scripts/checks.sh check_no_macos_forks (log outside repository)": {
+      "exit": 0
+    },
+    "CARGO_INCREMENTAL=0 cargo test --locked --release": {
+      "exit": 0
+    },
+    "cargo build --locked --release --bins": {
+      "exit": 0
+    }
+  },
+  "final_release_sha256": "1979794759cbb48375408979bc02b86af44c901fa466e43b2051850a8fed3cc7",
+  "matches_benchmark_binary": true,
+  "checks.log": {
+    "passed": 154,
+    "failed": 0,
+    "ignored": 0
+  },
+  "release.log": {
+    "passed": 154,
+    "failed": 0,
+    "ignored": 0
+  }
+}

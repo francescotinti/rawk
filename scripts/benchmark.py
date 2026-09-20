@@ -25,9 +25,22 @@ UTF8_WORKLOADS = [
 ]
 
 
+# Less uniform controls for field storage reuse: changing widths/counts, text,
+# decimal/exponent values, empty records and saved values across records.
+MIXED_INPUT = b"".join(
+    (f"key{i % 127}\t{i % 997 - 498}.25  02 {i % 31}e-2 "
+     + "extra " * (i % 7) + "\n").encode()
+    if i % 19 else b" \t \n" for i in range(100000)
+)
+MIXED_WORKLOADS = [
+    ('mixed_fields', '{s += $2; n += NF; last=$1} END{print s,n,last}', MIXED_INPUT),
+    ('mixed_aggregation', '{a[$1]+=$2} END{print a["key0"],a["key126"],a[""]}', MIXED_INPUT),
+]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--profile', choices=['byte', 'utf8'], default='byte')
+    parser.add_argument('--profile', choices=['byte', 'utf8', 'mixed'], default='byte')
     parser.add_argument('--before', type=Path)
     parser.add_argument('--rawk', type=Path, default=ROOT / 'rawk/target/release/rawk')
     parser.add_argument('--output', type=Path, default=ROOT / 'rawk/diary/benchmark-consolidation.json')
@@ -44,7 +57,7 @@ def main():
     report = {'locale': locale, 'profile': args.profile, 'platform': platform.platform(), 'runs': args.runs, 'scale': args.scale,
               'binaries': {label: {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
                            for label, path in binaries}, 'workloads': []}
-    for name, program, unit in (UTF8_WORKLOADS if args.profile == 'utf8' else WORKLOADS):
+    for name, program, unit in {'byte': WORKLOADS, 'utf8': UTF8_WORKLOADS, 'mixed': MIXED_WORKLOADS}[args.profile]:
         data = unit * args.scale
         row = {'workload': name, 'program': program, 'records': data.count(b'\n'),
                'input_sha256': hashlib.sha256(data).hexdigest(),
@@ -71,6 +84,11 @@ def main():
         row['stdout_hex'] = expected.hex()
         for values in row['runs'].values():
             values['median_seconds'] = statistics.median(values['seconds'])
+            values['min_seconds'] = min(values['seconds'])
+            values['max_seconds'] = max(values['seconds'])
+            values['stdev_seconds'] = statistics.stdev(values['seconds']) if args.runs > 1 else 0
+            rss = [v for v in values['max_rss_bytes'] if v is not None]
+            values['median_max_rss_bytes'] = statistics.median(rss) if rss else None
         report['workloads'].append(row)
         print(name, {label: round(values['median_seconds'], 4) for label, values in row['runs'].items()}, flush=True)
     args.output.write_text(json.dumps(report, indent=2) + '\n')

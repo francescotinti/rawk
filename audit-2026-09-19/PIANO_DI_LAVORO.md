@@ -342,3 +342,24 @@ Dettagli dell'harness, ambiente, tentativi iniziali e pubblicazione nella
 [consegna Intel](../diary/2026-09-20-macos-intel.md).
 Restano separati altre codifiche, nomi di file non UTF-8, ulteriori versioni
 macOS, ottimizzazioni e domini numerici fuori dal perimetro verificato.
+
+## Priorità prestazioni — 20 settembre 2026
+
+Sequenza autorizzata; questa tranche esegue soltanto la prima priorità.
+
+1. **Lettura, campi, valori e aggregazione**: baseline riproducibile su `aa0301a`,
+   profiling locale e primo intervento circoscritto sul costo misurato. Confronto
+   intercalato prima/dopo/C con output controllato, distribuzioni e RSS; gate
+   locali e CI nativa sulle quattro piattaforme prima della consegna runtime.
+   Nessuna promessa di parità col C; conservare anche eventuali risultati negativi.
+2. **Regex e sostituzioni UTF-8**: match/gsub, ricerche brevi e senza match;
+   preservare il vantaggio del percorso booleano su righe lunghe.
+3. **I/O e memoria su input grandi**: copie, allocazioni, buffering e picco RSS,
+   preservando pipe, getline, RS e stream condivisi.
+4. **Misure multipiattaforma e regressioni**: Linux e macOS Intel/ARM64,
+   corpus più rappresentativo e monitoraggio riproducibile. La correttezza
+   multipiattaforma resta obbligatoria già nella prima priorità.
+
+Le misure storiche non sono una baseline dell'HEAD corrente. Il punteggio
+indicativo 35/100 non è una metrica di accettazione. Commit e push seguono
+l'autorizzazione permanente in AGENTS.md, che supera le note storiche del piano.

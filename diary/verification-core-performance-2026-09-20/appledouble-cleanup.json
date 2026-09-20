@@ -1,0 +1,18 @@
+[
+  "._STATO_PROGETTO.md",
+  "src/._types.rs",
+  "audit-2026-09-19/._PIANO_DI_LAVORO.md",
+  "tests/._data_contract.rs",
+  "scripts/._benchmark.py",
+  "diary/._2026-09-20-core-performance.md",
+  "diary/._verification-core-performance-2026-09-20",
+  "diary/verification-core-performance-2026-09-20/._performance-summary.json",
+  "diary/verification-core-performance-2026-09-20/._targeted.log",
+  "diary/verification-core-performance-2026-09-20/._after-utf8.json",
+  "diary/verification-core-performance-2026-09-20/._after-mixed.json",
+  "diary/verification-core-performance-2026-09-20/._after-byte.json",
+  "diary/verification-core-performance-2026-09-20/._profile-method.json",
+  "diary/verification-core-performance-2026-09-20/._profile-before.log",
+  "diary/verification-core-performance-2026-09-20/._baseline.json",
+  "diary/verification-core-performance-2026-09-20/._environment.json"
+]

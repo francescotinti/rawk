@@ -1,0 +1,17 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.76s
+     Running tests/data_contract.rs (target/debug/deps/data_contract-a0619d1bf76e7467)
+
+running 9 tests
+test csv_handles_quoted_delimiters_newlines_and_escaped_quotes ... ok
+test reused_whitespace_fields_preserve_nul_bytes ... ok
+test successive_whitespace_records_preserve_values_and_numeric_types ... ok
+test invalid_regex_is_reported ... ok
+test fields_accept_regex_separator ... ok
+test regex_uses_leftmost_longest ... ok
+test split_preserves_empty_fields_and_clears_array ... ok
+test substitutions_report_count_not_changed_text ... ok
+test whitespace_reuse_handles_resplit_getline_and_separator_changes ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+
