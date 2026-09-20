@@ -1,0 +1,17 @@
+{
+  "program": "BEGIN{RS=\"a+b\"} END{print NR,length($0)}",
+  "results": [
+    {
+      "binary": "../c_awk/a.out",
+      "stdout": "1024 1\n",
+      "stderr": "",
+      "code": 0
+    },
+    {
+      "binary": "/tmp/rawk-io-20260920/before",
+      "stdout": "1024 2048\n",
+      "stderr": "",
+      "code": 0
+    }
+  ]
+}

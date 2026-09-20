@@ -1,0 +1,28 @@
+{
+  "program": "BEGIN{RS=\"a+b\"} END{print NR,length($0)}",
+  "input_recipe": "(b'x' * 2048 + b'aaab') * 1024",
+  "input_sha256": "a2dd854d9cc01706d83480cb8d33bfd51f6c26fa4c077c1d6e5dee47135625be",
+  "results": [
+    {
+      "binary": "../c_awk/a.out",
+      "stdout_hex": "3130323420310a",
+      "stderr_hex": "",
+      "status": 0,
+      "binary_sha256": "5d77fdd60aa5b3f6a9d888490b82d8870aff7c2b4813a12dcaa7d0195f94c780"
+    },
+    {
+      "binary": "/tmp/rawk-io-20260920/before",
+      "stdout_hex": "3130323420323034380a",
+      "stderr_hex": "",
+      "status": 0,
+      "binary_sha256": "ba06d91c1fc6f02a6f76f5cc858e60b27b774b9f497857cabaadb9899cb499f6"
+    },
+    {
+      "binary": "target/release/rawk",
+      "stdout_hex": "3130323420323034380a",
+      "stderr_hex": "",
+      "status": 0,
+      "binary_sha256": "f801a973025ae8f6d3955f3af267e83f61ebe6ee2a52cb324f28ccf2e9489adc"
+    }
+  ]
+}

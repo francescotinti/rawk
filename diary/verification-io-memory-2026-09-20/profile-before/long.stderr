@@ -1,0 +1,11 @@
+IOPROFILE allocations 389
+IOPROFILE allocated_bytes 11580180
+IOPROFILE reallocations 29
+IOPROFILE reallocation_requested_bytes 4220100
+IOPROFILE peak_live_requested_bytes 6311095
+IOPROFILE physical_reads 595
+IOPROFILE read_bytes 4194308
+IOPROFILE separator_bytes_examined 275339391
+IOPROFILE reader_explicit_copy_bytes 8388616
+IOPROFILE compacted_bytes 4094
+IOPROFILE max_reader_capacity 2097152

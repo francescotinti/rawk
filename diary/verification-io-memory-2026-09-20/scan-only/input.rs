@@ -37,7 +37,7 @@ impl RecordReader {
                     return Ok(None);
                 }
                 let len = end.unwrap_or(self.remaining().len());
-                let mut record = Vec::with_capacity(len);
+                let mut record = Vec::new();
                 for &b in &self.remaining()[..len] {
                     if b == b'\n' && record.last() == Some(&b'\r') {
                         record.pop();

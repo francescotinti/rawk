@@ -1,0 +1,15 @@
+short_file {'c': 0.4463, 'rust': 0.3591}
+long_1048576_file {'c': 0.3948, 'rust': 0.5599}
+long_4194304_file {'c': 0.401, 'rust': 2.1136}
+long_8388608_file {'c': 0.4053, 'rust': 4.2021}
+long_pipe {'c': 0.3981, 'rust': 2.1147}
+long_getline {'c': 0.4103, 'rust': 2.0976}
+unterminated {'c': 0.2076, 'rust': 2.1348}
+csv_long {'c': 0.404, 'rust': 1.0467}
+paragraph_control {'c': 0.0551, 'rust': 0.0129}
+Traceback (most recent call last):
+  File "/Volumes/Extreme Pro/Claude/testag-awk/rawk/scripts/benchmark_io.py", line 84, in <module>
+    main()
+  File "/Volumes/Extreme Pro/Claude/testag-awk/rawk/scripts/benchmark_io.py", line 66, in main
+    assert result.returncode == 0 and result.stdout == oracle.stdout, (name, label, result)
+AssertionError: ('regex_control', 'rust', CompletedProcess(args=['/usr/bin/time', '-l', '/private/tmp/rawk-io-20260920/before', 'BEGIN{RS="a+b"} END{print NR,length($0)}'], returncode=0, stdout=b'1024 2048\n', stderr=b'        0.00 real         0.00 user         0.00 sys\n             8224768  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                 699  page reclaims\n                   0  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   0  voluntary context switches\n                  11  involuntary context switches\n            59222002  instructions retired\n            21892428  cycles elapsed\n             2031952  peak memory footprint\n'))

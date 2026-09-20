@@ -389,3 +389,26 @@ lunghi -28,7%; match -16,3%, gsub -19,7%. Controlli byte -0,4%–+0,1%;
 RSS vicino alla baseline, con +16 KiB di mediana in due controlli.
 La priorità 3 è la prossima; non è stata implementata in questa tranche.
 [Riproduzione, verifiche e limiti](../diary/2026-09-20-regex-search.md).
+
+
+### Terza priorità: I/O e memoria su input grandi — in convalida
+
+Tranche autorizzata sulla consegna `61009df`. Rust/Cargo locali 1.98.1,
+baseline ricostruita prima di modificare il runtime e stessa toolchain per
+il dopo. Profiling strumentato delle allocazioni, copie, letture e scansioni;
+confronti intercalati prima/dopo/C con distribuzioni, RSS e hash, senza build
+o test contemporanei. Eliminata la scansione ripetuta del prefisso nei record
+con RS a un byte e CSV; riserva del record CSV dopo averne trovato il confine.
+Invariati RS regex, Shift-JIS, buffering da 8 KiB e gestione degli stream.
+
+Sul Mac M4 locale: -90,7%–-99,1% nei carichi con record lunghi; CSV -93,8%;
+128 MiB con record da 64 KiB -53,7%. Costo osservato +3,2% con righe corte
+da 128 MiB. Meno riallocazioni e picco live richiesto CSV, ma RSS non
+universalmente inferiore: +1,94 MiB nel caso da 1 MiB e +1,38 MiB CSV.
+Conservata anche una variante senza riserva CSV, con RSS variabile.
+
+Test mirati e gate locali passati: 160 debug + 160 release, zero ignorati,
+fmt/Clippy/XML verdi. CI nativa sulle quattro piattaforme in attesa di pubblicazione. La CI conserva Rust 1.96.0 per correttezza; non è un confronto di
+velocità con la 1.98.1 locale. Una differenza EOF/$0 preesistente con RS regex
+è registrata separatamente, senza modificarne gli expected o il runtime.
+La priorità 4 resta non avviata. [Consegna e prove](../diary/2026-09-20-io-memory.md).

@@ -1,0 +1,10 @@
+short_file {'c': 0.4465, 'before': 0.354, 'rust': 0.357}
+long_1048576_file {'c': 0.3985, 'before': 0.5603, 'rust': 0.0342}
+long_4194304_file {'c': 0.4019, 'before': 2.1201, 'rust': 0.0359}
+long_8388608_file {'c': 0.4035, 'before': 4.221, 'rust': 0.0392}
+long_pipe {'c': 0.3977, 'before': 2.1204, 'rust': 0.1982}
+long_getline {'c': 0.4125, 'before': 2.106, 'rust': 0.025}
+unterminated {'c': 0.2092, 'before': 2.1162, 'rust': 0.0262}
+csv_long {'c': 0.4041, 'before': 1.0619, 'rust': 0.0655}
+paragraph_control {'c': 0.0555, 'before': 0.0127, 'rust': 0.0133}
+regex_control {'c': 0.0746, 'before': 0.0131, 'rust': 0.0136}

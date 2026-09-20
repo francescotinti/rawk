@@ -1,0 +1,470 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "locale": "C",
+  "runs": 3,
+  "method": "file stdin descriptor or pipe communicate; wall includes time wrapper; time -l RSS bytes; warmup excluded",
+  "binaries": {
+    "c": {
+      "path": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out",
+      "sha256": "5d77fdd60aa5b3f6a9d888490b82d8870aff7c2b4813a12dcaa7d0195f94c780"
+    },
+    "rust": {
+      "path": "/private/tmp/rawk-io-20260920/before",
+      "sha256": "ba06d91c1fc6f02a6f76f5cc858e60b27b774b9f497857cabaadb9899cb499f6"
+    }
+  },
+  "workloads": [
+    {
+      "workload": "short_file",
+      "program": "END{print NR,length($0)}",
+      "flags": [],
+      "input_mode": "file",
+      "input_bytes": 16777216,
+      "input_sha256": "d4ad4195124005e186a9793b236e3fa02406fa5923f06959c37bd34e1526ac21",
+      "stdout_hex": "313034383537362031350a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.452650542,
+            0.4447587500000001,
+            0.4492107500000002
+          ],
+          "max_rss_bytes": [
+            1589248,
+            1572864,
+            1556480
+          ],
+          "median_seconds": 0.4492107500000002,
+          "min_seconds": 0.4447587500000001,
+          "max_seconds": 0.452650542,
+          "stdev_seconds": 0.003956700097609242,
+          "median_max_rss_bytes": 1572864
+        },
+        "rust": {
+          "seconds": [
+            0.3390195840000003,
+            0.34490641600000016,
+            0.3573791660000003
+          ],
+          "max_rss_bytes": [
+            7471104,
+            7503872,
+            7503872
+          ],
+          "median_seconds": 0.34490641600000016,
+          "min_seconds": 0.3390195840000003,
+          "max_seconds": 0.3573791660000003,
+          "stdev_seconds": 0.009374598078259579,
+          "median_max_rss_bytes": 7503872
+        }
+      }
+    },
+    {
+      "workload": "long_1048576_file",
+      "program": "END{print NR,length($0)}",
+      "flags": [],
+      "input_mode": "file",
+      "input_bytes": 16777232,
+      "input_sha256": "7c517b0133600d4ae98f7f65a4147d015ab1887273b62378300f65bdbfe1d97d",
+      "stdout_hex": "313620313034383537360a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.4228908750000002,
+            0.3985009589999997,
+            0.3993166669999999
+          ],
+          "max_rss_bytes": [
+            2752512,
+            2719744,
+            2736128
+          ],
+          "median_seconds": 0.3993166669999999,
+          "min_seconds": 0.3985009589999997,
+          "max_seconds": 0.4228908750000002,
+          "stdev_seconds": 0.013852055592676635,
+          "median_max_rss_bytes": 2736128
+        },
+        "rust": {
+          "seconds": [
+            0.6312065410000001,
+            0.5621981249999992,
+            0.5624317080000001
+          ],
+          "max_rss_bytes": [
+            16973824,
+            15941632,
+            14876672
+          ],
+          "median_seconds": 0.5624317080000001,
+          "min_seconds": 0.5621981249999992,
+          "max_seconds": 0.6312065410000001,
+          "stdev_seconds": 0.03977476941903613,
+          "median_max_rss_bytes": 15941632
+        }
+      }
+    },
+    {
+      "workload": "long_4194304_file",
+      "program": "END{print NR,length($0)}",
+      "flags": [],
+      "input_mode": "file",
+      "input_bytes": 16777220,
+      "input_sha256": "a46e204e16c79013e693e9e4b3ebcfc78c96a5cf73e878e2ff6eecb9650a8d02",
+      "stdout_hex": "3420343139343330340a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.40037375,
+            0.3999229169999996,
+            0.4005567079999999
+          ],
+          "max_rss_bytes": [
+            8028160,
+            8011776,
+            7995392
+          ],
+          "median_seconds": 0.40037375,
+          "min_seconds": 0.3999229169999996,
+          "max_seconds": 0.4005567079999999,
+          "stdev_seconds": 0.0003261939748408004,
+          "median_max_rss_bytes": 8011776
+        },
+        "rust": {
+          "seconds": [
+            2.125218499999999,
+            2.120443708,
+            2.1591882499999997
+          ],
+          "max_rss_bytes": [
+            30670848,
+            30687232,
+            30687232
+          ],
+          "median_seconds": 2.125218499999999,
+          "min_seconds": 2.120443708,
+          "max_seconds": 2.1591882499999997,
+          "stdev_seconds": 0.021126137399343173,
+          "median_max_rss_bytes": 30687232
+        }
+      }
+    },
+    {
+      "workload": "long_8388608_file",
+      "program": "END{print NR,length($0)}",
+      "flags": [],
+      "input_mode": "file",
+      "input_bytes": 16777218,
+      "input_sha256": "f46983996969643ebdb6021264ac3fc715ec7af679175a07bd95c2bafdff597e",
+      "stdout_hex": "3220383338383630380a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.41077949999999674,
+            0.4048995839999989,
+            0.4058272919999979
+          ],
+          "max_rss_bytes": [
+            12222464,
+            12189696,
+            12206080
+          ],
+          "median_seconds": 0.4058272919999979,
+          "min_seconds": 0.4048995839999989,
+          "max_seconds": 0.41077949999999674,
+          "stdev_seconds": 0.003161181698235251,
+          "median_max_rss_bytes": 12206080
+        },
+        "rust": {
+          "seconds": [
+            4.199331833000002,
+            4.187632917000002,
+            4.217031167000002
+          ],
+          "max_rss_bytes": [
+            51658752,
+            51658752,
+            51691520
+          ],
+          "median_seconds": 4.199331833000002,
+          "min_seconds": 4.187632917000002,
+          "max_seconds": 4.217031167000002,
+          "stdev_seconds": 0.014800834225819246,
+          "median_max_rss_bytes": 51658752
+        }
+      }
+    },
+    {
+      "workload": "long_pipe",
+      "program": "END{print NR,length($0)}",
+      "flags": [],
+      "input_mode": "pipe",
+      "input_bytes": 16777220,
+      "input_sha256": "a46e204e16c79013e693e9e4b3ebcfc78c96a5cf73e878e2ff6eecb9650a8d02",
+      "stdout_hex": "3420343139343330340a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.3986633330000018,
+            0.3976367090000039,
+            0.39942287499999907
+          ],
+          "max_rss_bytes": [
+            8011776,
+            8011776,
+            7995392
+          ],
+          "median_seconds": 0.3986633330000018,
+          "min_seconds": 0.3976367090000039,
+          "max_seconds": 0.39942287499999907,
+          "stdev_seconds": 0.0008964048440548648,
+          "median_max_rss_bytes": 8011776
+        },
+        "rust": {
+          "seconds": [
+            2.1134475839999993,
+            2.119545125000002,
+            2.1041715409999995
+          ],
+          "max_rss_bytes": [
+            30670848,
+            30670848,
+            30703616
+          ],
+          "median_seconds": 2.1134475839999993,
+          "min_seconds": 2.1041715409999995,
+          "max_seconds": 2.119545125000002,
+          "stdev_seconds": 0.0077413614757535784,
+          "median_max_rss_bytes": 30670848
+        }
+      }
+    },
+    {
+      "workload": "long_getline",
+      "program": "BEGIN{while((getline x)>0){n++;s+=length(x)};print n,s}",
+      "flags": [],
+      "input_mode": "file",
+      "input_bytes": 16777220,
+      "input_sha256": "a46e204e16c79013e693e9e4b3ebcfc78c96a5cf73e878e2ff6eecb9650a8d02",
+      "stdout_hex": "342031363737373231360a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.41006970799999465,
+            0.41207874999999916,
+            0.4147478750000033
+          ],
+          "max_rss_bytes": [
+            16515072,
+            16498688,
+            18644992
+          ],
+          "median_seconds": 0.41207874999999916,
+          "min_seconds": 0.41006970799999465,
+          "max_seconds": 0.4147478750000033,
+          "stdev_seconds": 0.0023468320669716818,
+          "median_max_rss_bytes": 16515072
+        },
+        "rust": {
+          "seconds": [
+            2.1059927499999986,
+            2.1031747499999938,
+            2.117149957999999
+          ],
+          "max_rss_bytes": [
+            26476544,
+            26509312,
+            26509312
+          ],
+          "median_seconds": 2.1059927499999986,
+          "min_seconds": 2.1031747499999938,
+          "max_seconds": 2.117149957999999,
+          "stdev_seconds": 0.007390656860734161,
+          "median_max_rss_bytes": 26509312
+        }
+      }
+    },
+    {
+      "workload": "unterminated",
+      "program": "END{print NR,length($0)}",
+      "flags": [],
+      "input_mode": "file",
+      "input_bytes": 8388608,
+      "input_sha256": "0c77bc0a0795a93612d45256897456d0fcb24f151c44c150d07ecd03f4ef5168",
+      "stdout_hex": "3120383338383630380a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.2087820409999992,
+            0.20946537499999351,
+            0.2094231250000007
+          ],
+          "max_rss_bytes": [
+            12173312,
+            12238848,
+            12206080
+          ],
+          "median_seconds": 0.2094231250000007,
+          "min_seconds": 0.2087820409999992,
+          "max_seconds": 0.20946537499999351,
+          "stdev_seconds": 0.0003829097180593109,
+          "median_max_rss_bytes": 12206080
+        },
+        "rust": {
+          "seconds": [
+            2.1292134999999988,
+            2.131287125000007,
+            2.138856167
+          ],
+          "max_rss_bytes": [
+            51658752,
+            51642368,
+            51625984
+          ],
+          "median_seconds": 2.131287125000007,
+          "min_seconds": 2.1292134999999988,
+          "max_seconds": 2.138856167,
+          "stdev_seconds": 0.005075617274631615,
+          "median_max_rss_bytes": 51642368
+        }
+      }
+    },
+    {
+      "workload": "csv_long",
+      "program": "END{print NR,length($0)}",
+      "flags": [
+        "--csv"
+      ],
+      "input_mode": "file",
+      "input_bytes": 16777312,
+      "input_sha256": "0c14d2bc4bfd50401f3d1ebfaf885d12d64ba40f24d95232d3015e36e4d43542",
+      "stdout_hex": "313620313034383538300a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.40096966699999825,
+            0.4071346660000046,
+            0.40590654100000734
+          ],
+          "max_rss_bytes": [
+            2719744,
+            2736128,
+            2752512
+          ],
+          "median_seconds": 0.40590654100000734,
+          "min_seconds": 0.40096966699999825,
+          "max_seconds": 0.4071346660000046,
+          "stdev_seconds": 0.0032631331717043314,
+          "median_max_rss_bytes": 2736128
+        },
+        "rust": {
+          "seconds": [
+            1.0798089999999974,
+            1.0678309590000055,
+            1.0465929169999981
+          ],
+          "max_rss_bytes": [
+            23625728,
+            22052864,
+            24756224
+          ],
+          "median_seconds": 1.0678309590000055,
+          "min_seconds": 1.0465929169999981,
+          "max_seconds": 1.0798089999999974,
+          "stdev_seconds": 0.016821791739954458,
+          "median_max_rss_bytes": 23625728
+        }
+      }
+    },
+    {
+      "workload": "paragraph_control",
+      "program": "BEGIN{RS=\"\"} END{print NR,length($0)}",
+      "flags": [],
+      "input_mode": "file",
+      "input_bytes": 2102272,
+      "input_sha256": "9713d74812e5fd755993f6bb20251a39ab9b9ab7992f378ea85c945c4d7fce81",
+      "stdout_hex": "3230343820310a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.05663904200000047,
+            0.056361832999996864,
+            0.0559199169999971
+          ],
+          "max_rss_bytes": [
+            1589248,
+            1589248,
+            1572864
+          ],
+          "median_seconds": 0.056361832999996864,
+          "min_seconds": 0.0559199169999971,
+          "max_seconds": 0.05663904200000047,
+          "stdev_seconds": 0.0003626925572181496,
+          "median_max_rss_bytes": 1589248
+        },
+        "rust": {
+          "seconds": [
+            0.018741625000004092,
+            0.013204415999993557,
+            0.013727500000001669
+          ],
+          "max_rss_bytes": [
+            8241152,
+            8241152,
+            8241152
+          ],
+          "median_seconds": 0.013727500000001669,
+          "min_seconds": 0.013204415999993557,
+          "max_seconds": 0.018741625000004092,
+          "stdev_seconds": 0.0030571160128600354,
+          "median_max_rss_bytes": 8241152
+        }
+      }
+    },
+    {
+      "workload": "regex_control",
+      "program": "BEGIN{RS=\"a+b\"} {s+=length($0)} END{print NR,s}",
+      "flags": [],
+      "input_mode": "file",
+      "input_bytes": 2101248,
+      "input_sha256": "a2dd854d9cc01706d83480cb8d33bfd51f6c26fa4c077c1d6e5dee47135625be",
+      "stdout_hex": "3130323420323039373135320a",
+      "runs": {
+        "c": {
+          "seconds": [
+            0.07561795899999879,
+            0.0792410420000067,
+            0.08013479199999551
+          ],
+          "max_rss_bytes": [
+            1703936,
+            1720320,
+            1703936
+          ],
+          "median_seconds": 0.0792410420000067,
+          "min_seconds": 0.07561795899999879,
+          "max_seconds": 0.08013479199999551,
+          "stdev_seconds": 0.002391906486371827,
+          "median_max_rss_bytes": 1703936
+        },
+        "rust": {
+          "seconds": [
+            0.013172083000000612,
+            0.01268729200000962,
+            0.014496082999997384
+          ],
+          "max_rss_bytes": [
+            8306688,
+            8257536,
+            8273920
+          ],
+          "median_seconds": 0.013172083000000612,
+          "min_seconds": 0.01268729200000962,
+          "max_seconds": 0.014496082999997384,
+          "stdev_seconds": 0.0009362801570844463,
+          "median_max_rss_bytes": 8273920
+        }
+      }
+    }
+  ]
+}

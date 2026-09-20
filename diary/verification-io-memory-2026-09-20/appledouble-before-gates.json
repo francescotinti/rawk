@@ -1,0 +1,10 @@
+{
+  "removed_verified_appledouble": [
+    "tests/._input_contract.rs",
+    "scripts/._benchmark_io.py",
+    "scripts/._profile_io.py",
+    "diary/._2026-09-20-io-memory.md",
+    "src/._input.rs"
+  ],
+  "unmodified_other_files": []
+}

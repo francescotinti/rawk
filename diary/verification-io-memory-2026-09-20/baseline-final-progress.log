@@ -1,0 +1,10 @@
+short_file {'c': 0.4492, 'rust': 0.3449}
+long_1048576_file {'c': 0.3993, 'rust': 0.5624}
+long_4194304_file {'c': 0.4004, 'rust': 2.1252}
+long_8388608_file {'c': 0.4058, 'rust': 4.1993}
+long_pipe {'c': 0.3987, 'rust': 2.1134}
+long_getline {'c': 0.4121, 'rust': 2.106}
+unterminated {'c': 0.2094, 'rust': 2.1313}
+csv_long {'c': 0.4059, 'rust': 1.0678}
+paragraph_control {'c': 0.0564, 'rust': 0.0137}
+regex_control {'c': 0.0792, 'rust': 0.0132}

@@ -1,0 +1,19 @@
+{
+  "removed_verified_appledouble": [
+    "._STATO_PROGETTO.md",
+    "audit-2026-09-19/._PIANO_DI_LAVORO.md",
+    "diary/._2026-09-20-io-memory.md",
+    "diary/verification-io-memory-2026-09-20/._measurement-method.json",
+    "diary/verification-io-memory-2026-09-20/._effective-config.json",
+    "diary/verification-io-memory-2026-09-20/._checks.log",
+    "diary/verification-io-memory-2026-09-20/._release.log",
+    "diary/verification-io-memory-2026-09-20/._final-build.log",
+    "diary/verification-io-memory-2026-09-20/._clippy-fixed.log",
+    "diary/verification-io-memory-2026-09-20/._local-summary.json",
+    "diary/verification-io-memory-2026-09-20/._checks-initial-clippy-failure.log",
+    "diary/verification-io-memory-2026-09-20/._clippy-1.98.1-diagnostic.jsonl",
+    "diary/verification-io-memory-2026-09-20/._regex-control-reproduction.json",
+    "diary/verification-io-memory-2026-09-20/._appledouble-before-final-gates.json"
+  ],
+  "unmodified_other_files": []
+}

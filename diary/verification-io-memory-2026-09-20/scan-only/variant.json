@@ -1,0 +1,4 @@
+{
+  "change": "Only CSV preallocation removed from current runtime; incremental scanning retained",
+  "input_sha256": "54d65d8d509ad90229a17e3523804a591d9a01a384efad8190f37f7311eeb7e6"
+}

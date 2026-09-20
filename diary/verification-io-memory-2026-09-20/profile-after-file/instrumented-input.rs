@@ -24,6 +24,7 @@ impl RecordReader {
         loop {
             let mut end = None;
             for (i, b) in self.remaining().iter().enumerate().skip(scanned) {
+                crate::io_profile::SCANNED.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
                 if *b == b'"' {
                     quoted = !quoted;
                 }
@@ -80,13 +81,18 @@ impl RecordReader {
         // Compact only when more input is needed, not after every record.
         if self.start > 1 {
             // Retain one consumed byte so ^ cannot match again after compaction.
+            crate::io_profile::COMPACTED.fetch_add(self.buffer.len() - (self.start - 1), std::sync::atomic::Ordering::Relaxed);
             self.buffer.drain(..self.start - 1);
             self.start = 1;
         }
         let mut bytes = [0; 8192];
+        crate::io_profile::READS.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
         let count = self.reader.read(&mut bytes)?;
+        crate::io_profile::READ_BYTES.fetch_add(count, std::sync::atomic::Ordering::Relaxed);
         self.eof = count == 0;
+        crate::io_profile::COPIED.fetch_add(count, std::sync::atomic::Ordering::Relaxed);
         self.buffer.extend_from_slice(&bytes[..count]);
+        crate::io_profile::CAPACITY.fetch_max(self.buffer.capacity(), std::sync::atomic::Ordering::Relaxed);
         Ok(())
     }
 
@@ -136,9 +142,7 @@ impl RecordReader {
                     found
                 }
             } else {
-                self.remaining()[scanned..]
-                    .iter()
-                    .position(|b| *b == rs[0])
+                crate::io_profile::position(&self.remaining()[scanned..], rs[0])
                     .map(|p| (scanned + p, scanned + p + 1, false))
             };
             if let Some((start, end, can_extend)) = separator {
@@ -150,8 +154,8 @@ impl RecordReader {
                     self.fill()?;
                     continue;
                 }
-                let record = self.remaining()[..start].to_vec();
-                let rt = self.remaining()[start..end].to_vec();
+                let record = crate::io_profile::copy(&self.remaining()[..start]);
+                let rt = crate::io_profile::copy(&self.remaining()[start..end]);
                 self.start += end;
                 return Ok(Some((record, rt)));
             }
@@ -159,7 +163,7 @@ impl RecordReader {
                 if self.remaining().is_empty() {
                     return Ok(None);
                 }
-                let mut record = self.remaining().to_vec();
+                let mut record = crate::io_profile::copy(&self.remaining());
                 self.buffer.clear();
                 self.start = 0;
                 if rs.is_empty() {
@@ -193,8 +197,8 @@ impl RecordReader {
             match search.resume(self.remaining(), self.eof) {
                 Progress::NeedMore => self.fill()?,
                 Progress::Found { start, end } => {
-                    let record = self.remaining()[..start].to_vec();
-                    let rt = self.remaining()[start..end].to_vec();
+                    let record = crate::io_profile::copy(&self.remaining()[..start]);
+                    let rt = crate::io_profile::copy(&self.remaining()[start..end]);
                     self.start += end;
                     return Ok(Some((record, rt)));
                 }
@@ -202,7 +206,7 @@ impl RecordReader {
                     if self.remaining().is_empty() {
                         return Ok(None);
                     }
-                    let record = self.remaining().to_vec();
+                    let record = crate::io_profile::copy(&self.remaining());
                     self.start = self.buffer.len();
                     return Ok(Some((record, Vec::new())));
                 }
@@ -290,14 +294,8 @@ mod tests {
             .shared();
             let alias = shared.clone();
             assert_eq!(shared.borrow_mut().next(b"\n").unwrap().unwrap().0, b"head");
-            assert_eq!(
-                alias.borrow_mut().next(b":").unwrap().unwrap(),
-                (long, b":".to_vec())
-            );
-            assert_eq!(
-                shared.borrow_mut().next(b"!").unwrap().unwrap().0,
-                b"\0\xff"
-            );
+            assert_eq!(alias.borrow_mut().next(b":").unwrap().unwrap(), (long, b":".to_vec()));
+            assert_eq!(shared.borrow_mut().next(b"!").unwrap().unwrap().0, b"\0\xff");
             assert_eq!(alias.borrow_mut().next(b"\n").unwrap().unwrap().0, b"tail");
             assert!(shared.borrow_mut().next(b"\n").unwrap().is_none());
         }
@@ -316,22 +314,10 @@ mod tests {
                 data: std::io::Cursor::new(data),
                 size,
             });
-            assert_eq!(
-                reader.next_csv().unwrap().unwrap(),
-                (b"head".to_vec(), b"\r\n".to_vec())
-            );
-            let normalized = record
-                .into_iter()
-                .filter(|b| *b != b'\r')
-                .collect::<Vec<_>>();
-            assert_eq!(
-                reader.next_csv().unwrap().unwrap(),
-                (normalized, b"\r\n".to_vec())
-            );
-            assert_eq!(
-                reader.next_csv().unwrap().unwrap(),
-                (b"\"unterminated\nquote".to_vec(), Vec::new())
-            );
+            assert_eq!(reader.next_csv().unwrap().unwrap(), (b"head".to_vec(), b"\r\n".to_vec()));
+            let normalized = record.into_iter().filter(|b| *b != b'\r').collect::<Vec<_>>();
+            assert_eq!(reader.next_csv().unwrap().unwrap(), (normalized, b"\r\n".to_vec()));
+            assert_eq!(reader.next_csv().unwrap().unwrap(), (b"\"unterminated\nquote".to_vec(), Vec::new()));
             assert!(reader.next_csv().unwrap().is_none());
         }
     }

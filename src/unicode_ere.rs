@@ -306,8 +306,10 @@ mod tests {
     fn encoding_preserves_offsets_and_invalid_bytes_without_sentinels() {
         let (bytes, offsets) = encode(b"A\xc3\xa9\xff\xf0\x9f\x98\x80\0");
         let runes: Vec<_> = bytes
-            .chunks_exact(4)
-            .map(|b| u32::from_be_bytes(b.try_into().unwrap()))
+            .as_chunks::<4>()
+            .0
+            .iter()
+            .map(|b| u32::from_be_bytes(*b))
             .collect();
         assert_eq!(runes, [65, 233, 255, 0x1f600, 0]);
         assert_eq!(offsets, [0, 1, 3, 4, 8, 9]);

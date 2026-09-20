@@ -1,0 +1,18 @@
+{
+  "uname": "Darwin MinidiFrancesco.homenet.telecomitalia.it 25.6.0 Darwin Kernel Version 25.6.0: Fri Jul 31 19:11:03 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T8132 arm64\n",
+  "sw_vers": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+  "memory_bytes": "17179869184\n",
+  "c_compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n",
+  "build_before_and_after": "CARGO_INCREMENTAL=0 cargo build --locked --release --bins",
+  "benchmark_locale": "C",
+  "runs_interleaved": 9,
+  "preliminary_baseline_runs": 3,
+  "warmup_per_binary_per_case": 1,
+  "rss_source": "/usr/bin/time -l; bytes; process peak, not allocator live bytes",
+  "profiling": "separate instrumented build; no performance timing inferred",
+  "benchmark_concurrency": "No local build/test/profiling overlapped benchmarks.",
+  "source_scripts_sha256": {
+    "scripts/benchmark_io.py": "ced0a19a6540d1fc77f4ee91fbed53ac49245fc020d095b0a983a64ad5e9a19f",
+    "scripts/profile_io.py": "bd2f23569078948d9407b93dd1d24a63298d2f15cbaac13975df042fa4195ab1"
+  }
+}

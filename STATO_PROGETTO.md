@@ -105,7 +105,7 @@ Benefici misurati solo sul Mac ARM64 locale, non sulle altre piattaforme.
 [Rapporto e limiti](diary/2026-09-20-core-performance.md).
 
 Priorità ordinate: (1) campi/valori/aggregazione, completata;
-(2) regex e sostituzioni UTF-8, completata; (3) I/O e memoria su input grandi;
+(2) regex e sostituzioni UTF-8, completata; (3) I/O e memoria su input grandi, in convalida finale;
 (4) misure prestazionali multipiattaforma e monitoraggio. Le successive
 priorità non sono avviate automaticamente. La correttezza sulle quattro
 piattaforme rimane requisito della prima.
@@ -120,10 +120,28 @@ Sul Mac ARM64 locale: -38,4% booleano breve, -35,9% senza match, -28,7%
 booleano lungo, -16,3% match e -19,7% gsub. Carichi byte circa invariati;
 RSS vicino alla baseline, con +16 KiB di mediana in due controlli. Nessuna
 attribuzione di questi benefici alle piattaforme non misurate. [Rapporto](diary/2026-09-20-regex-search.md).
-Le priorità 3 (I/O/memoria) e 4 (misure multipiattaforma) restano successive.
+La priorità 3 è descritta sotto; la priorità 4 resta successiva.
+
+## Prestazioni: terza priorità in convalida finale
+
+Base `61009df`, baseline ricostruita con Rust/Cargo **1.98.1** come il dopo;
+nessun beneficio attribuito al cambio dalla precedente 1.96.0. Scansione
+incrementale per RS a un byte e CSV, preallocazione del record CSV. Nove
+ripetizioni intercalate prima/dopo/C con output verificato: record lunghi
+-90,7%–-99,1%; CSV -93,8%; file da 128 MiB con record da 64 KiB -53,7%.
+Righe corte da 128 MiB +3,2%; RSS non universalmente migliore (+1,94 MiB
+con record da 1 MiB, +1,38 MiB CSV nella sessione principale). Ridotti i
+conteggi di riallocazione CSV, senza equipararli alla memoria residente.
+Test mirati e gate locali verdi: 160 debug + 160 release, zero ignorati;
+fmt, Clippy e XML 97/12/0/0 verdi. CI nativa in attesa di pubblicazione. Nessuna misura di velocità
+su Intel/Linux. La CI conserva il pin di correttezza Rust 1.96.0.
+[Consegna, distribuzioni e limiti](diary/2026-09-20-io-memory.md).
 
 ## Attività aperte
 
+- Differenza preesistente con RS regex a EOF e `$0` in END: controesempio
+  conservato nella consegna I/O; richiede diagnosi separata, non classificata
+  come differenza deliberata.
 - Altre codifiche, ulteriori versioni/profili macOS, nomi di file non UTF-8 e ulteriori
   ottimizzazioni: attività distinte da delimitare, non parte implicita di Shift-JIS.
 

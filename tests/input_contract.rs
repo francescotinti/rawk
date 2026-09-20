@@ -59,3 +59,46 @@ fn file_getline_and_interleaved_assignments() {
     assert_eq!(out.stdout, b"0\n1 a b 2 2\n2 c d 4 2\n");
     assert_eq!(out.code, Some(0));
 }
+
+#[test]
+fn large_records_getline_and_rs_changes_match_c() {
+    let mut input = b"head\n".to_vec();
+    input.extend(std::iter::repeat_n(b'x', 131073));
+    input.extend_from_slice(b":middle:");
+    input.extend(std::iter::repeat_n(b'y', 262145));
+    input.extend_from_slice(b"\ntail");
+    let program = r#"NR==1 {RS=":";getline x;print length($0),length(x),NR,FNR;getline;print $0,NR,FNR;RS="\n";next} {print length($0),NR,FNR}"#;
+    let run = |binary: &std::path::Path| {
+        let mut command = std::process::Command::new(binary);
+        command.arg(program).env("LC_ALL", "C");
+        rawk::test_support::run(command, &input, std::time::Duration::from_secs(10)).unwrap()
+    };
+    let oracle = run(&rawk::test_support::reference_binary().unwrap());
+    assert_eq!(oracle.code, Some(0));
+    assert!(!oracle.timed_out);
+    assert_eq!(
+        run(std::path::Path::new(env!("CARGO_BIN_EXE_rawk"))),
+        oracle
+    );
+}
+
+#[test]
+fn large_csv_records_match_c() {
+    let mut input = b"head,first\r\n\"".to_vec();
+    input.extend(std::iter::repeat_n(b'x', 131071));
+    input.extend_from_slice(b"\"\"y\r\nz\",last\r\nend,tail");
+    let run = |binary: &std::path::Path| {
+        let mut command = std::process::Command::new(binary);
+        command
+            .args(["--csv", "{print NR,NF,length($0),length($1),$2}"])
+            .env("LC_ALL", "C");
+        rawk::test_support::run(command, &input, std::time::Duration::from_secs(10)).unwrap()
+    };
+    let oracle = run(&rawk::test_support::reference_binary().unwrap());
+    assert_eq!(oracle.code, Some(0));
+    assert!(!oracle.timed_out);
+    assert_eq!(
+        run(std::path::Path::new(env!("CARGO_BIN_EXE_rawk"))),
+        oracle
+    );
+}

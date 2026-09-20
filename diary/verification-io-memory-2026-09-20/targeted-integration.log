@@ -1,0 +1,42 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.65s
+     Running tests/input_contract.rs (target/debug/deps/input_contract-b9e90b94b0ba3434)
+
+running 7 tests
+test getline_uses_main_stream_and_counts_every_read ... ok
+test rewriting_record_does_not_count_a_read ... ok
+test missing_getline_file_is_an_error_not_eof ... ok
+test rs_changes_apply_to_unconsumed_input ... ok
+test file_getline_and_interleaved_assignments ... ok
+test large_records_getline_and_rs_changes_match_c ... ok
+test large_csv_records_match_c ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.51s
+
+     Running tests/runtime_contract.rs (target/debug/deps/runtime_contract-63dd8746f47c29d3)
+
+running 3 tests
+test exit_executes_end_and_interrupts_expressions ... ok
+test short_circuit_preserves_side_effects ... ok
+test return_escapes_all_loop_forms ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/shift_jis.rs (target/debug/deps/shift_jis-173f7929633dbdf1)
+
+running 12 tests
+test required_sjis_locale_has_observable_case_mapping ... ok
+test conversion_failure_preserves_atomic_print_contract ... ok
+test regex_rs_with_three_or_four_byte_structural_units_matches_c ... ok
+test embedded_nul_preserves_the_rust_binary_extension ... ok
+test streaming_rs_keeps_binary_data_distinct_from_eof ... ok
+test decoded_character_with_unencodable_case_mapping_matches_c ... ok
+test record_separators_and_locale_precedence_match_c ... ok
+test valid_case_conversion_and_truncated_suffixes_match_c ... ok
+test regex_rs_sjis_refill_across_input_buffers_and_getline_matches_c ... ok
+test structural_units_regex_fields_and_formatting_match_c ... ok
+test regex_rs_refill_restart_longest_and_anchors_match_c ... ok
+test single_bytes_and_lead_trail_boundaries_match_c ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.62s
+

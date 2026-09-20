@@ -1,0 +1,109 @@
+{
+  "original_sources": {
+    "Cargo.toml": "ff6b781921ea28bfbd58826ee712fd3bbd141a9ae5c6f9b8fd307f7d67430e23",
+    "Cargo.lock": "b5913ceb7df57dd055cfb3e5ea9715842464a205764e6ec521b074b1536d1ebe",
+    "src/scratch.rs": "a4d88ddaa8cdc402022bd0de8d4b782f30b68fe36115c5349c74ec37ccaf3f64",
+    "src/types.rs": "5eafc0fe7aa29a90ab87a080a13a793532d6629321c82cdd02c3e67aaf890931",
+    "src/awk.pest": "7efd726fbdc55028625d7648906e0d6351349e8f276dc153c04788e620d895e3",
+    "src/unicode_ere.rs": "2cbbb0ff1db9ab69ae9bab045635b1e8391fc41f5bacd0aeb16a22c3f6041f03",
+    "src/lib.rs": "9debf5987d403cc5ece16ddac3b43b4eff795351f4cff15aed02d1d7a7f2159a",
+    "src/test_support.rs": "e8f9d921e946ec68c7ee9e6f2a25f4d199be388030375155e64f2a9f3047f2f1",
+    "src/validation.rs": "b1bcac375759eb0443776574a9f286b230977227a4b7758a8aba7a277eacff19",
+    "src/number_format.rs": "61e770a81ee8b7916cf00ab92af1cac23a30b0647f89feb3742ac90710fe44e2",
+    "src/main.rs": "efbdda94b7be142928b1d9c211817c41b7744258e13667d96d98e42390609988",
+    "src/text.rs": "fe7156ea661f2745ab697b6e23a892e3a1cca2d78f467f9d3fa3704adbf84267",
+    "src/input.rs": "c4342ae189f9be4373b1cf706273d8b9cb5701483a43bf0e52ea8897d7e6b862",
+    "src/ast.rs": "78b09f676625236eb75382fd563fcad0ff73bb609a96622342f44d5cf6cbf245",
+    "src/ere.rs": "57f2292322e79d9e48d153400f09938a5c60b5a19577af8c043a844730773c4e",
+    "src/parser.rs": "10555f257fdb6236bc9624cf02a553e27e9b774320431cc174bce366b6d32e39",
+    "src/cli.rs": "dd9293c03c0a1d6d56f7709302fbed9f06d69996e66c4003c02a534a0f3c93d2",
+    "src/bin/diffrun.rs": "767ba365d50c390c186b5129c5ac833aff3955a08468455847d9ce6f7fe81d54",
+    "src/runner/builtins.rs": "47153c14f782bc159008d4fd9482bdf184271739861e142f480f28493056c9b8",
+    "src/runner/io.rs": "ba605c934b27d9b1f8638aed26f8615745076055fbcd6d42de298bd7f46226ea",
+    "src/runner/fmt.rs": "2a6c4795fd597a7f90f4349ab2a659fcdbe3ba58654603791876e517c8e166b5",
+    "src/runner/mod.rs": "9de1824bab78257170bab426421f62900784cf82135d5f9b11f2ff8c905be89f",
+    "src/ere/stream.rs": "cbe0d9814d675b6d44b21e9e315acbdb39826683163597be12fe8205d189c8f1"
+  },
+  "instrumented_input_sha256": "7c1a6c262e9c865a4013d4dd5a39c5ed91903427abed338e1a79b2344cd3f9f9",
+  "instrumentation_sha256": "4ed6f99f9c5efbfe5f8446f17e0ccc540480f2fb20f92945ac0179979f9d98e7",
+  "binary_sha256": "ed47d3192c53ab32117e4c4cd1103c930786cce0006e0a3dd43f94d7e8bcf834",
+  "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)\nbinary: rustc\ncommit-hash: 48a229ceaefd4985c50990b14116b6d856af0985\ncommit-date: 2026-09-01\nhost: aarch64-apple-darwin\nrelease: 1.98.1\nLLVM version: 22.1.8\n",
+  "cases": [
+    {
+      "name": "short",
+      "input_bytes": 1048576,
+      "input_sha256": "630093cf3875dd29338d5ccfdaa291d56b77e6e489af9821bf308c1005582c8b",
+      "stdout_hex": "36353533362031350a",
+      "counters": {
+        "allocations": 393581,
+        "allocated_bytes": 2339628,
+        "reallocations": 22,
+        "reallocation_requested_bytes": 58562,
+        "peak_live_requested_bytes": 37167,
+        "physical_reads": 129,
+        "read_bytes": 1048576,
+        "separator_bytes_examined": 1048576,
+        "reader_explicit_copy_bytes": 2097152,
+        "compacted_bytes": 128,
+        "max_reader_capacity": 16384
+      }
+    },
+    {
+      "name": "long",
+      "input_bytes": 4194308,
+      "input_sha256": "2371c6cbe976c271862eeff3124c68c6cecc329b872eb1cb1cb3dbe16d3399f8",
+      "stdout_hex": "3420313034383537360a",
+      "counters": {
+        "allocations": 389,
+        "allocated_bytes": 11580180,
+        "reallocations": 29,
+        "reallocation_requested_bytes": 4220100,
+        "peak_live_requested_bytes": 6311095,
+        "physical_reads": 595,
+        "read_bytes": 4194308,
+        "separator_bytes_examined": 275339391,
+        "reader_explicit_copy_bytes": 8388616,
+        "compacted_bytes": 4094,
+        "max_reader_capacity": 2097152
+      }
+    },
+    {
+      "name": "unterminated",
+      "input_bytes": 1048576,
+      "input_sha256": "8f990ba0b577b51cf009ea049368c16bbda1b21e1b93be07a824758bb253c39b",
+      "stdout_hex": "3120313034383537360a",
+      "counters": {
+        "allocations": 369,
+        "allocated_bytes": 5287788,
+        "reallocations": 28,
+        "reallocation_requested_bytes": 2122948,
+        "peak_live_requested_bytes": 5262062,
+        "physical_reads": 158,
+        "read_bytes": 1048576,
+        "separator_bytes_examined": 70153728,
+        "reader_explicit_copy_bytes": 2097152,
+        "compacted_bytes": 0,
+        "max_reader_capacity": 1048576
+      }
+    },
+    {
+      "name": "csv",
+      "input_bytes": 4194328,
+      "input_sha256": "3a4ab18e15f81dd868b19f4591aa429ebea5f432da4cc7ab0ab01df44b5e7091",
+      "stdout_hex": "3420313034383538300a",
+      "counters": {
+        "allocations": 408,
+        "allocated_bytes": 6338233,
+        "reallocations": 173,
+        "reallocation_requested_bytes": 37774404,
+        "peak_live_requested_bytes": 9456752,
+        "physical_reads": 514,
+        "read_bytes": 4194328,
+        "separator_bytes_examined": 273419800,
+        "reader_explicit_copy_bytes": 4194328,
+        "compacted_bytes": 17376,
+        "max_reader_capacity": 2097152
+      }
+    }
+  ]
+}
