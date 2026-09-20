@@ -38,9 +38,24 @@ MIXED_WORKLOADS = [
 ]
 
 
+UTF8_MIXED_INPUT = b"".join(
+    (("pré😀fin" if i % 3 else "Āabc") + "λ" * (i % 17) + "\n").encode()
+    for i in range(10000)
+)
+UTF8_MIXED_WORKLOADS = [
+    ('utf8_dynamic_boolean', '{r=NR%2?"é|é😀":"𐀀";n+=($0~r)} END{print n}', UTF8_MIXED_INPUT),
+    ('utf8_match_mixed', '{n+=match($0,/é|é😀|λ+/);l+=RLENGTH} END{print n,l}', UTF8_MIXED_INPUT),
+    ('utf8_gsub_expanding', '{s=$0;n+=gsub(/é|é😀|λ+/,"<&>&",s);l+=length(s)} END{print n,l}', UTF8_MIXED_INPUT),
+    ('utf8_gsub_miss', '{n+=gsub(/𐀀/,"x")} END{print n}', UTF8_MIXED_INPUT),
+    ('utf8_match_long', '{n+=match($0,/é|é😀/);l+=RLENGTH} END{print n,l}',
+     (("λ" * 2048 + "é😀fin\n") * 1000).encode()),
+    ('utf8_empty_regex', '{s=$0;n+=($0~//);n+=match($0,//);n+=gsub(//,"x",s)} END{print n}', b"\n" * 100000),
+]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--profile', choices=['byte', 'utf8', 'mixed'], default='byte')
+    parser.add_argument('--profile', choices=['byte', 'utf8', 'mixed', 'utf8-mixed'], default='byte')
     parser.add_argument('--before', type=Path)
     parser.add_argument('--rawk', type=Path, default=ROOT / 'rawk/target/release/rawk')
     parser.add_argument('--output', type=Path, default=ROOT / 'rawk/diary/benchmark-consolidation.json')
@@ -53,11 +68,11 @@ def main():
     if args.before:
         binaries.append(('before', args.before.resolve()))
     binaries.append(('rust', args.rawk.resolve()))
-    locale = 'en_US.UTF-8' if args.profile == 'utf8' else 'C'
+    locale = 'en_US.UTF-8' if args.profile.startswith('utf8') else 'C'
     report = {'locale': locale, 'profile': args.profile, 'platform': platform.platform(), 'runs': args.runs, 'scale': args.scale,
               'binaries': {label: {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
                            for label, path in binaries}, 'workloads': []}
-    for name, program, unit in {'byte': WORKLOADS, 'utf8': UTF8_WORKLOADS, 'mixed': MIXED_WORKLOADS}[args.profile]:
+    for name, program, unit in {'byte': WORKLOADS, 'utf8': UTF8_WORKLOADS, 'mixed': MIXED_WORKLOADS, 'utf8-mixed': UTF8_MIXED_WORKLOADS}[args.profile]:
         data = unit * args.scale
         row = {'workload': name, 'program': program, 'records': data.count(b'\n'),
                'input_sha256': hashlib.sha256(data).hexdigest(),

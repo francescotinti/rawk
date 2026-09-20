@@ -1,0 +1,23 @@
+[
+  "._STATO_PROGETTO.md",
+  "audit-2026-09-19/._PIANO_DI_LAVORO.md",
+  "diary/._2026-09-20-regex-search.md",
+  "diary/._verification-regex-search-2026-09-20",
+  "diary/verification-regex-search-2026-09-20/._after-byte.json",
+  "diary/verification-regex-search-2026-09-20/._after-utf8-mixed.json",
+  "diary/verification-regex-search-2026-09-20/._after-utf8.json",
+  "diary/verification-regex-search-2026-09-20/._appledouble-cleanup-before-checks.json",
+  "diary/verification-regex-search-2026-09-20/._baseline-utf8.json",
+  "diary/verification-regex-search-2026-09-20/._environment.json",
+  "diary/verification-regex-search-2026-09-20/._performance-summary.json",
+  "diary/verification-regex-search-2026-09-20/._profile-boolean-before.log",
+  "diary/verification-regex-search-2026-09-20/._profile-gsub-before.log",
+  "diary/verification-regex-search-2026-09-20/._profiling.json",
+  "diary/verification-regex-search-2026-09-20/._targeted-initial.log",
+  "diary/verification-regex-search-2026-09-20/._targeted-new.log",
+  "scripts/._benchmark.py",
+  "src/._unicode_ere.rs",
+  "src/runner/._builtins.rs",
+  "src/runner/._mod.rs",
+  "tests/._unicode_contract.rs"
+]

@@ -104,6 +104,14 @@ Priorità ordinate: (1) campi/valori/aggregazione, questa tranche;
 priorità non sono avviate automaticamente. La correttezza sulle quattro
 piattaforme rimane requisito della prima.
 
+## Prestazioni: seconda priorità in verifica
+
+Proseguimento autorizzato su base `bab2f7c`: eliminazione della ricerca
+ridondante del RHS regex letterale, minori riallocazioni Unicode e sostituzioni
+senza buffer temporaneo per match. Benchmark completati; gate locale verde
+con 156 test debug e 156 release, zero ignorati. CI nativa da completare. [Rapporto](diary/2026-09-20-regex-search.md).
+Le priorità 3 (I/O/memoria) e 4 (misure multipiattaforma) restano successive.
+
 ## Attività aperte
 
 - Altre codifiche, ulteriori versioni/profili macOS, nomi di file non UTF-8 e ulteriori

@@ -1,0 +1,24 @@
+[
+  {
+    "name": "boolean",
+    "program": "{n+=($0 ~ /\u00e9|\u00e9\ud83d\ude00/)} END{print n}",
+    "unit": "pr\u00e9\ud83d\ude00fin\n",
+    "repetitions": 10000000,
+    "input_sha256": "84af4bf736940ec92eaa33d0fdd180dbc1dd501d224ebaeabe9023445cf88bbf",
+    "stdout": "10000000\n",
+    "exit": 0,
+    "sampling": "sample PID 8 1",
+    "locale": "en_US.UTF-8"
+  },
+  {
+    "name": "gsub",
+    "program": "{n+=gsub(/./,\"x\")} END{print n}",
+    "unit": "\u00e9\ud83d\ude00\u03bbz\n",
+    "repetitions": 10000000,
+    "input_sha256": "ea3100d34077d99c90ba4f1b91e0bf031b7ba10f13aa1bcef19a2d5152cb15f0",
+    "stdout": "40000000\n",
+    "exit": 0,
+    "sampling": "sample PID 8 1",
+    "locale": "en_US.UTF-8"
+  }
+]

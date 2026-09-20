@@ -237,3 +237,62 @@ fn boolean_regex_search_preserves_rune_alignment_and_empty_matches() {
     assert!(!out.timed_out && out.stderr.is_empty(), "{out:?}");
     assert_eq!(out.stdout, b"0 1 0\n1 0 1\n");
 }
+
+#[test]
+fn match_rhs_literals_and_dynamic_patterns_keep_their_distinct_evaluation() {
+    for locale in ["C", "en_US.UTF-8"] {
+        compare(
+            r#"function pat(){calls++;return "é"}
+               {s="é";print s~/é/,s!~/é/,/é/,(/é/==1);
+                print s~pat(),calls,s!~pat(),calls;
+                print ("1" ~ (($0="é") ~ /é/)),$0;
+                print (($0="z") ~ /é/),$0;
+                print ((/z/) ~ /1/),(/z/ ~ /0/);
+                print (s ~ /é/ ~ /1/)}"#,
+            "rien\né😀\n\n".as_bytes(),
+            &[("LC_ALL", locale)],
+        );
+    }
+}
+
+#[test]
+fn substitution_expansion_preserves_prefixes_escapes_and_empty_matches() {
+    let mut input = Vec::new();
+    for n in 0..=8 {
+        for suffix in ["&", "x", "", "&&é"] {
+            input.extend_from_slice(format!("{}{suffix}\n", "\\".repeat(n)).as_bytes());
+        }
+    }
+    for locale in ["C", "en_US.UTF-8"] {
+        for posix in [false, true] {
+            // Explicitly remove the flag in both processes for the default
+            // mode; retain the same runtime escape rules when it is present.
+            let program = r#"{s="préé😀é fin";print gsub(/é|é😀/,$0,s),s;
+                              s="é😀";print gsub(//,$0,s),s;
+                              s="préé😀 fin";print sub(/é|é😀/,$0,s),s;
+                              s="rien";print gsub(/é/,$0,s),s}"#;
+            let run = |binary: &Path| {
+                let mut command = Command::new(binary);
+                command
+                    .arg(program)
+                    .env("LC_ALL", locale)
+                    .env_remove("POSIXLY_CORRECT");
+                if posix {
+                    command.env("POSIXLY_CORRECT", "1");
+                }
+                h::run(command, &input, Duration::from_secs(5)).unwrap()
+            };
+            let expected = run(&h::reference_binary().unwrap());
+            assert_eq!(expected.code, Some(0));
+            assert_eq!(run(Path::new(env!("CARGO_BIN_EXE_rawk"))), expected);
+        }
+    }
+    let mut command = Command::new(env!("CARGO_BIN_EXE_rawk"));
+    command
+        .env("LC_ALL", "en_US.UTF-8")
+        .arg(r#"BEGIN{s="é\0z";print gsub(/./,"<&>",s),s}"#);
+    let out = h::run(command, b"", Duration::from_secs(5)).unwrap();
+    assert_eq!(out.code, Some(0));
+    assert!(out.stderr.is_empty() && !out.timed_out);
+    assert_eq!(out.stdout, b"3 <\xc3\xa9><\0><z>\n");
+}

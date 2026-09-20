@@ -14,8 +14,7 @@ use crate::types::{AwkValue, EvalContext, InputStream, OutputStream};
 use super::fmt::awk_sprintf;
 use super::{FlowControl, eval_expr};
 
-fn expand_awk_replacement(repl: &[u8], whole: &[u8]) -> Vec<u8> {
-    let mut out = Vec::with_capacity(repl.len() + whole.len());
+fn append_awk_replacement(out: &mut Vec<u8>, repl: &[u8], whole: &[u8]) {
     let mut i = 0;
     while i < repl.len() {
         match repl[i] {
@@ -48,7 +47,6 @@ fn expand_awk_replacement(repl: &[u8], whole: &[u8]) -> Vec<u8> {
             }
         }
     }
-    out
 }
 
 pub(super) fn dispatch_builtin(
@@ -429,7 +427,7 @@ pub(super) fn dispatch_builtin(
                     continue;
                 }
                 new_val.extend_from_slice(&target[last..m.start()]);
-                new_val.extend(expand_awk_replacement(&s_bytes, m.as_bytes()));
+                append_awk_replacement(&mut new_val, &s_bytes, m.as_bytes());
                 count += 1;
                 last = m.end();
                 previous_nonempty_end = if m.is_empty() { None } else { Some(m.end()) };

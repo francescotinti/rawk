@@ -371,3 +371,13 @@ mediana RSS nei carichi misurati. CI nativa tutta verde: macOS Intel/ARM64
 154 debug +154 release, Linux x86-64/ARM64 92+92 per runner; invariati i gate
 XML, driver, stream e codifiche. La priorità 2 è la prossima, non è stata
 implementata in questa tranche. [Misure, verifiche e limiti](../diary/2026-09-20-core-performance.md).
+
+
+### Seconda priorità avviata
+
+Dopo la consegna `bab2f7c`, l'utente ha autorizzato il proseguimento. La tranche
+corrente profila regex UTF-8 e sostituzioni sulla nuova baseline; comprende
+l'eliminazione della ricerca implicita ridondante del RHS letterale di ~ / !~,
+la capacità iniziale della codifica Unicode e l'espansione delle sostituzioni
+nel buffer finale. Accettazione: misure intercalate, controlli lunghi/byte,
+regressioni e gate sulle quattro piattaforme. Priorità 3 e 4 non avviate.

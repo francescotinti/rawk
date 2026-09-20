@@ -1,0 +1,22 @@
+{
+  "git rev-parse HEAD": "bab2f7c4bd64fe17e71718939915d2e526765920",
+  "git ls-remote origin refs/heads/master": "bab2f7c4bd64fe17e71718939915d2e526765920\trefs/heads/master",
+  "git -C ../c_awk rev-parse HEAD": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "sw_vers": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83",
+  "uname -a": "Darwin MinidiFrancesco.homenet.telecomitalia.it 25.6.0 Darwin Kernel Version 25.6.0: Fri Jul 31 19:11:03 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T8132 arm64",
+  "sysctl -n machdep.cpu.brand_string": "Apple M4",
+  "rustc -Vv": "rustc 1.96.0 (ac68faa20 2026-05-25)\nbinary: rustc\ncommit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96\ncommit-date: 2026-05-25\nhost: aarch64-apple-darwin\nrelease: 1.96.0\nLLVM version: 22.1.2",
+  "cargo -V": "cargo 1.96.0 (30a34c682 2026-05-25)",
+  "cc --version": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+  "python3 --version": "Python 3.9.6",
+  "otool -L ../c_awk/a.out": "../c_awk/a.out:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)",
+  "build": "make -C ../c_awk; cargo build --locked --release --bins",
+  "flags": {
+    "RUSTFLAGS": null,
+    "CFLAGS": null,
+    "LDFLAGS": null,
+    "LC_ALL": "C.UTF-8",
+    "LANG": "C.UTF-8"
+  },
+  "oracle_content_changes": []
+}

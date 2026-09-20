@@ -1,0 +1,17 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.82s
+     Running tests/unicode_contract.rs (target/debug/deps/unicode_contract-ff53360e0ff39268)
+
+running 1 test
+test match_rhs_literals_and_dynamic_patterns_keep_their_distinct_evaluation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.41s
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.17s
+     Running tests/unicode_contract.rs (target/debug/deps/unicode_contract-ff53360e0ff39268)
+
+running 1 test
+test substitution_expansion_preserves_prefixes_escapes_and_empty_matches ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.51s
+

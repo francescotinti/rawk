@@ -5,7 +5,9 @@ use crate::text;
 const MAX_RUNE: u32 = 0x1fffff;
 
 pub(crate) fn encode(bytes: &[u8]) -> (Vec<u8>, Vec<usize>) {
-    let mut offsets = Vec::new();
+    // Leave room for a short subject and its end offset without growing
+    // the vector after the first few runes. Long subjects still grow normally.
+    let mut offsets = Vec::with_capacity(8);
     let encoded = encode_with_offsets(bytes, |i| offsets.push(i));
     (encoded, offsets)
 }
@@ -16,7 +18,14 @@ pub(crate) fn encode_keys(bytes: &[u8]) -> Vec<u8> {
 }
 
 fn encode_with_offsets(bytes: &[u8], mut visit: impl FnMut(usize)) -> Vec<u8> {
-    let mut encoded = Vec::with_capacity(bytes.len());
+    // Keys use four bytes per rune. A small initial allocation avoids
+    // repeated growth on short subjects; empty boolean searches allocate none.
+    let capacity = if bytes.is_empty() {
+        0
+    } else {
+        bytes.len().max(32)
+    };
+    let mut encoded = Vec::with_capacity(capacity);
     let mut i = 0;
     while i < bytes.len() {
         visit(i);

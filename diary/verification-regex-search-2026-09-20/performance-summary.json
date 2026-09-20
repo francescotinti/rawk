@@ -1,0 +1,142 @@
+[
+  {
+    "workload": "utf8_boolean_short",
+    "before_seconds": 0.6294247500000001,
+    "after_seconds": 0.38791516700000006,
+    "change_percent": -38.36988980811448,
+    "after_over_c": 1.878521918970656,
+    "before_rss": 8404992,
+    "after_rss": 8372224,
+    "time_ranges_disjoint": true
+  },
+  {
+    "workload": "utf8_boolean_long",
+    "before_seconds": 0.2994689589999986,
+    "after_seconds": 0.21351220800000092,
+    "change_percent": -28.703058669929817,
+    "after_over_c": 0.442088279699986,
+    "before_rss": 8798208,
+    "after_rss": 8781824,
+    "time_ranges_disjoint": true
+  },
+  {
+    "workload": "utf8_boolean_miss",
+    "before_seconds": 0.5966850410000006,
+    "after_seconds": 0.38219804199999885,
+    "change_percent": -35.94643476238942,
+    "after_over_c": 2.1013867909811874,
+    "before_rss": 8077312,
+    "after_rss": 8028160,
+    "time_ranges_disjoint": true
+  },
+  {
+    "workload": "utf8_match",
+    "before_seconds": 0.659351375,
+    "after_seconds": 0.5517904169999994,
+    "change_percent": -16.313146840711536,
+    "after_over_c": 2.3865649276869783,
+    "before_rss": 8421376,
+    "after_rss": 8355840,
+    "time_ranges_disjoint": true
+  },
+  {
+    "workload": "utf8_gsub",
+    "before_seconds": 0.8914997500000013,
+    "after_seconds": 0.7159804169999973,
+    "change_percent": -19.68809671567533,
+    "after_over_c": 2.2686867155741304,
+    "before_rss": 8437760,
+    "after_rss": 8372224,
+    "time_ranges_disjoint": true
+  },
+  {
+    "workload": "utf8_dynamic_boolean",
+    "before_seconds": 0.10093104099999994,
+    "after_seconds": 0.098042042,
+    "change_percent": -2.862349353951421,
+    "after_over_c": 1.627620746433174,
+    "before_rss": 8486912,
+    "after_rss": 8404992,
+    "time_ranges_disjoint": false
+  },
+  {
+    "workload": "utf8_match_mixed",
+    "before_seconds": 0.11073883399999929,
+    "after_seconds": 0.10542241599999969,
+    "change_percent": -4.800861457507888,
+    "after_over_c": 2.0515918573169416,
+    "before_rss": 8699904,
+    "after_rss": 8667136,
+    "time_ranges_disjoint": false
+  },
+  {
+    "workload": "utf8_gsub_expanding",
+    "before_seconds": 0.18473683299999966,
+    "after_seconds": 0.1721272909999998,
+    "change_percent": -6.825678342120267,
+    "after_over_c": 2.270361824314341,
+    "before_rss": 8732672,
+    "after_rss": 8749056,
+    "time_ranges_disjoint": true
+  },
+  {
+    "workload": "utf8_gsub_miss",
+    "before_seconds": 0.08558754100000066,
+    "after_seconds": 0.07966741699999957,
+    "change_percent": -6.917039478913212,
+    "after_over_c": 1.3285643492086543,
+    "before_rss": 8306688,
+    "after_rss": 8224768,
+    "time_ranges_disjoint": false
+  },
+  {
+    "workload": "utf8_match_long",
+    "before_seconds": 0.2161412089999999,
+    "after_seconds": 0.2152830829999992,
+    "change_percent": -0.39702100491196823,
+    "after_over_c": 0.07137245224582274,
+    "before_rss": 8601600,
+    "after_rss": 8519680,
+    "time_ranges_disjoint": false
+  },
+  {
+    "workload": "utf8_empty_regex",
+    "before_seconds": 1.05894808299999,
+    "after_seconds": 0.9984852910000015,
+    "change_percent": -5.709703145096401,
+    "after_over_c": 4.7156798954432215,
+    "before_rss": 8454144,
+    "after_rss": 8421376,
+    "time_ranges_disjoint": false
+  },
+  {
+    "workload": "sum_fields",
+    "before_seconds": 1.2130372499999997,
+    "after_seconds": 1.2145814999999995,
+    "change_percent": 0.12730441707373696,
+    "after_over_c": 1.849150454289486,
+    "before_rss": 7405568,
+    "after_rss": 7421952,
+    "time_ranges_disjoint": false
+  },
+  {
+    "workload": "regex_fields",
+    "before_seconds": 0.23868983300000224,
+    "after_seconds": 0.2378323339999966,
+    "change_percent": -0.3592524194382607,
+    "after_over_c": 2.9153130762146198,
+    "before_rss": 8224768,
+    "after_rss": 8142848,
+    "time_ranges_disjoint": false
+  },
+  {
+    "workload": "array_aggregation",
+    "before_seconds": 1.8966327919999983,
+    "after_seconds": 1.898023749999993,
+    "change_percent": 0.07333828698214973,
+    "after_over_c": 2.331294433464521,
+    "before_rss": 7454720,
+    "after_rss": 7421952,
+    "time_ranges_disjoint": false
+  }
+]

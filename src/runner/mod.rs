@@ -681,7 +681,12 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> Result<AwkValue, FlowCon
             if *op == BinaryOperator::Or && l_val.is_truthy() {
                 return Ok(AwkValue::Number(1.0));
             }
-            let r_val = if *op == BinaryOperator::In {
+            // A literal on the right of ~ or !~ is a pattern, not an
+            // implicit search of $0. The operator below uses its source.
+            let r_val = if *op == BinaryOperator::In
+                || (matches!(op, BinaryOperator::Match | BinaryOperator::NotMatch)
+                    && matches!(&**rhs, Expr::RegexLiteral(_)))
+            {
                 AwkValue::Uninitialized
             } else {
                 eval_expr(rhs, context)?
