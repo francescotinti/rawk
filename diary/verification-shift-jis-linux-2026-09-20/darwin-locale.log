@@ -1,0 +1,5 @@
+locale=ja_JP.SJIS codeset=SJIS MB_CUR_MAX=2 wchar_t=4
+decode=2 wchar=0x8281
+encode=2
+truncated=incomplete
+invalid=error errno=92

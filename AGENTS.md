@@ -41,7 +41,8 @@
 - Il gate richiede Python 3, compilatore C, fixture originali e locale dei test.
   Per Linux usare i runner nativi GitHub x86-64/ARM64 del workflow compatibility;
   `cargo check` per il target non dimostra linking o correttezza della libc.
-  Il gate Linux corrente non include Shift-JIS né prepara `ja_JP.SJIS`.
+  Il gate Linux include Shift-JIS; il workflow prepara `ja_JP.SJIS`, verifica
+  la libc nativa e confronta anche tutte le coppie decodificabili del runner.
 - Non alterare log/evidenze storiche per ripulirli. Escludere build, cache e
   metadati AppleDouble dai commit; eliminare soltanto artefatti identificati.
 

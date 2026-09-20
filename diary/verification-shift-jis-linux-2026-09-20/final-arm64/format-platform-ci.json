@@ -1,0 +1,1326 @@
+{
+  "platform": "Linux-6.17.0-1022-azure-aarch64-with-glibc2.39",
+  "oracle_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "cases": [
+    {
+      "program": "BEGIN{printf \"[%*.*d] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*i] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*u] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*o] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*x] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*X] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*f] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*g] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*e] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*E] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*a] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*A] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*s] %d\\n\",-9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*c] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*d] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*i] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*u] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*o] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*x] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*X] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*f] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*g] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*e] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*E] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*a] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*A] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*s] %d\\n\",0,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b25302e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*c] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*d] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*i] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*u] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*o] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*x] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*X] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*f] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*g] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*e] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*E] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*a] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*A] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*s] %d\\n\",9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b25392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%*.*c] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*d] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*i] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*u] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*o] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*x] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*X] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*f] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*g] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*e] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*E] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*a] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*A] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*s] %d\\n\",-9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*c] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*d] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*i] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*u] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*o] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*x] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*X] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*f] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*g] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*e] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*E] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*a] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*A] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*s] %d\\n\",0,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b25302e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*c] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25302e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*d] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*i] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*u] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*o] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*x] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*X] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*f] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*g] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*e] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*E] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*a] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*A] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*s] %d\\n\",9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b2530392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%0*.*c] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2530392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*d] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*i] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*u] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*o] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*x] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*X] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*f] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*g] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*e] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*E] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*a] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*A] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*s] %d\\n\",-9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*c] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b2d392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*d] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*i] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*u] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*o] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*x] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*X] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*f] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*g] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*e] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*E] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*a] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*A] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*s] %d\\n\",0,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*c] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b302e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*d] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*i] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*u] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*o] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*x] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*X] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*f] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*g] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*e] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*E] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*a] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*A] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*s] %d\\n\",9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%+#0*.*c] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b25232b30392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*d] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*i] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*u] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*o] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*x] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*X] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*f] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*g] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*e] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*E] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*a] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*A] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*s] %d\\n\",-9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*c] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b2523202d392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*d] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*i] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*u] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*o] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*x] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*X] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*f] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*g] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*e] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*E] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*a] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*A] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*s] %d\\n\",0,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b252320302e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*c] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320302e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*d] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*i] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*u] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*o] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*x] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*X] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*f] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*g] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*e] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*E] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*a] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*A] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*s] %d\\n\",9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b252320392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[% #*.*c] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252320392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*d] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*i] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*u] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*o] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*x] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*X] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*f] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*g] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*e] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*E] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*a] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*A] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*s] %d\\n\",-9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*c] %d\\n\",-9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*d] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*i] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*u] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*o] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*x] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*X] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*f] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*g] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*e] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*E] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*a] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*A] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*s] %d\\n\",0,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b252d2e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*c] %d\\n\",0,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d2e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*d] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a645d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*i] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a695d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*u] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a755d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*o] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a6f5d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*x] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a785d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*X] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d336a585d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*f] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33665d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*g] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33675d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*e] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33655d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*E] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33455d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*a] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33615d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*A] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33415d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*s] %d\\n\",9,-3,\"abcd\",73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33735d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"[%-0*.*c] %d\\n\",9,-3,1.25,73}",
+      "code": 0,
+      "stdout": "5b252d392e302d33635d2037330a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",-0.5,-0.5,-0.5}",
+      "code": 0,
+      "stdout": "30203020300a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",-1,-1,-1}",
+      "code": 0,
+      "stdout": "30203020300a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",-3.75,-3.75,-3.75}",
+      "code": 0,
+      "stdout": "30203020300a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",-2147483649,-2147483649,-2147483649}",
+      "code": 0,
+      "stdout": "30203020300a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",-9007199254740991,-9007199254740991,-9007199254740991}",
+      "code": 0,
+      "stdout": "30203020300a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",0,0,0}",
+      "code": 0,
+      "stdout": "30203020300a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",1,1,1}",
+      "code": 0,
+      "stdout": "31203120310a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",9007199254740991,9007199254740991,9007199254740991}",
+      "code": 0,
+      "stdout": "39303037313939323534373430393931203337373737373737373737373737373737372031666666666666666666666666660a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",9223372036854775808,9223372036854775808,9223372036854775808}",
+      "code": 0,
+      "stdout": "39323233333732303336383534373735383038203130303030303030303030303030303030303030303020383030303030303030303030303030300a",
+      "stderr": ""
+    },
+    {
+      "program": "BEGIN{printf \"%u %o %x\\n\",18446744073709549568,18446744073709549568,18446744073709549568}",
+      "code": 0,
+      "stdout": "3138343436373434303733373039353439353638203137373737373737373737373737373737373430303020666666666666666666666666663830300a",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "base_commit": "40712166b7cfe7010e0b39b904b4caed23354958",
+  "verified_commit": "3b9facfebb6e29f4399f330be3ca7fbbfe591663",
+  "runtime_unchanged_from": "a1186164dc452d47f8623ff19b582730c48c19c5",
+  "oracle_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "ci_url": "https://github.com/francescotinti/rawk/actions/runs/35508846617",
+  "linux": {
+    "arm64": {
+      "tests": {
+        "debug": {
+          "passed": 87,
+          "failed": 0,
+          "ignored": 0
+        },
+        "release": {
+          "passed": 87,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "shift_jis_tests_per_profile": 12,
+      "valid_pairs": 6879,
+      "encodable_pairs": {
+        "toupper": 6879,
+        "tolower": 6878
+      },
+      "unencodable_mappings": {
+        "toupper": [],
+        "tolower": [
+          "81f0"
+        ]
+      },
+      "conversion_match": true,
+      "libc": [
+        "glibc",
+        "2.39"
+      ],
+      "locale_preflight": "locale=ja_JP.SJIS codeset=SHIFT_JIS MB_CUR_MAX=2 wchar_t=4\ndecode=2 wchar=0xff41\nencode=2\ntruncated=incomplete\ninvalid=error errno=84\n"
+    },
+    "x86_64": {
+      "tests": {
+        "debug": {
+          "passed": 87,
+          "failed": 0,
+          "ignored": 0
+        },
+        "release": {
+          "passed": 87,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      "shift_jis_tests_per_profile": 12,
+      "valid_pairs": 6879,
+      "encodable_pairs": {
+        "toupper": 6879,
+        "tolower": 6878
+      },
+      "unencodable_mappings": {
+        "toupper": [],
+        "tolower": [
+          "81f0"
+        ]
+      },
+      "conversion_match": true,
+      "libc": [
+        "glibc",
+        "2.39"
+      ],
+      "locale_preflight": "locale=ja_JP.SJIS codeset=SHIFT_JIS MB_CUR_MAX=2 wchar_t=4\ndecode=2 wchar=0xff41\nencode=2\ntruncated=incomplete\ninvalid=error errno=84\n"
+    }
+  },
+  "darwin_local": {
+    "initial_shift_jis_debug": 11,
+    "initial_shift_jis_release": 11,
+    "new_regression_debug": 1,
+    "new_regression_release": 1,
+    "valid_pairs": 11280,
+    "full_local_suites_repeated": false,
+    "reason": "No runtime changes; targeted local checks and remote gates."
+  },
+  "evidence_sha256": {
+    "ci-final.json": "b756f0ee7af2a74aaec56a51dbce5fe4cd0607ada61045fa5401091a4bd96176",
+    "ci-final.log": "84940f2d9151109532904f40d7b7bc582011977c744bd50b1eaf53dea017bd4b",
+    "ci-first-gate.json": "7fe12164850bcb1876fe683b9e8c6fdd0c21399e1a99fa534b4a5db86f5bf396",
+    "ci-initial.json": "3236a8d82bccfc8e394b70fac73402c13d05d84d010052fa2b642ac47aa2ab8b",
+    "ci-initial.log": "33720a0da767cc687d5fc3ac717f523edf52ef7c8d5c5b85516a17f2cf99b17a",
+    "darwin-locale.log": "b0292d711ef66539373a78b9158cf8966f1d86359b2664fcec3f27244d3399ec",
+    "darwin-mapping-release.log": "01357e9391b9a94d64d6a86ac30db1486279a334b139d8623200c8f862f37ef2",
+    "darwin-pairs-final.json": "1334f27ab0a8f3787008be4436714a0a13e43937bd5b53d1f5859dd1713ba9c5",
+    "darwin-pairs.json": "258a029ada11c5e800806f84313afdebce023965b6d8b6cf6f49e2c1f29718ca",
+    "darwin-release.log": "9fbdc00ae59682a817dcc6607313a53e542c6d4f3d4b34b727dc4abbbcf412fc",
+    "final-arm64/format-platform-ci.json": "0239b2b75a220b92d9b8dacd2ad9d2c28599e3d88a587f4c6da725a029e58eb7",
+    "final-arm64/linux-driver-results-ci.json": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55",
+    "final-arm64/portability-ci.log": "4ea9ab5b13e3f2590ec1a7d4e7f5328de65c57c08739a0f48d35ef5eada24a2e",
+    "final-arm64/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "final-arm64/shift-jis-platform-ci.json": "813a57c8068569bae094855bfb31b63e87ff988e45698a00900314b5f2f7474e",
+    "final-macos/full-driver-results-ci.json": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa",
+    "final-macos/unicode-driver-results-ci.json": "319ba794bac6208a112e23a1a690e0943b65e50201c5b261f89b65bdd2c92c8a",
+    "final-x86_64/format-platform-ci.json": "0009a5a282c4e997889feada3379c3c584b69f4048e832a8c4ae22a369072cfd",
+    "final-x86_64/linux-driver-results-ci.json": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78",
+    "final-x86_64/portability-ci.log": "59da14b050ace4371a3164a593f168e02fc3dc0d1b8a55f4933106d07f0966eb",
+    "final-x86_64/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "final-x86_64/shift-jis-platform-ci.json": "c192465097a5a7fd86c8e45c7c9667513c1e450c17edf9d37b37c65e5f175cb3",
+    "initial-arm64/format-platform-ci.json": "0239b2b75a220b92d9b8dacd2ad9d2c28599e3d88a587f4c6da725a029e58eb7",
+    "initial-arm64/linux-driver-results-ci.json": "ea38dbc70b850f926b59c06d3c29fb888d63a575cbf94a2ddfa75a06cd600077",
+    "initial-arm64/portability-ci.log": "ae5428bc992f41e97c4569cb1bc36dc641f435c44d8efa22bf4ba6b652fb6e49",
+    "initial-arm64/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "initial-arm64/shift-jis-platform-ci.json": "ede118772b89f32feadd07593a9638f38f5a05ce9e62efa175405e7e22ce1900",
+    "initial-x86_64/format-platform-ci.json": "0009a5a282c4e997889feada3379c3c584b69f4048e832a8c4ae22a369072cfd",
+    "initial-x86_64/linux-driver-results-ci.json": "8f95aaad2a7ca980bf7777f0cebddee6d6c85e6c2f6be4f004a97f65232ae7b7",
+    "initial-x86_64/portability-ci.log": "aa68d2da9539efdf66b0f0bb1d9ba67454b47183c38860e8562c1e3cd6d65a9a",
+    "initial-x86_64/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "initial-x86_64/shift-jis-platform-ci.json": "3087eb2c183cc3e3f0ee9fa0cee286012430421a3ac31b9ab05eb8d15705c02c"
+  },
+  "ci_conclusion": "success",
+  "macos_ci": {
+    "debug_passed": 149,
+    "failed": 0,
+    "ignored": 0,
+    "xml": {
+      "match": 97,
+      "expected": 12,
+      "unexpected": 0,
+      "skipped": 0
+    },
+    "original_driver_audit": "success",
+    "utf8_driver_audit": "success",
+    "full_release_suite_executed": false
+  }
+}

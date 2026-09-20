@@ -1,0 +1,31 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "libc": [
+    "",
+    ""
+  ],
+  "locale": "ja_JP.SJIS",
+  "codeset": "SJIS",
+  "oracle_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "rawk_revision": "4ed62b27663d5657e36174a092e05c1e1ac552bd",
+  "valid_double_byte_pairs": 11280,
+  "conversion_match": true,
+  "input_sha256": "7aa192e900ea83d97c32c5983e4d3a261e156d32f343afe61d96c1f0fd1f984c",
+  "binary_sha256": {
+    "c": "5d77fdd60aa5b3f6a9d888490b82d8870aff7c2b4813a12dcaa7d0195f94c780",
+    "rust": "f3e4001b44ad774a9cf283f9f53c059c5587cf8057a467e99fc0ce1de2e4d2ff"
+  },
+  "outcomes": {
+    "c": {
+      "code": 0,
+      "stderr_hex": "",
+      "stdout_sha256": "df72f864eaebbb12940bb7d9120fe5ef57398863973330ac8fec85c43f598495"
+    },
+    "rust": {
+      "code": 0,
+      "stderr_hex": "",
+      "stdout_sha256": "df72f864eaebbb12940bb7d9120fe5ef57398863973330ac8fec85c43f598495"
+    }
+  }
+}

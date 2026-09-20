@@ -1,0 +1,18 @@
+    Finished `release` profile [optimized] target(s) in 0.36s
+     Running tests/shift_jis.rs (target/release/deps/shift_jis-5a32b33fced7a1c8)
+
+running 11 tests
+test regex_rs_with_three_or_four_byte_structural_units_matches_c ... ok
+test conversion_failure_preserves_atomic_print_contract ... ok
+test required_sjis_locale_has_observable_case_mapping ... ok
+test streaming_rs_keeps_binary_data_distinct_from_eof ... ok
+test embedded_nul_preserves_the_rust_binary_extension ... ok
+test record_separators_and_locale_precedence_match_c ... ok
+test valid_case_conversion_and_truncated_suffixes_match_c ... ok
+test structural_units_regex_fields_and_formatting_match_c ... ok
+test regex_rs_sjis_refill_across_input_buffers_and_getline_matches_c ... ok
+test regex_rs_refill_restart_longest_and_anchors_match_c ... ok
+test single_bytes_and_lead_trail_boundaries_match_c ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.52s
+

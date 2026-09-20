@@ -1,0 +1,84 @@
+{
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "libc": [
+    "glibc",
+    "2.39"
+  ],
+  "locale": "ja_JP.SJIS",
+  "codeset": "SHIFT_JIS",
+  "oracle_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "rawk_revision": "3b9facfebb6e29f4399f330be3ca7fbbfe591663",
+  "valid_double_byte_pairs": 6879,
+  "conversion_match": true,
+  "binary_sha256": {
+    "c": "8fc1b1ed35ed1d1cc8357f4b14c0cb7fbcf3a9362b4232bddd40872f9da82d22",
+    "rust": "986939d2e196064b8c05734311bbb3c1a3d31b424ed1c52196d888e0ac1f897f"
+  },
+  "encodable_pairs": {
+    "toupper": 6879,
+    "tolower": 6878
+  },
+  "unencodable_mappings": {
+    "toupper": [],
+    "tolower": [
+      "81f0"
+    ]
+  },
+  "cases": [
+    {
+      "operation": "toupper",
+      "pairs": 6879,
+      "match": true,
+      "input_sha256": "06d871600357fcd312a0e99326f26f415cbfad380583ed2672d9a88d6daecc14",
+      "outcomes": {
+        "c": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "6fcf7349c4b4399e09be53ae6bf18782216a8af926c52acb8fe12e08a02b7f3d"
+        },
+        "rust": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "6fcf7349c4b4399e09be53ae6bf18782216a8af926c52acb8fe12e08a02b7f3d"
+        }
+      }
+    },
+    {
+      "operation": "tolower",
+      "pairs": 6878,
+      "match": true,
+      "input_sha256": "e118cf1c2d4fcd0ec32f67ec9ee918fe55407a09bbbad74c458f6342ececf803",
+      "outcomes": {
+        "c": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "95784a40ce813f3c5ca14085f242ff9b12f9fbe905c9ef3b92b7bba5f0659193"
+        },
+        "rust": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "95784a40ce813f3c5ca14085f242ff9b12f9fbe905c9ef3b92b7bba5f0659193"
+        }
+      }
+    },
+    {
+      "operation": "tolower",
+      "input_hex": "81f0",
+      "match": true,
+      "expected_error": "illegal wide character",
+      "outcomes": {
+        "c": {
+          "code": 2,
+          "stdout_hex": "",
+          "stderr_hex": "2f686f6d652f72756e6e65722f776f726b2f7261776b2f7261776b2f635f61776b2f612e6f75743a20696c6c6567616c207769646520636861726163746572206181f05a0a20696e707574207265636f7264206e756d62657220312c2066696c65200a20736f75726365206c696e65206e756d62657220310a"
+        },
+        "rust": {
+          "code": 2,
+          "stdout_hex": "",
+          "stderr_hex": "7261776b3a20696c6c6567616c2077696465206368617261637465720a"
+        }
+      }
+    }
+  ]
+}

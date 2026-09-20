@@ -93,7 +93,11 @@ byte è corretto: un automa dedicato riproduce i gruppi di lettura e i riavvii
 di `fnematch`, senza cambiare le regex in memoria. La regressione è attiva;
 non rimangono ignore per Shift-JIS. Rust conserva i byte FF anche nei casi
 in cui l'oracolo Darwin fallisce passando un `char` negativo a `ungetc`.
-Linux nativo resta sospeso; la convalida non si estende automaticamente ad
-altre piattaforme. [Correzione RS e verifiche](../diary/2026-09-20-shift-jis-rs.md).
+Linux glibc 2.39 x86-64/ARM64 è ora verificato sui runner nativi: 12 test
+Shift-JIS nel gate debug/release e 6.879 coppie valide confrontate con il C.
+Upper riesce per tutte; lower riesce per 6.878 e restituisce l'errore previsto
+`illegal wide character` per `81 f0`, come il C. La sonda controlla anche
+questo esito; non scarta il caso. [Consegna Linux](../diary/2026-09-20-shift-jis-linux.md).
+La convalida non si estende automaticamente ad altre piattaforme. [Correzione RS e verifiche](../diary/2026-09-20-shift-jis-rs.md).
 
 Audit iniziale e piano di lavoro: [valutazione](../audit-2026-09-19/VALUTAZIONE.md) e [piano aggiornato](../audit-2026-09-19/PIANO_DI_LAVORO.md).

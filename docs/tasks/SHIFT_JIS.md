@@ -6,8 +6,12 @@ Conversioni, unità BWK e residuo `fnematch`/RS implementati e verificati su
 Darwin ARM64. La regressione sulle sequenze strutturali di 3/4 byte è stata
 riattivata senza modificarne l'oracolo. Leggere la [consegna RS](../../diary/2026-09-20-shift-jis-rs.md)
 e il [rapporto iniziale](../../diary/2026-09-20-shift-jis.md) per contratti ed
-evidenze. Linux nativo resta sospeso; nessuna dichiarazione di supporto
-universale di codifiche o piattaforme.
+evidenze. Linux glibc 2.39 x86-64/ARM64 ora verificato con locale preparata, preflight
+libc e suite attiva: 87 test debug + 87 release per runner, inclusi 12 Shift-JIS.
+Confrontate tutte le 6.879 coppie libc valide, compreso l'errore di ricodifica
+minuscola di `81 f0`. Nessuna modifica runtime necessaria.
+[Consegna Linux](../../diary/2026-09-20-shift-jis-linux.md).
+Nessuna dichiarazione di supporto universale di codifiche o piattaforme.
 
 ## Obiettivo
 
@@ -33,7 +37,7 @@ con evidenze; non dichiarare supporto completo sulla base di pochi esempi.
   ricavare il contratto dal codice e dai risultati, non dal nome della codifica.
 - Preservare C, UTF-8, ISO-8859-1/9, contratti binari e semantica delle regex.
 - Eseguire test mirati, gate completo e suite release; registrare ciò che resta
-  non verificabile. Linux nativo resta sospeso, non è un prerequisito locale.
+  non verificabile. Per Linux usare evidenze dei runner nativi x86-64/ARM64.
 - Aggiornare stato, rapporto e piano, consegnando secondo il modello.
 - Nessuna riscrittura della home, nessuna estensione implicita ad altre codifiche.
 

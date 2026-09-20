@@ -1,0 +1,64 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "libc": [
+    "",
+    ""
+  ],
+  "locale": "ja_JP.SJIS",
+  "codeset": "SJIS",
+  "oracle_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "rawk_revision": "2c214635401bc130838104fc07036e2cbead9b36",
+  "valid_double_byte_pairs": 11280,
+  "conversion_match": true,
+  "binary_sha256": {
+    "c": "5d77fdd60aa5b3f6a9d888490b82d8870aff7c2b4813a12dcaa7d0195f94c780",
+    "rust": "f3e4001b44ad774a9cf283f9f53c059c5587cf8057a467e99fc0ce1de2e4d2ff"
+  },
+  "encodable_pairs": {
+    "toupper": 11280,
+    "tolower": 11280
+  },
+  "unencodable_mappings": {
+    "toupper": [],
+    "tolower": []
+  },
+  "cases": [
+    {
+      "operation": "toupper",
+      "pairs": 11280,
+      "match": true,
+      "input_sha256": "7aa192e900ea83d97c32c5983e4d3a261e156d32f343afe61d96c1f0fd1f984c",
+      "outcomes": {
+        "c": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "4650872983e077f6259b737120e83413239795716fe56c2d1a20a94f85ffd1ad"
+        },
+        "rust": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "4650872983e077f6259b737120e83413239795716fe56c2d1a20a94f85ffd1ad"
+        }
+      }
+    },
+    {
+      "operation": "tolower",
+      "pairs": 11280,
+      "match": true,
+      "input_sha256": "7aa192e900ea83d97c32c5983e4d3a261e156d32f343afe61d96c1f0fd1f984c",
+      "outcomes": {
+        "c": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "e11d0494bacbb4b6a189f0df915057b6fa89c41aafc4c3c1503c5156eeda6cfe"
+        },
+        "rust": {
+          "code": 0,
+          "stderr_hex": "",
+          "stdout_sha256": "e11d0494bacbb4b6a189f0df915057b6fa89c41aafc4c3c1503c5156eeda6cfe"
+        }
+      }
+    }
+  ]
+}

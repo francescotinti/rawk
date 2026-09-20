@@ -7,14 +7,18 @@ Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 - Repository: `francescotinti/rawk`, branch di coordinamento `master`.
 - Commit runtime pubblicato verificato: `a118616` (correzione CI Linux, tutti i job verdi).
   Eseguire `git status` e `git log` per lo stato corrente; questo non è un puntatore dinamico.
+- Ultima convalida pubblicata: `3b9facf` (infrastruttura/test Shift-JIS, runtime
+  invariato da `a118616`). [CI tutta verde](https://github.com/francescotinti/rawk/actions/runs/35508846617):
+  Linux **87 debug + 87 release per runner**; macOS **149 debug** nel gate completo,
+  XML 97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED, audit originali/UTF-8 verdi.
 - Fasi 1–7 chiuse nel profilo C su Darwin ARM64; successivamente aggiunti UTF-8,
   conversioni/classi ISO-8859-1/9 e ottimizzazione delle regex booleane UTF-8.
 - Il residuo RS Shift-JIS è corretto nella consegna successiva a `6bd0c0f`;
   dettagli, evidenze e perimetro nel [rapporto RS](diary/2026-09-20-shift-jis-rs.md).
-- Verifica corrente: **148 test debug e 148 release passati su Darwin ARM64**, nessun ignorato.
+- Verifica locale precedente: **148 test debug e 148 release passati su Darwin ARM64**, nessun ignorato.
   XML 97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED; fmt e Clippy passati.
   CI macOS verde, inclusi gate e audit originali/UTF-8.
-- **Linux glibc x86-64 e ARM64 nativi verdi in CI**: 75 test debug + 75 release
+- **CI Linux precedente (`a118616`)**: 75 test debug + 75 release
   su ciascun runner, nessun ignorato; fmt, Clippy e build release passati.
   Corretti cast `wchar_t`, precisione dinamica negativa, unsigned negativi x86-64
   e zero-padding di `%s`, preservando Darwin e i percorsi binari/multibyte.
@@ -29,7 +33,7 @@ Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 - Oracle: `../c_awk`, revisione `5739fd79bcfc75ba7526773d0cf634521f8aca3c`.
   Non è una certificazione POSIX/gawk completa. Conservare le differenze deliberate.
 
-## Shift-JIS: residuo RS risolto su Darwin ARM64
+## Shift-JIS: Darwin ARM64 e Linux glibc nativo
 
 Conversioni libc, errori su input invalido/troncato e unità strutturali BWK
 implementati per `ja_JP.SJIS`. La sonda e9 ora restituisce errore anche in Rust;
@@ -43,11 +47,16 @@ EOF, cambi di RS, letture fisiche corte, confini del buffer e `getline`.
 Non è una certificazione generale di tutte le codifiche o piattaforme.
 [Scheda](docs/tasks/SHIFT_JIS.md), [consegna RS](diary/2026-09-20-shift-jis-rs.md).
 
+Linux glibc 2.39 x86-64 e ARM64: locale generata e sondata nativamente,
+12 test Shift-JIS inclusi nel gate debug/release. Tutte le 6.879 coppie valide
+verificate contro il C: upper 6.879 successi, lower 6.878 successi e un errore
+atteso di ricodifica (`81 f0`), identico nei due interpreti. Nessuna modifica
+runtime necessaria. [Consegna Linux Shift-JIS](diary/2026-09-20-shift-jis-linux.md).
+
 ## Attività aperte
 
-- Shift-JIS su Linux resta da convalidare: il gate Linux corrente non include
-  `tests/shift_jis.rs` e non prepara `ja_JP.SJIS`. La CI verde non certifica
-  questa codifica né l'intero inventario dei driver originali su Linux.
+- L'inventario completo dei driver Linux resta diagnostico, senza `--check`;
+  il gate non ne certifica l'equivalenza integrale.
 - Altre codifiche, macOS Intel nativo, nomi di file non UTF-8 e ulteriori
   ottimizzazioni: attività distinte da delimitare, non parte implicita di Shift-JIS.
 

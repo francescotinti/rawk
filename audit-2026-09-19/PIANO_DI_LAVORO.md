@@ -280,3 +280,20 @@ prepara `ja_JP.SJIS`; l'inventario completo dei driver è diagnostico, senza
 `--check`. Restano da delimitare convalida Shift-JIS Linux, altre codifiche,
 macOS Intel nativo e ulteriori domini numerici. Nessuna certificazione generale.
 [Consegna ed evidenze](../diary/2026-09-20-linux-ci.md).
+
+
+## Shift-JIS Linux nativo — 20 settembre 2026
+
+Attivata la suite Shift-JIS nei runner glibc 2.39 x86-64/ARM64 con locale
+`ja_JP.SJIS` generata e sonda libc obbligatoria. Entrambi superano 87 test debug
++ 87 release, inclusi 12 Shift-JIS, senza ignorati. Confrontate tutte le 6.879
+coppie decodificabili native: upper riesce per tutte, lower per 6.878; il caso
+`81 f0` verifica l'errore di ricodifica condiviso da C e Rust. La sonda iniziale
+si interrompeva su questo errore perché assumeva che ogni mapping fosse
+ricodificabile; evidenze conservate e controllo corretto, senza scartare casi.
+
+Nessuna modifica al runtime: preservati contratti binari, decoder BWK,
+conversioni libc, RS e correzioni precedenti. Altre codifiche e macOS Intel
+rimangono attività separate; inventario driver Linux ancora diagnostico.
+CI finale `3b9facf` tutta verde, compreso macOS: 149 test debug, XML invariato,
+audit originali/UTF-8 passati. [Consegna ed evidenze](../diary/2026-09-20-shift-jis-linux.md).
