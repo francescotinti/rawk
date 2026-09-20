@@ -100,7 +100,7 @@ impl RecordReader {
                 let leading = self.remaining().iter().take_while(|b| **b == b'\n').count();
                 self.start += leading;
             }
-            let subject_end = if regex.is_some() && crate::text::utf8() && !self.eof {
+            let subject_end = if regex.is_some() && crate::text::multibyte() && !self.eof {
                 crate::text::incomplete_tail(&self.buffer).unwrap_or(self.buffer.len())
             } else {
                 self.buffer.len()

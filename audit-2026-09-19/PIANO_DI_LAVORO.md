@@ -221,3 +221,24 @@ Adottate regole persistenti in [AGENTS.md](../AGENTS.md), punto di ingresso
 [scheda Shift-JIS](../docs/tasks/SHIFT_JIS.md). La home mantiene struttura e
 attribuzioni originali; riscritture da concordare. Il piano canonico è questa
 copia versionata nel repository, non quella esterna.
+
+## Shift-JIS — 20 settembre 2026
+
+Implementate conversioni libc e unità strutturali BWK per `ja_JP.SJIS`, con
+regressioni su dati validi, invalidi, troncati e NUL. La sonda completa delle
+coppie valide della libc Darwin verifica 11.280 coppie per upper/lower.
+Preservati i contratti di NUL e stampa atomica, senza modificare gli expected
+XML o la home. [Rapporto e risultati](../diary/2026-09-20-shift-jis.md).
+
+Rimane aperto il decoder del percorso streaming `fnematch` per RS regex:
+sequenze strutturali di tre/quattro byte possono essere interpretate dal C
+in funzione del riempimento a gruppi di due byte. Test differenziale presente
+ma ignorato esplicitamente; prossimo passo modellare tale comportamento
+prima di estendere il perimetro dichiarato. Linux nativo ancora sospeso.
+139 test debug/release passati con 1 ignore esplicito; XML 97 MATCH,
+12 EXPECTED, 0 UNEXPECTED. Fmt/Clippy e controlli Rust Linux glibc dei due
+target passati; igiene AppleDouble ripristinata dopo il gate.
+
+Su istruzione dell’utente, `AGENTS.md` richiede ora commit e push su GitHub
+al termine di ogni attività, dopo le verifiche pertinenti e con verifica
+del commit remoto, salvo diversa istruzione esplicita.

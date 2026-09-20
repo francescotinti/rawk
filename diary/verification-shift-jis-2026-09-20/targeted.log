@@ -1,0 +1,39 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.38s
+     Running tests/shift_jis.rs (target/debug/deps/shift_jis-1c1b9bb11ce40504)
+
+running 8 tests
+test regex_rs_with_three_or_four_byte_structural_units_matches_c ... ignored, Open C fnematch lookahead discrepancy; see diary/2026-09-20-shift-jis.md
+test required_sjis_locale_has_observable_case_mapping ... ok
+test embedded_nul_preserves_the_rust_binary_extension ... ok
+test print_preserves_prefix_and_redirection_on_conversion_failure ... FAILED
+test valid_case_conversion_and_truncated_suffixes_match_c ... ok
+test structural_units_regex_fields_and_formatting_match_c ... ok
+test record_separators_and_locale_precedence_match_c ... ok
+test single_bytes_and_lead_trail_boundaries_match_c ... FAILED
+
+failures:
+
+---- print_preserves_prefix_and_redirection_on_conversion_failure stdout ----
+
+thread 'print_preserves_prefix_and_redirection_on_conversion_failure' (9605443) panicked at tests/shift_jis.rs:170:5:
+assertion `left == right` failed
+  left: {}
+ right: {"out1": [112, 114, 101, 102, 105, 120, 32]}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- single_bytes_and_lead_trail_boundaries_match_c stdout ----
+
+thread 'single_bytes_and_lead_trail_boundaries_match_c' (9605446) panicked at tests/shift_jis.rs:14:5:
+assertion `left == right` failed: {print tolower($0)}, input=[97, 130, 63, 122, 10], C=Outcome { stdout: [], stderr: [47, 86, 111, 108, 117, 109, 101, 115, 47, 69, 120, 116, 114, 101, 109, 101, 32, 80, 114, 111, 47, 67, 108, 97, 117, 100, 101, 47, 116, 101, 115, 116, 97, 103, 45, 97, 119, 107, 47, 99, 95, 97, 119, 107, 47, 97, 46, 111, 117, 116, 58, 32, 105, 108, 108, 101, 103, 97, 108, 32, 98, 121, 116, 101, 32, 115, 101, 113, 117, 101, 110, 99, 101, 32, 97, 130, 63, 122, 10, 32, 105, 110, 112, 117, 116, 32, 114, 101, 99, 111, 114, 100, 32, 110, 117, 109, 98, 101, 114, 32, 49, 44, 32, 102, 105, 108, 101, 32, 10, 32, 115, 111, 117, 114, 99, 101, 32, 108, 105, 110, 101, 32, 110, 117, 109, 98, 101, 114, 32, 49, 10], code: Some(2), timed_out: false }, Rust=Outcome { stdout: [], stderr: [47, 86, 111, 108, 117, 109, 101, 115, 47, 69, 120, 116, 114, 101, 109, 101, 32, 80, 114, 111, 47, 67, 108, 97, 117, 100, 101, 47, 116, 101, 115, 116, 97, 103, 45, 97, 119, 107, 47, 114, 97, 119, 107, 47, 116, 97, 114, 103, 101, 116, 47, 100, 101, 98, 117, 103, 47, 114, 97, 119, 107, 58, 32, 47, 86, 111, 108, 117, 109, 101, 115, 47, 69, 120, 116, 114, 101, 109, 101, 32, 80, 114, 111, 47, 67, 108, 97, 117, 100, 101, 47, 116, 101, 115, 116, 97, 103, 45, 97, 119, 107, 47, 114, 97, 119, 107, 47, 116, 97, 114, 103, 101, 116, 47, 100, 101, 98, 117, 103, 47, 114, 97, 119, 107, 58, 32, 99, 97, 110, 110, 111, 116, 32, 101, 120, 101, 99, 117, 116, 101, 32, 98, 105, 110, 97, 114, 121, 32, 102, 105, 108, 101, 10], code: Some(126), timed_out: false }
+  left: Some(126)
+ right: Some(2)
+
+
+failures:
+    print_preserves_prefix_and_redirection_on_conversion_failure
+    single_bytes_and_lead_trail_boundaries_match_c
+
+test result: FAILED. 5 passed; 2 failed; 1 ignored; 0 measured; 0 filtered out; finished in 15.53s
+
+error: test failed, to rerun pass `--test shift_jis`

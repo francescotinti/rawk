@@ -7,10 +7,30 @@ use std::{
 struct Locale {
     handle: usize,
     utf8: bool,
+    shift_jis: bool,
     legacy_byte: bool,
 }
 static LOCALE: OnceLock<Locale> = OnceLock::new();
+
+// libc does not expose Darwin's mbstate_t. Its SDK defines a union of
+// char[128] and long long (arm/_types.h and i386/_types.h).
+#[cfg(target_vendor = "apple")]
+#[repr(C)]
+union MbState {
+    bytes: [libc::c_char; 128],
+    alignment: libc::c_longlong,
+}
+#[cfg(not(target_vendor = "apple"))]
+type MbState = libc::mbstate_t;
+
 unsafe extern "C" {
+    fn mbrtowc(
+        wc: *mut libc::wchar_t,
+        bytes: *const libc::c_char,
+        len: usize,
+        state: *mut MbState,
+    ) -> usize;
+    fn wcrtomb(bytes: *mut libc::c_char, wc: libc::wchar_t, state: *mut MbState) -> usize;
     fn nl_langinfo_l(item: libc::nl_item, locale: libc::locale_t) -> *mut libc::c_char;
     fn towupper_l(c: u32, locale: libc::locale_t) -> u32;
     fn towlower_l(c: u32, locale: libc::locale_t) -> u32;
@@ -30,6 +50,69 @@ unsafe extern "C" {
     fn isxdigit_l(c: i32, locale: libc::locale_t) -> i32;
 }
 
+/// Select LC_CTYPE only for this synchronous conversion and restore the
+/// caller's thread locale on every exit, including errors. No global setlocale
+/// or shared implicit mbtowc/wctomb conversion state is used.
+struct ThreadLocale(libc::locale_t);
+impl Drop for ThreadLocale {
+    fn drop(&mut self) {
+        unsafe { libc::uselocale(self.0) };
+    }
+}
+
+fn convert_shift_jis(bytes: &[u8], upper: bool) -> Result<Vec<u8>, String> {
+    let handle = LOCALE.get().unwrap().handle as libc::locale_t;
+    let previous = unsafe { libc::uselocale(handle) };
+    if previous.is_null() {
+        return Err("cannot select case conversion locale".into());
+    }
+    let _restore = ThreadLocale(previous);
+    // An all-zero mbstate_t is the initial conversion state on both targets.
+    let mut decode: MbState = unsafe { std::mem::zeroed() };
+    let mut encode: MbState = unsafe { std::mem::zeroed() };
+    let mut out = Vec::with_capacity(bytes.len());
+    let mut offset = 0;
+    while offset < bytes.len() {
+        let mut wc = 0;
+        let n = unsafe {
+            mbrtowc(
+                &mut wc,
+                bytes[offset..].as_ptr().cast(),
+                bytes.len() - offset,
+                &mut decode,
+            )
+        };
+        if n == usize::MAX || n == usize::MAX - 1 {
+            return Err("illegal byte sequence in case conversion".into());
+        }
+        // Unlike C strings, Rust's deliberate binary extension continues
+        // beyond NUL. mbrtowc consumes that byte but returns zero.
+        offset += n.max(1);
+        let mapped = unsafe {
+            if upper {
+                towupper_l(wc as u32, handle)
+            } else {
+                towlower_l(wc as u32, handle)
+            }
+        };
+        // Shift-JIS emits at most two bytes; leave MB_LEN_MAX-sized room
+        // (Darwin 6, glibc 16). This path only accepts the SJIS codeset.
+        let mut buffer = [0u8; 16];
+        let n = unsafe {
+            wcrtomb(
+                buffer.as_mut_ptr().cast(),
+                mapped as libc::wchar_t,
+                &mut encode,
+            )
+        };
+        if n == usize::MAX {
+            return Err("illegal wide character".into());
+        }
+        out.extend_from_slice(&buffer[..n]);
+    }
+    Ok(out)
+}
+
 pub(crate) fn init() {
     LOCALE.get_or_init(|| {
         let name = ["LC_ALL", "LC_CTYPE", "LANG"]
@@ -45,6 +128,7 @@ pub(crate) fn init() {
             return Locale {
                 handle: 0,
                 utf8: false,
+                shift_jis: false,
                 legacy_byte: false,
             };
         }
@@ -61,12 +145,15 @@ pub(crate) fn init() {
         Locale {
             handle: handle as usize,
             utf8,
+            shift_jis: matches!(normalized.as_slice(), b"SJIS" | b"SHIFTJIS"),
             legacy_byte,
         }
     });
 }
-pub(crate) fn utf8() -> bool {
-    LOCALE.get().is_some_and(|l| l.utf8)
+/// BWK uses its structural UTF decoder for supported multibyte locales,
+/// including Shift-JIS. This describes character units, not the codeset.
+pub(crate) fn multibyte() -> bool {
+    LOCALE.get().is_some_and(|l| l.utf8 || l.shift_jis)
 }
 pub(crate) fn legacy_byte_locale() -> bool {
     LOCALE.get().is_some_and(|l| l.legacy_byte)
@@ -94,7 +181,7 @@ pub(crate) fn rune(bytes: &[u8]) -> (u32, usize) {
     (value, n)
 }
 pub(crate) fn next_len(bytes: &[u8]) -> usize {
-    if utf8() {
+    if multibyte() {
         rune(bytes).1
     } else {
         usize::from(!bytes.is_empty())
@@ -108,7 +195,7 @@ pub(crate) fn advance(bytes: &[u8], at: usize) -> usize {
     }
 }
 pub(crate) fn byte_offset(bytes: &[u8], count: usize) -> usize {
-    if !utf8() {
+    if !multibyte() {
         return count.min(bytes.len());
     }
     let mut i = 0;
@@ -121,7 +208,7 @@ pub(crate) fn byte_offset(bytes: &[u8], count: usize) -> usize {
     i
 }
 pub(crate) fn len(bytes: &[u8]) -> usize {
-    if !utf8() {
+    if !multibyte() {
         return bytes.len();
     }
     let (mut i, mut n) = (0, 0);
@@ -132,6 +219,9 @@ pub(crate) fn len(bytes: &[u8]) -> usize {
     n
 }
 pub(crate) fn convert(bytes: &[u8], upper: bool) -> Result<Vec<u8>, String> {
+    if LOCALE.get().is_some_and(|l| l.shift_jis) {
+        return convert_shift_jis(bytes, upper);
+    }
     if legacy_byte_locale() {
         let handle = LOCALE.get().unwrap().handle as libc::locale_t;
         return Ok(bytes
@@ -150,7 +240,7 @@ pub(crate) fn convert(bytes: &[u8], upper: bool) -> Result<Vec<u8>, String> {
             })
             .collect());
     }
-    if !utf8() {
+    if !multibyte() {
         return Ok(if upper {
             bytes.to_ascii_uppercase()
         } else {
@@ -224,7 +314,7 @@ pub(crate) fn encode_rune(mut c: u32) -> Vec<u8> {
 }
 
 pub(crate) fn character_index(bytes: &[u8], offset: usize) -> usize {
-    if !utf8() {
+    if !multibyte() {
         return offset + 1;
     }
     let (mut i, mut count) = (0, 0);

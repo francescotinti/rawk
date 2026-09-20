@@ -1,0 +1,60 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.93s
+     Running tests/shift_jis.rs (target/debug/deps/shift_jis-1c1b9bb11ce40504)
+
+running 5 tests
+test embedded_nul_preserves_the_rust_binary_extension ... FAILED
+test required_sjis_locale_has_observable_case_mapping ... FAILED
+test valid_case_conversion_and_truncated_suffixes_match_c ... FAILED
+test structural_units_regex_fields_and_formatting_match_c ... FAILED
+test single_bytes_and_lead_trail_boundaries_match_c ... FAILED
+
+failures:
+
+---- embedded_nul_preserves_the_rust_binary_extension stdout ----
+
+thread 'embedded_nul_preserves_the_rust_binary_extension' (9598170) panicked at tests/shift_jis.rs:94:5:
+assertion `left == right` failed
+  left: [65, 0, 130, 129, 124, 97, 0, 130, 129]
+ right: [65, 0, 130, 96, 124, 97, 0, 130, 129]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- required_sjis_locale_has_observable_case_mapping stdout ----
+
+thread 'required_sjis_locale_has_observable_case_mapping' (9598171) panicked at tests/shift_jis.rs:35:9:
+assertion `left == right` failed: /Volumes/Extreme Pro/Claude/testag-awk/rawk/target/debug/rawk
+  left: [130, 129]
+ right: [130, 96]
+
+---- valid_case_conversion_and_truncated_suffixes_match_c stdout ----
+
+thread 'valid_case_conversion_and_truncated_suffixes_match_c' (9598174) panicked at tests/shift_jis.rs:15:5:
+assertion `left == right` failed: {print toupper($0);print tolower($0);print toupper(tolower($0))}, input=[97, 90, 166, 223, 130, 160, 130, 96, 130, 129, 131, 159, 131, 191, 132, 64, 132, 112]
+  left: [65, 90, 166, 223, 130, 160, 130, 96, 130, 129, 131, 159, 131, 191, 132, 64, 132, 80, 10, 97, 122, 166, 223, 130, 160, 130, 96, 130, 129, 131, 159, 131, 191, 132, 64, 132, 112, 10, 65, 90, 166, 223, 130, 160, 130, 96, 130, 129, 131, 159, 131, 191, 132, 64, 132, 80, 10]
+ right: [65, 90, 166, 223, 130, 160, 130, 96, 130, 96, 131, 159, 131, 159, 132, 64, 132, 64, 10, 97, 122, 166, 223, 130, 160, 130, 129, 130, 129, 131, 191, 131, 191, 132, 112, 132, 112, 10, 65, 90, 166, 223, 130, 160, 130, 96, 130, 96, 131, 159, 131, 159, 132, 64, 132, 64, 10]
+
+---- structural_units_regex_fields_and_formatting_match_c stdout ----
+
+thread 'structural_units_regex_fields_and_formatting_match_c' (9598173) panicked at tests/shift_jis.rs:15:5:
+assertion `left == right` failed: {print length($0),index($0,"z");print substr($0,2,1);print split($0,a,"");for(i=1;i<=length($0);i++)print a[i];print match($0,/./),RSTART,RLENGTH;print gsub(/./,"X"),$0}, input=[97, 130, 160, 122, 10, 195, 169, 120, 10, 225, 128, 128, 122, 10, 240, 144, 128, 128, 122, 10, 233, 10]
+  left: [52, 32, 52, 10, 130, 10, 52, 10, 97, 10, 130, 10, 160, 10, 122, 10, 49, 32, 49, 32, 49, 10, 52, 32, 88, 88, 88, 88, 10, 51, 32, 48, 10, 169, 10, 51, 10, 195, 10, 169, 10, 120, 10, 49, 32, 49, 32, 49, 10, 51, 32, 88, 88, 88, 10, 52, 32, 52, 10, 128, 10, 52, 10, 225, 10, 128, 10, 128, 10, 122, 10, 49, 32, 49, 32, 49, 10, 52, 32, 88, 88, 88, 88, 10, 53, 32, 53, 10, 144, 10, 53, 10, 240, 10, 144, 10, 128, 10, 128, 10, 122, 10, 49, 32, 49, 32, 49, 10, 53, 32, 88, 88, 88, 88, 88, 10, 49, 32, 48, 10, 10, 49, 10, 233, 10, 49, 32, 49, 32, 49, 10, 49, 32, 88, 10]
+ right: [52, 32, 52, 10, 130, 10, 52, 10, 97, 10, 130, 10, 160, 10, 122, 10, 49, 32, 49, 32, 49, 10, 52, 32, 88, 88, 88, 88, 10, 50, 32, 48, 10, 120, 10, 50, 10, 195, 169, 10, 120, 10, 49, 32, 49, 32, 49, 10, 50, 32, 88, 88, 10, 50, 32, 50, 10, 122, 10, 50, 10, 225, 128, 128, 10, 122, 10, 49, 32, 49, 32, 49, 10, 50, 32, 88, 88, 10, 50, 32, 50, 10, 122, 10, 50, 10, 240, 144, 128, 128, 10, 122, 10, 49, 32, 49, 32, 49, 10, 50, 32, 88, 88, 10, 49, 32, 48, 10, 10, 49, 10, 233, 10, 49, 32, 49, 32, 49, 10, 49, 32, 88, 10]
+
+---- single_bytes_and_lead_trail_boundaries_match_c stdout ----
+
+thread 'single_bytes_and_lead_trail_boundaries_match_c' (9598172) panicked at tests/shift_jis.rs:14:5:
+assertion `left == right` failed: {print toupper($0)}, input=[129, 10]
+  left: Some(0)
+ right: Some(2)
+
+
+failures:
+    embedded_nul_preserves_the_rust_binary_extension
+    required_sjis_locale_has_observable_case_mapping
+    single_bytes_and_lead_trail_boundaries_match_c
+    structural_units_regex_fields_and_formatting_match_c
+    valid_case_conversion_and_truncated_suffixes_match_c
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.26s
+
+error: test failed, to rerun pass `--test shift_jis`

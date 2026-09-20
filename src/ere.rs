@@ -37,7 +37,7 @@ impl<'a> Match<'a> {
 impl Ere {
     pub(crate) fn new(bytes: &[u8]) -> Result<Self, String> {
         validate_repetitions(bytes)?;
-        let unicode = crate::text::utf8();
+        let unicode = crate::text::multibyte();
         let pattern = if unicode {
             crate::unicode_ere::compile(bytes)?
         } else {

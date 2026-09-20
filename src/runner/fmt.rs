@@ -139,7 +139,7 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
             let bytes = match arg {
                 AwkValue::String(s) if !s.is_empty() => s[..crate::text::next_len(s)].to_vec(),
                 AwkValue::String(_) => vec![0],
-                _ if crate::text::utf8() && arg.as_number() >= 128.0 => {
+                _ if crate::text::multibyte() && arg.as_number() >= 128.0 => {
                     char::from_u32(arg.as_number() as u32)
                         .unwrap_or('\u{fffd}')
                         .to_string()
@@ -148,7 +148,7 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
                 _ => vec![arg.as_number() as i64 as u8],
             };
             let (width, precision, left, zero) = parse_s_flags(spec_bytes);
-            let multibyte = crate::text::utf8() && bytes.len() > 1;
+            let multibyte = crate::text::multibyte() && bytes.len() > 1;
             let padding = width.saturating_sub(if multibyte {
                 precision.unwrap_or(1).min(1)
             } else {
@@ -185,7 +185,7 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
                 let pad_count = width.saturating_sub(crate::text::len(truncated));
                 let pad_byte = if zero_pad
                     && !left_align
-                    && !(crate::text::utf8() && s_bytes.iter().any(|b| *b >= 128))
+                    && !(crate::text::multibyte() && s_bytes.iter().any(|b| *b >= 128))
                 {
                     b'0'
                 } else {

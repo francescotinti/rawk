@@ -1,0 +1,44 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.27s
+     Running tests/shift_jis.rs (target/debug/deps/shift_jis-1c1b9bb11ce40504)
+
+running 5 tests
+test required_sjis_locale_has_observable_case_mapping ... ok
+test embedded_nul_preserves_the_rust_binary_extension ... ok
+test structural_units_regex_fields_and_formatting_match_c ... FAILED
+test valid_case_conversion_and_truncated_suffixes_match_c ... FAILED
+test single_bytes_and_lead_trail_boundaries_match_c ... FAILED
+
+failures:
+
+---- structural_units_regex_fields_and_formatting_match_c stdout ----
+
+thread 'structural_units_regex_fields_and_formatting_match_c' (9600062) panicked at tests/shift_jis.rs:15:5:
+assertion `left == right` failed: BEGIN{RS=".."}{print length($0),$0}, input=[97, 130, 160, 122, 10, 195, 169, 120, 10, 225, 128, 128, 122, 10, 240, 144, 128, 128, 122, 10, 233, 10]
+  left: [48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10]
+ right: [48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 48, 32, 10, 49, 32, 10, 10]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- valid_case_conversion_and_truncated_suffixes_match_c stdout ----
+
+thread 'valid_case_conversion_and_truncated_suffixes_match_c' (9600063) panicked at tests/shift_jis.rs:15:5:
+assertion `left == right` failed: {print length($0),toupper($0)}, input=[233, 10]
+  left: []
+ right: [49, 32]
+
+---- single_bytes_and_lead_trail_boundaries_match_c stdout ----
+
+thread 'single_bytes_and_lead_trail_boundaries_match_c' (9600061) panicked at tests/shift_jis.rs:14:5:
+assertion `left == right` failed: {print toupper($0)}, input=[97, 159, 159, 122, 10]
+  left: Some(126)
+ right: Some(0)
+
+
+failures:
+    single_bytes_and_lead_trail_boundaries_match_c
+    structural_units_regex_fields_and_formatting_match_c
+    valid_case_conversion_and_truncated_suffixes_match_c
+
+test result: FAILED. 2 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.92s
+
+error: test failed, to rerun pass `--test shift_jis`

@@ -79,4 +79,19 @@ con il C tutti i 255 byte non nulli nelle due locale e richiedono che siano
 installate. Dettagli nel [rapporto locale legacy](../diary/2026-09-20-legacy-locales.md).
 Shift-JIS e le altre codifiche non sono incluse in questa convalida.
 
+## Shift-JIS — profilo delimitato
+
+In `ja_JP.SJIS` le conversioni upper/lower usano la libc della locale e
+rifiutano sequenze invalide o troncate. Stringhe, regex in memoria, campi e
+formattazione mantengono le unità strutturali BWK del C; `%c` numerico emette
+UTF-8 anche qui. NUL interni e stampa atomica su errore rimangono estensioni
+deliberate Rust. Verificato su Darwin ARM64, incluse 11.280 coppie valide per
+entrambe le conversioni.
+
+Rimane una divergenza nei separatori RS regex con sequenze strutturali di
+tre/quattro byte: il C le decodifica in funzione del riempimento del buffer.
+Il test differenziale corrispondente è esplicitamente ignorato, non passato.
+Linux nativo resta sospeso; non si dichiara supporto Shift-JIS completo.
+[Contratto, controesempio e verifiche](../diary/2026-09-20-shift-jis.md).
+
 Audit iniziale e piano di lavoro: [valutazione](../audit-2026-09-19/VALUTAZIONE.md) e [piano aggiornato](../audit-2026-09-19/PIANO_DI_LAVORO.md).

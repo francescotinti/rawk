@@ -1,5 +1,14 @@
 # Task: supporto Shift-JIS
 
+## Avanzamento — 20 settembre 2026
+
+Implementazione e convalida Darwin del profilo delimitato descritte nel
+[rapporto](../../diary/2026-09-20-shift-jis.md). Conversioni e unità BWK
+implementate; rimane aperta la divergenza di `fnematch`/RS su sequenze
+strutturali di 3/4 byte. Il test differenziale è conservato con `ignore`
+esplicito: non dichiarare compatibilità completa o test interamente verdi
+senza citare questa esclusione. Linux nativo resta sospeso.
+
 ## Obiettivo
 
 Riprodurre il comportamento dell'AWK C per ja_JP.SJIS nei percorsi interessati:

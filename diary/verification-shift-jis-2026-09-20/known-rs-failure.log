@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.34s
+     Running tests/shift_jis.rs (target/debug/deps/shift_jis-1c1b9bb11ce40504)
+
+running 1 test
+test regex_rs_with_three_or_four_byte_structural_units_matches_c ... FAILED
+
+failures:
+
+---- regex_rs_with_three_or_four_byte_structural_units_matches_c stdout ----
+
+thread 'regex_rs_with_three_or_four_byte_structural_units_matches_c' (9665585) panicked at tests/shift_jis.rs:18:5:
+assertion `left == right` failed: BEGIN{RS=".."}{print length($0),$0}, input=[225, 128, 128, 122, 10]
+  left: [48, 32, 10, 49, 32, 10, 10]
+ right: [48, 32, 10, 48, 32, 10, 49, 32, 10, 10]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    regex_rs_with_three_or_four_byte_structural_units_matches_c
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.39s
+
+error: test failed, to rerun pass `--test shift_jis`

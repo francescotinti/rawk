@@ -1,0 +1,186 @@
+{
+  "status": "partial: streaming regex RS discrepancy remains open",
+  "base_commit": "6cff6bc731d523d36c2a4d23481f382c717812a7",
+  "debug": {
+    "passed": 139,
+    "failed": 0,
+    "ignored": 1
+  },
+  "release": {
+    "passed": 139,
+    "failed": 0,
+    "ignored": 1
+  },
+  "release_exit": 0,
+  "gate_exit": 1,
+  "gate_note": "Only AppleDouble metadata hygiene failed; artifacts removed and check rerun successfully. All runtime, XML, fmt and Clippy checks passed.",
+  "xml": {
+    "match": 97,
+    "expected": 12,
+    "unexpected": 0,
+    "skipped": 0
+  },
+  "linux_cross_check": {
+    "x86_64": 0,
+    "aarch64": 0,
+    "native": "suspended"
+  },
+  "known_rs_regression_explicit_run_exit": 101,
+  "probe": {
+    "locale": "ja_JP.SJIS",
+    "valid_double_byte_pairs": 11280,
+    "input_sha256": "7aa192e900ea83d97c32c5983e4d3a261e156d32f343afe61d96c1f0fd1f984c",
+    "conversion_match": true,
+    "output_sha256": "df72f864eaebbb12940bb7d9120fe5ef57398863973330ac8fec85c43f598495",
+    "binary_sha256": {
+      "c": "5d77fdd60aa5b3f6a9d888490b82d8870aff7c2b4813a12dcaa7d0195f94c780",
+      "rust": "9dec982bebc5f85d30e6d0bd135af53d111604902a5b523dd596b47dc935d72c"
+    },
+    "rs_cases": [
+      {
+        "input_hex": "c3a97a0a",
+        "program": "BEGIN{RS=\"..\"}{print length($0),$0}",
+        "match": true,
+        "c": {
+          "code": 0,
+          "stdout_hex": "30200a31200a0a",
+          "stderr_hex": ""
+        },
+        "rust": {
+          "code": 0,
+          "stdout_hex": "30200a31200a0a",
+          "stderr_hex": ""
+        }
+      },
+      {
+        "input_hex": "61c3a97a0a",
+        "program": "BEGIN{RS=\"..\"}{print length($0),$0}",
+        "match": true,
+        "c": {
+          "code": 0,
+          "stdout_hex": "30200a30200a",
+          "stderr_hex": ""
+        },
+        "rust": {
+          "code": 0,
+          "stdout_hex": "30200a30200a",
+          "stderr_hex": ""
+        }
+      },
+      {
+        "input_hex": "6161c3a97a0a",
+        "program": "BEGIN{RS=\"..\"}{print length($0),$0}",
+        "match": true,
+        "c": {
+          "code": 0,
+          "stdout_hex": "30200a30200a31200a0a",
+          "stderr_hex": ""
+        },
+        "rust": {
+          "code": 0,
+          "stdout_hex": "30200a30200a31200a0a",
+          "stderr_hex": ""
+        }
+      },
+      {
+        "input_hex": "e180807a0a",
+        "program": "BEGIN{RS=\"..\"}{print length($0),$0}",
+        "match": false,
+        "c": {
+          "code": 0,
+          "stdout_hex": "30200a30200a31200a0a",
+          "stderr_hex": ""
+        },
+        "rust": {
+          "code": 0,
+          "stdout_hex": "30200a31200a0a",
+          "stderr_hex": ""
+        }
+      },
+      {
+        "input_hex": "61e180807a0a",
+        "program": "BEGIN{RS=\"..\"}{print length($0),$0}",
+        "match": true,
+        "c": {
+          "code": 0,
+          "stdout_hex": "30200a30200a",
+          "stderr_hex": ""
+        },
+        "rust": {
+          "code": 0,
+          "stdout_hex": "30200a30200a",
+          "stderr_hex": ""
+        }
+      },
+      {
+        "input_hex": "6161e180807a0a",
+        "program": "BEGIN{RS=\"..\"}{print length($0),$0}",
+        "match": false,
+        "c": {
+          "code": 0,
+          "stdout_hex": "30200a30200a30200a31200a0a",
+          "stderr_hex": ""
+        },
+        "rust": {
+          "code": 0,
+          "stdout_hex": "30200a30200a31200a0a",
+          "stderr_hex": ""
+        }
+      },
+      {
+        "input_hex": "f09080807a0a",
+        "program": "BEGIN{RS=\"..\"}{print length($0),$0}",
+        "match": false,
+        "c": {
+          "code": 0,
+          "stdout_hex": "30200a30200a30200a",
+          "stderr_hex": ""
+        },
+        "rust": {
+          "code": 0,
+          "stdout_hex": "30200a31200a0a",
+          "stderr_hex": ""
+        }
+      },
+      {
+        "input_hex": "61f09080807a0a",
+        "program": "BEGIN{RS=\"..\"}{print length($0),$0}",
+        "match": false,
+        "c": {
+          "code": 0,
+          "stdout_hex": "30200a30200a30200a31200a0a",
+          "stderr_hex": ""
+        },
+        "rust": {
+          "code": 0,
+          "stdout_hex": "30200a30200a",
+          "stderr_hex": ""
+        }
+      },
+      {
+        "input_hex": "6161f09080807a0a",
+        "program": "BEGIN{RS=\"..\"}{print length($0),$0}",
+        "match": false,
+        "c": {
+          "code": 0,
+          "stdout_hex": "30200a30200a30200a30200a",
+          "stderr_hex": ""
+        },
+        "rust": {
+          "code": 0,
+          "stdout_hex": "30200a30200a31200a0a",
+          "stderr_hex": ""
+        }
+      }
+    ]
+  },
+  "sources_sha256": {
+    "src/text.rs": "00d522ac97432f62982719913be8c448bf99d14f8da391522cefd86da3dc6a57",
+    "src/ere.rs": "653be53b64db8262e2851f3fc18516e24a6fe861b089414283ecc2f27dbc7e4c",
+    "src/input.rs": "757a42b8ad6d9668a1c12884565218bf101f4742b3da421d45d022d113dd5522",
+    "src/runner/fmt.rs": "91f3b3b77ae676f3e7bdb102659cb5ff92cab61a093f448a5883dd8d1c0fb9c1",
+    "tests/shift_jis.rs": "b4137e8363c6aaf123504ea23dc6e97a014481e02691fbddc181404da8915fc2"
+  },
+  "push": "not performed",
+  "ci": "not checked"
+}

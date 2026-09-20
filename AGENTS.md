@@ -18,8 +18,8 @@
   Integrare aggiornamenti puntuali; concordare preventivamente una riscrittura
   della home o cambiamenti all'identità/presentazione del progetto.
 - Un'autorizzazione a commit/push non autorizza modifiche editoriali fuori tema.
-  Rispettare l'ambito dell'autorizzazione Git già ricevuta; non presumere che un
-  push autorizzato per una consegna autorizzi tutte le pubblicazioni future.
+  L'utente ha autorizzato in modo permanente commit e push alla chiusura di
+  ogni attività su questo repository, salvo diversa istruzione esplicita.
 - Una conversazione per obiettivo coerente, mantenuta fino a verifica e consegna.
   Usare la conversazione di coordinamento per priorità e decisioni trasversali.
   Creare nuove conversazioni soltanto su richiesta dell'utente.
@@ -50,5 +50,13 @@
 - Compilare una consegna in `diary/` seguendo [il modello](docs/CONSEGNA_TASK.md).
 - Riportare risultato, verifiche realmente eseguite, limiti, file modificati,
   stato Git e prossimo intervento. Non dichiarare completato ciò che è sospeso.
-- Effettuare commit/push quando autorizzati; distinguere sempre commit locale,
-  push verificato e stato CI. Le evidenze del nuovo task non sostituiscono le vecchie.
+- Al termine di ogni attività, dopo le verifiche pertinenti, creare un commit
+  delle modifiche del task ed eseguire il push sul repository GitHub configurato,
+  senza chiedere una nuova conferma. Se non ci sono modifiche, non creare commit
+  vuoti; pubblicare comunque eventuali commit locali del task ancora pendenti.
+- Verificare che il commit pubblicato sia presente sul branch remoto e riportare
+  hash, stato della working tree e stato CI separatamente. Se commit o push
+  falliscono, riportare l'impedimento e non dichiarare il repository aggiornato.
+  Non includere modifiche estranee, credenziali, build, cache o metadati AppleDouble;
+  non usare force push senza un'autorizzazione specifica.
+- Le evidenze del nuovo task non sostituiscono le vecchie.
