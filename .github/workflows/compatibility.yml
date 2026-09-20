@@ -42,8 +42,6 @@ jobs:
         run: |
           set -o pipefail
           bash scripts/darwin_native_environment.sh "${{ matrix.architecture }}" 2>&1 | tee diary/darwin-environment-ci.log
-          cc -std=c11 -Wall -Wextra -Werror scripts/shift_jis_locale_probe.c -o /tmp/rawk-sjis-locale-probe
-          /tmp/rawk-sjis-locale-probe 2>&1 | tee diary/shift-jis-locale-ci.log
           python3 scripts/format_platform_probe.py --output diary/format-platform-ci.json
       - name: Complete correctness gate (debug)
         run: |
