@@ -103,3 +103,28 @@ fn unsigned_conversion_matches_native_oracle() {
         );
     }
 }
+
+#[test]
+fn negative_precision_keeps_binary_and_multibyte_paths() {
+    // Preserve rawk's existing NUL and multibyte behavior; these paths do not
+    // acquire glibc's literal rendering of an invalid numeric/byte format.
+    let mut cmd = Command::new(env!("CARGO_BIN_EXE_rawk"));
+    cmd.env("LC_ALL", "en_US.UTF-8")
+        .arg(r#"BEGIN{printf "[%*.*c]|[%*.*c]|[%*.*s]",-9,-3,0,-9,-3,233,-9,-3,"é"}"#);
+    let out = h::run(cmd, b"", Duration::from_secs(3)).unwrap();
+    assert_eq!(out.code, Some(0));
+    assert!(out.stderr.is_empty());
+    assert_eq!(out.stdout, "[\0  ]|[é   ]|[   ]".as_bytes());
+}
+
+#[test]
+fn zero_padded_strings_match_native_oracle() {
+    for value in ["\"\"", "\"abcd\""] {
+        compare(
+            &format!(
+                "BEGIN{{printf \"[%05s][%05.0s][%05.2s][%-05s]\\n\",{value},{value},{value},{value}}}"
+            ),
+            b"",
+        );
+    }
+}

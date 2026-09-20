@@ -66,15 +66,7 @@ pub(super) fn awk_sprintf(
                 {
                     // BWK substitutes the star textually. Darwin interprets
                     // %width.-Ns as left-aligned width N with zero precision.
-                    let flags: Vec<u8> = spec_bytes
-                        .iter()
-                        .skip(1)
-                        .take_while(|b| b"-+ #0".contains(b))
-                        .copied()
-                        .collect();
-                    spec_bytes = vec![b'%'];
-                    spec_bytes.extend(flags);
-                    spec_bytes.extend(format!("-{}.0", value.unsigned_abs()).bytes());
+                    spec_bytes = negative_precision_spec(&spec_bytes, value.unsigned_abs());
                 } else {
                     spec_bytes.extend(value.to_string().bytes());
                 }
@@ -121,7 +113,34 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
     if cfg!(all(target_os = "linux", target_env = "gnu"))
         && let Some(literal) = glibc_negative_precision(spec_bytes, conv)
     {
-        out.extend(literal);
+        // BWK bypasses snprintf for multibyte strings/characters and numeric
+        // NUL. Keep rawk's existing byte-preserving formatting on those paths.
+        let uses_libc = match conv {
+            b's' => {
+                let bytes = arg.as_string_convfmt(convfmt);
+                !(0..bytes.len()).any(|i| crate::text::next_len(&bytes[i..]) > 1)
+            }
+            b'c' => match arg {
+                AwkValue::String(s) => !s.is_empty() && s[0] != 0 && crate::text::next_len(s) <= 1,
+                _ => {
+                    arg.as_number() as i64 != 0
+                        && !(crate::text::multibyte() && arg.as_number() >= 128.0)
+                }
+            },
+            _ => true,
+        };
+        if uses_libc {
+            out.extend(literal);
+        } else {
+            let dot = spec_bytes.windows(2).position(|p| p == b".-").unwrap();
+            let precision = std::str::from_utf8(&spec_bytes[dot + 2..spec_bytes.len() - 1])
+                .ok()
+                .and_then(|p| p.parse::<u32>().ok())
+                .unwrap_or(0);
+            let mut normalized = negative_precision_spec(spec_bytes, precision);
+            normalized.push(conv);
+            format_one(&normalized, conv, arg, convfmt, out);
+        }
         return;
     }
     // Lo spec è ASCII puro per costruzione (% + flags `-+ #0` + digit + `.` +
@@ -192,14 +211,10 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
                     truncated = &truncated[..crate::text::byte_offset(truncated, p)];
                 }
                 let pad_count = width.saturating_sub(crate::text::len(truncated));
-                let pad_byte = if zero_pad
-                    && !left_align
-                    && !(crate::text::multibyte() && s_bytes.iter().any(|b| *b >= 128))
-                {
-                    b'0'
-                } else {
-                    b' '
-                };
+                let space_pad = left_align
+                    || cfg!(all(target_os = "linux", target_env = "gnu"))
+                    || (crate::text::multibyte() && s_bytes.iter().any(|b| *b >= 128));
+                let pad_byte = if zero_pad && !space_pad { b'0' } else { b' ' };
                 if left_align {
                     out.extend_from_slice(truncated);
                     for _ in 0..pad_count {
@@ -218,6 +233,18 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
             out.extend_from_slice(spec_bytes);
         }
     }
+}
+
+fn negative_precision_spec(spec: &[u8], precision: u32) -> Vec<u8> {
+    let mut normalized = vec![b'%'];
+    normalized.extend(
+        spec.iter()
+            .skip(1)
+            .take_while(|b| b"-+ #0".contains(b))
+            .copied(),
+    );
+    normalized.extend(format!("-{precision}.0").bytes());
+    normalized
 }
 
 // BWK textually substitutes a negative precision, then adds `j` for integers.
