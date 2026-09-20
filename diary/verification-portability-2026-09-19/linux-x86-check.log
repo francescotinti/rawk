@@ -1,0 +1,6 @@
+    Blocking waiting for file lock on build directory
+    Checking rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `/Volumes/Extreme Pro/Claude/testag-awk/rawk/target/x86_64-unknown-linux-gnu/debug/incremental/unicode_contract-1non1avpbxnvz/s-hmfmwi1777-0eqad0f-working`
+
+warning: `rawk` (test "unicode_contract") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 9.33s

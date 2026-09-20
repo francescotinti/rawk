@@ -1,0 +1,62 @@
+{
+  "p.43": {
+    "rule": "array-lines",
+    "inputs": {
+      "p.43": "b8be51db21cd22b6c347fceb7b06226ba6423d3468a2935ff205bda253105cbb",
+      "test.data": "b3ec24310faa52a521c07180553f8b00855d6306b8ca4ad43c0c6bd6ac8dd177",
+      "test.countries": "d411cfa990c29cc317ec96edc322ddfbe6144731f9f41b8e74a7bea0fa198725"
+    }
+  },
+  "p.48b": {
+    "rule": "fixed-rng-streams",
+    "inputs": {
+      "p.48b": "0b6075e34a1cac3e812a66d70eccde05dd0af815b6a2e0933d51360900aeefc5",
+      "test.data": "b3ec24310faa52a521c07180553f8b00855d6306b8ca4ad43c0c6bd6ac8dd177",
+      "test.countries": "d411cfa990c29cc317ec96edc322ddfbe6144731f9f41b8e74a7bea0fa198725"
+    },
+    "stdout_sha256": {
+      "c": "47b27fc099e6d6639e15731e2ebc7f10a73cf94496bf363fc892a6fde324b942",
+      "rust": "7e6a520b1d8fa394b084141669f784cb45fa1101a8f1b007d14bc340642f2f40"
+    }
+  },
+  "t.in2": {
+    "rule": "array-lines",
+    "inputs": {
+      "t.in2": "d88f2799501aa98ab74bd3e8ac9073002b541a1b5c136b7712650c7720725508",
+      "test.data": "b3ec24310faa52a521c07180553f8b00855d6306b8ca4ad43c0c6bd6ac8dd177",
+      "test.countries": "d411cfa990c29cc317ec96edc322ddfbe6144731f9f41b8e74a7bea0fa198725"
+    }
+  },
+  "t.intest2": {
+    "rule": "array-sections",
+    "inputs": {
+      "t.intest2": "103dbd5b75cb49766edc9bfd25e68a37aa36daab7a6067097090df7c8444f07f",
+      "test.data": "b3ec24310faa52a521c07180553f8b00855d6306b8ca4ad43c0c6bd6ac8dd177",
+      "test.countries": "d411cfa990c29cc317ec96edc322ddfbe6144731f9f41b8e74a7bea0fa198725"
+    }
+  },
+  "t.printf2": {
+    "rule": "fixed-binary-streams",
+    "inputs": {
+      "t.printf2": "a22d83a0e6c67b24ec7114233fc94be9984de596c9ad2ebb43c8c49302de2c70",
+      "test.data": "b3ec24310faa52a521c07180553f8b00855d6306b8ca4ad43c0c6bd6ac8dd177",
+      "test.countries": "d411cfa990c29cc317ec96edc322ddfbe6144731f9f41b8e74a7bea0fa198725"
+    },
+    "stdout_sha256": {
+      "c": "4c051178ad2b7a6511f7c8ff0942a29d7f46c1b6c222e22ba8ed14af676eaa54",
+      "rust": "b670c8b0a047f1607361ae93dbe281e5f7d49d83c29e8a10061337b0410205f2"
+    }
+  },
+  "t.randk": {
+    "rule": "fixed-rng-streams",
+    "inputs": {
+      "t.randk": "675967900437acdba8047fa5ff6efa98775571220f41efb8a92ee65bacbe4620",
+      "test.data": "b3ec24310faa52a521c07180553f8b00855d6306b8ca4ad43c0c6bd6ac8dd177",
+      "test.countries": "d411cfa990c29cc317ec96edc322ddfbe6144731f9f41b8e74a7bea0fa198725"
+    },
+    "stdout_sha256": {
+      "c": "001b3ca0d397ac619205050ab1dfc99a5ddb97fba0b060554fab16a918401884",
+      "rust": "87d39c2e859a1c3d1fcc348e31ca07767473559d455c20ef2a88a88225a2eae0"
+    }
+  }
+}

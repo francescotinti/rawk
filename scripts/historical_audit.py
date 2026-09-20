@@ -9,13 +9,13 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def run(binary, arguments, cwd, environment=None):
-    child = subprocess.Popen([str(binary), *arguments], stdin=subprocess.DEVNULL,
+def run(binary, arguments, cwd, environment=None, timeout_seconds=3, stdin_data=None):
+    child = subprocess.Popen([str(binary), *arguments], stdin=subprocess.PIPE if stdin_data is not None else subprocess.DEVNULL,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                              cwd=cwd, env=dict(os.environ, LC_ALL='C') | (environment or {}), start_new_session=True)
     timeout = False
     try:
-        stdout, stderr = child.communicate(timeout=3)
+        stdout, stderr = child.communicate(input=stdin_data, timeout=timeout_seconds)
     except subprocess.TimeoutExpired:
         timeout = True
         os.killpg(child.pid, signal.SIGKILL)
@@ -25,6 +25,12 @@ def run(binary, arguments, cwd, environment=None):
             os.killpg(child.pid, signal.SIGKILL)
         except ProcessLookupError:
             pass
+        except PermissionError:
+            # Darwin may report EPERM for an already empty process group.
+            # Never suppress a failure to kill a group that still has members.
+            groups = subprocess.check_output(['ps', '-axo', 'pgid=']).split()
+            if str(child.pid).encode() in groups:
+                raise
     return dict(stdout_hex=stdout.hex(), stderr_hex=stderr.hex(),
                 stdout=stdout.decode(errors='backslashreplace'),
                 stderr=stderr.decode(errors='backslashreplace'),

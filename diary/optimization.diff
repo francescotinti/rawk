@@ -1,0 +1,141 @@
+--- a/src/input.rs
++++ b/src/input.rs
+@@ -6,6 +6,7 @@
+ pub(crate) struct RecordReader {
+     reader: Box<dyn Read>,
+     buffer: Vec<u8>,
++    start: usize,
+     eof: bool,
+     separator: Option<(Vec<u8>, std::rc::Rc<crate::ere::Ere>)>,
+ }
+@@ -18,7 +19,7 @@
+         loop {
+             let mut quoted = false;
+             let mut end = None;
+-            for (i, b) in self.buffer.iter().enumerate() {
++            for (i, b) in self.remaining().iter().enumerate() {
+                 if *b == b'"' {
+                     quoted = !quoted;
+                 }
+@@ -28,12 +29,12 @@
+                 }
+             }
+             if end.is_some() || self.eof {
+-                if self.buffer.is_empty() {
++                if self.remaining().is_empty() {
+                     return Ok(None);
+                 }
+-                let len = end.unwrap_or(self.buffer.len());
++                let len = end.unwrap_or(self.remaining().len());
+                 let mut record = Vec::new();
+-                for &b in &self.buffer[..len] {
++                for &b in &self.remaining()[..len] {
+                     if b == b'\n' && record.last() == Some(&b'\r') {
+                         record.pop();
+                     }
+@@ -49,7 +50,7 @@
+                 } else {
+                     Vec::new()
+                 };
+-                self.buffer.drain(..len + usize::from(end.is_some()));
++                self.start += len + usize::from(end.is_some());
+                 return Ok(Some((record, rt)));
+             }
+             self.fill()?;
+@@ -59,12 +60,22 @@
+         Self {
+             reader: Box::new(reader),
+             buffer: Vec::new(),
++            start: 0,
+             eof: false,
+             separator: None,
+         }
+     }
+ 
++    fn remaining(&self) -> &[u8] {
++        &self.buffer[self.start..]
++    }
++
+     fn fill(&mut self) -> io::Result<()> {
++        // Compact only when more input is needed, not after every record.
++        if self.start > 0 {
++            self.buffer.drain(..self.start);
++            self.start = 0;
++        }
+         let mut bytes = [0; 8192];
+         let count = self.reader.read(&mut bytes)?;
+         self.eof = count == 0;
+@@ -85,15 +96,15 @@
+         };
+         loop {
+             if rs.is_empty() {
+-                let leading = self.buffer.iter().take_while(|b| **b == b'\n').count();
+-                self.buffer.drain(..leading);
++                let leading = self.remaining().iter().take_while(|b| **b == b'\n').count();
++                self.start += leading;
+             }
+             let separator = if let Some(regex) = &regex {
+                 {
+                     let mut offset = 0;
+                     let mut found = None;
+-                    while offset <= self.buffer.len() {
+-                        let Some(m) = regex.find_at(&self.buffer, offset) else {
++                    while offset <= self.remaining().len() {
++                        let Some(m) = regex.find_at(self.remaining(), offset) else {
+                             break;
+                         };
+                         if !m.is_empty() {
+@@ -105,27 +116,29 @@
+                     found
+                 }
+             } else {
+-                self.buffer
++                self.remaining()
+                     .iter()
+                     .position(|b| *b == rs[0])
+                     .map(|p| (p, p + 1, false))
+             };
+             if let Some((start, end, can_extend)) = separator {
+                 // A regex separator ending at the buffer boundary might extend.
+-                if regex.is_some() && (can_extend || end == self.buffer.len()) && !self.eof {
++                if regex.is_some() && (can_extend || end == self.remaining().len()) && !self.eof {
+                     self.fill()?;
+                     continue;
+                 }
+-                let record = self.buffer[..start].to_vec();
+-                let rt = self.buffer[start..end].to_vec();
+-                self.buffer.drain(..end);
++                let record = self.remaining()[..start].to_vec();
++                let rt = self.remaining()[start..end].to_vec();
++                self.start += end;
+                 return Ok(Some((record, rt)));
+             }
+             if self.eof {
+-                if self.buffer.is_empty() {
++                if self.remaining().is_empty() {
+                     return Ok(None);
+                 }
+-                let mut record = std::mem::take(&mut self.buffer);
++                let mut record = self.remaining().to_vec();
++                self.buffer.clear();
++                self.start = 0;
+                 if rs.is_empty() {
+                     while record.last() == Some(&b'\n') {
+                         record.pop();
+--- a/src/types.rs
++++ b/src/types.rs
+@@ -200,10 +200,10 @@
+ /// arithmetic may still produce subnormal values. Preserve that distinction.
+ pub(crate) fn parse_number(text: &str) -> Option<f64> {
+     let text = text.trim_ascii();
+-    if matches!(
+-        text.to_ascii_lowercase().as_str(),
+-        "+inf" | "-inf" | "+nan" | "-nan"
+-    ) {
++    if text.len() == 4
++        && matches!(text.as_bytes()[0], b'+' | b'-')
++        && (text[1..].eq_ignore_ascii_case("inf") || text[1..].eq_ignore_ascii_case("nan"))
++    {
+         return text.parse().ok();
+     }
+     let value: f64 = text.parse().ok()?;

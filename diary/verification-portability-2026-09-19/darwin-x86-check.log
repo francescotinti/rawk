@@ -1,0 +1,5 @@
+    Checking rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `/Volumes/Extreme Pro/Claude/testag-awk/rawk/target/x86_64-apple-darwin/debug/incremental/unicode_contract-1gxxwv0r7x8yf/s-hmfmwiuxw8-1aociic-working`
+
+warning: `rawk` (test "unicode_contract") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.59s

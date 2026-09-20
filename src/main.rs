@@ -11,17 +11,26 @@ mod input;
 mod number_format;
 mod parser;
 mod runner;
+mod text;
 mod types;
+mod unicode_ere;
 mod validation;
 
 use cli::Config;
 
 fn main() {
+    if std::env::args_os().len() == 1 {
+        eprintln!("usage: rawk [-F fs | --csv] [-v var=value] [-f progfile | 'prog'] [file ...]");
+        std::process::exit(1);
+    }
     let config = Config::parse_cli();
 
     if config.debug > 0 {
-        eprintln!("Debug mode: {}", config.debug);
-        eprintln!("Config: {:#?}", config);
+        println!(
+            "rawk version {} (debug {})",
+            env!("CARGO_PKG_VERSION"),
+            config.debug
+        );
     }
 
     let code = match runner::run(config) {

@@ -4,7 +4,7 @@
  * Description: Engine printf/sprintf di rawk. Phase 7.5 — byte-aware.
  *              `awk_sprintf(fmt: &[u8], args: &[AwkValue]) -> Vec<u8>`
  *              processa lo string format AWK byte-by-byte. Conversion
- *              intere delegano a sprintf::sprintf!; quelle decimali usano
+ *              intere sono gestite direttamente; quelle decimali usano
  *              number_format e quelle esadecimali hex_float. %c distingue
  *              valori numerici (anche StrNum) da stringhe esplicite. %s emette i byte raw senza UTF-8
  *              round-trip; width/precision applicati byte-aware.
@@ -37,12 +37,47 @@ pub(super) fn awk_sprintf(
             continue;
         }
         // Accumula spec: flags + width + .precision + conversion
-        let spec_start = i;
+        let mut spec_bytes = vec![b'%'];
         i += 1;
         let mut conv: Option<u8> = None;
         while i < fmt.len() {
             let c = fmt[i];
             i += 1;
+            if b"hjLlqtz".contains(&c) {
+                continue;
+            }
+            if c == b'*' {
+                let value = args
+                    .get(arg_idx)
+                    .ok_or_else(|| {
+                        super::FlowControl::Error("missing printf width/precision argument".into())
+                    })?
+                    .as_number();
+                arg_idx += 1;
+                if !value.is_finite() || value.abs() > 1_000_000.0 {
+                    return Err(super::FlowControl::Error(
+                        "printf width/precision exceeds supported range".into(),
+                    ));
+                }
+                let value = value as i32;
+                if value < 0 && spec_bytes.last() == Some(&b'.') {
+                    // BWK substitutes the star textually. Darwin interprets
+                    // %width.-Ns as left-aligned width N with zero precision.
+                    let flags: Vec<u8> = spec_bytes
+                        .iter()
+                        .skip(1)
+                        .take_while(|b| b"-+ #0".contains(b))
+                        .copied()
+                        .collect();
+                    spec_bytes = vec![b'%'];
+                    spec_bytes.extend(flags);
+                    spec_bytes.extend(format!("-{}.0", value.unsigned_abs()).bytes());
+                } else {
+                    spec_bytes.extend(value.to_string().bytes());
+                }
+                continue;
+            }
+            spec_bytes.push(c);
             if b"diouxXeEfgGaAcs".contains(&c) {
                 conv = Some(c);
                 break;
@@ -53,11 +88,18 @@ pub(super) fn awk_sprintf(
                 ));
             }
         }
-        let spec_bytes = &fmt[spec_start..i];
         match conv {
             None => {
-                // EOF dentro lo spec — emetti letterale e termina.
-                return Err(super::FlowControl::Error("incomplete printf format".into()));
+                let arg = args
+                    .get(arg_idx)
+                    .ok_or_else(|| super::FlowControl::Error("incomplete printf format".into()))?;
+                arg_idx += 1;
+                eprintln!(
+                    "rawk: weird printf conversion {}",
+                    String::from_utf8_lossy(&spec_bytes)
+                );
+                out.extend_from_slice(&spec_bytes);
+                out.extend(arg.as_string_convfmt(convfmt));
             }
             Some(c) => {
                 let arg = args
@@ -65,7 +107,7 @@ pub(super) fn awk_sprintf(
                     .cloned()
                     .ok_or_else(|| super::FlowControl::Error("missing printf argument".into()))?;
                 arg_idx += 1;
-                format_one(spec_bytes, c, &arg, convfmt, &mut out);
+                format_one(&spec_bytes, c, &arg, convfmt, &mut out);
             }
         }
     }
@@ -83,13 +125,8 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
         _ => arg.as_number(),
     };
     match conv {
-        b'd' | b'i' => {
-            let s = sprintf::sprintf!(spec, arg.as_number() as i64).unwrap_or_default();
-            out.extend_from_slice(s.as_bytes());
-        }
-        b'o' | b'x' | b'X' | b'u' => {
-            let s = sprintf::sprintf!(spec, arg.as_number() as u64).unwrap_or_default();
-            out.extend_from_slice(s.as_bytes());
+        b'd' | b'i' | b'o' | b'x' | b'X' | b'u' => {
+            out.extend(integer_format(spec_bytes, conv, arg.as_number()));
         }
         b'a' | b'A' => out.extend(hex_float(spec_bytes, number)),
         b'e' | b'E' | b'f' | b'g' | b'G' => {
@@ -99,28 +136,40 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
         b'c' => {
             // Numeric input fields are StrNum: %c converts their numeric value,
             // whereas an explicit string contributes its first byte.
-            let byte = match arg {
-                AwkValue::String(s) => s.first().copied().unwrap_or(0),
-                _ => arg.as_number() as i64 as u8,
+            let bytes = match arg {
+                AwkValue::String(s) if !s.is_empty() => s[..crate::text::next_len(s)].to_vec(),
+                AwkValue::String(_) => vec![0],
+                _ if crate::text::utf8() && arg.as_number() >= 128.0 => {
+                    char::from_u32(arg.as_number() as u32)
+                        .unwrap_or('\u{fffd}')
+                        .to_string()
+                        .into_bytes()
+                }
+                _ => vec![arg.as_number() as i64 as u8],
             };
-            let (width, _, left, zero) = parse_s_flags(spec_bytes);
-            let padding = width.saturating_sub(1);
+            let (width, precision, left, zero) = parse_s_flags(spec_bytes);
+            let multibyte = crate::text::utf8() && bytes.len() > 1;
+            let padding = width.saturating_sub(if multibyte {
+                precision.unwrap_or(1).min(1)
+            } else {
+                1
+            });
             if !left {
-                let pad = if zero && cfg!(target_os = "macos") {
+                let pad = if zero && cfg!(target_os = "macos") && !multibyte {
                     b'0'
                 } else {
                     b' '
                 };
                 out.extend(std::iter::repeat_n(pad, padding));
             }
-            out.push(byte);
+            out.extend(bytes);
             if left {
                 out.extend(std::iter::repeat_n(b' ', padding));
             }
         }
         b's' => {
             // Phase 7.5: %s emette `arg.as_string_convfmt(convfmt)` integro come bytes raw.
-            // Width/precision applicati byte-aware.
+            // Width/precision count the character units selected by LC_CTYPE.
             let s_bytes = arg.as_string_convfmt(convfmt);
             if spec_bytes.len() == 2 {
                 // Fast path: spec esattamente `%s` → emetti tutto raw.
@@ -131,10 +180,17 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
                 if let Some(p) = precision
                     && truncated.len() > p
                 {
-                    truncated = &truncated[..p];
+                    truncated = &truncated[..crate::text::byte_offset(truncated, p)];
                 }
-                let pad_count = width.saturating_sub(truncated.len());
-                let pad_byte = if zero_pad { b'0' } else { b' ' };
+                let pad_count = width.saturating_sub(crate::text::len(truncated));
+                let pad_byte = if zero_pad
+                    && !left_align
+                    && !(crate::text::utf8() && s_bytes.iter().any(|b| *b >= 128))
+                {
+                    b'0'
+                } else {
+                    b' '
+                };
                 if left_align {
                     out.extend_from_slice(truncated);
                     for _ in 0..pad_count {
@@ -276,4 +332,55 @@ fn hex_float(spec: &[u8], value: f64) -> Vec<u8> {
         format!("{}{sign}{body}", " ".repeat(padding))
     };
     result.into_bytes()
+}
+
+fn integer_format(spec: &[u8], conv: u8, value: f64) -> Vec<u8> {
+    let (width, precision, left, zero) = parse_s_flags(spec);
+    let signed = matches!(conv, b'd' | b'i');
+    let integer = value as i64;
+    let magnitude = if signed {
+        integer.unsigned_abs()
+    } else {
+        value as u64
+    };
+    let mut digits = match conv {
+        b'o' => format!("{magnitude:o}"),
+        b'x' => format!("{magnitude:x}"),
+        b'X' => format!("{magnitude:X}"),
+        _ => magnitude.to_string(),
+    };
+    if precision == Some(0) && magnitude == 0 {
+        digits.clear();
+    }
+    if let Some(p) = precision {
+        digits = format!("{}{digits}", "0".repeat(p.saturating_sub(digits.len())));
+    }
+    let sign = if signed && integer < 0 {
+        "-"
+    } else if signed && spec.contains(&b'+') {
+        "+"
+    } else if signed && spec.contains(&b' ') {
+        " "
+    } else {
+        ""
+    };
+    let prefix = if spec.contains(&b'#') {
+        match conv {
+            b'o' if !digits.starts_with('0') => "0",
+            b'x' if magnitude != 0 => "0x",
+            b'X' if magnitude != 0 => "0X",
+            _ => "",
+        }
+    } else {
+        ""
+    };
+    let pad = width.saturating_sub(sign.len() + prefix.len() + digits.len());
+    if left {
+        format!("{sign}{prefix}{digits}{}", " ".repeat(pad))
+    } else if zero && precision.is_none() {
+        format!("{sign}{prefix}{}{digits}", "0".repeat(pad))
+    } else {
+        format!("{}{sign}{prefix}{digits}", " ".repeat(pad))
+    }
+    .into_bytes()
 }

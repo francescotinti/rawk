@@ -1,0 +1,104 @@
+T.errmsg/1 illegal primary in regular expression ['stderr_hex'] status 2 2
+T.errmsg/2 illegal break, continue, next or nextfile from BEGIN ['stderr_hex'] status 2 2
+T.errmsg/3 illegal break, continue, next or nextfile from END ['stderr_hex'] status 2 2
+T.errmsg/4 nextfile is illegal inside a function ['stderr_hex', 'code'] status 2 0
+T.errmsg/5 duplicate argument ['stderr_hex'] status 2 2
+T.errmsg/6 nonterminated character class ['stderr_hex'] status 2 2
+T.errmsg/7 nonterminated character class ['stderr_hex'] status 2 2
+T.errmsg/8 nonterminated character class ['stderr_hex'] status 2 2
+T.errmsg/9 nonterminated character class ['stderr_hex'] status 2 2
+T.errmsg/10 syntax error in regular expression ['stderr_hex'] status 2 2
+T.errmsg/11 syntax error in regular expression ['stderr_hex'] status 2 2
+T.errmsg/12 division by zero ['stderr_hex'] status 2 2
+T.errmsg/13 division by zero in /= ['stderr_hex'] status 2 2
+T.errmsg/14 division by zero in %= ['stderr_hex'] status 2 2
+T.errmsg/15 division by zero in mod ['stderr_hex'] status 2 2
+T.errmsg/16 can.t read value.* array name. ['stderr_hex'] status 2 2
+T.errmsg/17 can.t read value.* function ['stderr_hex'] status 2 2
+T.errmsg/18 can.t assign.* a function ['stderr_hex'] status 2 2
+T.errmsg/19 can.t assign to x; it.s an array name. ['stderr_hex'] status 2 2
+T.errmsg/20 is a function, not an array ['stderr_hex'] status 2 2
+T.errmsg/21 function f called with 1 args, uses only 0 ['stderr_hex'] status 2 2
+T.errmsg/22 can.t use function f as argument in f ['stderr_hex'] status 2 2
+T.errmsg/23 x is an array, not a function ['stderr_hex'] status 2 2
+T.errmsg/24 illegal nested function ['stderr_hex'] status 2 2
+T.errmsg/25 return not in function ['stderr_hex'] status 2 2
+T.errmsg/26 break illegal outside ['stderr_hex'] status 2 2
+T.errmsg/27 continue illegal outside ['stderr_hex'] status 2 2
+T.errmsg/28 non-terminated string ['stderr_hex'] status 2 2
+T.errmsg/29 next is illegal inside a function ['stderr_hex'] status 2 2
+T.errmsg/30 not enough args in printf(%s) ['stderr_hex'] status 2 2
+T.errmsg/31 weird printf conversion ['stderr_hex'] status 0 0
+T.errmsg/32 function f has .* arguments, limit .* ['stderr_hex'] status 2 2
+T.errmsg/33 bailing out ['stderr_hex'] status 2 2
+T.errmsg/34 bailing out ['stderr_hex'] status 2 2
+T.errmsg/35 bailing out ['stderr_hex'] status 2 2
+T.errmsg/36 bailing out ['stderr_hex'] status 2 2
+T.errmsg/37 bailing out ['stderr_hex'] status 2 2
+T.errmsg/38 bailing out ['stderr_hex'] status 2 2
+T.errmsg/39 extra ) ['stderr_hex'] status 2 2
+T.errmsg/40 illegal statement ['stderr_hex'] status 2 2
+T.errmsg/41 illegal statement ['stderr_hex'] status 2 2
+T.errmsg/42 illegal statement ['stderr_hex'] status 2 2
+T.errmsg/43 illegal .*next.* from BEGIN ['stderr_hex'] status 2 2
+T.errmsg/44 illegal .*next.* from END ['stderr_hex'] status 2 2
+T.errmsg/45 can.t open file ./nonexistentdir/foo ['stderr_hex'] status 2 2
+T.errmsg/46 you can.t define function f more than once ['stderr_hex'] status 2 2
+T.errmsg/47 function mp called with 1 args, uses only 0 ['stderr_hex'] status 0 0
+T.errmsg/48 index.*doesn.t permit regular expressions ['stderr_hex'] status 2 2
+T.errmsg/51 null file name in print or getline ['stderr_hex'] status 2 2
+T.errmsg/52 function has too many arguments ['stderr_hex'] status 0 0
+T.errmsg/53 calling undefined function foo ['stderr_hex'] status 2 2
+T.flags/invocation-1  ['stderr_hex'] status 1 1
+T.flags/invocation-2  ['stderr_hex'] status 2 2
+T.flags/invocation-3  ['stderr_hex'] status 2 2
+T.flags/invocation-4  ['stderr_hex'] status 2 2
+T.flags/invocation-6  ['stderr_hex'] status 2 2
+T.misc/invocation-11  ['stderr_hex'] status 2 2
+T.misc/invocation-14  ['stderr_hex'] status 2 2
+T.misc/invocation-15  ['stderr_hex'] status 2 2
+T.misc/invocation-16  ['stderr_hex'] status 2 2
+T.misc/invocation-17  ['stderr_hex'] status 2 2
+T.misc/invocation-21  ['stderr_hex'] status 2 2
+T.misc/invocation-35  ['stderr_hex'] status 2 2
+T.misc/invocation-36  ['stderr_hex'] status 2 2
+T.misc/invocation-37  ['stderr_hex'] status 2 2
+T.misc/invocation-38  ['stderr_hex'] status 2 2
+T.misc/invocation-39  ['stderr_hex'] status 0 0
+T.misc/invocation-41  ['stderr_hex'] status 2 2
+T.misc/invocation-42  ['stderr_hex'] status 2 2
+T.misc/invocation-43  ['stderr_hex'] status 2 2
+T.misc/invocation-46  ['stderr_hex'] status 2 2
+T.misc/invocation-47  ['stderr_hex'] status 2 2
+T.misc/invocation-48  ['stderr_hex'] status 2 2
+T.misc/invocation-49  ['stderr_hex'] status 2 2
+T.misc/invocation-50  ['stderr_hex'] status 2 2
+T.misc/invocation-51  ['stderr_hex'] status 2 2
+T.misc/invocation-52  ['stderr_hex'] status 2 2
+T.misc/invocation-53  ['stderr_hex'] status 2 2
+T.misc/invocation-55  ['stderr_hex'] status 2 2
+T.misc/invocation-57  ['stderr_hex'] status 2 2
+T.misc/invocation-58  ['stderr_hex'] status 2 2
+T.misc/invocation-60  ['stderr_hex'] status 2 2
+T.misc/invocation-61  ['stderr_hex'] status 2 2
+T.misc/invocation-62  ['stderr_hex'] status 2 2
+T.misc/invocation-63  ['stderr_hex'] status 2 2
+T.misc/invocation-64  ['stderr_hex'] status 2 2
+T.misc/invocation-65  ['stderr_hex'] status 2 2
+T.misc/invocation-66  ['stderr_hex'] status 2 2
+T.misc/invocation-69  ['stderr_hex'] status 2 2
+T.misc/invocation-70  ['stderr_hex'] status 2 2
+T.misc/invocation-71  ['stderr_hex'] status 2 2
+T.misc/invocation-72  ['stderr_hex'] status 2 2
+T.misc/invocation-73  ['stderr_hex'] status 2 2
+T.misc/invocation-80  ['stdout_hex'] status 0 0
+T.builtin/invocation-3  ['files'] status 0 0
+T.builtin/invocation-10  ['stderr_hex'] status 0 0
+T.errmsg/invocation-55  ['stderr_hex'] status 2 2
+T.errmsg/invocation-56  ['stderr_hex'] status 2 2
+T.errmsg/invocation-57  ['stderr_hex'] status 2 2
+T.errmsg/invocation-58  ['stderr_hex'] status 2 2
+T.errmsg/invocation-59  ['stderr_hex'] status 2 2
+T.errmsg/invocation-60  ['stderr_hex'] status 2 2
+cases 275 exact 173
+All individual contracts passed

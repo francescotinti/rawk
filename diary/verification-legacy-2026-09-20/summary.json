@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-20",
+  "platform": "Darwin ARM64",
+  "locales": [
+    "en_US.ISO8859-1",
+    "tr_TR.ISO8859-9"
+  ],
+  "before_tests_failed": 5,
+  "legacy_tests": 6,
+  "full_gate_exit": 0,
+  "debug_tests": 132,
+  "release_exit": 0,
+  "release_tests": 132,
+  "utf8_original_cases": 300,
+  "xml": {
+    "match": 97,
+    "expected": 12,
+    "unexpected": 0,
+    "skipped": 0
+  },
+  "linux_type_checks": {
+    "x86_64": 0,
+    "aarch64": 0
+  },
+  "linux_execution": false,
+  "remote_ci": false,
+  "push": false,
+  "shift_jis": "pending",
+  "evidence_sha256": {
+    "before.log": "86253db827a9395cd07b278673dd8f07d2e837bde42e9f3a2d163f57e1304392",
+    "after-focused.log": "3fbfc5b52f4fba76ef24387cbc9c61e7a532e61788d55c509244543edb754e0e",
+    "full-gate.log": "95d800792cc20dcaa0d3079a54b9d1ca59db391a034f747a49c2dfb9de1cc62b",
+    "linux-x86-check.log": "cae4c6a0d41d85de7b98e7f979e224f058b064708abe7bbd28ceddbd8705e383",
+    "linux-arm-check.log": "d4829d8ca5aef085a04115201b055b37ff9efc1f1ea7089f3cccc5288a61dff4",
+    "release-tests.log": "e5d313592a1c550a8cf24e00620cdf8d4017a0699d759c1cf22b935346c7e4f4",
+    "source-snapshot.json": "cad52ddbed5363e0d74c4b6f7aff134a2e9e7068d20c2f2da02dc05acfcbbffc"
+  }
+}

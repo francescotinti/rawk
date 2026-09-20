@@ -1,0 +1,29 @@
+{
+  "date": "2026-09-20",
+  "platform": "Darwin ARM64",
+  "full_gate_exit": 0,
+  "debug_tests": 126,
+  "release_exit": 0,
+  "release_tests": 126,
+  "utf8_original_cases": 300,
+  "xml": {
+    "match": 97,
+    "expected": 12,
+    "unexpected": 0,
+    "skipped": 0
+  },
+  "linux_x86_typecheck_exit": 0,
+  "linux_execution": false,
+  "remote_ci": false,
+  "push": false,
+  "evidence_sha256": {
+    "full-gate.log": "0d989afaccaaf0890d152364aef33c838c221f62f38b2e0a55aad67c197861a9",
+    "release-tests.log": "b1a098934a665c37f3ce2656a5d700dd6063dfaa64f091d05c8f67c2ba5cdfa9",
+    "unicode-tests.log": "c4d21249f8882e9e7bf9a30d72b996ae1fc6efdc967cb4959c0d3c3ad39e07b9",
+    "linux-check.log": "a5822c99fcfb7eb1d494d79bf1c3d9a6ced74a10b3354d9e28b6050ba928b190",
+    "utf8-benchmark.log": "2b6bb0cfd35a09ea2e08be2a72e427994d970f4ca8b4b44d8c527c2987c21eb9",
+    "byte-benchmark.log": "9f383a778fbf6522bfbda788c98a06206be337bbd2e6f15c4512578d5a19a1f9",
+    "legacy-probe.json": "eac569ed07123f506d40c2bff13b029beff1678c073199a95bdcecd12d59af50",
+    "source-snapshot.json": "db1cc4deace12c04aa99c08e169c4b21f531226ab9ecfe88af2eaeec1e8c542a"
+  }
+}

@@ -1,4 +1,5 @@
-//! Byte-oriented leftmost-longest matching. The locator finds the earliest
+//! Leftmost-longest matching using byte DFAs (raw bytes or encoded BWK runes).
+//! The locator finds the earliest
 //! starting position; an anchored all-matches DFA selects its longest match.
 //! Walking the DFA also tells streaming readers whether a match can extend.
 use regex_automata::{
@@ -10,6 +11,7 @@ use regex_automata::{
 #[derive(Clone)]
 pub(crate) struct Ere {
     locator: regex::bytes::Regex,
+    unicode: bool,
     longest: Option<dense::DFA<Vec<u32>>>,
 }
 pub(crate) struct Match<'a> {
@@ -25,9 +27,6 @@ impl<'a> Match<'a> {
     pub(crate) fn end(&self) -> usize {
         self.end
     }
-    pub(crate) fn len(&self) -> usize {
-        self.end - self.start
-    }
     pub(crate) fn is_empty(&self) -> bool {
         self.start == self.end
     }
@@ -38,7 +37,13 @@ impl<'a> Match<'a> {
 impl Ere {
     pub(crate) fn new(bytes: &[u8]) -> Result<Self, String> {
         validate_repetitions(bytes)?;
-        let pattern = crate::types::regex_pattern_from_bytes(&normalize_brackets(bytes)?);
+        let unicode = crate::text::utf8();
+        let pattern = if unicode {
+            crate::unicode_ere::compile(bytes)?
+        } else {
+            let normalized = normalize_operators(&normalize_brackets(bytes)?);
+            crate::types::regex_pattern_from_bytes(&normalized)
+        };
         let locator = regex::bytes::RegexBuilder::new(&pattern)
             .unicode(false)
             .dot_matches_new_line(true)
@@ -49,6 +54,7 @@ impl Ere {
         if !bytes.iter().any(|b| b"\\.^$|?*+()[]{}".contains(b)) {
             return Ok(Self {
                 locator,
+                unicode,
                 longest: None,
             });
         }
@@ -68,17 +74,42 @@ impl Ere {
             .map_err(|e| e.to_string())?;
         Ok(Self {
             locator,
+            unicode,
             longest: Some(longest),
         })
     }
     pub(crate) fn is_match(&self, bytes: &[u8]) -> bool {
-        self.locator.is_match(bytes)
+        if self.unicode {
+            let encoded = crate::unicode_ere::encode_keys(bytes);
+            self.locate(&encoded, 0).is_some()
+        } else {
+            self.locator.is_match(bytes)
+        }
     }
     pub(crate) fn find<'a>(&self, bytes: &'a [u8]) -> Option<Match<'a>> {
         self.find_at(bytes, 0)
     }
     pub(crate) fn find_at<'a>(&self, bytes: &'a [u8], offset: usize) -> Option<Match<'a>> {
-        let first = self.locator.find_at(bytes, offset)?;
+        self.subject(bytes).find_at(offset)
+    }
+    pub(crate) fn subject<'r, 'b>(&'r self, bytes: &'b [u8]) -> Subject<'r, 'b> {
+        Subject {
+            re: self,
+            bytes,
+            encoded: self.unicode.then(|| crate::unicode_ere::encode(bytes)),
+        }
+    }
+    fn locate<'a>(&self, bytes: &'a [u8], mut offset: usize) -> Option<regex::bytes::Match<'a>> {
+        loop {
+            let m = self.locator.find_at(bytes, offset)?;
+            if !self.unicode || m.start().is_multiple_of(4) {
+                return Some(m);
+            }
+            offset = m.start() + 1;
+        }
+    }
+    fn find_encoded<'a>(&self, bytes: &'a [u8], offset: usize) -> Option<Match<'a>> {
+        let first = self.locate(bytes, offset)?;
         let start = first.start();
         let Some(longest) = &self.longest else {
             return Some(Match {
@@ -122,6 +153,31 @@ impl Ere {
     }
 }
 
+/// Reuse transcoding when split/gsub search the same subject repeatedly.
+pub(crate) struct Subject<'r, 'b> {
+    re: &'r Ere,
+    bytes: &'b [u8],
+    encoded: Option<(Vec<u8>, Vec<usize>)>,
+}
+impl<'b> Subject<'_, 'b> {
+    pub(crate) fn find_at(&self, offset: usize) -> Option<Match<'b>> {
+        let Some((encoded, offsets)) = &self.encoded else {
+            return self.re.find_encoded(self.bytes, offset);
+        };
+        let start = offsets.partition_point(|&n| n < offset);
+        if start >= offsets.len() {
+            return None;
+        }
+        let m = self.re.find_encoded(encoded, start * 4)?;
+        Some(Match {
+            bytes: self.bytes,
+            start: offsets[m.start() / 4],
+            end: offsets[m.end() / 4],
+            can_extend: m.can_extend,
+        })
+    }
+}
+
 pub(crate) fn split(bytes: &[u8], separator: &[u8]) -> Result<Vec<Vec<u8>>, String> {
     if bytes.is_empty() {
         return Ok(Vec::new());
@@ -134,7 +190,14 @@ pub(crate) fn split(bytes: &[u8], separator: &[u8]) -> Result<Vec<Vec<u8>>, Stri
             .collect());
     }
     if separator.is_empty() {
-        return Ok(bytes.iter().map(|b| vec![*b]).collect());
+        let mut parts = Vec::new();
+        let mut start = 0;
+        while start < bytes.len() {
+            let end = crate::text::advance(bytes, start);
+            parts.push(bytes[start..end].to_vec());
+            start = end;
+        }
+        return Ok(parts);
     }
     if separator.len() == 1 {
         return Ok(bytes.split(|b| *b == separator[0]).map(Vec::from).collect());
@@ -146,15 +209,16 @@ pub(crate) fn split_using(bytes: &[u8], re: &Ere) -> Vec<Vec<u8>> {
     if bytes.is_empty() {
         return Vec::new();
     }
+    let subject = re.subject(bytes);
     let mut parts = Vec::new();
     let mut start = 0;
     let mut search = 0;
     while search <= bytes.len() {
-        let Some(m) = re.find_at(bytes, search) else {
+        let Some(m) = subject.find_at(search) else {
             break;
         };
         if m.is_empty() {
-            search = m.end() + 1;
+            search = crate::text::advance(bytes, m.end());
             continue;
         }
         parts.push(bytes[start..m.start()].to_vec());
@@ -235,12 +299,11 @@ fn normalize_brackets(pattern: &[u8]) -> Result<Vec<u8>, String> {
     let mut i = 0;
     while i < pattern.len() {
         if pattern[i] == b'\\' {
-            out.push(pattern[i]);
             i += 1;
-            if let Some(&next) = pattern.get(i) {
-                out.push(next);
-                i += 1;
-            }
+            let byte = quoted_class_byte(pattern, &mut i)?;
+            out.extend_from_slice(format!("\\x{byte:02x}").as_bytes());
+        } else if pattern.get(i..i + 2) == Some(b"$^") {
+            return Err("invalid adjacent regex anchors $^".into());
         } else if pattern[i] != b'[' {
             out.push(pattern[i]);
             i += 1;
@@ -264,20 +327,26 @@ fn normalize_brackets(pattern: &[u8]) -> Result<Vec<u8>, String> {
                         .ok_or("unterminated named character class")?;
                     let name = &pattern[start..end];
                     for b in 0u8..=255 {
-                        let member = match name {
-                            b"alnum" => b.is_ascii_alphanumeric(),
-                            b"alpha" => b.is_ascii_alphabetic(),
-                            b"blank" => matches!(b, b' ' | b'\t'),
-                            b"cntrl" => b.is_ascii_control(),
-                            b"digit" => b.is_ascii_digit(),
-                            b"graph" => (33..=126).contains(&b),
-                            b"lower" => b.is_ascii_lowercase(),
-                            b"print" => (32..=126).contains(&b),
-                            b"punct" => b.is_ascii_punctuation(),
-                            b"space" => b == b' ' || (9..=13).contains(&b),
-                            b"upper" => b.is_ascii_uppercase(),
-                            b"xdigit" => b.is_ascii_hexdigit(),
-                            _ => return Err("unknown named character class".into()),
+                        let member = if crate::text::legacy_byte_locale() {
+                            let name = std::str::from_utf8(name)
+                                .map_err(|_| "unknown named character class")?;
+                            crate::text::class_member(name, b)?
+                        } else {
+                            match name {
+                                b"alnum" => b.is_ascii_alphanumeric(),
+                                b"alpha" => b.is_ascii_alphabetic(),
+                                b"blank" => matches!(b, b' ' | b'\t'),
+                                b"cntrl" => b.is_ascii_control(),
+                                b"digit" => b.is_ascii_digit(),
+                                b"graph" => (33..=126).contains(&b),
+                                b"lower" => b.is_ascii_lowercase(),
+                                b"print" => (32..=126).contains(&b),
+                                b"punct" => b.is_ascii_punctuation(),
+                                b"space" => b == b' ' || (9..=13).contains(&b),
+                                b"upper" => b.is_ascii_uppercase(),
+                                b"xdigit" => b.is_ascii_hexdigit(),
+                                _ => return Err("unknown named character class".into()),
+                            }
                         };
                         if member {
                             tokens.push((b, false));
@@ -358,7 +427,7 @@ fn quoted_class_byte(pattern: &[u8], i: &mut usize) -> Result<u8, String> {
                 count += 1;
             }
             if count == 0 {
-                return Err("missing hex digits in character class".into());
+                return Ok(0);
             }
             return u8::try_from(value)
                 .map_err(|_| "character class escape exceeds byte profile".into());
@@ -378,4 +447,46 @@ fn quoted_class_byte(pattern: &[u8], i: &mut usize) -> Result<u8, String> {
         _ => b,
     };
     Ok(value)
+}
+
+// BWK treats a non-interval opening brace and an unmatched closing parenthesis
+// as literals. Keep Rust-specific regex syntax out of the byte ERE interface.
+fn normalize_operators(pattern: &[u8]) -> Vec<u8> {
+    let mut out = Vec::new();
+    let (mut i, mut depth, mut class) = (0, 0usize, false);
+    while i < pattern.len() {
+        let b = pattern[i];
+        if b == b'\\' {
+            out.push(b);
+            i += 1;
+            if let Some(&c) = pattern.get(i) {
+                out.push(c);
+            }
+        } else {
+            if b == b'[' {
+                class = true;
+            }
+            if !class {
+                if b == b'(' {
+                    depth += 1;
+                }
+                if b == b')' {
+                    if depth == 0 {
+                        out.push(b'\\');
+                    } else {
+                        depth -= 1;
+                    }
+                }
+                if b == b'{' && !pattern.get(i + 1).is_some_and(u8::is_ascii_digit) {
+                    out.push(b'\\');
+                }
+            }
+            out.push(b);
+            if b == b']' {
+                class = false;
+            }
+        }
+        i += 1;
+    }
+    out
 }

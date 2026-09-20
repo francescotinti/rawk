@@ -1,0 +1,3 @@
+sum_fields {'c': 0.1684, 'before': 0.4452, 'rust': 0.45}
+regex_fields {'c': 0.0253, 'before': 0.0642, 'rust': 0.0645}
+array_aggregation {'c': 0.2101, 'before': 0.6172, 'rust': 0.641}

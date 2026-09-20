@@ -1,0 +1,23 @@
+bison -d  awkgram.y
+awkgram.y: conflicts: 44 shift/reduce, 85 reduce/reduce
+cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o awkgram.tab.o awkgram.tab.c
+cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o b.o b.c
+cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o main.o main.c
+cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o parse.o parse.c
+cc -g -Wall -pedantic -Wcast-qual -O2 maketab.c -o maketab
+./maketab awkgram.tab.h >proctab.c
+cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o proctab.o proctab.c
+cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o tran.o tran.c
+cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o lib.o lib.c
+lib.c:758:11: warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
+  758 | void error()
+      |           ^
+      |            void
+1 warning generated.
+cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o run.o run.c
+run.c:1981:6: warning: variable 'unused' set but not used [-Wunused-but-set-variable]
+ 1981 |         int unused;
+      |             ^
+1 warning generated.
+cc -g -Wall -pedantic -Wcast-qual   -O2   -c -o lex.o lex.c
+cc -g -Wall -pedantic -Wcast-qual   -O2 awkgram.tab.o b.o main.o parse.o proctab.o tran.o lib.o run.o lex.o   -lm

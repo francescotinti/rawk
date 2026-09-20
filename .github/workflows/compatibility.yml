@@ -1,0 +1,104 @@
+name: Compatibility (Darwin and Linux, byte and UTF-8 profiles)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compatibility:
+    runs-on: macos-15
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: rawk
+    env:
+      LC_ALL: C
+      CARGO_INCREMENTAL: '0'
+      RUSTUP_TOOLCHAIN: 1.96.0
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: rawk
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install 1.96.0 --profile minimal --component rustfmt --component clippy
+      - name: Build pinned original C oracle
+        run: |
+          git init ../c_awk
+          git -C ../c_awk remote add origin https://github.com/onetrueawk/awk.git
+          git -C ../c_awk fetch --depth 1 origin 5739fd79bcfc75ba7526773d0cf634521f8aca3c
+          git -C ../c_awk checkout --detach FETCH_HEAD
+          make -C ../c_awk
+          ../c_awk/a.out --version
+      - name: Complete correctness gate
+        run: bash scripts/checks.sh
+      - name: Audit all original shell drivers (includes documented diagnostic and locale differences)
+        if: always()
+        run: python3 scripts/full_driver_audit.py --output diary/full-driver-results-ci.json
+      - name: Audit original UTF-8 drivers
+        if: always()
+        run: python3 scripts/full_driver_audit.py --drivers T.utf T.utfre --locale en_US.UTF-8 --check --output diary/unicode-driver-results-ci.json
+      - name: Retain full driver evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: original-driver-audit
+          path: |
+            rawk/diary/full-driver-results-ci.json
+            rawk/diary/unicode-driver-results-ci.json
+          if-no-files-found: error
+
+  linux-portability:
+    # Native execution: cross-checking Rust alone does not validate libc/locale.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: rawk
+    env:
+      LC_ALL: C
+      CARGO_INCREMENTAL: '0'
+      RUSTUP_TOOLCHAIN: 1.96.0
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: rawk
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install 1.96.0 --profile minimal --component rustfmt --component clippy
+      - name: Prepare tested locales and C build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential bison locales
+          sudo localedef -i en_US -f UTF-8 en_US.UTF-8
+          sudo localedef -i tr_TR -f UTF-8 tr_TR.UTF-8
+          sudo localedef -i en_US -f ISO-8859-1 en_US.ISO8859-1
+          sudo localedef -i tr_TR -f ISO-8859-9 tr_TR.ISO8859-9
+          locale -a
+      - name: Build pinned original C oracle
+        run: |
+          git init ../c_awk
+          git -C ../c_awk remote add origin https://github.com/onetrueawk/awk.git
+          git -C ../c_awk fetch --depth 1 origin 5739fd79bcfc75ba7526773d0cf634521f8aca3c
+          git -C ../c_awk checkout --detach FETCH_HEAD
+          make -C ../c_awk
+          ../c_awk/a.out --version
+      - name: Native portability gate (debug and release)
+        run: |
+          set -o pipefail
+          bash scripts/check_portability.sh 2>&1 | tee diary/portability-ci.log
+      - name: Inventory original drivers on this platform
+        if: always()
+        run: python3 scripts/full_driver_audit.py --output diary/linux-driver-results-ci.json
+      - name: Retain platform evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: portability-${{ matrix.os }}
+          path: |
+            rawk/diary/portability-ci.log
+            rawk/diary/linux-driver-results-ci.json
+          if-no-files-found: error

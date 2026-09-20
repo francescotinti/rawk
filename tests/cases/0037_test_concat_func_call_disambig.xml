@@ -4,9 +4,11 @@
         function add(x) { return x + 1 }
         BEGIN { print add(5), add (5) }
         </awk>
-    <expected_stdout match="exact">6 5
-</expected_stdout>
-    <expected_divergence reason="bwk-fatal-on-warning">
+    <expected_stdout match="exact"></expected_stdout>
+    <expected_stderr>rawk: cannot read function add as a value
+</expected_stderr>
+    <expected_status>2</expected_status>
+    <expected_divergence reason="diagnostic-and-atomic-print-on-error">
         <stdout>6 </stdout>
         <stderr>&lt;AWK&gt;: can't read value of add; it's a function.
  source line number 3

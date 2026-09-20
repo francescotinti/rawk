@@ -1,0 +1,115 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.32s
+     Running unittests src/bin/diffrun.rs (target/debug/deps/diffrun-e8f2c22366f6d04a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/rawk-bebb0e5d887885e7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/builtins_sanity.rs (target/debug/deps/builtins_sanity-ae977ee7411945b9)
+
+running 5 tests
+test length_string ... ok
+test match_basic ... ok
+test split_basic ... ok
+test sprintf_int ... ok
+test substr_basic ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+
+     Running tests/bytes_array_keys.rs (target/debug/deps/bytes_array_keys-2d9f9e467ecbc2f5)
+
+running 3 tests
+test distinct_high_byte_keys_do_not_collide ... ok
+test for_in_returns_all_distinct_byte_keys ... ok
+test nul_embedded_key_round_trips ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/bytes_printf.rs (target/debug/deps/bytes_printf-ecfb3eec6f826388)
+
+running 6 tests
+test field_split_with_high_byte_fs ... ok
+test print_with_high_byte_ofs ... ok
+test printf_c_emits_first_byte_raw ... ok
+test printf_format_string_with_high_bytes ... ok
+test printf_s_preserves_high_byte ... ok
+test sprintf_high_byte_round_trip ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/bytes_regex_match.rs (target/debug/deps/bytes_regex_match-ab780207d6a6e4eb)
+
+running 6 tests
+test gsub_ampersand_includes_whole_match ... ok
+test match_builtin_high_byte_pattern_position ... ok
+test match_distinguishes_high_bytes ... ok
+test nul_inside_subject_with_rs_regex ... ok
+test rs_regex_high_byte_separator_splits_correctly ... ok
+test sub_replaces_high_byte_run ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/diffrun_buckets.rs (target/debug/deps/diffrun_buckets-ec569a34ff51a5ae)
+
+running 3 tests
+test diffrun_emits_four_bucket_summary ... ok
+test diffrun_exits_nonzero_when_unexpected_divergences_present ... ok
+test diffrun_step23_target_counts ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.61s
+
+     Running tests/error_messages.rs (target/debug/deps/error_messages-4cf40e49dfd0155a)
+
+running 2 tests
+test missing_program_file_mentions_filename ... ok
+test output_to_unwritable_path_mentions_filename ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/exit_codes.rs (target/debug/deps/exit_codes-00ecda39b9ddde20)
+
+running 4 tests
+test exit_from_end_block ... 
+ok
+test exit_with_value ... ok
+test exit_zero_default ... ok
+test syntax_error_nonzero ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/printf_sanity.rs (target/debug/deps/printf_sanity-49846e0a8b0d0981)
+
+running 5 tests
+test d_padding ... ok
+test e_scientific ... ok
+test f_precision ... ok
+test s_truncate ... ok
+test x_hex ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/proptest_diff.rs (target/debug/deps/proptest_diff-97a1845d8a00e62b)
+
+running 6 tests
+test template_add ... ok
+test template_concat_string ... ok
+test template_multiply ... ok
+test template_printf_float ... ok
+test template_printf_int ... ok
+test template_scientific_no_orphan_dot ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.30s
+
+     Running tests/xml_runner_test.rs (target/debug/deps/xml_runner_test-b7267c7f36131d80)
+
+running 1 test
+test run_xml_testsuite ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.81s
+

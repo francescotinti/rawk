@@ -90,10 +90,15 @@ pub(super) fn ensure_input_file(filename: &str, context: &mut EvalContext) {
     if context.in_files.contains_key(filename) {
         return;
     }
-    if let Ok(file) = std::fs::File::open(filename) {
+    if filename == "-" {
+        context.in_files.insert(
+            filename.to_owned(),
+            InputStream::File(context.stdin.clone()),
+        );
+    } else if let Ok(file) = std::fs::File::open(filename) {
         context.in_files.insert(
             filename.to_string(),
-            InputStream::File(Box::new(crate::input::RecordReader::new(file))),
+            InputStream::File(crate::input::RecordReader::new(file).shared()),
         );
     }
 }
@@ -120,7 +125,7 @@ pub(super) fn ensure_input_pipe(cmd: &str, context: &mut EvalContext) -> bool {
             context.in_files.insert(
                 cmd.to_string(),
                 InputStream::Pipe {
-                    stdout: Box::new(reader),
+                    stdout: reader.shared(),
                     child,
                 },
             );

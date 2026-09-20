@@ -1,0 +1,24 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `/Volumes/Extreme Pro/Claude/testag-awk/rawk/target/debug/incremental/unicode_contract-0iwn5lwg7cucy/s-hmgbo0blum-18tucb6-working`
+
+warning: `rawk` (test "unicode_contract") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `/Volumes/Extreme Pro/Claude/testag-awk/rawk/target/debug/incremental/rawk-10jzm85n3srna/s-hmgbo0bltz-1a4p6iq-working`
+
+warning: `rawk` (bin "rawk") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.53s
+     Running tests/unicode_contract.rs (target/debug/deps/unicode_contract-22cea4d0ee7f7623)
+
+running 10 tests
+test binary_nul_extension_and_case_conversion_errors ... ok
+test unicode_formatting_and_source_escapes ... ok
+test required_locales_are_active_in_both_interpreters ... ok
+test utf8_record_separators_across_buffers ... ok
+test utf8_regex_empty_matches_and_mixed_bytes ... ok
+test repeated_matches_and_index_inside_a_multibyte_unit ... ok
+test locale_precedence_and_character_operations ... ok
+test unicode_classes_ranges_and_anchors ... ok
+test boolean_regex_search_preserves_rune_alignment_and_empty_matches ... ok
+test original_utf8_drivers ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.54s
+

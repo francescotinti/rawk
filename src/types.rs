@@ -52,9 +52,7 @@ pub(crate) enum AwkValue {
 
 impl AwkValue {
     pub(crate) fn from_str_num(s: Vec<u8>) -> Self {
-        let parsed = std::str::from_utf8(&s)
-            .ok()
-            .and_then(|t| t.trim().parse::<f64>().ok());
+        let parsed = std::str::from_utf8(&s).ok().and_then(parse_number);
         match parsed {
             Some(n) => AwkValue::StrNum(s, n),
             None => AwkValue::String(s),
@@ -198,6 +196,32 @@ impl AwkValue {
     }
 }
 
+/// BWK rejects string/literal conversions reporting range errors, while
+/// arithmetic may still produce subnormal values. Preserve that distinction.
+pub(crate) fn parse_number(text: &str) -> Option<f64> {
+    let text = text.trim_ascii();
+    if text.len() == 4
+        && matches!(text.as_bytes()[0], b'+' | b'-')
+        && (text[1..].eq_ignore_ascii_case("inf") || text[1..].eq_ignore_ascii_case("nan"))
+    {
+        return text.parse().ok();
+    }
+    let value: f64 = text.parse().ok()?;
+    if !value.is_finite() || value.is_subnormal() {
+        return None;
+    }
+    if value == 0.0
+        && text
+            .split(['e', 'E'])
+            .next()?
+            .bytes()
+            .any(|b| matches!(b, b'1'..=b'9'))
+    {
+        return None;
+    }
+    Some(value)
+}
+
 fn numeric_prefix(bytes: &[u8]) -> f64 {
     let b = bytes.trim_ascii_start();
     let mut i = usize::from(b.first().is_some_and(|c| *c == b'+' || *c == b'-'));
@@ -232,7 +256,7 @@ fn numeric_prefix(bytes: &[u8]) -> f64 {
     }
     std::str::from_utf8(&b[..i])
         .ok()
-        .and_then(|s| s.parse().ok())
+        .and_then(parse_number)
         .unwrap_or(0.0)
 }
 
@@ -255,9 +279,10 @@ fn format_number_unbounded(n: f64, fmt: &str) -> String {
     if n.is_finite() && n == n.trunc() && n.abs() < 1e16 {
         return format!("{}", n as i64);
     }
-    // Path B: %.0f per integer-like grandi entro f64 precision (NUOVO)
-    if n.is_finite() && n == n.trunc() && n.abs() < 1e21 {
-        return sprintf::sprintf!("%.0f", n).unwrap_or_else(|_| n.to_string());
+    // BWK preserves 30 significant digits for integral binary64 values,
+    // regardless of OFMT/CONVFMT (tran.c, getsval/getpssval).
+    if n == n.trunc() {
+        return crate::number_format::format("%.30g", n).expect("valid numeric format");
     }
     // Rust's formatter avoids sprintf's incorrect rounding with very large fixed precision.
     if let Some(precision) = fmt
@@ -310,18 +335,18 @@ impl OutputStream {
 /// Stream di input AWK aperto: file regolare oppure pipe da un comando (`"cmd" | getline`).
 /// Come `OutputStream::Pipe`, conserva lo `Child` per `wait()` su `close()`.
 pub(crate) enum InputStream {
-    File(Box<crate::input::RecordReader>),
+    File(crate::input::SharedReader),
     Pipe {
-        stdout: Box<crate::input::RecordReader>,
+        stdout: crate::input::SharedReader,
         child: std::process::Child,
     },
 }
 
 impl InputStream {
-    pub(crate) fn reader(&mut self) -> &mut crate::input::RecordReader {
+    pub(crate) fn reader(&mut self) -> std::cell::RefMut<'_, crate::input::RecordReader> {
         match self {
-            InputStream::File(r) => r.as_mut(),
-            InputStream::Pipe { stdout, .. } => stdout.as_mut(),
+            InputStream::File(r) => r.borrow_mut(),
+            InputStream::Pipe { stdout, .. } => stdout.borrow_mut(),
         }
     }
 }
@@ -351,6 +376,7 @@ pub(crate) struct EvalContext {
     pub(crate) convfmt: Vec<u8>,
     pub(crate) ofmt: Vec<u8>,
     pub(crate) input: crate::input::MainInput,
+    pub(crate) stdin: crate::input::SharedReader,
     pub(crate) rules: std::rc::Rc<Vec<crate::runner::CompiledRule>>,
 
     pub(crate) exit_code: i32,
@@ -382,6 +408,7 @@ impl EvalContext {
             convfmt: b"%.6g".to_vec(),
             ofmt: b"%.6g".to_vec(),
             input: Default::default(),
+            stdin: crate::input::RecordReader::new(std::io::stdin()).shared(),
             rules: Default::default(),
 
             exit_code: 0,
@@ -559,7 +586,24 @@ impl EvalContext {
         }
         self.arrays.get(&self.array_name(name))
     }
+    pub(crate) fn is_function_name(&self, name: &str) -> bool {
+        self.functions.contains_key(name)
+            && !self
+                .local_scopes
+                .last()
+                .is_some_and(|scope| scope.contains_key(name))
+            && !self
+                .array_scopes
+                .last()
+                .is_some_and(|scope| scope.contains_key(name))
+    }
+
     pub(crate) fn ensure_array(&mut self, name: &str) -> Result<(), crate::runner::FlowControl> {
+        if self.is_function_name(name) {
+            return Err(crate::runner::FlowControl::Error(format!(
+                "{name} is a function, not an array"
+            )));
+        }
         if self.get_var(name) != AwkValue::Uninitialized {
             return Err(crate::runner::FlowControl::Error(format!(
                 "{name} is a scalar"

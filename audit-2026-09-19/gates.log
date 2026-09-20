@@ -1,0 +1,8 @@
+check_clippy                   OK
+check_diffrun_no_unexpected    OK
+check_fmt                      OK
+check_no_exit_outside_main     OK
+check_no_macos_forks           OK
+check_no_scratch_root          OK
+check_runner_split             OK
+check_tests                    OK

@@ -1,0 +1,1096 @@
+[
+  {
+    "case": "T.-f-f",
+    "source_sha256": "f0970606a344578fe89ed5c02aea5c89f625049e2f83eb1ec5928f525acff69e",
+    "c": {
+      "stdout_hex": "542e2d662d663a20636865636b206d756c7469706c65202d6620617267756d656e74730a",
+      "stderr_hex": "",
+      "stdout": "T.-f-f: check multiple -f arguments\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e2d662d663a20636865636b206d756c7469706c65202d6620617267756d656e74730a",
+      "stderr_hex": "",
+      "stdout": "T.-f-f: check multiple -f arguments\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.argv",
+    "source_sha256": "e6f473d910a1419d9d30f914b9e44649fde6d19feb440fb06c371d445b5d9b5f",
+    "c": {
+      "stdout_hex": "542e617267763a206d697363207465737473206f66206172676320616e6420617267760a",
+      "stderr_hex": "",
+      "stdout": "T.argv: misc tests of argc and argv\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e617267763a206d697363207465737473206f66206172676320616e6420617267760a",
+      "stderr_hex": "",
+      "stdout": "T.argv: misc tests of argc and argv\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.arnold",
+    "source_sha256": "ce5ecf0d538878ddea88623bb3bc99098981b36e91db075e9bf1ebb62c1a67c7",
+    "c": {
+      "stdout_hex": "542e61726e6f6c643a20746573742066697865732062792041726e6f6c6420526f6262696e7320382f31380a2f707269766174652f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d66756c6c2d6472697665722d73636669316673772f746573746469722f61726e6f6c642d66697865730a2d7277782d2d2d2d2d2d402031206672616e636573636f74696e7469202073746166662020323030323634205365702031392031303a3132202e2e2f2e2e2f612e6f75740a",
+      "stderr_hex": "",
+      "stdout": "T.arnold: test fixes by Arnold Robbins 8/18\n/private/var/folders/n2/3ynvhhr1275c7p2j80kc1q5r0000gn/T/rawk-full-driver-scfi1fsw/testdir/arnold-fixes\n-rwx------@ 1 francescotinti  staff  200264 Sep 19 10:12 ../../a.out\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e61726e6f6c643a20746573742066697865732062792041726e6f6c6420526f6262696e7320382f31380a2f707269766174652f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d66756c6c2d6472697665722d696b6a39386c70792f746573746469722f61726e6f6c642d66697865730a2d7277782d2d2d2d2d2d402031206672616e636573636f74696e746920207374616666202033373631303838205365702031392031303a3132202e2e2f2e2e2f612e6f75740a",
+      "stderr_hex": "",
+      "stdout": "T.arnold: test fixes by Arnold Robbins 8/18\n/private/var/folders/n2/3ynvhhr1275c7p2j80kc1q5r0000gn/T/rawk-full-driver-ikj98lpy/testdir/arnold-fixes\n-rwx------@ 1 francescotinti  staff  3761088 Sep 19 10:12 ../../a.out\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.beebe",
+    "source_sha256": "464850aa5932a163f6eb8a98fe930dafc972395a80da397c3cd25f2922ba1f47",
+    "c": {
+      "stdout_hex": "542e62656562653a2074657374732066726f6d206e656c736f6e2062656562652066726f6d206761776b20746573742073756974650a",
+      "stderr_hex": "",
+      "stdout": "T.beebe: tests from nelson beebe from gawk test suite\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e62656562653a2074657374732066726f6d206e656c736f6e2062656562652066726f6d206761776b20746573742073756974650a",
+      "stderr_hex": "",
+      "stdout": "T.beebe: tests from nelson beebe from gawk test suite\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.builtin",
+    "source_sha256": "5a22fbd225a55ffad9e01b9f665867eadd14e21c89d2c2ea24043e025500f540",
+    "c": {
+      "stdout_hex": "542e6275696c74696e3a2074657374206d697363656c6c616e656f7573206275696c74696e2066756e6374696f6e730a3163310a3c2064c3bc7273747c44c3bc5253547c44c3bc7273740a2d2d2d0a3e2064c3bc7273747c44c39c5253547c44c3bc7273740a4241443a20542e6275696c74696e2028746f75707065722f746f6c6f7765722920666f72207574662d380a",
+      "stderr_hex": "",
+      "stdout": "T.builtin: test miscellaneous builtin functions\n1c1\n< d\u00fcrst|D\u00fcRST|D\u00fcrst\n---\n> d\u00fcrst|D\u00dcRST|D\u00fcrst\nBAD: T.builtin (toupper/tolower) for utf-8\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "BAD: T.builtin (toupper/tolower) for utf-8"
+      ],
+      "passed": false
+    },
+    "rust": {
+      "stdout_hex": "542e6275696c74696e3a2074657374206d697363656c6c616e656f7573206275696c74696e2066756e6374696f6e730a312c313063312c31300a3c20302e3937343234350a3c20302e3639313233360a3c20302e3432373937350a3c20302e3137353538360a3c20302e3235343535320a3c20302e3936323630330a3c20302e3338383630380a3c20302e3730383530380a3c20302e3532303334340a3c20302e333835350a2d2d2d0a3e20302e3733313131330a3e20302e37373334360a3e20302e303235383434360a3e20302e3538343135390a3e20302e3236323137310a3e20302e3737313938370a3e20302e3231383639370a3e20302e3739333731330a3e20302e3734393333380a3e20302e3936383933380a4241443a20542e6275696c74696e202872616e64290a3163310a3c2064c3bc7273747c44c3bc5253547c44c3bc7273740a2d2d2d0a3e2064c3bc7273747c44c39c5253547c44c3bc7273740a4241443a20542e6275696c74696e2028746f75707065722f746f6c6f7765722920666f72207574662d380a",
+      "stderr_hex": "",
+      "stdout": "T.builtin: test miscellaneous builtin functions\n1,10c1,10\n< 0.974245\n< 0.691236\n< 0.427975\n< 0.175586\n< 0.254552\n< 0.962603\n< 0.388608\n< 0.708508\n< 0.520344\n< 0.3855\n---\n> 0.731113\n> 0.77346\n> 0.0258446\n> 0.584159\n> 0.262171\n> 0.771987\n> 0.218697\n> 0.793713\n> 0.749338\n> 0.968938\nBAD: T.builtin (rand)\n1c1\n< d\u00fcrst|D\u00fcRST|D\u00fcrst\n---\n> d\u00fcrst|D\u00dcRST|D\u00fcrst\nBAD: T.builtin (toupper/tolower) for utf-8\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "BAD: T.builtin (rand)",
+        "BAD: T.builtin (toupper/tolower) for utf-8"
+      ],
+      "passed": false
+    },
+    "status": "reference-failure"
+  },
+  {
+    "case": "T.chem",
+    "source_sha256": "34137b8e269e04842454fc0463286b763ab1f61dfc3e0cdb9dd1058591bf91b0",
+    "c": {
+      "stdout_hex": "542e6368656d3a2074657374206368656d2e61776b0a",
+      "stderr_hex": "",
+      "stdout": "T.chem: test chem.awk\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6368656d3a2074657374206368656d2e61776b0a",
+      "stderr_hex": "",
+      "stdout": "T.chem: test chem.awk\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.close",
+    "source_sha256": "fd83f81c723e9d91e4cc6f06613c682035e8b9ae81bbba0e25a958dde898c2ff",
+    "c": {
+      "stdout_hex": "542e636c6f73653a207465737420636c6f7365206275696c742d696e0a",
+      "stderr_hex": "",
+      "stdout": "T.close: test close built-in\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e636c6f73653a207465737420636c6f7365206275696c742d696e0a",
+      "stderr_hex": "",
+      "stdout": "T.close: test close built-in\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.clv",
+    "source_sha256": "90955c6ed23d3d55d22a94dd3321da8606f6dfec703d75e2ba4283036be28ffd",
+    "c": {
+      "stdout_hex": "542e636c763a20636865636b20636f6d6d616e642d6c696e65207661726961626c65730a",
+      "stderr_hex": "",
+      "stdout": "T.clv: check command-line variables\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e636c763a20636865636b20636f6d6d616e642d6c696e65207661726961626c65730a",
+      "stderr_hex": "",
+      "stdout": "T.clv: check command-line variables\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.csconcat",
+    "source_sha256": "82eafc2044f91a6fcd2cb09af402de1a8cc2fdb94b873e2fd0fe57ff7af309cc",
+    "c": {
+      "stdout_hex": "542e6373636f6e6361743a207465737420636f6e7374616e7420737472696e6720636f6e636174656e6174696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.csconcat: test constant string concatenation\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6373636f6e6361743a207465737420636f6e7374616e7420737472696e6720636f6e636174656e6174696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.csconcat: test constant string concatenation\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.csv",
+    "source_sha256": "d80ca1cf5ec9eed7096659c92b8a2391e1bc494993212845e6258374ff39d536",
+    "c": {
+      "stdout_hex": "542e6373763a207465737473206f6620637376206669656c642073706c697474696e672c206e6f20656d626564646564206e65776c696e65730a2020312020207b20666f722028693d313b20693c3d4e463b20692b2b29207072696e746628225b25735d222c202469293b207072696e746628225c6e2229207d0a32332074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.csv: tests of csv field splitting, no embedded newlines\n  1   { for (i=1; i<=NF; i++) printf(\"[%s]\", $i); printf(\"\\n\") }\n23 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6373763a207465737473206f6620637376206669656c642073706c697474696e672c206e6f20656d626564646564206e65776c696e65730a2020312020207b20666f722028693d313b20693c3d4e463b20692b2b29207072696e746628225b25735d222c202469293b207072696e746628225c6e2229207d0a32332074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.csv: tests of csv field splitting, no embedded newlines\n  1   { for (i=1; i<=NF; i++) printf(\"[%s]\", $i); printf(\"\\n\") }\n23 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.delete",
+    "source_sha256": "6a4c8913d554e0d5e5d4bfcc1bbe1b7a8fb296f6e11764fa96ee8062a45c70aa",
+    "c": {
+      "stdout_hex": "542e64656c6574653a206d697363207465737473206f662061727261792064656c6574696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.delete: misc tests of array deletion\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e64656c6574653a206d697363207465737473206f662061727261792064656c6574696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.delete: misc tests of array deletion\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.errmsg",
+    "source_sha256": "a100a68d3566518d351cf87bddbeb96a08bb4600609fe9deec222235d660d233",
+    "c": {
+      "stdout_hex": "542e6572726d73673a20636865636b20736f6d65206572726f72206d657373616765730a0972756e6e696e6720746573747320696e20666f6f2e73680a424144073a206c6f6720617267756d656e74206f7574206f6620646f6d61696e206661696c65640a424144073a2065787020726573756c74206f7574206f662072616e6765206661696c65640a424144073a20746869732073686f756c64207072696e74206120424144206d657373616765206661696c65640a",
+      "stderr_hex": "",
+      "stdout": "T.errmsg: check some error messages\n\trunning tests in foo.sh\nBAD\u0007: log argument out of domain failed\nBAD\u0007: exp result out of range failed\nBAD\u0007: this should print a BAD message failed\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "BAD\u0007: log argument out of domain failed",
+        "BAD\u0007: exp result out of range failed",
+        "BAD\u0007: this should print a BAD message failed"
+      ],
+      "passed": false
+    },
+    "rust": {
+      "stdout_hex": "542e6572726d73673a20636865636b20736f6d65206572726f72206d657373616765730a0972756e6e696e6720746573747320696e20666f6f2e73680a424144073a20696c6c6567616c207072696d61727920696e20726567756c61722065787072657373696f6e206661696c65640a424144073a20696c6c6567616c20627265616b2c20636f6e74696e75652c206e657874206f72206e65787466696c652066726f6d20424547494e206661696c65640a424144073a20696c6c6567616c20627265616b2c20636f6e74696e75652c206e657874206f72206e65787466696c652066726f6d20454e44206661696c65640a424144073a206e65787466696c6520697320696c6c6567616c20696e7369646520612066756e6374696f6e206661696c65640a424144073a206e6f6e7465726d696e617465642063686172616374657220636c617373206661696c65640a424144073a206e6f6e7465726d696e617465642063686172616374657220636c617373206661696c65640a424144073a206e6f6e7465726d696e617465642063686172616374657220636c617373206661696c65640a424144073a206e6f6e7465726d696e617465642063686172616374657220636c617373206661696c65640a424144073a2073796e746178206572726f7220696e20726567756c61722065787072657373696f6e206661696c65640a424144073a2073796e746178206572726f7220696e20726567756c61722065787072657373696f6e206661696c65640a424144073a206469766973696f6e206279207a65726f20696e202f3d206661696c65640a424144073a206469766973696f6e206279207a65726f20696e20253d206661696c65640a424144073a2063616e2e7420726561642076616c75652e2a206172726179206e616d652e206661696c65640a424144073a2063616e2e7420726561642076616c75652e2a2066756e6374696f6e206661696c65640a424144073a2063616e2e742061737369676e2e2a20612066756e6374696f6e206661696c65640a424144073a2063616e2e742061737369676e20746f20783b2069742e7320616e206172726179206e616d652e206661696c65640a424144073a2063616e2e74207573652066756e6374696f6e206620617320617267756d656e7420696e2066206661696c65640a424144073a207820697320616e2061727261792c206e6f7420612066756e6374696f6e206661696c65640a424144073a20696c6c6567616c206e65737465642066756e6374696f6e206661696c65640a424144073a2072657475726e206e6f7420696e2066756e6374696f6e206661696c65640a424144073a20627265616b20696c6c6567616c206f757473696465206661696c65640a424144073a20636f6e74696e756520696c6c6567616c206f757473696465206661696c65640a424144073a206e6f6e2d7465726d696e6174656420737472696e67206661696c65640a424144073a206e65787420697320696c6c6567616c20696e7369646520612066756e6374696f6e206661696c65640a424144073a206e6f7420656e6f756768206172677320696e207072696e746628257329206661696c65640a424144073a2066756e6374696f6e206620686173202e2a20617267756d656e74732c206c696d6974202e2a206661696c65640a424144073a206261696c696e67206f7574206661696c65640a424144073a206261696c696e67206f7574206661696c65640a424144073a206261696c696e67206f7574206661696c65640a424144073a206261696c696e67206f7574206661696c65640a424144073a206261696c696e67206f7574206661696c65640a424144073a206261696c696e67206f7574206661696c65640a424144073a2065787472612029206661696c65640a424144073a20696c6c6567616c2073746174656d656e74206661696c65640a424144073a20696c6c6567616c2073746174656d656e74206661696c65640a424144073a20696c6c6567616c2073746174656d656e74206661696c65640a424144073a20696c6c6567616c202e2a6e6578742e2a2066726f6d20424547494e206661696c65640a424144073a20696c6c6567616c202e2a6e6578742e2a2066726f6d20454e44206661696c65640a424144073a2063616e2e74206f70656e2066696c65202e2f6e6f6e6578697374656e746469722f666f6f206661696c65640a424144073a20796f752063616e2e7420646566696e652066756e6374696f6e2066206d6f7265207468616e206f6e6365206661696c65640a424144073a20696e6465782e2a646f65736e2e74207065726d697420726567756c61722065787072657373696f6e73206661696c65640a424144073a206c6f6720617267756d656e74206f7574206f6620646f6d61696e206661696c65640a424144073a2065787020726573756c74206f7574206f662072616e6765206661696c65640a424144073a206e756c6c2066696c65206e616d6520696e207072696e74206f72206765746c696e65206661696c65640a424144073a2063616c6c696e6720756e646566696e65642066756e6374696f6e20666f6f206661696c65640a424144073a20746869732073686f756c64207072696e74206120424144206d657373616765206661696c65640a424144073a20542e6572726d7367206e65776c696e6520696e20737472696e670a424144073a20542e6572726d736720636d647c6765746c696e6520756e736166650a424144073a20542e6572726d7367207072696e74203e20756e736166650a424144073a20542e6572726d7367207072696e74203e3e20756e736166650a424144073a20542e6572726d7367207072696e74207c20756e736166650a",
+      "stderr_hex": "",
+      "stdout": "T.errmsg: check some error messages\n\trunning tests in foo.sh\nBAD\u0007: illegal primary in regular expression failed\nBAD\u0007: illegal break, continue, next or nextfile from BEGIN failed\nBAD\u0007: illegal break, continue, next or nextfile from END failed\nBAD\u0007: nextfile is illegal inside a function failed\nBAD\u0007: nonterminated character class failed\nBAD\u0007: nonterminated character class failed\nBAD\u0007: nonterminated character class failed\nBAD\u0007: nonterminated character class failed\nBAD\u0007: syntax error in regular expression failed\nBAD\u0007: syntax error in regular expression failed\nBAD\u0007: division by zero in /= failed\nBAD\u0007: division by zero in %= failed\nBAD\u0007: can.t read value.* array name. failed\nBAD\u0007: can.t read value.* function failed\nBAD\u0007: can.t assign.* a function failed\nBAD\u0007: can.t assign to x; it.s an array name. failed\nBAD\u0007: can.t use function f as argument in f failed\nBAD\u0007: x is an array, not a function failed\nBAD\u0007: illegal nested function failed\nBAD\u0007: return not in function failed\nBAD\u0007: break illegal outside failed\nBAD\u0007: continue illegal outside failed\nBAD\u0007: non-terminated string failed\nBAD\u0007: next is illegal inside a function failed\nBAD\u0007: not enough args in printf(%s) failed\nBAD\u0007: function f has .* arguments, limit .* failed\nBAD\u0007: bailing out failed\nBAD\u0007: bailing out failed\nBAD\u0007: bailing out failed\nBAD\u0007: bailing out failed\nBAD\u0007: bailing out failed\nBAD\u0007: bailing out failed\nBAD\u0007: extra ) failed\nBAD\u0007: illegal statement failed\nBAD\u0007: illegal statement failed\nBAD\u0007: illegal statement failed\nBAD\u0007: illegal .*next.* from BEGIN failed\nBAD\u0007: illegal .*next.* from END failed\nBAD\u0007: can.t open file ./nonexistentdir/foo failed\nBAD\u0007: you can.t define function f more than once failed\nBAD\u0007: index.*doesn.t permit regular expressions failed\nBAD\u0007: log argument out of domain failed\nBAD\u0007: exp result out of range failed\nBAD\u0007: null file name in print or getline failed\nBAD\u0007: calling undefined function foo failed\nBAD\u0007: this should print a BAD message failed\nBAD\u0007: T.errmsg newline in string\nBAD\u0007: T.errmsg cmd|getline unsafe\nBAD\u0007: T.errmsg print > unsafe\nBAD\u0007: T.errmsg print >> unsafe\nBAD\u0007: T.errmsg print | unsafe\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "BAD\u0007: illegal primary in regular expression failed",
+        "BAD\u0007: illegal break, continue, next or nextfile from BEGIN failed",
+        "BAD\u0007: illegal break, continue, next or nextfile from END failed",
+        "BAD\u0007: nextfile is illegal inside a function failed",
+        "BAD\u0007: nonterminated character class failed",
+        "BAD\u0007: nonterminated character class failed",
+        "BAD\u0007: nonterminated character class failed",
+        "BAD\u0007: nonterminated character class failed",
+        "BAD\u0007: syntax error in regular expression failed",
+        "BAD\u0007: syntax error in regular expression failed",
+        "BAD\u0007: division by zero in /= failed",
+        "BAD\u0007: division by zero in %= failed",
+        "BAD\u0007: can.t read value.* array name. failed",
+        "BAD\u0007: can.t read value.* function failed",
+        "BAD\u0007: can.t assign.* a function failed",
+        "BAD\u0007: can.t assign to x; it.s an array name. failed",
+        "BAD\u0007: can.t use function f as argument in f failed",
+        "BAD\u0007: x is an array, not a function failed",
+        "BAD\u0007: illegal nested function failed",
+        "BAD\u0007: return not in function failed",
+        "BAD\u0007: break illegal outside failed",
+        "BAD\u0007: continue illegal outside failed",
+        "BAD\u0007: non-terminated string failed",
+        "BAD\u0007: next is illegal inside a function failed",
+        "BAD\u0007: not enough args in printf(%s) failed",
+        "BAD\u0007: function f has .* arguments, limit .* failed",
+        "BAD\u0007: bailing out failed",
+        "BAD\u0007: bailing out failed",
+        "BAD\u0007: bailing out failed",
+        "BAD\u0007: bailing out failed",
+        "BAD\u0007: bailing out failed",
+        "BAD\u0007: bailing out failed",
+        "BAD\u0007: extra ) failed",
+        "BAD\u0007: illegal statement failed",
+        "BAD\u0007: illegal statement failed",
+        "BAD\u0007: illegal statement failed",
+        "BAD\u0007: illegal .*next.* from BEGIN failed",
+        "BAD\u0007: illegal .*next.* from END failed",
+        "BAD\u0007: can.t open file ./nonexistentdir/foo failed",
+        "BAD\u0007: you can.t define function f more than once failed",
+        "BAD\u0007: index.*doesn.t permit regular expressions failed",
+        "BAD\u0007: log argument out of domain failed",
+        "BAD\u0007: exp result out of range failed",
+        "BAD\u0007: null file name in print or getline failed",
+        "BAD\u0007: calling undefined function foo failed",
+        "BAD\u0007: this should print a BAD message failed",
+        "BAD\u0007: T.errmsg newline in string",
+        "BAD\u0007: T.errmsg cmd|getline unsafe",
+        "BAD\u0007: T.errmsg print > unsafe",
+        "BAD\u0007: T.errmsg print >> unsafe",
+        "BAD\u0007: T.errmsg print | unsafe"
+      ],
+      "passed": false
+    },
+    "status": "reference-failure"
+  },
+  {
+    "case": "T.expr",
+    "source_sha256": "e890e25a67697f7dfac74df7d4f93bd8bbde5217d38c9909acfb4aa2240e744d",
+    "c": {
+      "stdout_hex": "542e657870723a207465737473206f66206d697363656c6c616e656f75732065787072657373696f6e730a20203120207b207072696e7420282431203d3d203129203f202279657322203a20226e6f22207d0a20203220202431203e20300a20203320207b207072696e74204e46207d0a20203420207b207072696e74204e462c20244e46207d0a20203520207b20693d313b207072696e742028242b2b242b2b6929207d0a20203620207b2078203d2024312b2b2b2b24323b207072696e742024312c2078207d0a20203720202431202124320a20203820207b207072696e74202824317e2f6162632f2021243229207d0a20203920207b207072696e7420212431202b202432207d0a20313020207b207072696e7420282431203d3d20243229207d0a20313120207b207072696e742024312c202b24312c202d24312c202d202d2431207d0a20313220207b207072696e7466282261252a73625c6e222c2024312c20243229207d0a20313320207b207072696e7466282261252d2a73625c6e222c2024312c20243229207d0a20313420207b207072696e7466282261252a2e2a73625c6e222c2024312c2024322c202268656c6c6f2229207d0a20313520207b207072696e7466282261252d2a2e2a73625c6e222c2024312c2024322c202268656c6c6f2229207d0a20313620207b207072696e74662822256420256c6420256c6c6420257a6420256a642025686420256868645c6e222c2024312c2024312c2024312c2024312c2024312c2024312c20243129207d0a20313720207b207072696e74662822257820256c7820256c6c7820257a7820256a782025687820256868785c6e222c2024312c2024312c2024312c2024312c2024312c2024312c20243129207d0a20313820207b20696620282431207e20243229207072696e7420313b20656c7365207072696e742030207d0a20313920207b207072696e74202431207e202432207d0a20323020207b207072696e74202431207c7c202432207d0a20323120207b207072696e74202431202626202432207d0a20323220207b202431203d2024323b202431203d2024313b207072696e74202431207d0a20323320207b2066203d20313b2024662b2b3b207072696e7420662c202466207d0a20323420207b20665b315d3d313b20665b325d3d323b207072696e742024665b315d2c2024665b315d2b2b2c2024665b325d2c20665b315d2c20665b325d207d0a3131342074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.expr: tests of miscellaneous expressions\n  1  { print ($1 == 1) ? \"yes\" : \"no\" }\n  2  $1 > 0\n  3  { print NF }\n  4  { print NF, $NF }\n  5  { i=1; print ($++$++i) }\n  6  { x = $1++++$2; print $1, x }\n  7  $1 !$2\n  8  { print ($1~/abc/ !$2) }\n  9  { print !$1 + $2 }\n 10  { print ($1 == $2) }\n 11  { print $1, +$1, -$1, - -$1 }\n 12  { printf(\"a%*sb\\n\", $1, $2) }\n 13  { printf(\"a%-*sb\\n\", $1, $2) }\n 14  { printf(\"a%*.*sb\\n\", $1, $2, \"hello\") }\n 15  { printf(\"a%-*.*sb\\n\", $1, $2, \"hello\") }\n 16  { printf(\"%d %ld %lld %zd %jd %hd %hhd\\n\", $1, $1, $1, $1, $1, $1, $1) }\n 17  { printf(\"%x %lx %llx %zx %jx %hx %hhx\\n\", $1, $1, $1, $1, $1, $1, $1) }\n 18  { if ($1 ~ $2) print 1; else print 0 }\n 19  { print $1 ~ $2 }\n 20  { print $1 || $2 }\n 21  { print $1 && $2 }\n 22  { $1 = $2; $1 = $1; print $1 }\n 23  { f = 1; $f++; print f, $f }\n 24  { f[1]=1; f[2]=2; print $f[1], $f[1]++, $f[2], f[1], f[2] }\n114 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e657870723a207465737473206f66206d697363656c6c616e656f75732065787072657373696f6e730a20203120207b207072696e7420282431203d3d203129203f202279657322203a20226e6f22207d0a20203220202431203e20300a20203320207b207072696e74204e46207d0a20203420207b207072696e74204e462c20244e46207d0a20203520207b20693d313b207072696e742028242b2b242b2b6929207d0a20203620207b2078203d2024312b2b2b2b24323b207072696e742024312c2078207d0a20203720202431202124320a20203820207b207072696e74202824317e2f6162632f2021243229207d0a20203920207b207072696e7420212431202b202432207d0a20313020207b207072696e7420282431203d3d20243229207d0a20313120207b207072696e742024312c202b24312c202d24312c202d202d2431207d0a20313220207b207072696e7466282261252a73625c6e222c2024312c20243229207d0a20313320207b207072696e7466282261252d2a73625c6e222c2024312c20243229207d0a20313420207b207072696e7466282261252a2e2a73625c6e222c2024312c2024322c202268656c6c6f2229207d0a20313520207b207072696e7466282261252d2a2e2a73625c6e222c2024312c2024322c202268656c6c6f2229207d0a20313620207b207072696e74662822256420256c6420256c6c6420257a6420256a642025686420256868645c6e222c2024312c2024312c2024312c2024312c2024312c2024312c20243129207d0a20313720207b207072696e74662822257820256c7820256c6c7820257a7820256a782025687820256868785c6e222c2024312c2024312c2024312c2024312c2024312c2024312c20243129207d0a20313820207b20696620282431207e20243229207072696e7420313b20656c7365207072696e742030207d0a20313920207b207072696e74202431207e202432207d0a20323020207b207072696e74202431207c7c202432207d0a20323120207b207072696e74202431202626202432207d0a20323220207b202431203d2024323b202431203d2024313b207072696e74202431207d0a20323320207b2066203d20313b2024662b2b3b207072696e7420662c202466207d0a20323420207b20665b315d3d313b20665b325d3d323b207072696e742024665b315d2c2024665b315d2b2b2c2024665b325d2c20665b315d2c20665b325d207d0a3131342074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.expr: tests of miscellaneous expressions\n  1  { print ($1 == 1) ? \"yes\" : \"no\" }\n  2  $1 > 0\n  3  { print NF }\n  4  { print NF, $NF }\n  5  { i=1; print ($++$++i) }\n  6  { x = $1++++$2; print $1, x }\n  7  $1 !$2\n  8  { print ($1~/abc/ !$2) }\n  9  { print !$1 + $2 }\n 10  { print ($1 == $2) }\n 11  { print $1, +$1, -$1, - -$1 }\n 12  { printf(\"a%*sb\\n\", $1, $2) }\n 13  { printf(\"a%-*sb\\n\", $1, $2) }\n 14  { printf(\"a%*.*sb\\n\", $1, $2, \"hello\") }\n 15  { printf(\"a%-*.*sb\\n\", $1, $2, \"hello\") }\n 16  { printf(\"%d %ld %lld %zd %jd %hd %hhd\\n\", $1, $1, $1, $1, $1, $1, $1) }\n 17  { printf(\"%x %lx %llx %zx %jx %hx %hhx\\n\", $1, $1, $1, $1, $1, $1, $1) }\n 18  { if ($1 ~ $2) print 1; else print 0 }\n 19  { print $1 ~ $2 }\n 20  { print $1 || $2 }\n 21  { print $1 && $2 }\n 22  { $1 = $2; $1 = $1; print $1 }\n 23  { f = 1; $f++; print f, $f }\n 24  { f[1]=1; f[2]=2; print $f[1], $f[1]++, $f[2], f[1], f[2] }\n114 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.exprconv",
+    "source_sha256": "444131c48c0e8e81682b3697bdf7f88ff95f75c7cff211976d3c0d5723854920",
+    "c": {
+      "stdout_hex": "542e65787072636f6e763a20636865636b20636f6e76657273696f6e206f66206578707220746f206e756d6265720a",
+      "stderr_hex": "",
+      "stdout": "T.exprconv: check conversion of expr to number\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e65787072636f6e763a20636865636b20636f6e76657273696f6e206f66206578707220746f206e756d6265720a",
+      "stderr_hex": "",
+      "stdout": "T.exprconv: check conversion of expr to number\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.flags",
+    "source_sha256": "764e9eb848402a85e5295eb9f9492f06f9524afa7e53cae44f5ae8fdc48eac32",
+    "c": {
+      "stdout_hex": "542e666c6167733a207465737420736f6d6520636f6d6d616e646c696e6520666c6167730a",
+      "stderr_hex": "",
+      "stdout": "T.flags: test some commandline flags\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e666c6167733a207465737420736f6d6520636f6d6d616e646c696e6520666c6167730a07542e666c6167733a20626164206e6f2070726f6772616d0a07542e666c6167733a206261642063616e2e74206f70656e2070726f6772616d0a07542e666c6167733a206261642063616e2e74206f70656e2070726f6772616d20320a07542e666c6167733a20626164206d697373696e67206669656c6420736570617261746f720a",
+      "stderr_hex": "",
+      "stdout": "T.flags: test some commandline flags\n\u0007T.flags: bad no program\n\u0007T.flags: bad can.t open program\n\u0007T.flags: bad can.t open program 2\n\u0007T.flags: bad missing field separator\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "\u0007T.flags: bad no program",
+        "\u0007T.flags: bad can.t open program",
+        "\u0007T.flags: bad can.t open program 2",
+        "\u0007T.flags: bad missing field separator"
+      ],
+      "passed": false
+    },
+    "status": "open"
+  },
+  {
+    "case": "T.func",
+    "source_sha256": "bee4e1a226508e1b4856be199a991833714bcc6087652471499e8120cca3db34",
+    "c": {
+      "stdout_hex": "542e66756e633a207465737420757365722d646566696e65642066756e6374696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.func: test user-defined functions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e66756e633a207465737420757365722d646566696e65642066756e6374696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.func: test user-defined functions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.gawk",
+    "source_sha256": "f3dd8c811b2ad06c865fb1ad59ac0098fef57bdbb89377ac96ddb4e845f6bfba",
+    "c": {
+      "stdout_hex": "542e6761776b3a20746573747320616461707465642066726f6d206761776b20746573742073756974650a",
+      "stderr_hex": "",
+      "stdout": "T.gawk: tests adapted from gawk test suite\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6761776b3a20746573747320616461707465642066726f6d206761776b20746573742073756974650a",
+      "stderr_hex": "",
+      "stdout": "T.gawk: tests adapted from gawk test suite\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.getline",
+    "source_sha256": "f6d647af8bed8842633380aa594aaec6c7ae7c8f8711b1b79f39d67f97fca462",
+    "c": {
+      "stdout_hex": "542e6765746c696e653a2074657374206765746c696e652066756e6374696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.getline: test getline function\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6765746c696e653a2074657374206765746c696e652066756e6374696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.getline: test getline function\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.int-expr",
+    "source_sha256": "e49a188ccbd4eb541f7495cc2e90a923506b047483e215ece8013a510758b9f7",
+    "c": {
+      "stdout_hex": "542e696e742d657870723a207465737420696e74657276616c2065787072657373696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.int-expr: test interval expressions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e696e742d657870723a207465737420696e74657276616c2065787072657373696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.int-expr: test interval expressions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.latin1",
+    "source_sha256": "ec6ae79e678e01af79af6a8421083af75567bf6a157f4fd6e383b1f913aeedaa",
+    "c": {
+      "stdout_hex": "542e6c6174696e313a207465737473206f6620382d62697420696e7075740a",
+      "stderr_hex": "",
+      "stdout": "T.latin1: tests of 8-bit input\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6c6174696e313a207465737473206f6620382d62697420696e7075740a",
+      "stderr_hex": "",
+      "stdout": "T.latin1: tests of 8-bit input\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.lilly",
+    "source_sha256": "bd5d2dd441cbadd8b3edcb5d148b6cb58b4fd4c2a42d18005f6f922d19abc930",
+    "c": {
+      "stdout_hex": "542e6c696c6c793a206d697363656c6c616e656f75732052452074657374732066726f6d204272756365204c696c6c790a3132362074657374730a0a",
+      "stderr_hex": "",
+      "stdout": "T.lilly: miscellaneous RE tests from Bruce Lilly\n126 tests\n\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6c696c6c793a206d697363656c6c616e656f75732052452074657374732066726f6d204272756365204c696c6c790a3132362074657374730a0a",
+      "stderr_hex": "",
+      "stdout": "T.lilly: miscellaneous RE tests from Bruce Lilly\n126 tests\n\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.main",
+    "source_sha256": "b91264e5fbc95543c812a8558234e7d228567cf288afd7a3cd7ffb5d4d92f1d9",
+    "c": {
+      "stdout_hex": "542e6d61696e3a206d697363207465737473206f6620617267756d656e747320696e206d61696e0a",
+      "stderr_hex": "",
+      "stdout": "T.main: misc tests of arguments in main\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6d61696e3a206d697363207465737473206f6620617267756d656e747320696e206d61696e0a",
+      "stderr_hex": "",
+      "stdout": "T.main: misc tests of arguments in main\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.misc",
+    "source_sha256": "d239d6185edf87a44e0b95a4bc53a518451003fbf30349d9f4054436c006912d",
+    "c": {
+      "stdout_hex": "542e6d6973633a206d697363656c6c616e656f7573206275676c657473206e6f77207761746368656420666f720a",
+      "stderr_hex": "",
+      "stdout": "T.misc: miscellaneous buglets now watched for\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6d6973633a206d697363656c6c616e656f7573206275676c657473206e6f77207761746368656420666f720a074241443a20542e6d6973632073706c6974206572726f720a074241443a20542e6d6973632068656c6c6f206572726f720a074241443a20542e6d6973632070696c65206572726f720a074241443a20542e6d69736320677375622062616e616e61206572726f720a074241443a20542e6d697363207375622062616e616e61206572726f720a074241443a20542e6d697363206c696e656e6f0a074241443a20542e6d6973632063616e2774206f70656e0a074241443a20542e6d69736320636f6e74696e756174696f6e206c696e65206e756d6265720a074241443a20542e6d6973632073796e746178206572726f72206c696e65206e756d6265720aefbfbd4241443a20542e6d697363206573636170652073657175656e63657320696e20737472696e6773206d697368616e646c65640a",
+      "stderr_hex": "074241443a20542e6d6973632066636e20617267730a074241443a20542e6d69736320756e646566696e65642066756e6374696f6e0a074241443a20542e6d69736320666f6f206275670a074241443a20542e6d6973632073796e746178206572726f722021783d79206661696c730a542e6d6973633a206c696e65203136383a206572726f723a20636f6d6d616e64206e6f7420666f756e640a074241443a20542e6d6973632073796e746178206572726f72202e206661696c730a074241443a20542e6d6973632073796e746178206572726f72202e2e206661696c730a074241443a20542e6d6973632073796e746178206572726f72202e452e206661696c730a074241443a20542e6d6973632073796e746178206572726f72202e2b2b2e206661696c730a074241443a20542e6d6973632073796e746178206572726f722024206661696c730a074241443a20542e6d6973632073796e746178206572726f7220206661696c730a074241443a20542e6d69736320626172652071756f7465206661696c730a074241443a20542e6d697363206e6f6e2d7465726d696e617465642052450a074241443a20542e6d697363206c6f6f70696e672073796e746178206572726f7220310a074241443a20542e6d697363206c6f6f70696e672073796e746178206572726f7220320a074241443a20542e6d697363206c6f6f70696e672073796e746178206572726f7220330a074241443a20542e6d69736320272427206e6f74207065726d697474656420696e20666f726d6174730a",
+      "stdout": "T.misc: miscellaneous buglets now watched for\n\u0007BAD: T.misc split error\n\u0007BAD: T.misc hello error\n\u0007BAD: T.misc pile error\n\u0007BAD: T.misc gsub banana error\n\u0007BAD: T.misc sub banana error\n\u0007BAD: T.misc lineno\n\u0007BAD: T.misc can't open\n\u0007BAD: T.misc continuation line number\n\u0007BAD: T.misc syntax error line number\n\ufffdBAD: T.misc escape sequences in strings mishandled\n",
+      "stderr": "\u0007BAD: T.misc fcn args\n\u0007BAD: T.misc undefined function\n\u0007BAD: T.misc foo bug\n\u0007BAD: T.misc syntax error !x=y fails\nT.misc: line 168: error: command not found\n\u0007BAD: T.misc syntax error . fails\n\u0007BAD: T.misc syntax error .. fails\n\u0007BAD: T.misc syntax error .E. fails\n\u0007BAD: T.misc syntax error .++. fails\n\u0007BAD: T.misc syntax error $ fails\n\u0007BAD: T.misc syntax error  fails\n\u0007BAD: T.misc bare quote fails\n\u0007BAD: T.misc non-terminated RE\n\u0007BAD: T.misc looping syntax error 1\n\u0007BAD: T.misc looping syntax error 2\n\u0007BAD: T.misc looping syntax error 3\n\u0007BAD: T.misc '$' not permitted in formats\n",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "\u0007BAD: T.misc split error",
+        "\u0007BAD: T.misc hello error",
+        "\u0007BAD: T.misc pile error",
+        "\u0007BAD: T.misc gsub banana error",
+        "\u0007BAD: T.misc sub banana error",
+        "\u0007BAD: T.misc lineno",
+        "\u0007BAD: T.misc can't open",
+        "\u0007BAD: T.misc continuation line number",
+        "\u0007BAD: T.misc syntax error line number",
+        "\ufffdBAD: T.misc escape sequences in strings mishandled",
+        "\u0007BAD: T.misc fcn args",
+        "\u0007BAD: T.misc undefined function",
+        "\u0007BAD: T.misc foo bug",
+        "\u0007BAD: T.misc syntax error !x=y fails",
+        "\u0007BAD: T.misc syntax error . fails",
+        "\u0007BAD: T.misc syntax error .. fails",
+        "\u0007BAD: T.misc syntax error .E. fails",
+        "\u0007BAD: T.misc syntax error .++. fails",
+        "\u0007BAD: T.misc syntax error $ fails",
+        "\u0007BAD: T.misc syntax error  fails",
+        "\u0007BAD: T.misc bare quote fails",
+        "\u0007BAD: T.misc non-terminated RE",
+        "\u0007BAD: T.misc looping syntax error 1",
+        "\u0007BAD: T.misc looping syntax error 2",
+        "\u0007BAD: T.misc looping syntax error 3",
+        "\u0007BAD: T.misc '$' not permitted in formats"
+      ],
+      "passed": false
+    },
+    "status": "open"
+  },
+  {
+    "case": "T.nextfile",
+    "source_sha256": "13e8219fae01b908a7911c1ee3202eb4e84a52d670714c48019440f1ceb86e63",
+    "c": {
+      "stdout_hex": "542e6e65787466696c653a207465737473206f66206e65787466696c6520636f6d6d616e640a",
+      "stderr_hex": "",
+      "stdout": "T.nextfile: tests of nextfile command\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6e65787466696c653a207465737473206f66206e65787466696c6520636f6d6d616e640a",
+      "stderr_hex": "",
+      "stdout": "T.nextfile: tests of nextfile command\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.overflow",
+    "source_sha256": "965e6abae8cf956fe53602695b83a25f98de94f3f7e1aebc1539dce264e59445",
+    "c": {
+      "stdout_hex": "542e6f766572666c6f773a207465737420736f6d65206f766572666c6f7720636f6e646974696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.overflow: test some overflow conditions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6f766572666c6f773a207465737420736f6d65206f766572666c6f7720636f6e646974696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.overflow: test some overflow conditions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.re",
+    "source_sha256": "1a5341d0a66142b56e9540928e4eb98d96351472255a91f772888491754abce9",
+    "c": {
+      "stdout_hex": "542e72653a207465737473206f6620726567756c61722065787072657373696f6e20636f64650a093330312074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.re: tests of regular expression code\n\t301 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e72653a207465737473206f6620726567756c61722065787072657373696f6e20636f64650a093330312074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.re: tests of regular expression code\n\t301 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.recache",
+    "source_sha256": "e478ce97160ab560f1d8b36c55a446bd4566a85aaf93dd04eeeb7367a3d5caff",
+    "c": {
+      "stdout_hex": "542e726563616368653a207465737420726520636163686520696e20622e630a",
+      "stderr_hex": "",
+      "stdout": "T.recache: test re cache in b.c\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e726563616368653a207465737420726520636163686520696e20622e630a",
+      "stderr_hex": "",
+      "stdout": "T.recache: test re cache in b.c\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.redir",
+    "source_sha256": "845c14651832f26e064ac86379ae46e65221689c38d80294dff845d237899f19",
+    "c": {
+      "stdout_hex": "542e72656469723a2074657374207265646972656374696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.redir: test redirections\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e72656469723a2074657374207265646972656374696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.redir: test redirections\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.split",
+    "source_sha256": "6cf0af7a12b571b50e9a8249fd8245302872a04c40af804b3bd7251621795ac6",
+    "c": {
+      "stdout_hex": "542e73706c69743a206d697363207465737473206f66206669656c642073706c697474696e6720616e642073706c697420636f6d6d616e640a",
+      "stderr_hex": "",
+      "stdout": "T.split: misc tests of field splitting and split command\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e73706c69743a206d697363207465737473206f66206669656c642073706c697474696e6720616e642073706c697420636f6d6d616e640a",
+      "stderr_hex": "",
+      "stdout": "T.split: misc tests of field splitting and split command\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.sub",
+    "source_sha256": "130cb880bf39372338b0070305ba6d3b337408aaa510184ee4cb1c92a22fe3bc",
+    "c": {
+      "stdout_hex": "542e7375623a207465737473206f662073756220616e64206773756220636f64650a3134302074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.sub: tests of sub and gsub code\n140 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e7375623a207465737473206f662073756220616e64206773756220636f64650a3134302074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.sub: tests of sub and gsub code\n140 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.system",
+    "source_sha256": "7f8039b2510f0dc8cfe6de38122cf6316b47e166a7b1c9da4ae258bdc4ab1393",
+    "c": {
+      "stdout_hex": "542e73797374656d3a20746573742073797374656d206275696c742d696e0a",
+      "stderr_hex": "",
+      "stdout": "T.system: test system built-in\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e73797374656d3a20746573742073797374656d206275696c742d696e0a",
+      "stderr_hex": "",
+      "stdout": "T.system: test system built-in\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.utf",
+    "source_sha256": "f0544cc5c3752b432f78d54b7ad7be47bf851163700999a6d90e12dacdb360ae",
+    "c": {
+      "stdout_hex": "542e7574663a207465737473206f66207574662066756e6374696f6e730a74727920202031207b207072696e74206c656e67746828243129207d0a3163310a3c2032310a2d2d2d0a3e20370a077465737420312e33206661696c6564070a3163310a3c2031320a2d2d2d0a3e20360a077465737420312e34206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420312e35206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420312e36206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420312e37206661696c6564070a3163310a3c20340a2d2d2d0a3e20310a077465737420312e38206661696c6564070a3163310a3c2031310a2d2d2d0a3e20380a077465737420312e39206661696c6564070a3163310a3c20380a2d2d2d0a3e20340a077465737420312e3130206661696c6564070a3163310a3c20360a2d2d2d0a3e20330a077465737420312e3131206661696c6564070a3163310a3c20340a2d2d2d0a3e20320a077465737420312e3132206661696c6564070a3163310a3c2031300a2d2d2d0a3e20350a077465737420312e3133206661696c6564070a3163310a3c20360a2d2d2d0a3e20330a077465737420312e3134206661696c6564070a3163310a3c20380a2d2d2d0a3e20340a077465737420312e3135206661696c6564070a3163310a3c2032310a2d2d2d0a3e20370a077465737420312e3136206661696c6564070a3163310a3c20390a2d2d2d0a3e20330a077465737420312e3137206661696c6564070a3163310a3c20360a2d2d2d0a3e20320a077465737420312e3138206661696c6564070a3163310a3c20390a2d2d2d0a3e20330a077465737420312e3139206661696c6564070a3163310a3c2031320a2d2d2d0a3e20360a077465737420312e3230206661696c6564070a3163310a3c20360a2d2d2d0a3e20330a077465737420312e3231206661696c6564070a3163310a3c2031320a2d2d2d0a3e20360a077465737420312e3232206661696c6564070a74727920202032207b207072696e7420696e6465782824312c20243229207d0a3163310a3c2031360a2d2d2d0a3e20360a077465737420322e35206661696c6564070a3163310a3c20340a2d2d2d0a3e20320a077465737420322e36206661696c6564070a3163310a3c20340a2d2d2d0a3e20320a077465737420322e38206661696c6564070a3163310a3c20360a2d2d2d0a3e20330a077465737420322e39206661696c6564070a3163310a3c2031310a2d2d2d0a3e20380a077465737420322e3130206661696c6564070a74727920202033207b207072696e74207375627374722824302c20322c203329207d0a3163310a3c20a4cf890a2d2d2d0a3e20cf89cf81ceb10a077465737420332e32206661696c6564070a3163310a3c20a4cf890a2d2d2d0a3e20cf890a077465737420332e33206661696c6564070a3163310a3c20a780ea0a2d2d2d0a3e20eab88820ec9db40a077465737420332e34206661696c6564070a3163310a3c20d0bf790a2d2d2d0a3e20d0bf79d1800a077465737420332e35206661696c6564070a74727920202034207b207072696e74202431207e202432207d0a74727920202035207b206e203d207375622824322c2024332c202431293b207072696e74206e2c202431207d0a3163310a3c20312078a1d0b5d0b9d187d0b0d1810a2d2d2d0a3e20312078d0b5d0b9d187d0b0d1810a077465737420352e35206661696c6564070a74727920202036207b206e203d20677375622824322c2024332c202431293b207072696e74206e2c202431207d0a3163310a3c203132207878787878787878787878780a2d2d2d0a3e2036207878787878780a077465737420362e35206661696c6564070a74727920202037207b207072696e74206d617463682824312c202432292c205253544152542c20524c454e475448207d0a3163310a3c2036203620310a2d2d2d0a3e2032203220310a077465737420372e33206661696c6564070a3163310a3c20313320313320310a2d2d2d0a3e2035203520310a077465737420372e34206661696c6564070a3163310a3c20313020313020330a2d2d2d0a3e2034203420310a077465737420372e37206661696c6564070a3163310a3c2031302031302031320a2d2d2d0a3e2034203420340a077465737420372e38206661696c6564070a3163310a3c2033203320320a2d2d2d0a3e2032203220310a077465737420372e3130206661696c6564070a3163310a3c2033203320330a2d2d2d0a3e2032203220320a077465737420372e3132206661696c6564070a3163310a3c2031203120310a2d2d2d0a3e2034203420310a077465737420372e3133206661696c6564070a3163310a3c2031203120310a2d2d2d0a3e20302030202d310a077465737420372e3134206661696c6564070a3163310a3c20313320313320310a2d2d2d0a3e2031203120310a077465737420372e3135206661696c6564070a3163310a3c2031203120310a2d2d2d0a3e2032203220310a077465737420372e3136206661696c6564070a3163310a3c2031203120310a2d2d2d0a3e2032203220330a077465737420372e3137206661696c6564070a3163310a3c203520352032370a2d2d2d0a3e203320332031350a077465737420372e3139206661696c6564070a3163310a3c2034203420310a2d2d2d0a3e2032203220310a077465737420372e3230206661696c6564070a7472792020203820424547494e207b46533d22227d207b7072696e74204e467d0a3163310a3c2033300a2d2d2d0a3e2031300a077465737420382e31206661696c6564070a3163310a3c2032310a2d2d2d0a3e20370a077465737420382e32206661696c6564070a3163310a3c2031320a2d2d2d0a3e20360a077465737420382e33206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420382e34206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420382e35206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420382e36206661696c6564070a3163310a3c20340a2d2d2d0a3e20310a077465737420382e37206661696c6564070a3163310a3c2031310a2d2d2d0a3e20380a077465737420382e38206661696c6564070a74727920202039207b7072696e746628225b25352e32735d5b252d352e32735d5c6e22292c2024312c2024317d0a3163310a3c205b202020e78e5d5be78e2020205d0a2d2d2d0a3e205b202020e78eb0e59ca85d5be78eb0e59ca82020205d0a077465737420392e32206661696c6564070a3163310a3c205b202020e78e5d5be78e2020205d0a2d2d2d0a3e205b202020e78eb0cf895d5be78eb0cf892020205d0a077465737420392e33206661696c6564070a3163310a3c205b202020cf895d5bcf892020205d0a2d2d2d0a3e205b202020cf89615d5bcf89612020205d0a077465737420392e34206661696c6564070a3163310a3c205b202020d0a15d5bd0a12020205d0a2d2d2d0a3e205b202020d0a1d0b55d5bd0a1d0b52020205d0a077465737420392e35206661696c6564070a3163310a3c205b202020d0a15d5bd0a12020205d0a2d2d2d0a3e205b202020d0a1d0b55d5bd0a1d0b52020205d0a077465737420392e36206661696c6564070a3163310a3c205b202020f09f5d5bf09f2020205d0a2d2d2d0a3e205b20202020f09f98805d5bf09f9880202020205d0a077465737420392e37206661696c6564070a74727920203130207b7072696e746628225b2535735d5b252d35735d5c6e22292c2024312c2024317d0a3163310a3c205be78eb0e59ca861625d5be78eb0e59ca861625d0a2d2d2d0a3e205b20e78eb0e59ca861625d5be78eb0e59ca86162205d0a07746573742031302e32206661696c6564070a3163310a3c205be78eb0cf8961625d5be78eb0cf8961625d0a2d2d2d0a3e205b20e78eb0cf8961625d5be78eb0cf896162205d0a07746573742031302e35206661696c6564070a3163310a3c205bcf896162635d5bcf896162635d0a2d2d2d0a3e205b20cf896162635d5bcf89616263205d0a07746573742031302e36206661696c6564070a3163310a3c205b20f09f98805d5bf09f9880205d0a2d2d2d0a3e205b20202020f09f98805d5bf09f9880202020205d0a07746573742031302e38206661696c6564070a74727920203131207b7072696e746628225b252e32735d5b252d2e32735d5c6e22292c2024312c2024317d0a3163310a3c205be78e5d5be78e5d0a2d2d2d0a3e205be78eb0e59ca85d5be78eb0e59ca85d0a07746573742031312e32206661696c6564070a3163310a3c205be78e5d5be78e5d0a2d2d2d0a3e205be78eb0cf895d5be78eb0cf895d0a07746573742031312e33206661696c6564070a3163310a3c205bf09f5d5bf09f5d0a2d2d2d0a3e205bf09f98805d5bf09f98805d0a07746573742031312e35206661696c6564070a74727920203132207b7072696e7466282225632025635c6e222c2024312c207375627374722824312c322c3129297d0a3163310a3c20e320810a2d2d2d0a3e20e3819920e381b90a07746573742031322e31206661696c6564070a3163310a3c20e320810a2d2d2d0a3e20e381ae20e4bb8a0a07746573742031322e32206661696c6564070a3163310a3c20d020a10a2d2d2d0a3e20d0a120d0b50a07746573742031322e33206661696c6564070a3163310a3c20e7208e0a2d2d2d0a3e20e78eb020e59ca80a07746573742031322e34206661696c6564070a3163310a3c20f0209f0a2d2d2d0a3e20f09f988020f09f96950a07746573742031322e35206661696c6564070a3130362074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.utf: tests of utf functions\ntry   1 { print length($1) }\n1c1\n< 21\n---\n> 7\n\u0007test 1.3 failed\u0007\n1c1\n< 12\n---\n> 6\n\u0007test 1.4 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 1.5 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 1.6 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 1.7 failed\u0007\n1c1\n< 4\n---\n> 1\n\u0007test 1.8 failed\u0007\n1c1\n< 11\n---\n> 8\n\u0007test 1.9 failed\u0007\n1c1\n< 8\n---\n> 4\n\u0007test 1.10 failed\u0007\n1c1\n< 6\n---\n> 3\n\u0007test 1.11 failed\u0007\n1c1\n< 4\n---\n> 2\n\u0007test 1.12 failed\u0007\n1c1\n< 10\n---\n> 5\n\u0007test 1.13 failed\u0007\n1c1\n< 6\n---\n> 3\n\u0007test 1.14 failed\u0007\n1c1\n< 8\n---\n> 4\n\u0007test 1.15 failed\u0007\n1c1\n< 21\n---\n> 7\n\u0007test 1.16 failed\u0007\n1c1\n< 9\n---\n> 3\n\u0007test 1.17 failed\u0007\n1c1\n< 6\n---\n> 2\n\u0007test 1.18 failed\u0007\n1c1\n< 9\n---\n> 3\n\u0007test 1.19 failed\u0007\n1c1\n< 12\n---\n> 6\n\u0007test 1.20 failed\u0007\n1c1\n< 6\n---\n> 3\n\u0007test 1.21 failed\u0007\n1c1\n< 12\n---\n> 6\n\u0007test 1.22 failed\u0007\ntry   2 { print index($1, $2) }\n1c1\n< 16\n---\n> 6\n\u0007test 2.5 failed\u0007\n1c1\n< 4\n---\n> 2\n\u0007test 2.6 failed\u0007\n1c1\n< 4\n---\n> 2\n\u0007test 2.8 failed\u0007\n1c1\n< 6\n---\n> 3\n\u0007test 2.9 failed\u0007\n1c1\n< 11\n---\n> 8\n\u0007test 2.10 failed\u0007\ntry   3 { print substr($0, 2, 3) }\n1c1\n< \\xa4\u03c9\n---\n> \u03c9\u03c1\u03b1\n\u0007test 3.2 failed\u0007\n1c1\n< \\xa4\u03c9\n---\n> \u03c9\n\u0007test 3.3 failed\u0007\n1c1\n< \\xa7\\x80\\xea\n---\n> \uae08 \uc774\n\u0007test 3.4 failed\u0007\n1c1\n< \u043fy\n---\n> \u043fy\u0440\n\u0007test 3.5 failed\u0007\ntry   4 { print $1 ~ $2 }\ntry   5 { n = sub($2, $3, $1); print n, $1 }\n1c1\n< 1 x\\xa1\u0435\u0439\u0447\u0430\u0441\n---\n> 1 x\u0435\u0439\u0447\u0430\u0441\n\u0007test 5.5 failed\u0007\ntry   6 { n = gsub($2, $3, $1); print n, $1 }\n1c1\n< 12 xxxxxxxxxxxx\n---\n> 6 xxxxxx\n\u0007test 6.5 failed\u0007\ntry   7 { print match($1, $2), RSTART, RLENGTH }\n1c1\n< 6 6 1\n---\n> 2 2 1\n\u0007test 7.3 failed\u0007\n1c1\n< 13 13 1\n---\n> 5 5 1\n\u0007test 7.4 failed\u0007\n1c1\n< 10 10 3\n---\n> 4 4 1\n\u0007test 7.7 failed\u0007\n1c1\n< 10 10 12\n---\n> 4 4 4\n\u0007test 7.8 failed\u0007\n1c1\n< 3 3 2\n---\n> 2 2 1\n\u0007test 7.10 failed\u0007\n1c1\n< 3 3 3\n---\n> 2 2 2\n\u0007test 7.12 failed\u0007\n1c1\n< 1 1 1\n---\n> 4 4 1\n\u0007test 7.13 failed\u0007\n1c1\n< 1 1 1\n---\n> 0 0 -1\n\u0007test 7.14 failed\u0007\n1c1\n< 13 13 1\n---\n> 1 1 1\n\u0007test 7.15 failed\u0007\n1c1\n< 1 1 1\n---\n> 2 2 1\n\u0007test 7.16 failed\u0007\n1c1\n< 1 1 1\n---\n> 2 2 3\n\u0007test 7.17 failed\u0007\n1c1\n< 5 5 27\n---\n> 3 3 15\n\u0007test 7.19 failed\u0007\n1c1\n< 4 4 1\n---\n> 2 2 1\n\u0007test 7.20 failed\u0007\ntry   8 BEGIN {FS=\"\"} {print NF}\n1c1\n< 30\n---\n> 10\n\u0007test 8.1 failed\u0007\n1c1\n< 21\n---\n> 7\n\u0007test 8.2 failed\u0007\n1c1\n< 12\n---\n> 6\n\u0007test 8.3 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 8.4 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 8.5 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 8.6 failed\u0007\n1c1\n< 4\n---\n> 1\n\u0007test 8.7 failed\u0007\n1c1\n< 11\n---\n> 8\n\u0007test 8.8 failed\u0007\ntry   9 {printf(\"[%5.2s][%-5.2s]\\n\"), $1, $1}\n1c1\n< [   \\xe7\\x8e][\\xe7\\x8e   ]\n---\n> [   \u73b0\u5728][\u73b0\u5728   ]\n\u0007test 9.2 failed\u0007\n1c1\n< [   \\xe7\\x8e][\\xe7\\x8e   ]\n---\n> [   \u73b0\u03c9][\u73b0\u03c9   ]\n\u0007test 9.3 failed\u0007\n1c1\n< [   \u03c9][\u03c9   ]\n---\n> [   \u03c9a][\u03c9a   ]\n\u0007test 9.4 failed\u0007\n1c1\n< [   \u0421][\u0421   ]\n---\n> [   \u0421\u0435][\u0421\u0435   ]\n\u0007test 9.5 failed\u0007\n1c1\n< [   \u0421][\u0421   ]\n---\n> [   \u0421\u0435][\u0421\u0435   ]\n\u0007test 9.6 failed\u0007\n1c1\n< [   \\xf0\\x9f][\\xf0\\x9f   ]\n---\n> [    \ud83d\ude00][\ud83d\ude00    ]\n\u0007test 9.7 failed\u0007\ntry  10 {printf(\"[%5s][%-5s]\\n\"), $1, $1}\n1c1\n< [\u73b0\u5728ab][\u73b0\u5728ab]\n---\n> [ \u73b0\u5728ab][\u73b0\u5728ab ]\n\u0007test 10.2 failed\u0007\n1c1\n< [\u73b0\u03c9ab][\u73b0\u03c9ab]\n---\n> [ \u73b0\u03c9ab][\u73b0\u03c9ab ]\n\u0007test 10.5 failed\u0007\n1c1\n< [\u03c9abc][\u03c9abc]\n---\n> [ \u03c9abc][\u03c9abc ]\n\u0007test 10.6 failed\u0007\n1c1\n< [ \ud83d\ude00][\ud83d\ude00 ]\n---\n> [    \ud83d\ude00][\ud83d\ude00    ]\n\u0007test 10.8 failed\u0007\ntry  11 {printf(\"[%.2s][%-.2s]\\n\"), $1, $1}\n1c1\n< [\\xe7\\x8e][\\xe7\\x8e]\n---\n> [\u73b0\u5728][\u73b0\u5728]\n\u0007test 11.2 failed\u0007\n1c1\n< [\\xe7\\x8e][\\xe7\\x8e]\n---\n> [\u73b0\u03c9][\u73b0\u03c9]\n\u0007test 11.3 failed\u0007\n1c1\n< [\\xf0\\x9f][\\xf0\\x9f]\n---\n> [\ud83d\ude00][\ud83d\ude00]\n\u0007test 11.5 failed\u0007\ntry  12 {printf(\"%c %c\\n\", $1, substr($1,2,1))}\n1c1\n< \\xe3 \\x81\n---\n> \u3059 \u3079\n\u0007test 12.1 failed\u0007\n1c1\n< \\xe3 \\x81\n---\n> \u306e \u4eca\n\u0007test 12.2 failed\u0007\n1c1\n< \\xd0 \\xa1\n---\n> \u0421 \u0435\n\u0007test 12.3 failed\u0007\n1c1\n< \\xe7 \\x8e\n---\n> \u73b0 \u5728\n\u0007test 12.4 failed\u0007\n1c1\n< \\xf0 \\x9f\n---\n> \ud83d\ude00 \ud83d\udd95\n\u0007test 12.5 failed\u0007\n106 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "\u0007test 1.3 failed\u0007",
+        "\u0007test 1.4 failed\u0007",
+        "\u0007test 1.5 failed\u0007",
+        "\u0007test 1.6 failed\u0007",
+        "\u0007test 1.7 failed\u0007",
+        "\u0007test 1.8 failed\u0007",
+        "\u0007test 1.9 failed\u0007",
+        "\u0007test 1.10 failed\u0007",
+        "\u0007test 1.11 failed\u0007",
+        "\u0007test 1.12 failed\u0007",
+        "\u0007test 1.13 failed\u0007",
+        "\u0007test 1.14 failed\u0007",
+        "\u0007test 1.15 failed\u0007",
+        "\u0007test 1.16 failed\u0007",
+        "\u0007test 1.17 failed\u0007",
+        "\u0007test 1.18 failed\u0007",
+        "\u0007test 1.19 failed\u0007",
+        "\u0007test 1.20 failed\u0007",
+        "\u0007test 1.21 failed\u0007",
+        "\u0007test 1.22 failed\u0007",
+        "\u0007test 2.5 failed\u0007",
+        "\u0007test 2.6 failed\u0007",
+        "\u0007test 2.8 failed\u0007",
+        "\u0007test 2.9 failed\u0007",
+        "\u0007test 2.10 failed\u0007",
+        "\u0007test 3.2 failed\u0007",
+        "\u0007test 3.3 failed\u0007",
+        "\u0007test 3.4 failed\u0007",
+        "\u0007test 3.5 failed\u0007",
+        "\u0007test 5.5 failed\u0007",
+        "\u0007test 6.5 failed\u0007",
+        "\u0007test 7.3 failed\u0007",
+        "\u0007test 7.4 failed\u0007",
+        "\u0007test 7.7 failed\u0007",
+        "\u0007test 7.8 failed\u0007",
+        "\u0007test 7.10 failed\u0007",
+        "\u0007test 7.12 failed\u0007",
+        "\u0007test 7.13 failed\u0007",
+        "\u0007test 7.14 failed\u0007",
+        "\u0007test 7.15 failed\u0007",
+        "\u0007test 7.16 failed\u0007",
+        "\u0007test 7.17 failed\u0007",
+        "\u0007test 7.19 failed\u0007",
+        "\u0007test 7.20 failed\u0007",
+        "\u0007test 8.1 failed\u0007",
+        "\u0007test 8.2 failed\u0007",
+        "\u0007test 8.3 failed\u0007",
+        "\u0007test 8.4 failed\u0007",
+        "\u0007test 8.5 failed\u0007",
+        "\u0007test 8.6 failed\u0007",
+        "\u0007test 8.7 failed\u0007",
+        "\u0007test 8.8 failed\u0007",
+        "\u0007test 9.2 failed\u0007",
+        "\u0007test 9.3 failed\u0007",
+        "\u0007test 9.4 failed\u0007",
+        "\u0007test 9.5 failed\u0007",
+        "\u0007test 9.6 failed\u0007",
+        "\u0007test 9.7 failed\u0007",
+        "\u0007test 10.2 failed\u0007",
+        "\u0007test 10.5 failed\u0007",
+        "\u0007test 10.6 failed\u0007",
+        "\u0007test 10.8 failed\u0007",
+        "\u0007test 11.2 failed\u0007",
+        "\u0007test 11.3 failed\u0007",
+        "\u0007test 11.5 failed\u0007",
+        "\u0007test 12.1 failed\u0007",
+        "\u0007test 12.2 failed\u0007",
+        "\u0007test 12.3 failed\u0007",
+        "\u0007test 12.4 failed\u0007",
+        "\u0007test 12.5 failed\u0007"
+      ],
+      "passed": false
+    },
+    "rust": {
+      "stdout_hex": "542e7574663a207465737473206f66207574662066756e6374696f6e730a74727920202031207b207072696e74206c656e67746828243129207d0a3163310a3c2032310a2d2d2d0a3e20370a077465737420312e33206661696c6564070a3163310a3c2031320a2d2d2d0a3e20360a077465737420312e34206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420312e35206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420312e36206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420312e37206661696c6564070a3163310a3c20340a2d2d2d0a3e20310a077465737420312e38206661696c6564070a3163310a3c2031310a2d2d2d0a3e20380a077465737420312e39206661696c6564070a3163310a3c20380a2d2d2d0a3e20340a077465737420312e3130206661696c6564070a3163310a3c20360a2d2d2d0a3e20330a077465737420312e3131206661696c6564070a3163310a3c20340a2d2d2d0a3e20320a077465737420312e3132206661696c6564070a3163310a3c2031300a2d2d2d0a3e20350a077465737420312e3133206661696c6564070a3163310a3c20360a2d2d2d0a3e20330a077465737420312e3134206661696c6564070a3163310a3c20380a2d2d2d0a3e20340a077465737420312e3135206661696c6564070a3163310a3c2032310a2d2d2d0a3e20370a077465737420312e3136206661696c6564070a3163310a3c20390a2d2d2d0a3e20330a077465737420312e3137206661696c6564070a3163310a3c20360a2d2d2d0a3e20320a077465737420312e3138206661696c6564070a3163310a3c20390a2d2d2d0a3e20330a077465737420312e3139206661696c6564070a3163310a3c2031320a2d2d2d0a3e20360a077465737420312e3230206661696c6564070a3163310a3c20360a2d2d2d0a3e20330a077465737420312e3231206661696c6564070a3163310a3c2031320a2d2d2d0a3e20360a077465737420312e3232206661696c6564070a74727920202032207b207072696e7420696e6465782824312c20243229207d0a3163310a3c2031360a2d2d2d0a3e20360a077465737420322e35206661696c6564070a3163310a3c20340a2d2d2d0a3e20320a077465737420322e36206661696c6564070a3163310a3c20340a2d2d2d0a3e20320a077465737420322e38206661696c6564070a3163310a3c20360a2d2d2d0a3e20330a077465737420322e39206661696c6564070a3163310a3c2031310a2d2d2d0a3e20380a077465737420322e3130206661696c6564070a74727920202033207b207072696e74207375627374722824302c20322c203329207d0a3163310a3c20a4cf890a2d2d2d0a3e20cf89cf81ceb10a077465737420332e32206661696c6564070a3163310a3c20a4cf890a2d2d2d0a3e20cf890a077465737420332e33206661696c6564070a3163310a3c20a780ea0a2d2d2d0a3e20eab88820ec9db40a077465737420332e34206661696c6564070a3163310a3c20d0bf790a2d2d2d0a3e20d0bf79d1800a077465737420332e35206661696c6564070a74727920202034207b207072696e74202431207e202432207d0a74727920202035207b206e203d207375622824322c2024332c202431293b207072696e74206e2c202431207d0a3163310a3c20312078a1d0b5d0b9d187d0b0d1810a2d2d2d0a3e20312078d0b5d0b9d187d0b0d1810a077465737420352e35206661696c6564070a74727920202036207b206e203d20677375622824322c2024332c202431293b207072696e74206e2c202431207d0a3163310a3c203132207878787878787878787878780a2d2d2d0a3e2036207878787878780a077465737420362e35206661696c6564070a74727920202037207b207072696e74206d617463682824312c202432292c205253544152542c20524c454e475448207d0a3163310a3c2036203620310a2d2d2d0a3e2032203220310a077465737420372e33206661696c6564070a3163310a3c20313320313320310a2d2d2d0a3e2035203520310a077465737420372e34206661696c6564070a3163310a3c20313020313020330a2d2d2d0a3e2034203420310a077465737420372e37206661696c6564070a3163310a3c2031302031302031320a2d2d2d0a3e2034203420340a077465737420372e38206661696c6564070a3163310a3c2033203320320a2d2d2d0a3e2032203220310a077465737420372e3130206661696c6564070a3163310a3c2033203320330a2d2d2d0a3e2032203220320a077465737420372e3132206661696c6564070a3163310a3c2031203120310a2d2d2d0a3e2034203420310a077465737420372e3133206661696c6564070a3163310a3c2031203120310a2d2d2d0a3e20302030202d310a077465737420372e3134206661696c6564070a3163310a3c20313320313320310a2d2d2d0a3e2031203120310a077465737420372e3135206661696c6564070a3163310a3c2031203120310a2d2d2d0a3e2032203220310a077465737420372e3136206661696c6564070a3163310a3c2031203120310a2d2d2d0a3e2032203220330a077465737420372e3137206661696c6564070a3163310a3c203520352032370a2d2d2d0a3e203320332031350a077465737420372e3139206661696c6564070a3163310a3c2034203420310a2d2d2d0a3e2032203220310a077465737420372e3230206661696c6564070a7472792020203820424547494e207b46533d22227d207b7072696e74204e467d0a3163310a3c2033300a2d2d2d0a3e2031300a077465737420382e31206661696c6564070a3163310a3c2032310a2d2d2d0a3e20370a077465737420382e32206661696c6564070a3163310a3c2031320a2d2d2d0a3e20360a077465737420382e33206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420382e34206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420382e35206661696c6564070a3163310a3c2031380a2d2d2d0a3e20360a077465737420382e36206661696c6564070a3163310a3c20340a2d2d2d0a3e20310a077465737420382e37206661696c6564070a3163310a3c2031310a2d2d2d0a3e20380a077465737420382e38206661696c6564070a74727920202039207b7072696e746628225b25352e32735d5b252d352e32735d5c6e22292c2024312c2024317d0a3163310a3c205b202020e78e5d5be78e2020205d0a2d2d2d0a3e205b202020e78eb0e59ca85d5be78eb0e59ca82020205d0a077465737420392e32206661696c6564070a3163310a3c205b202020e78e5d5be78e2020205d0a2d2d2d0a3e205b202020e78eb0cf895d5be78eb0cf892020205d0a077465737420392e33206661696c6564070a3163310a3c205b202020cf895d5bcf892020205d0a2d2d2d0a3e205b202020cf89615d5bcf89612020205d0a077465737420392e34206661696c6564070a3163310a3c205b202020d0a15d5bd0a12020205d0a2d2d2d0a3e205b202020d0a1d0b55d5bd0a1d0b52020205d0a077465737420392e35206661696c6564070a3163310a3c205b202020d0a15d5bd0a12020205d0a2d2d2d0a3e205b202020d0a1d0b55d5bd0a1d0b52020205d0a077465737420392e36206661696c6564070a3163310a3c205b202020f09f5d5bf09f2020205d0a2d2d2d0a3e205b20202020f09f98805d5bf09f9880202020205d0a077465737420392e37206661696c6564070a74727920203130207b7072696e746628225b2535735d5b252d35735d5c6e22292c2024312c2024317d0a3163310a3c205be78eb0e59ca861625d5be78eb0e59ca861625d0a2d2d2d0a3e205b20e78eb0e59ca861625d5be78eb0e59ca86162205d0a07746573742031302e32206661696c6564070a3163310a3c205be78eb0cf8961625d5be78eb0cf8961625d0a2d2d2d0a3e205b20e78eb0cf8961625d5be78eb0cf896162205d0a07746573742031302e35206661696c6564070a3163310a3c205bcf896162635d5bcf896162635d0a2d2d2d0a3e205b20cf896162635d5bcf89616263205d0a07746573742031302e36206661696c6564070a3163310a3c205b20f09f98805d5bf09f9880205d0a2d2d2d0a3e205b20202020f09f98805d5bf09f9880202020205d0a07746573742031302e38206661696c6564070a74727920203131207b7072696e746628225b252e32735d5b252d2e32735d5c6e22292c2024312c2024317d0a3163310a3c205be78e5d5be78e5d0a2d2d2d0a3e205be78eb0e59ca85d5be78eb0e59ca85d0a07746573742031312e32206661696c6564070a3163310a3c205be78e5d5be78e5d0a2d2d2d0a3e205be78eb0cf895d5be78eb0cf895d0a07746573742031312e33206661696c6564070a3163310a3c205bf09f5d5bf09f5d0a2d2d2d0a3e205bf09f98805d5bf09f98805d0a07746573742031312e35206661696c6564070a74727920203132207b7072696e7466282225632025635c6e222c2024312c207375627374722824312c322c3129297d0a3163310a3c20e320810a2d2d2d0a3e20e3819920e381b90a07746573742031322e31206661696c6564070a3163310a3c20e320810a2d2d2d0a3e20e381ae20e4bb8a0a07746573742031322e32206661696c6564070a3163310a3c20d020a10a2d2d2d0a3e20d0a120d0b50a07746573742031322e33206661696c6564070a3163310a3c20e7208e0a2d2d2d0a3e20e78eb020e59ca80a07746573742031322e34206661696c6564070a3163310a3c20f0209f0a2d2d2d0a3e20f09f988020f09f96950a07746573742031322e35206661696c6564070a3130362074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.utf: tests of utf functions\ntry   1 { print length($1) }\n1c1\n< 21\n---\n> 7\n\u0007test 1.3 failed\u0007\n1c1\n< 12\n---\n> 6\n\u0007test 1.4 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 1.5 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 1.6 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 1.7 failed\u0007\n1c1\n< 4\n---\n> 1\n\u0007test 1.8 failed\u0007\n1c1\n< 11\n---\n> 8\n\u0007test 1.9 failed\u0007\n1c1\n< 8\n---\n> 4\n\u0007test 1.10 failed\u0007\n1c1\n< 6\n---\n> 3\n\u0007test 1.11 failed\u0007\n1c1\n< 4\n---\n> 2\n\u0007test 1.12 failed\u0007\n1c1\n< 10\n---\n> 5\n\u0007test 1.13 failed\u0007\n1c1\n< 6\n---\n> 3\n\u0007test 1.14 failed\u0007\n1c1\n< 8\n---\n> 4\n\u0007test 1.15 failed\u0007\n1c1\n< 21\n---\n> 7\n\u0007test 1.16 failed\u0007\n1c1\n< 9\n---\n> 3\n\u0007test 1.17 failed\u0007\n1c1\n< 6\n---\n> 2\n\u0007test 1.18 failed\u0007\n1c1\n< 9\n---\n> 3\n\u0007test 1.19 failed\u0007\n1c1\n< 12\n---\n> 6\n\u0007test 1.20 failed\u0007\n1c1\n< 6\n---\n> 3\n\u0007test 1.21 failed\u0007\n1c1\n< 12\n---\n> 6\n\u0007test 1.22 failed\u0007\ntry   2 { print index($1, $2) }\n1c1\n< 16\n---\n> 6\n\u0007test 2.5 failed\u0007\n1c1\n< 4\n---\n> 2\n\u0007test 2.6 failed\u0007\n1c1\n< 4\n---\n> 2\n\u0007test 2.8 failed\u0007\n1c1\n< 6\n---\n> 3\n\u0007test 2.9 failed\u0007\n1c1\n< 11\n---\n> 8\n\u0007test 2.10 failed\u0007\ntry   3 { print substr($0, 2, 3) }\n1c1\n< \\xa4\u03c9\n---\n> \u03c9\u03c1\u03b1\n\u0007test 3.2 failed\u0007\n1c1\n< \\xa4\u03c9\n---\n> \u03c9\n\u0007test 3.3 failed\u0007\n1c1\n< \\xa7\\x80\\xea\n---\n> \uae08 \uc774\n\u0007test 3.4 failed\u0007\n1c1\n< \u043fy\n---\n> \u043fy\u0440\n\u0007test 3.5 failed\u0007\ntry   4 { print $1 ~ $2 }\ntry   5 { n = sub($2, $3, $1); print n, $1 }\n1c1\n< 1 x\\xa1\u0435\u0439\u0447\u0430\u0441\n---\n> 1 x\u0435\u0439\u0447\u0430\u0441\n\u0007test 5.5 failed\u0007\ntry   6 { n = gsub($2, $3, $1); print n, $1 }\n1c1\n< 12 xxxxxxxxxxxx\n---\n> 6 xxxxxx\n\u0007test 6.5 failed\u0007\ntry   7 { print match($1, $2), RSTART, RLENGTH }\n1c1\n< 6 6 1\n---\n> 2 2 1\n\u0007test 7.3 failed\u0007\n1c1\n< 13 13 1\n---\n> 5 5 1\n\u0007test 7.4 failed\u0007\n1c1\n< 10 10 3\n---\n> 4 4 1\n\u0007test 7.7 failed\u0007\n1c1\n< 10 10 12\n---\n> 4 4 4\n\u0007test 7.8 failed\u0007\n1c1\n< 3 3 2\n---\n> 2 2 1\n\u0007test 7.10 failed\u0007\n1c1\n< 3 3 3\n---\n> 2 2 2\n\u0007test 7.12 failed\u0007\n1c1\n< 1 1 1\n---\n> 4 4 1\n\u0007test 7.13 failed\u0007\n1c1\n< 1 1 1\n---\n> 0 0 -1\n\u0007test 7.14 failed\u0007\n1c1\n< 13 13 1\n---\n> 1 1 1\n\u0007test 7.15 failed\u0007\n1c1\n< 1 1 1\n---\n> 2 2 1\n\u0007test 7.16 failed\u0007\n1c1\n< 1 1 1\n---\n> 2 2 3\n\u0007test 7.17 failed\u0007\n1c1\n< 5 5 27\n---\n> 3 3 15\n\u0007test 7.19 failed\u0007\n1c1\n< 4 4 1\n---\n> 2 2 1\n\u0007test 7.20 failed\u0007\ntry   8 BEGIN {FS=\"\"} {print NF}\n1c1\n< 30\n---\n> 10\n\u0007test 8.1 failed\u0007\n1c1\n< 21\n---\n> 7\n\u0007test 8.2 failed\u0007\n1c1\n< 12\n---\n> 6\n\u0007test 8.3 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 8.4 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 8.5 failed\u0007\n1c1\n< 18\n---\n> 6\n\u0007test 8.6 failed\u0007\n1c1\n< 4\n---\n> 1\n\u0007test 8.7 failed\u0007\n1c1\n< 11\n---\n> 8\n\u0007test 8.8 failed\u0007\ntry   9 {printf(\"[%5.2s][%-5.2s]\\n\"), $1, $1}\n1c1\n< [   \\xe7\\x8e][\\xe7\\x8e   ]\n---\n> [   \u73b0\u5728][\u73b0\u5728   ]\n\u0007test 9.2 failed\u0007\n1c1\n< [   \\xe7\\x8e][\\xe7\\x8e   ]\n---\n> [   \u73b0\u03c9][\u73b0\u03c9   ]\n\u0007test 9.3 failed\u0007\n1c1\n< [   \u03c9][\u03c9   ]\n---\n> [   \u03c9a][\u03c9a   ]\n\u0007test 9.4 failed\u0007\n1c1\n< [   \u0421][\u0421   ]\n---\n> [   \u0421\u0435][\u0421\u0435   ]\n\u0007test 9.5 failed\u0007\n1c1\n< [   \u0421][\u0421   ]\n---\n> [   \u0421\u0435][\u0421\u0435   ]\n\u0007test 9.6 failed\u0007\n1c1\n< [   \\xf0\\x9f][\\xf0\\x9f   ]\n---\n> [    \ud83d\ude00][\ud83d\ude00    ]\n\u0007test 9.7 failed\u0007\ntry  10 {printf(\"[%5s][%-5s]\\n\"), $1, $1}\n1c1\n< [\u73b0\u5728ab][\u73b0\u5728ab]\n---\n> [ \u73b0\u5728ab][\u73b0\u5728ab ]\n\u0007test 10.2 failed\u0007\n1c1\n< [\u73b0\u03c9ab][\u73b0\u03c9ab]\n---\n> [ \u73b0\u03c9ab][\u73b0\u03c9ab ]\n\u0007test 10.5 failed\u0007\n1c1\n< [\u03c9abc][\u03c9abc]\n---\n> [ \u03c9abc][\u03c9abc ]\n\u0007test 10.6 failed\u0007\n1c1\n< [ \ud83d\ude00][\ud83d\ude00 ]\n---\n> [    \ud83d\ude00][\ud83d\ude00    ]\n\u0007test 10.8 failed\u0007\ntry  11 {printf(\"[%.2s][%-.2s]\\n\"), $1, $1}\n1c1\n< [\\xe7\\x8e][\\xe7\\x8e]\n---\n> [\u73b0\u5728][\u73b0\u5728]\n\u0007test 11.2 failed\u0007\n1c1\n< [\\xe7\\x8e][\\xe7\\x8e]\n---\n> [\u73b0\u03c9][\u73b0\u03c9]\n\u0007test 11.3 failed\u0007\n1c1\n< [\\xf0\\x9f][\\xf0\\x9f]\n---\n> [\ud83d\ude00][\ud83d\ude00]\n\u0007test 11.5 failed\u0007\ntry  12 {printf(\"%c %c\\n\", $1, substr($1,2,1))}\n1c1\n< \\xe3 \\x81\n---\n> \u3059 \u3079\n\u0007test 12.1 failed\u0007\n1c1\n< \\xe3 \\x81\n---\n> \u306e \u4eca\n\u0007test 12.2 failed\u0007\n1c1\n< \\xd0 \\xa1\n---\n> \u0421 \u0435\n\u0007test 12.3 failed\u0007\n1c1\n< \\xe7 \\x8e\n---\n> \u73b0 \u5728\n\u0007test 12.4 failed\u0007\n1c1\n< \\xf0 \\x9f\n---\n> \ud83d\ude00 \ud83d\udd95\n\u0007test 12.5 failed\u0007\n106 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "\u0007test 1.3 failed\u0007",
+        "\u0007test 1.4 failed\u0007",
+        "\u0007test 1.5 failed\u0007",
+        "\u0007test 1.6 failed\u0007",
+        "\u0007test 1.7 failed\u0007",
+        "\u0007test 1.8 failed\u0007",
+        "\u0007test 1.9 failed\u0007",
+        "\u0007test 1.10 failed\u0007",
+        "\u0007test 1.11 failed\u0007",
+        "\u0007test 1.12 failed\u0007",
+        "\u0007test 1.13 failed\u0007",
+        "\u0007test 1.14 failed\u0007",
+        "\u0007test 1.15 failed\u0007",
+        "\u0007test 1.16 failed\u0007",
+        "\u0007test 1.17 failed\u0007",
+        "\u0007test 1.18 failed\u0007",
+        "\u0007test 1.19 failed\u0007",
+        "\u0007test 1.20 failed\u0007",
+        "\u0007test 1.21 failed\u0007",
+        "\u0007test 1.22 failed\u0007",
+        "\u0007test 2.5 failed\u0007",
+        "\u0007test 2.6 failed\u0007",
+        "\u0007test 2.8 failed\u0007",
+        "\u0007test 2.9 failed\u0007",
+        "\u0007test 2.10 failed\u0007",
+        "\u0007test 3.2 failed\u0007",
+        "\u0007test 3.3 failed\u0007",
+        "\u0007test 3.4 failed\u0007",
+        "\u0007test 3.5 failed\u0007",
+        "\u0007test 5.5 failed\u0007",
+        "\u0007test 6.5 failed\u0007",
+        "\u0007test 7.3 failed\u0007",
+        "\u0007test 7.4 failed\u0007",
+        "\u0007test 7.7 failed\u0007",
+        "\u0007test 7.8 failed\u0007",
+        "\u0007test 7.10 failed\u0007",
+        "\u0007test 7.12 failed\u0007",
+        "\u0007test 7.13 failed\u0007",
+        "\u0007test 7.14 failed\u0007",
+        "\u0007test 7.15 failed\u0007",
+        "\u0007test 7.16 failed\u0007",
+        "\u0007test 7.17 failed\u0007",
+        "\u0007test 7.19 failed\u0007",
+        "\u0007test 7.20 failed\u0007",
+        "\u0007test 8.1 failed\u0007",
+        "\u0007test 8.2 failed\u0007",
+        "\u0007test 8.3 failed\u0007",
+        "\u0007test 8.4 failed\u0007",
+        "\u0007test 8.5 failed\u0007",
+        "\u0007test 8.6 failed\u0007",
+        "\u0007test 8.7 failed\u0007",
+        "\u0007test 8.8 failed\u0007",
+        "\u0007test 9.2 failed\u0007",
+        "\u0007test 9.3 failed\u0007",
+        "\u0007test 9.4 failed\u0007",
+        "\u0007test 9.5 failed\u0007",
+        "\u0007test 9.6 failed\u0007",
+        "\u0007test 9.7 failed\u0007",
+        "\u0007test 10.2 failed\u0007",
+        "\u0007test 10.5 failed\u0007",
+        "\u0007test 10.6 failed\u0007",
+        "\u0007test 10.8 failed\u0007",
+        "\u0007test 11.2 failed\u0007",
+        "\u0007test 11.3 failed\u0007",
+        "\u0007test 11.5 failed\u0007",
+        "\u0007test 12.1 failed\u0007",
+        "\u0007test 12.2 failed\u0007",
+        "\u0007test 12.3 failed\u0007",
+        "\u0007test 12.4 failed\u0007",
+        "\u0007test 12.5 failed\u0007"
+      ],
+      "passed": false
+    },
+    "status": "reference-failure"
+  },
+  {
+    "case": "T.utfre",
+    "source_sha256": "f1b4feac9c9b3cd994bdf59bc87e8cb2ba5b19879e7c55d924a9eb0d6097fcb4",
+    "c": {
+      "stdout_hex": "542e75746672653a207465737473206f6620726567756c61722065787072657373696f6e20636f646520666f7220556e69636f64652f7574662d380a3433206661696c73205ecebb2e24207e20cebbcebb0a3531206661696c73205e2eed95b4207e20e38281ed95b40a3532206661696c73205e2eed95b4207e20e38281ed95b4ed95b40a3634206661696c7320ed95b42a207e200a3638206661696c7320ed95b42a207e20e38281e38281e38281e382810a3639206661696c7320ed95b4ed95b42a207e20ed95b40a3731206661696c7320ed95b4ed95b42a207e20e38281ed95b40a3834206661696c732078ceb82b79207e2078ceb8ceb8790a3835206661696c732078ceb82b79207e2078ceb8ceb8ceb8ceb8ceb8ceb8790a3839206661696c732078ceb83f79207e2078790a3932206661696c7320ceb83f623fe381ae3f207e200a3933206661696c7320ceb83f623fe381ae3f207e20780a313036206661696c73205bce912dcea95d20217e20ceb20a313038206661696c73205b5ece912dcea95d207e20ceb40a313139206661696c73205bce912dce94cea62dcea95d20217e20cea00a313230206661696c73205bce912dce94cea62dcea95d20217e20cea30a093139342074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.utfre: tests of regular expression code for Unicode/utf-8\n43 fails ^\u03bb.$ ~ \u03bb\u03bb\n51 fails ^.\ud574 ~ \u3081\ud574\n52 fails ^.\ud574 ~ \u3081\ud574\ud574\n64 fails \ud574* ~ \n68 fails \ud574* ~ \u3081\u3081\u3081\u3081\n69 fails \ud574\ud574* ~ \ud574\n71 fails \ud574\ud574* ~ \u3081\ud574\n84 fails x\u03b8+y ~ x\u03b8\u03b8y\n85 fails x\u03b8+y ~ x\u03b8\u03b8\u03b8\u03b8\u03b8\u03b8y\n89 fails x\u03b8?y ~ xy\n92 fails \u03b8?b?\u306e? ~ \n93 fails \u03b8?b?\u306e? ~ x\n106 fails [\u0391-\u03a9] !~ \u03b2\n108 fails [^\u0391-\u03a9] ~ \u03b4\n119 fails [\u0391-\u0394\u03a6-\u03a9] !~ \u03a0\n120 fails [\u0391-\u0394\u03a6-\u03a9] !~ \u03a3\n\t194 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "43 fails ^\u03bb.$ ~ \u03bb\u03bb",
+        "51 fails ^.\ud574 ~ \u3081\ud574",
+        "52 fails ^.\ud574 ~ \u3081\ud574\ud574",
+        "64 fails \ud574* ~ ",
+        "68 fails \ud574* ~ \u3081\u3081\u3081\u3081",
+        "69 fails \ud574\ud574* ~ \ud574",
+        "71 fails \ud574\ud574* ~ \u3081\ud574",
+        "84 fails x\u03b8+y ~ x\u03b8\u03b8y",
+        "85 fails x\u03b8+y ~ x\u03b8\u03b8\u03b8\u03b8\u03b8\u03b8y",
+        "89 fails x\u03b8?y ~ xy",
+        "92 fails \u03b8?b?\u306e? ~ ",
+        "93 fails \u03b8?b?\u306e? ~ x",
+        "106 fails [\u0391-\u03a9] !~ \u03b2",
+        "108 fails [^\u0391-\u03a9] ~ \u03b4",
+        "119 fails [\u0391-\u0394\u03a6-\u03a9] !~ \u03a0",
+        "120 fails [\u0391-\u0394\u03a6-\u03a9] !~ \u03a3"
+      ],
+      "passed": false
+    },
+    "rust": {
+      "stdout_hex": "542e75746672653a207465737473206f6620726567756c61722065787072657373696f6e20636f646520666f7220556e69636f64652f7574662d380a3433206661696c73205ecebb2e24207e20cebbcebb0a3531206661696c73205e2eed95b4207e20e38281ed95b40a3532206661696c73205e2eed95b4207e20e38281ed95b4ed95b40a3634206661696c7320ed95b42a207e200a3638206661696c7320ed95b42a207e20e38281e38281e38281e382810a3639206661696c7320ed95b4ed95b42a207e20ed95b40a3731206661696c7320ed95b4ed95b42a207e20e38281ed95b40a3834206661696c732078ceb82b79207e2078ceb8ceb8790a3835206661696c732078ceb82b79207e2078ceb8ceb8ceb8ceb8ceb8ceb8790a3839206661696c732078ceb83f79207e2078790a3932206661696c7320ceb83f623fe381ae3f207e200a3933206661696c7320ceb83f623fe381ae3f207e20780a313036206661696c73205bce912dcea95d20217e20ceb20a313038206661696c73205b5ece912dcea95d207e20ceb40a313139206661696c73205bce912dce94cea62dcea95d20217e20cea00a313230206661696c73205bce912dce94cea62dcea95d20217e20cea30a093139342074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.utfre: tests of regular expression code for Unicode/utf-8\n43 fails ^\u03bb.$ ~ \u03bb\u03bb\n51 fails ^.\ud574 ~ \u3081\ud574\n52 fails ^.\ud574 ~ \u3081\ud574\ud574\n64 fails \ud574* ~ \n68 fails \ud574* ~ \u3081\u3081\u3081\u3081\n69 fails \ud574\ud574* ~ \ud574\n71 fails \ud574\ud574* ~ \u3081\ud574\n84 fails x\u03b8+y ~ x\u03b8\u03b8y\n85 fails x\u03b8+y ~ x\u03b8\u03b8\u03b8\u03b8\u03b8\u03b8y\n89 fails x\u03b8?y ~ xy\n92 fails \u03b8?b?\u306e? ~ \n93 fails \u03b8?b?\u306e? ~ x\n106 fails [\u0391-\u03a9] !~ \u03b2\n108 fails [^\u0391-\u03a9] ~ \u03b4\n119 fails [\u0391-\u0394\u03a6-\u03a9] !~ \u03a0\n120 fails [\u0391-\u0394\u03a6-\u03a9] !~ \u03a3\n\t194 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [
+        "43 fails ^\u03bb.$ ~ \u03bb\u03bb",
+        "51 fails ^.\ud574 ~ \u3081\ud574",
+        "52 fails ^.\ud574 ~ \u3081\ud574\ud574",
+        "64 fails \ud574* ~ ",
+        "68 fails \ud574* ~ \u3081\u3081\u3081\u3081",
+        "69 fails \ud574\ud574* ~ \ud574",
+        "71 fails \ud574\ud574* ~ \u3081\ud574",
+        "84 fails x\u03b8+y ~ x\u03b8\u03b8y",
+        "85 fails x\u03b8+y ~ x\u03b8\u03b8\u03b8\u03b8\u03b8\u03b8y",
+        "89 fails x\u03b8?y ~ xy",
+        "92 fails \u03b8?b?\u306e? ~ ",
+        "93 fails \u03b8?b?\u306e? ~ x",
+        "106 fails [\u0391-\u03a9] !~ \u03b2",
+        "108 fails [^\u0391-\u03a9] ~ \u03b4",
+        "119 fails [\u0391-\u0394\u03a6-\u03a9] !~ \u03a0",
+        "120 fails [\u0391-\u0394\u03a6-\u03a9] !~ \u03a3"
+      ],
+      "passed": false
+    },
+    "status": "reference-failure"
+  }
+]

@@ -23,9 +23,45 @@ pub fn validate(program: &Program, safe: bool) -> Result<()> {
             ),
         )?;
     }
+    let mut function_names = std::collections::HashSet::new();
     for function in &program.functions {
+        if !function_names.insert(&function.name) {
+            bail!("function {} defined more than once", function.name);
+        }
+        let mut seen = std::collections::HashSet::new();
+        for parameter in &function.params {
+            if parameter == &function.name {
+                bail!("{} is both function name and argument name", function.name);
+            }
+            if !seen.insert(parameter) {
+                bail!(
+                    "duplicate argument {parameter} in function {}",
+                    function.name
+                );
+            }
+        }
         statements(&function.body, safe)?;
         control_context(&function.body, true, 0, false)?;
+    }
+    for (body, params) in program.rules.iter().map(|r| (&r.action, &[][..])).chain(
+        program
+            .functions
+            .iter()
+            .map(|f| (&f.body, f.params.as_slice())),
+    ) {
+        let mut expressions = Vec::new();
+        let mut arrays = Vec::new();
+        collect_statements(body, &mut expressions, &mut arrays);
+        for expr in expressions {
+            if let Expr::ArrayAccess(name, _) = expr {
+                arrays.push(name);
+            }
+        }
+        for name in arrays {
+            if function_names.contains(name) && !params.contains(name) {
+                bail!("{name} is both an array and a function");
+            }
+        }
     }
     Ok(())
 }
@@ -39,11 +75,11 @@ fn expression(expr: &Expr, safe: bool) -> Result<()> {
             let bounds = match name.as_str() {
                 "sin" | "cos" | "exp" | "log" | "sqrt" | "int" | "tolower" | "toupper"
                 | "system" | "close" => Some((1, 1)),
-                "index" | "atan2" | "and" | "or" | "xor" | "lshift" | "rshift" | "match" => {
-                    Some((2, 2))
-                }
+                "index" | "and" | "or" | "xor" | "lshift" | "rshift" | "match" => Some((2, 2)),
                 "substr" | "split" | "sub" | "gsub" => Some((2, 3)),
-                "length" | "srand" | "fflush" => Some((0, 1)),
+                "length" => Some((0, usize::MAX)),
+                "atan2" => Some((1, 2)),
+                "srand" | "fflush" => Some((0, 1)),
                 "rand" | "systime" => Some((0, 0)),
                 "strftime" => Some((0, 3)),
                 "sprintf" => Some((1, usize::MAX)),
@@ -53,6 +89,9 @@ fn expression(expr: &Expr, safe: bool) -> Result<()> {
                 && !(min..=max).contains(&args.len())
             {
                 bail!("invalid number of arguments to {name}: {}", args.len());
+            }
+            if name == "index" && args.iter().any(|a| matches!(a, Expr::RegexLiteral(_))) {
+                bail!("index does not permit regular expressions");
             }
             for arg in args {
                 expression(arg, safe)?;
@@ -111,6 +150,9 @@ fn statements(body: &[Statement], safe: bool) -> Result<()> {
                 for arg in args {
                     expression(arg, safe)?;
                 }
+            }
+            Statement::Expr(Expr::StringLiteral(_) | Expr::NumberLiteral(_)) => {
+                bail!("illegal literal statement")
             }
             Statement::Expr(e) => expression(e, safe)?,
             Statement::Delete(_, Some(keys)) => {

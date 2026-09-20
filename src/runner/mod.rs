@@ -51,10 +51,11 @@ impl From<anyhow::Error> for FlowControl {
 }
 
 pub fn run(config: Config) -> anyhow::Result<i32> {
+    crate::text::init();
     let fs = if config.csv {
         ","
     } else if let Some(ref fs) = config.field_separator {
-        fs.as_str()
+        if fs == "t" { "\t" } else { fs.as_str() }
     } else {
         " "
     };
@@ -99,20 +100,39 @@ pub fn run(config: Config) -> anyhow::Result<i32> {
     context.set_var("RS", AwkValue::String(b"\n".to_vec()));
 
     let mut program_text = String::new();
+    let mut sources = Vec::new();
     if !config.program_files.is_empty() {
         for pf in &config.program_files {
-            let content = std::fs::read_to_string(pf)
-                .with_context(|| format!("lettura programfile '{pf}'"))?;
+            let content = if pf == "-" {
+                use std::io::Read;
+                let mut content = Vec::new();
+                std::io::stdin()
+                    .read_to_end(&mut content)
+                    .context("reading program from stdin")?;
+                parser::source_text(&content)
+            } else {
+                let content =
+                    std::fs::read(pf).with_context(|| format!("lettura programfile '{pf}'"))?;
+                parser::source_text(&content)
+            };
             if !program_text.is_empty() {
                 program_text.push('\n');
             }
+            sources.push((program_text.len(), pf.as_str()));
             program_text.push_str(&content);
         }
     } else if let Some(ref p) = config.program {
-        program_text.push_str(p);
+        {
+            use std::os::unix::ffi::OsStrExt;
+            program_text.push_str(&parser::source_text(p.as_bytes()));
+        }
     }
 
-    let program = parser::parse(&program_text)?;
+    let program = if sources.is_empty() {
+        parser::parse(&program_text)?
+    } else {
+        parser::parse_with_sources(&program_text, &sources)?
+    };
     crate::validation::validate(&program, config.safe)?;
 
     let mut compiled_rules = Vec::new();
@@ -208,9 +228,16 @@ fn assignment(context: &mut EvalContext, text: &str) -> bool {
     {
         return false;
     }
+    let value = if value.contains('\n') {
+        eprintln!("rawk: newline in assignment string");
+        context.exit_code = 2;
+        value.replace('\n', "")
+    } else {
+        value.to_owned()
+    };
     context.set_var(
         name,
-        AwkValue::from_str_num(parser::decode_string_escapes(value)),
+        AwkValue::from_str_num(parser::decode_string_escapes(&value)),
     );
     true
 }
@@ -243,12 +270,13 @@ fn read_main(context: &mut EvalContext) -> Result<Option<Vec<u8>>, FlowControl> 
                 None => return Ok(None),
             };
             context.input.reader = Some(if filename == "-" {
-                crate::input::RecordReader::new(std::io::stdin())
+                context.stdin.clone()
             } else {
                 crate::input::RecordReader::new(
                     File::open(&filename)
                         .map_err(|e| FlowControl::Error(format!("input {filename}: {e}")))?,
                 )
+                .shared()
             });
             context.input.opened = true;
             context.fnr = 0;
@@ -271,9 +299,9 @@ fn read_main(context: &mut EvalContext) -> Result<Option<Vec<u8>>, FlowControl> 
             continue;
         };
         let record = (if context.csv {
-            reader.next_csv()
+            reader.borrow_mut().next_csv()
         } else {
-            reader.next(&rs)
+            reader.borrow_mut().next(&rs)
         })
         .map_err(|e| FlowControl::Error(e.to_string()))?;
         if let Some((record, rt)) = record {
@@ -313,6 +341,11 @@ fn execute_special_blocks(
 
         if is_match {
             let fc = execute_action(&rule.action, context);
+            if fc == FlowControl::NextFile
+                && matches!(block_type, SpecialBlock::Begin | SpecialBlock::End)
+            {
+                return FlowControl::Error("nextfile is not allowed in BEGIN/END".into());
+            }
             if fc != FlowControl::None {
                 return fc;
             }
@@ -375,6 +408,9 @@ fn target(expr: &Expr, context: &mut EvalContext) -> Result<Target, FlowControl>
             if !index.is_finite() || index < 0.0 {
                 return Err(FlowControl::Error("invalid field index".into()));
             }
+            if index > i32::MAX as f64 {
+                return Err(FlowControl::Error("out of range field".into()));
+            }
             Ok(Target::Field(index as usize))
         }
         _ => Err(FlowControl::Error("expression is not assignable".into())),
@@ -391,6 +427,11 @@ impl Target {
     fn set(&self, context: &mut EvalContext, value: AwkValue) -> Result<(), FlowControl> {
         match self {
             Self::Variable(name) => {
+                if context.is_function_name(name) {
+                    return Err(FlowControl::Error(format!(
+                        "cannot assign to function {name}"
+                    )));
+                }
                 if name == "NF" && (!value.as_number().is_finite() || value.as_number() < 0.0) {
                     return Err(FlowControl::Error(
                         "NF must be nonnegative and finite".into(),
@@ -441,6 +482,11 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> Result<AwkValue, FlowCon
             AwkValue::Number(if regex.is_match(&record) { 1.0 } else { 0.0 })
         }
         Expr::Variable(v) => {
+            if context.is_function_name(v) {
+                return Err(FlowControl::Error(format!(
+                    "cannot read function {v} as a value"
+                )));
+            }
             if context.array(v).is_some() {
                 return Err(FlowControl::Error(format!("{v} is an array")));
             }
@@ -499,8 +545,17 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> Result<AwkValue, FlowCon
             }
             // Not a builtin: user-defined function fallback (semantica invariata).
             if let Some((params, body)) = context.functions.get(name).cloned() {
+                if args.len() + params.len() > 50 {
+                    return Err(FlowControl::Error(format!(
+                        "function {name} has too many arguments (limit 50)"
+                    )));
+                }
                 if args.len() > params.len() {
-                    return Err(FlowControl::Error(format!("too many arguments to {name}")));
+                    eprintln!(
+                        "rawk: function {name} called with {} args, uses only {}",
+                        args.len(),
+                        params.len()
+                    );
                 }
                 let mut local_scope = std::collections::HashMap::new();
                 let mut aliases = std::collections::HashMap::new();
@@ -537,6 +592,9 @@ fn eval_expr(expr: &Expr, context: &mut EvalContext) -> Result<AwkValue, FlowCon
                         };
                         local_scope.insert(param.clone(), value);
                     }
+                }
+                for arg in args.iter().skip(params.len()) {
+                    eval_expr(arg, context)?;
                 }
                 context.local_scopes.push(local_scope);
                 context.array_scopes.push(aliases);
@@ -798,7 +856,7 @@ fn execute_action_inner(
                     .unwrap_or_default();
 
                 for key in keys {
-                    context.set_var(key_name, AwkValue::String(key));
+                    Target::Variable(key_name.clone()).set(context, AwkValue::String(key))?;
                     let fc = execute_action(block, context);
                     if fc == FlowControl::Break {
                         break;

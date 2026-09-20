@@ -1,0 +1,465 @@
+[
+  {
+    "name": "exit_end",
+    "program": "BEGIN { exit 7 } END { print \"END\" }",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 7,
+      "stdout": "END\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 7,
+      "stdout": "",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "short_circuit",
+    "program": "BEGIN { x=0; print (0 && ++x), x; print (1 || ++x), x }",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "0 0\n1 0\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "0 1\n1 2\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "record_counter",
+    "program": "{$0=$0; print NR,FNR} END {print NR}",
+    "input": "a\nb\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "1 1\n2 2\n2\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "2 2\n4 4\n4\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "fs_regex",
+    "program": "BEGIN { FS=\"[,:]+\" } {print NF,$1,$2,$3}",
+    "input": "a,b:c\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "3 a b c\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "1 a,b:c  \n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "rs_dynamic",
+    "program": "{print $0; RS=\":\"}",
+    "input": "a\nb:c:",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "a\nb\nc\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "a\nb:c:\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "regex_longest",
+    "program": "BEGIN {match(\"ab\", /a|ab/); print RSTART,RLENGTH}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "1 1\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "regex_invalid",
+    "program": "BEGIN {r=\"[\"; print (\"abc\" ~ r)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: nonterminated character class [\n source line number 1\n"
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "array_parameter",
+    "program": "function f(a) {a[1]=9} BEGIN {x[1]=1; f(x); print x[1]}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "9\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "return_while",
+    "program": "function f(i) {while(i++ < 2) {return 7} return 9} BEGIN {print f(0)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "7\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "9\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "next_function",
+    "program": "function f() {next} {f(); print \"BAD\"} END {print NR}",
+    "input": "a\nb\n",
+    "mode": [],
+    "c": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: next is illegal inside a function at source line 1 in function f\n context is\n\tfunction f() >>>  {next} <<< \n"
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "BAD\nBAD\n2\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "getline_file",
+    "program": "{getline x; print $0,x,NR,FNR}",
+    "input": "a\nb\nc\nd\n",
+    "mode": [
+      "file"
+    ],
+    "c": {
+      "code": 0,
+      "stdout": "a b 2 2\nc d 4 4\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "a  1 1\nb  2 2\nc  3 3\nd  4 4\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "getline_counter",
+    "program": "{getline x; print $0,x,NR,FNR}",
+    "input": "a\nb\nc\nd\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "a b 2 2\nc d 4 4\n",
+      "stderr": ""
+    },
+    "rust": {
+      "timeout": true
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "getline_missing",
+    "program": "BEGIN {print (getline x < \"/nonexistent/rawk-audit-absent\")}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "-1\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "split_empty_clear",
+    "program": "BEGIN {a[9]=\"old\"; print split(\"a,,b\",a,\",\"); print a[2],(9 in a)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "3\n 0\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "2\nb 9\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "gsub_count",
+    "program": "BEGIN {s=\"aaa\"; print gsub(/a/,\"b\",s),s; print sub(/b/,\"b\",s)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "3 bbb\n1\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "1 bbb\n0\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "numeric_string_compare",
+    "program": "BEGIN { print (\"01\" == \"1\"), (\"10\" < \"2\") }",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "0 1\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "1 0\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "numeric_prefix",
+    "program": "BEGIN {print \"12x\"+0}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "12\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "field_increment",
+    "program": "{$1++; print $1,$0}",
+    "input": "3\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "4 4\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "3 3\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "escaped_quote",
+    "program": "BEGIN {print \"a\\\"b\"}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "a\"b\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "rawk: Parse error:  --> 1:19\n  |\n1 | BEGIN {print \"a\\\"b\"}\n  |                   ^---\n  |\n  = expected statement, redirect, term, op_and, op_or, op_match, op_not_match, op_in, op_eq, op_neq, op_le, op_lt, op_add, op_sub, op_mul, op_div, op_mod, op_pow, op_inc, or op_dec\n"
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "range_pattern",
+    "program": "NR==1,NR==2 {print}",
+    "input": "a\nb\nc\n",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "a\nb\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "rawk: Parse error:  --> 1:6\n  |\n1 | NR==1,NR==2 {print}\n  |      ^---\n  |\n  = expected EOI, rule, action_block, function_decl, term, op_and, op_or, op_match, op_not_match, op_in, op_eq, op_neq, op_ge, op_le, op_gt, op_lt, op_add, op_sub, op_mul, op_div, op_mod, op_pow, op_inc, or op_dec\n"
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "assignment_expr",
+    "program": "BEGIN {print (x=3)}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "rawk: Parse error:  --> 1:16\n  |\n1 | BEGIN {print (x=3)}\n  |                ^---\n  |\n  = expected term, op_and, op_or, op_match, op_not_match, op_in, op_eq, op_neq, op_ge, op_le, op_gt, op_lt, op_add, op_sub, op_mul, op_div, op_mod, op_pow, op_inc, or op_dec\n"
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "leading_decimal",
+    "program": "BEGIN {print .5}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "0.5\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "rawk: Parse error:  --> 1:14\n  |\n1 | BEGIN {print .5}\n  |              ^---\n  |\n  = expected statement, redirect, or term\n"
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "underscore_identifier",
+    "program": "BEGIN {_x=3; print _x}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "rawk: Parse error:  --> 1:8\n  |\n1 | BEGIN {_x=3; print _x}\n  |        ^---\n  |\n  = expected statement\n"
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "power_precedence",
+    "program": "BEGIN {print -2^2}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 0,
+      "stdout": "-4\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "4\n",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "arity_panic",
+    "program": "BEGIN {print substr(\"a\")}",
+    "input": "",
+    "mode": [],
+    "c": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: syntax error at source line 1\n context is\n\tBEGIN {print >>>  substr(\"a\") <<< \n/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: illegal statement at source line 1\n"
+    },
+    "rust": {
+      "code": 101,
+      "stdout": "",
+      "stderr": "\nthread 'main' (7259806) panicked at src/runner/builtins.rs:83:36:\nindex out of bounds: the len is 1 but the index is 1\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n"
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "program_file_cli",
+    "program": "{print FILENAME,$0}",
+    "input": "a\nb\n",
+    "mode": [
+      "programfile"
+    ],
+    "c": {
+      "code": 0,
+      "stdout": "/var/folders/n2/3ynvhhr1275c7p2j80kc1q5r0000gn/T/rawk-audit-c111gy46/input.txt a\n/var/folders/n2/3ynvhhr1275c7p2j80kc1q5r0000gn/T/rawk-audit-c111gy46/input.txt b\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "same_stdout_and_status": false
+  },
+  {
+    "name": "argv_assignment",
+    "program": "{print x,$0}",
+    "input": "a\n",
+    "mode": [
+      "assignment"
+    ],
+    "c": {
+      "code": 0,
+      "stdout": "7 a\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "rawk: No such file or directory (os error 2)\n"
+    },
+    "same_stdout_and_status": false
+  }
+]

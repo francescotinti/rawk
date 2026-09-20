@@ -7,7 +7,7 @@ COMMENT = _{ "#" ~ (!"\n" ~ ANY)* }
 nl = _{ "\n" }
 eos = _{ ";" | nl }
 
-program = { SOI ~ nl* ~ ( (function_decl | rule) ~ nl* )* ~ EOI }
+program = { SOI ~ eos* ~ ( (function_decl | rule) ~ eos* )* ~ EOI }
 
 rule = { 
     (pattern ~ nl* ~ action_block) |
@@ -15,12 +15,12 @@ rule = {
     action_block
 }
 
-action_block = { "{" ~ nl* ~ (statement ~ nl*)* ~ "}" }
+action_block = { "{" ~ eos* ~ (statement ~ eos*)* ~ "}" }
 
-function_decl = { "function" ~ ident ~ "(" ~ nl* ~ ident_list? ~ nl* ~ ")" ~ nl* ~ action_block }
+function_decl = { (&kw_function ~ "function") ~ ident ~ "(" ~ nl* ~ ident_list? ~ nl* ~ ")" ~ nl* ~ action_block }
 ident_list = { ident ~ (nl* ~ "," ~ nl* ~ ident)* }
 
-pattern = { "BEGINFILE" | "ENDFILE" | "BEGIN" | "END" | range_pattern | expr }
+pattern = { (&kw_BEGINFILE ~ "BEGINFILE") | (&kw_ENDFILE ~ "ENDFILE") | (&kw_BEGIN ~ "BEGIN") | (&kw_END ~ "END") | range_pattern | expr }
 range_pattern = { expr ~ "," ~ expr }
 regex_pattern = ${ "/" ~ regex_inner ~ "/" }
 regex_inner = @{ ("\\" ~ ANY | !"/" ~ ANY)* }
@@ -44,23 +44,23 @@ statement = {
     expr_stmt) ~ eos?
 }
 
-if_stmt = { "if" ~ nl* ~ "(" ~ nl* ~ expr ~ nl* ~ ")" ~ nl* ~ block_or_stmt ~ (nl* ~ "else" ~ nl* ~ block_or_stmt)? }
-while_stmt = { "while" ~ nl* ~ "(" ~ nl* ~ expr ~ nl* ~ ")" ~ nl* ~ block_or_stmt }
-do_while_stmt = { "do" ~ nl* ~ block_or_stmt ~ nl* ~ "while" ~ nl* ~ "(" ~ nl* ~ expr ~ nl* ~ ")" }
-for_in_stmt = { "for" ~ nl* ~ "(" ~ nl* ~ ident ~ nl* ~ "in" ~ nl* ~ ident ~ nl* ~ ")" ~ nl* ~ block_or_stmt }
-for_stmt = { "for" ~ nl* ~ "(" ~ nl* ~ for_init? ~ nl* ~ ";" ~ nl* ~ for_cond? ~ nl* ~ ";" ~ nl* ~ for_step? ~ nl* ~ ")" ~ nl* ~ block_or_stmt }
+if_stmt = { (&kw_if ~ "if") ~ nl* ~ "(" ~ nl* ~ expr ~ nl* ~ ")" ~ nl* ~ block_or_stmt ~ (nl* ~ (&kw_else ~ "else") ~ nl* ~ block_or_stmt)? }
+while_stmt = { (&kw_while ~ "while") ~ nl* ~ "(" ~ nl* ~ expr ~ nl* ~ ")" ~ nl* ~ block_or_stmt }
+do_while_stmt = { (&kw_do ~ "do") ~ nl* ~ block_or_stmt ~ nl* ~ (&kw_while ~ "while") ~ nl* ~ "(" ~ nl* ~ expr ~ nl* ~ ")" }
+for_in_stmt = { (&kw_for ~ "for") ~ nl* ~ "(" ~ nl* ~ ident ~ nl* ~ (&kw_in ~ "in") ~ nl* ~ ident ~ nl* ~ ")" ~ nl* ~ block_or_stmt }
+for_stmt = { (&kw_for ~ "for") ~ nl* ~ "(" ~ nl* ~ for_init? ~ nl* ~ ";" ~ nl* ~ for_cond? ~ nl* ~ ";" ~ nl* ~ for_step? ~ nl* ~ ")" ~ nl* ~ block_or_stmt }
 for_init = { assign_stmt | expr }
 for_cond = { expr }
 for_step = { assign_stmt | expr }
-delete_stmt = { "delete" ~ ident ~ ("[" ~ nl* ~ expr_list ~ nl* ~ "]")? }
-print_stmt = { "print" ~ (print_expr_list | paren_print_args)? ~ redirect? }
-printf_stmt = { "printf" ~ (print_expr_list | paren_print_args)? ~ redirect? }
-break_stmt = { "break" }
-continue_stmt = { "continue" }
-nextfile_stmt = { "nextfile" }
-next_stmt = { "next" }
-return_stmt = { "return" ~ expr? }
-exit_stmt = { "exit" ~ expr? }
+delete_stmt = { (&kw_delete ~ "delete") ~ ident ~ ("[" ~ nl* ~ expr_list ~ nl* ~ "]")? }
+print_stmt = { (&kw_print ~ "print") ~ (print_expr_list | paren_print_args)? ~ redirect? }
+printf_stmt = { (&kw_printf ~ "printf") ~ (print_expr_list | paren_print_args)? ~ redirect? }
+break_stmt = { (&kw_break ~ "break") }
+continue_stmt = { (&kw_continue ~ "continue") }
+nextfile_stmt = { (&kw_nextfile ~ "nextfile") }
+next_stmt = { (&kw_next ~ "next") }
+return_stmt = { (&kw_return ~ "return") ~ expr? }
+exit_stmt = { (&kw_exit ~ "exit") ~ expr? }
 redirect = { (">>" | ">" | "|") ~ expr }
 assign_stmt = { assignable ~ assign_op ~ nl* ~ expr }
 assign_op = { "**=" | "+=" | "-=" | "*=" | "/=" | "%=" | "^=" | ("=" ~ !"=") }
@@ -104,9 +104,10 @@ non_getline_primary = { field | func_call | bare_length | array_access | number 
 primary = { getline_expr | non_getline_primary }
 
 getline_expr = { pipe_getline | plain_getline }
-pipe_getline = { non_getline_primary ~ nl* ~ "|" ~ nl* ~ "getline" ~ ident? }
-plain_getline = { "getline" ~ ident? ~ (nl* ~ "<" ~ nl* ~ expr)? }
-field = { "$" ~ primary }
+pipe_getline = { non_getline_primary ~ nl* ~ "|" ~ nl* ~ (&kw_getline ~ "getline") ~ ident? }
+plain_getline = { (&kw_getline ~ "getline") ~ ident? ~ (nl* ~ "<" ~ nl* ~ concat_expr)? }
+field = { "$" ~ field_index }
+field_index = { ((op_inc | op_dec) ~ field_index) | (array_access ~ postfix_op?) | primary }
 array_access = { ident ~ "[" ~ nl* ~ expr_list ~ nl* ~ "]" }
 builtin_name = @{ ("atan2" | "close" | "cos" | "exp" | "fflush" | "gsub" | "index" | "int" | "length" | "log" | "match" | "rand" | "sin" | "split" | "sprintf" | "sqrt" | "srand" | "substr" | "sub" | "system" | "tolower" | "toupper") ~ !(ASCII_ALPHANUMERIC | "_") }
 func_name = @{ (builtin_name ~ (" " | "\t")* | ident) ~ "(" }
@@ -121,27 +122,27 @@ op_and = { "&&" }
 op_or  = { "||" }
 op_match = { "~" }
 op_not_match = { "!~" }
-op_in  = { "in" }
+op_in  = { (&kw_in ~ "in") }
 op_eq  = { "==" }
 op_neq = { "!=" }
 op_ge  = { ">=" }
 op_le  = { "<=" }
 op_gt  = { ">" }
 op_lt  = { "<" }
-op_add = { "+" }
-op_sub = { "-" }
+op_add = @{ "+" ~ !"+" }
+op_sub = @{ "-" ~ !"-" }
 op_mul = { "*" }
 op_div = { "/" }
 op_mod = { "%" }
 op_pow = { "**" | "^" }
 
 op_not = { "!" }
-op_plus = { "+" ~ !"+" }
-op_minus = { "-" ~ !"-" }
+op_plus = @{ "+" ~ !"+" }
+op_minus = @{ "-" ~ !"-" }
 op_inc = { "++" }
 op_dec = { "--" }
 
-ident = @{ !("in" ~ !(ASCII_ALPHANUMERIC | "_")) ~ (ASCII_ALPHA | "_") ~ (ASCII_ALPHANUMERIC | "_")* }
+ident = @{ !((&kw_in ~ "in") ~ !(ASCII_ALPHANUMERIC | "_")) ~ (ASCII_ALPHA | "_") ~ (ASCII_ALPHANUMERIC | "_")* }
 number = @{ (ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT*)? | "." ~ ASCII_DIGIT+) ~ (("e" | "E") ~ ("+" | "-")? ~ ASCII_DIGIT+)? }
 string_literal = ${ "\"" ~ inner_string ~ "\"" }
 inner_string = @{ ("\\" ~ ANY | !"\"" ~ ANY)* }
@@ -149,3 +150,26 @@ inner_string = @{ ("\\" ~ ANY | !"\"" ~ ANY)* }
 paren_print_args = { "(" ~ nl* ~ expr_list? ~ nl* ~ ")" }
 
 tuple_in = { "(" ~ nl* ~ expr ~ (nl* ~ "," ~ nl* ~ expr)+ ~ nl* ~ ")" ~ nl* ~ op_in ~ nl* ~ ident }
+
+// Atomic lookahead prevents keyword prefixes from consuming identifiers.
+kw_function = @{ "function" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_BEGINFILE = @{ "BEGINFILE" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_ENDFILE = @{ "ENDFILE" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_BEGIN = @{ "BEGIN" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_END = @{ "END" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_if = @{ "if" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_else = @{ "else" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_while = @{ "while" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_do = @{ "do" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_for = @{ "for" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_in = @{ "in" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_delete = @{ "delete" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_print = @{ "print" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_printf = @{ "printf" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_break = @{ "break" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_continue = @{ "continue" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_nextfile = @{ "nextfile" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_next = @{ "next" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_return = @{ "return" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_exit = @{ "exit" ~ !(ASCII_ALPHANUMERIC | "_") }
+kw_getline = @{ "getline" ~ !(ASCII_ALPHANUMERIC | "_") }

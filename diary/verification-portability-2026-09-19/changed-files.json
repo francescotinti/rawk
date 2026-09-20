@@ -1,0 +1,5 @@
+{
+  ".github/workflows/compatibility.yml": "8f9f60eab4ec9bc7aa7e45a69cb37cb8ea220257282d335e6b678398ca2bb424",
+  "scripts/check_portability.sh": "39fedf004434e1243298dc2fdc0b4f01e8fa0de4a3adc1aa003037b7e6284776",
+  "tests/unicode_contract.rs": "f6e199d67dbdc1bf7b5b1ddf835b3cbc589abc3e1f7f41c0a1b7f26defe95dc2"
+}

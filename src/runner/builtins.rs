@@ -58,12 +58,22 @@ pub(super) fn dispatch_builtin(
 ) -> Result<Option<AwkValue>, FlowControl> {
     let value = match name {
         "length" => {
-            // length() POSIX byte-count: opera direttamente sui byte.
+            // Count character units selected by LC_CTYPE; array length stays cardinality.
             let n = if args.is_empty() {
-                context.record.len()
+                crate::text::len(&context.record)
+            } else if let Expr::Variable(name) = &args[0]
+                && let Some(array) = context.array(name)
+            {
+                array.len()
             } else {
-                eval_expr(&args[0], context)?.as_string().len()
+                crate::text::len(&eval_expr(&args[0], context)?.as_string())
             };
+            if args.len() > 1 {
+                eprintln!("rawk: warning: function has too many arguments");
+                for arg in &args[1..] {
+                    eval_expr(arg, context)?;
+                }
+            }
             AwkValue::Number(n as f64)
         }
         "tolower" => {
@@ -72,7 +82,7 @@ pub(super) fn dispatch_builtin(
             } else {
                 eval_expr(&args[0], context)?.as_string()
             };
-            AwkValue::String(s.to_ascii_lowercase())
+            AwkValue::String(crate::text::convert(&s, false).map_err(FlowControl::Error)?)
         }
         "toupper" => {
             let s = if args.is_empty() {
@@ -80,7 +90,7 @@ pub(super) fn dispatch_builtin(
             } else {
                 eval_expr(&args[0], context)?.as_string()
             };
-            AwkValue::String(s.to_ascii_uppercase())
+            AwkValue::String(crate::text::convert(&s, true).map_err(FlowControl::Error)?)
         }
         "substr" => {
             let s = eval_expr(&args[0], context)?.as_string();
@@ -91,20 +101,22 @@ pub(super) fn dispatch_builtin(
                 s.len()
             };
             let start_idx = if start > 0 { start - 1 } else { 0 };
-            // substr byte-based: skip/take sui byte (design Phase 7).
-            let sub: Vec<u8> = s.iter().skip(start_idx).take(len).copied().collect();
+            // Translate character positions to byte offsets without lossy conversion.
+            let start = crate::text::byte_offset(&s, start_idx);
+            let end = start + crate::text::byte_offset(&s[start..], len);
+            let sub = s[start..end].to_vec();
             AwkValue::String(sub)
         }
         "index" => {
             let s = eval_expr(&args[0], context)?.as_string();
             let t = eval_expr(&args[1], context)?.as_string();
-            // index byte-based: ricerca sub-slice sui byte (design Phase 7).
+            // BWK searches byte substrings, then reports the containing character.
             let idx = if t.is_empty() {
-                1
+                usize::from(!s.is_empty())
             } else {
                 s.windows(t.len())
                     .position(|w| w == t.as_slice())
-                    .map(|i| i + 1)
+                    .map(|i| crate::text::character_index(&s, i))
                     .unwrap_or(0)
             };
             AwkValue::Number(idx as f64)
@@ -116,6 +128,11 @@ pub(super) fn dispatch_builtin(
         "sqrt" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().sqrt()),
         "int" => AwkValue::Number(eval_expr(&args[0], context)?.as_number().trunc()),
         "atan2" => {
+            if args.len() == 1 {
+                eval_expr(&args[0], context)?;
+                eprintln!("rawk: atan2 requires two arguments; returning 1.0");
+                return Ok(Some(AwkValue::Number(1.0)));
+            }
             let y = eval_expr(&args[0], context)?.as_number();
             let x = eval_expr(&args[1], context)?.as_number();
             AwkValue::Number(y.atan2(x))
@@ -314,9 +331,15 @@ pub(super) fn dispatch_builtin(
             };
             let re = context.compile_or_get_regex(&re_bytes)?;
             if let Some(m) = re.find(&s) {
-                context.set_var("RSTART", AwkValue::Number(m.start() as f64 + 1.0));
-                context.set_var("RLENGTH", AwkValue::Number(m.len() as f64));
-                AwkValue::Number(m.start() as f64 + 1.0)
+                context.set_var(
+                    "RSTART",
+                    AwkValue::Number(crate::text::len(&s[..m.start()]) as f64 + 1.0),
+                );
+                context.set_var(
+                    "RLENGTH",
+                    AwkValue::Number(crate::text::len(m.as_bytes()) as f64),
+                );
+                AwkValue::Number(crate::text::len(&s[..m.start()]) as f64 + 1.0)
             } else {
                 context.set_var("RSTART", AwkValue::Number(0.0));
                 context.set_var("RLENGTH", AwkValue::Number(-1.0));
@@ -342,6 +365,12 @@ pub(super) fn dispatch_builtin(
             };
             let parts = if context.csv && args.len() == 2 {
                 crate::input::csv_fields(&s)
+            } else if args
+                .get(2)
+                .is_some_and(|arg| matches!(arg, Expr::RegexLiteral(re) if !re.is_empty()))
+            {
+                let re = context.compile_or_get_regex(&fs_bytes)?;
+                crate::ere::split_using(&s, &re)
             } else {
                 crate::ere::split(&s, &fs_bytes).map_err(FlowControl::Error)?
             };
@@ -376,18 +405,19 @@ pub(super) fn dispatch_builtin(
             };
             let target = destination.get(context).as_string();
             let re = context.compile_or_get_regex(&r_bytes)?;
+            let subject = re.subject(&target);
             let mut new_val = Vec::new();
             let mut last = 0;
             let mut search = 0;
             let mut count = 0;
             let mut previous_nonempty_end = None;
             while search <= target.len() {
-                let Some(m) = re.find_at(&target, search) else {
+                let Some(m) = subject.find_at(search) else {
                     break;
                 };
                 // An empty match immediately following a nonempty one is not a second replacement.
                 if m.is_empty() && previous_nonempty_end == Some(m.start()) {
-                    search = m.end() + 1;
+                    search = crate::text::advance(&target, m.end());
                     continue;
                 }
                 new_val.extend_from_slice(&target[last..m.start()]);
@@ -395,7 +425,11 @@ pub(super) fn dispatch_builtin(
                 count += 1;
                 last = m.end();
                 previous_nonempty_end = if m.is_empty() { None } else { Some(m.end()) };
-                search = m.end() + usize::from(m.is_empty());
+                search = if m.is_empty() {
+                    crate::text::advance(&target, m.end())
+                } else {
+                    m.end()
+                };
                 if !is_gsub {
                     break;
                 }

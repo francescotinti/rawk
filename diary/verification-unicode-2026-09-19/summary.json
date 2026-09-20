@@ -1,0 +1,39 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "c_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "gate_exit_code": 0,
+  "release_test_exit_code": 0,
+  "debug_tests": 124,
+  "release_tests": 124,
+  "unicode_drivers": {
+    "locale": "en_US.UTF-8",
+    "T.utf": 106,
+    "T.utfre": 194,
+    "passed": true
+  },
+  "xml": {
+    "match": 97,
+    "expected": 12,
+    "unexpected": 0,
+    "skipped": 0
+  },
+  "other_locales_checked": [
+    "C",
+    "tr_TR.UTF-8",
+    "nonexistent_RAWK_locale"
+  ],
+  "remote_ci_executed": false,
+  "pushed": false,
+  "source_files": 190,
+  "benchmark_exit_code": 0,
+  "evidence_sha256": {
+    "gate.log": "db547cf476e346170cc9097801d2019b54933674a9d3659740ad5b4842466017",
+    "release-tests.log": "52c4ec95dbe4821385a379749a00fc193752edc8bb60e4c28761a7da4c93492a",
+    "utf8-drivers.log": "1582f9c7e6082150376b308fe22ab3c964bd14941967ce96c0477fb0600982cc",
+    "boundary-regression.log": "a451fab849177de21dda78a5427e51b526f356bd2001854c2b396dd14558de46",
+    "byte-benchmark.log": "66d4256f63b8a3db201d4866a5442fe6ea50afbe3469de103d43a392ff758823",
+    "unicode-benchmark.log": "b2498fb76f70602c6d3538dbd9cb84d52f68c01f851a4841f5a6d53484b13032",
+    "source-snapshot.json": "a7b239bf2e21704f46044eae5f71133483906dfcfa6671170c1ae194df9d2024"
+  }
+}

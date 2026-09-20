@@ -1,0 +1,51 @@
+=== rawk differential test report ===
+Reference awk: /usr/bin/awk (awk version 20260426)
+Total testcase: 109
+  MATCH:               95
+  EXPECTED-DIVERGE:    14
+  UNEXPECTED-DIVERGE:  0
+  SKIPPED:             0
+
+== EXPECTED DIVERGENCES (annotated) ==
+[1] test_type_coercion  (bwk-parser-quirk)
+    rawk:    "15 1 0\n"
+    awk:     "\"\""
+[2] test_bitwise_and_time  (bwk-missing-gawk-extension)
+    rawk:    "1 4\n"
+    awk:     "\"\""
+[3] test_gawk_manual_seven_random_numbers  (bwk-different-rng)
+    rawk:    "98\n69\n43\n17\n25\n97\n39\n"
+    awk:     "84\n39\n79\n80\n92\n19\n33\n"
+[4] test_gawk_manual_word_frequency  (non-deterministic-iteration-order)
+    rawk:    "hello 2\nworld 1\nawk 1\n"
+    awk:     "world 1\nawk 1\nhello 2\n"
+[5] test_record_terminator_rt  (bwk-missing-gawk-extension)
+    rawk:    "1 RT: A\n2 RT: A\n3 RT: \n"
+    awk:     "1 RT: \n2 RT: \n3 RT: \n"
+[6] test_concat_func_call_disambig  (bwk-fatal-on-warning)
+    rawk:    "6 5\n"
+    awk:     "6 "
+[7] test_escape_octal_zero  (bwk-truncates-at-nul)
+    rawk:    "[1]\n"
+    awk:     "[0]\n"
+[8] test_escape_unknown_preserved  (bwk-escape-handling)
+    rawk:    "a\\zb\n"
+    awk:     "azb\n"
+[9] test_rs_rt_paragraph  (bwk-missing-gawk-extension)
+    rawk:    "1:a:[\n\n]\n2:b:[\n\n\n]\n3:c:[]\n"
+    awk:     "1:a:[]\n2:b:[]\n3:c:[]\n"
+[10] test_nextfile_single_file_endfile_runs  (bwk-missing-gawk-extension)
+    rawk:    "1:a\nEF\nEND:2\n"
+    awk:     "1:a\nEND:2\n"
+[11] test_nextfile_in_user_function  (bwk-fatal-on-warning)
+    rawk:    "1:a\nEND\n"
+    awk:     "\"\""
+[12] test_print_huge_uses_scientific  (bwk-different-number-format)
+    rawk:    "1e+21\n"
+    awk:     "1000000000000000000000\n"
+[13] test_div_by_zero_warning_continues  (bwk-fatal-on-warning)
+    rawk:    "after:0\n"
+    awk:     "\"\""
+[14] test_unknown_function_warning_continues  (bwk-fatal-on-warning)
+    rawk:    "after:\n"
+    awk:     "\"\""

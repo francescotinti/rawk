@@ -1,0 +1,5 @@
+utf8_boolean_short {'c': 0.0474, 'before': 0.1946, 'rust': 0.1593}
+utf8_boolean_long {'c': 0.1023, 'before': 0.1169, 'rust': 0.0693}
+utf8_boolean_miss {'c': 0.0425, 'before': 0.1757, 'rust': 0.154}
+utf8_match {'c': 0.0523, 'before': 0.1643, 'rust': 0.1662}
+utf8_gsub {'c': 0.0697, 'before': 0.2373, 'rust': 0.2368}

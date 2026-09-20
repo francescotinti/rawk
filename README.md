@@ -2,7 +2,7 @@
 
 Porting sperimentale di AWK da C a Rust. Il riferimento di compatibilità è il sorgente nella cartella adiacente `c_awk`; il runtime Rust esegue autonomamente i programmi.
 
-Il profilo verificato è orientato ai byte, con `LC_ALL=C`. La suite comprende il nucleo AWK e alcune estensioni (RT, BEGINFILE/ENDFILE, builtin temporali e bitwise). Non costituisce una certificazione di conformità POSIX o gawk. Stato e risultati aggiornati sono nel [rapporto sulle correzioni funzionali](diary/2026-09-19-functional-fixes.md); il [primo rapporto](diary/2026-09-19-remediation.md) conserva la situazione iniziale.
+Sono verificati il profilo orientato ai byte (`LC_ALL=C`) e il profilo UTF-8 su Darwin ARM64. La selezione segue `LC_ALL`, `LC_CTYPE`, `LANG`; dettagli nel [rapporto Unicode e locale](diary/2026-09-19-unicode-locale.md). La suite comprende il nucleo AWK e alcune estensioni (RT, BEGINFILE/ENDFILE, builtin temporali e bitwise). Non costituisce una certificazione di conformità POSIX o gawk. Stato e risultati aggiornati sono nel [rapporto di chiusura della Fase 7](diary/2026-09-19-phase7-closure.md); il [primo rapporto](diary/2026-09-19-remediation.md) conserva la situazione iniziale.
 
 ## Build e utilizzo
 
@@ -53,10 +53,30 @@ Il confronto controlla byte di stdout, stderr e codice di uscita, in directory t
 
 ## Limiti noti
 
-Le cinque differenze inizialmente trovate in `bugs-fixed` sono corrette: 31/31 casi corrispondono per stdout e status. L'estensione a `testdir/p.*` e `t.*` dà 219 corrispondenze integrali su 225 programmi; i sei casi rimanenti sono elencati nel rapporto, e riguardano ordine degli array, RNG e conservazione dei byte NUL. I cinque casi funzionali precedentemente aperti sono corretti. I tre driver adattati T.argv, T.clv e T.delete passano con entrambi gli interpreti.
+Il corpus storico `bugs-fixed` corrisponde in 31/31 casi per stdout e status. Tutti i 225 programmi `testdir/p.*` e `t.*` sono nel gate: 219 confronti integrali e sei contratti specifici per ordine degli array, RNG e conservazione dei NUL. `corpus_audit.py --check` rifiuta ogni differenza non coperta da tali contratti, che fissano sorgenti, fixture e risultati ammessi e hanno prove negative.
 
-`cargo test` include i 219 casi verificati (stream, status e file prodotti), i 31 casi storici e i tre driver. Questi ultimi richiedono Python 3 e un compilatore C per l'helper echo originale. `corpus_audit.py --check` restituisce errore se incontra qualunque differenza, comprese quelle ancora aperte: non è presentato come un gate verde. I driver hanno adattamenti dichiarati a percorsi, fixture, ordine degli array e testo diagnostico; i sorgenti C originali non vengono modificati.
+Dei 33 driver shell, **27 sono verificati integralmente**. T.flags, T.misc, T.builtin e T.errmsg hanno contratti per le singole invocazioni; T.utf e T.utfre sono verificati separatamente in `en_US.UTF-8`, con tutti i loro 300 casi originali. I 275 sottocasi comprendono 173 confronti esatti, 99 differenze della sola diagnostica e tre differenze deliberate, tutte fissate con esiti precisi. Inventario, impronte degli input e prove negative impediscono che una nuova divergenza venga accettata automaticamente. Il rapporto completo conserva anche i fallimenti delle asserzioni storiche: `diary/full-driver-closure-results.json`.
 
-Il profilo adotta il limite C di 255 per le ripetizioni regex e di 255 byte per la conversione numerica tramite OFMT/CONVFMT. Il formatter `%a` segue le particolarità del riferimento Darwin; altri sistemi richiedono verifica dedicata. Formati printf dinamici `*`, locale/Unicode complete e l'intera sintassi regex del C richiedono ulteriore lavoro. Il limite di memoria del DFA è 4 MiB.
+Printf/sprintf supportano larghezza e precisione dinamiche `*`. Escape regex, ancore RS, sorgenti non UTF-8, precedenze, keyword e CLI hanno regressioni dedicate. Il profilo usa il limite C di 255 per le ripetizioni regex e di 255 byte per OFMT/CONVFMT, con cache DFA limitata a 4 MiB. Conversioni e classi POSIX ISO-8859-1/9 sono verificate su Darwin ARM64; le altre locale legacy e piattaforme richiedono una convalida separata; la CLI continua a richiedere nomi di file UTF-8.
 
-I benchmark locali mostrano Rust più lento e con maggiore memoria rispetto al C sui tre carichi misurati. L'ottimizzazione rimane una fase successiva alla compatibilità.
+I test richiedono Python 3, un compilatore C e l'oracolo originale. La CI è predisposta su macOS (gate completo) e Linux glibc x86-64/ARM64 (gate di portabilità), con revisioni fissate; non è stata eseguita sul servizio remoto. Entrambi i gate includono UTF-8 e verificano esplicitamente che le locale richieste siano attive. Il gate Linux non certifica i contratti storici registrati su Darwin. Stato e comandi nel [rapporto di portabilità](diary/2026-09-19-portability.md). Risultati della Fase 7, copia pulita e benchmark sono nel rapporto di chiusura; il rapporto di consolidamento conserva le misure precedenti.
+
+## Aggiornamento prestazioni — 20 settembre 2026
+
+Ottimizzata la ricerca booleana UTF-8 (`~`, `!~`, pattern di regola): evita la
+mappa degli offset e il calcolo del match più lungo. Nei tre carichi misurati
+riduce i tempi del 12–41%; il profilo byte mostra variazioni di +1–3%.
+Verifica: 126 test debug e release, gate completo verde. Misure, comandi e limiti
+nel [rapporto prestazioni](diary/2026-09-20-regex-performance.md).
+Le altre codifiche legacy rimangono aperte; la verifica nativa Linux è sospesa in
+assenza di runtime locale.
+
+## Locale ISO-8859-1 e ISO-8859-9
+
+Conversioni maiuscole/minuscole e classi regex POSIX seguono le tabelle della
+locale selezionata, conservando unità a byte e NUL interni. I test confrontano
+con il C tutti i 255 byte non nulli nelle due locale e richiedono che siano
+installate. Dettagli nel [rapporto locale legacy](diary/2026-09-20-legacy-locales.md).
+Shift-JIS e le altre codifiche non sono incluse in questa convalida.
+
+Audit iniziale e piano di lavoro: [valutazione](audit-2026-09-19/VALUTAZIONE.md) e [piano aggiornato](audit-2026-09-19/PIANO_DI_LAVORO.md).

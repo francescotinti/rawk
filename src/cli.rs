@@ -35,7 +35,7 @@ pub struct Config {
 
     /// The inline awk program (if no -f is provided)
     #[arg(required_unless_present = "program_files")]
-    pub program: Option<String>,
+    pub program: Option<std::ffi::OsString>,
 
     /// Input files to process
     pub input_files: Vec<String>,
@@ -43,13 +43,45 @@ pub struct Config {
 
 impl Config {
     pub fn parse_cli() -> Self {
-        let args =
-            std::env::args_os().map(|arg| if arg == "-safe" { "--safe".into() } else { arg });
+        let mut args = Vec::new();
+        let mut options = true;
+        let mut value_pending = false;
+        for (i, arg) in std::env::args_os().enumerate() {
+            if i == 0 || value_pending {
+                value_pending = false;
+                args.push(arg);
+                continue;
+            }
+            let text = arg.to_string_lossy();
+            if options && text == "-safe" {
+                args.push("--safe".into());
+            } else if options && text == "-d" {
+                args.push("-d1".into());
+            } else if options && text.starts_with('-') && text != "-" {
+                if text == "--" {
+                    options = false;
+                } else if ["-f", "-F", "-v"].contains(&text.as_ref()) {
+                    value_pending = true;
+                } else if !["--csv", "--safe", "--help", "--version", "-h", "-V", "-s"]
+                    .contains(&text.as_ref())
+                    && !["-f", "-F", "-v", "-d"].iter().any(|p| text.starts_with(p))
+                {
+                    eprintln!("rawk: unknown option {text} ignored");
+                    continue;
+                }
+                args.push(arg);
+            } else {
+                options = false;
+                args.push(arg);
+            }
+        }
         let mut config = Config::parse_from(args);
         if !config.program_files.is_empty()
             && let Some(first_input) = config.program.take()
         {
-            config.input_files.insert(0, first_input);
+            config
+                .input_files
+                .insert(0, first_input.to_string_lossy().into_owned());
         }
         config
     }

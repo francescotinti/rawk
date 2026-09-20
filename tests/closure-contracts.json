@@ -1,0 +1,2022 @@
+{
+  "profile": "Darwin ARM64, LC_ALL=C; exact streams/status/changed files; only executable path normalized",
+  "cases": {
+    "T.expr/1.1": "a687ee17e2f8ac033eef2670bf5f77c878a72cb993b4f114931915e317b92da9",
+    "T.expr/1.2": "0bc2f6b8da6211062adabd7c2d053767809e4b331353a93d89838eb58cb54040",
+    "T.expr/1.3": "69d386ee4d3db8bebee321826a37ef38d47af47c753d1e596ad41b5bd4eeb7fa",
+    "T.expr/1.4": "8b5d6a2a59e3ded51c4e3a76a5e175cf194aa2af183cabacb7c631f2df330ba3",
+    "T.expr/1.5": "034f194f4c2d64901d1c6c4ee6d5117296ae32f4d17484bdc7f87d3f6bd277a9",
+    "T.expr/1.6": "d43ccbb24ccca695f51e6be5c2f22df49fb13dbec16c4bb6d2f31229b5b7d0d2",
+    "T.expr/1.7": "d5de751255819ce0490b29cffbb98ac9da5bc2371f1bf58e9946f98ff7f7f5d6",
+    "T.expr/1.8": "8244280817a65934e1798641f40daf50a38934b5ee2799a8ce7330b90ba1feeb",
+    "T.expr/2.1": "0736f65a10e3e3bd518b65935a732e9d4f085d37972647a4525d2315d75315ed",
+    "T.expr/2.2": "f90e9ba6a6d156639d92f53803e18f7d7f3479232b51cb5d08bdb5017167760f",
+    "T.expr/2.3": "30bc442947c303d9ea4361d765423407359b793579397f7b3c3d7e7b7a6b2094",
+    "T.expr/2.4": "2c0f60ec0b491ce790703abb0f6592d50f529432bc7bfabdb34b8348fe374b5f",
+    "T.expr/2.5": "3e671b2af7300ef3a2468ba0640fea1c2452e8034f2b3cb2d3ff45ed9d149ed1",
+    "T.expr/2.6": "804776904b3e9d965bab8ae63e06ae95cc7fe0e2fc89712dba3d4a004af33e66",
+    "T.expr/2.7": "fe737223f3f3c812d5ccceea957c72129f9f9dd9e479d2d0f8a846af8573664f",
+    "T.expr/2.8": "32f07d1ab3fe55900792f0509056cc9e0c40802ed68f02d7fbdda45b3465beea",
+    "T.expr/3.1": "5e97d7c9d825b8342c3b3d79b0f0637c23572cbf987e16ea2fe0c853acbccc89",
+    "T.expr/3.2": "130395f56b62e0e85858f056aec33640b945f5dc09e2167165e306ab2ca7c729",
+    "T.expr/3.3": "949c78a11817a35530dffce3d142079d93c9861baef8c5d9b1666d3c940ec83c",
+    "T.expr/3.4": "39c8d242b62c293392da6e87dd6279bef0913095da7f46c131e41af4f05ef7e7",
+    "T.expr/3.5": "498052d30858520e10151719bbf15c5f22eb78e59a2dd068a81d6c9798a3eb4c",
+    "T.expr/4.1": "0cd5810e7f530d352c97bf8319e1e76a8f2e6cef054d510393e9f8001c939549",
+    "T.expr/4.2": "13ef509ac291f01c2442f01bd21054576455597e7aa6a96917c1a8b1d22ad496",
+    "T.expr/4.3": "3acb780ea0119a298900e00ba9053dd3c801def8089dfde5db387530318023d6",
+    "T.expr/4.4": "77827421ee26790574d75505cdbd9fad0c2f46a8456a2e2dcde13c6181799cbb",
+    "T.expr/5.1": "412db72a81dc128066923688aefbb5c0a2ea3fd97d5197238c459597d8a040ca",
+    "T.expr/5.2": "6c53fa9bdb79a9fb94db254904bca3e1b077a7442038ea0eb562244732762124",
+    "T.expr/5.3": "3cff6a9ada5d0ed1fbb5a45400c5570ac08a38b78d15b2a24e6e5aeb9bbf2c3c",
+    "T.expr/6.1": "c7aeed6be5929a16162bb2d4e4c0897f6773d0543189f97cda07469904c6066a",
+    "T.expr/7.1": "74a670b7bbf73aa7e8f75f37ceeceb91923ba9d58c16389cf62f444492535ff0",
+    "T.expr/7.2": "e72711147d83d2dba880f51a454e88d034370b4fe57829b322baa8caad2ffa4e",
+    "T.expr/7.3": "6a496863fec3550bbbbeb5b096dea2e751f864004354e91d178fd40475a3c64e",
+    "T.expr/7.4": "994b175812554fcadde27fba8b01096ebcc9993a273532d782aaaa8f5747b898",
+    "T.expr/8.1": "5403155d4a7cd597ed5c66136c57f7652169bbf2f01d7f73ad3648e6e9a1139d",
+    "T.expr/8.2": "73107f7e595b6714e2fbdfa8b39f9c7b0e713dd50735e742ac89bbe6e9ee915f",
+    "T.expr/8.3": "2bc217f454b88af8e77b803583d30b9002dd25b629199bfe24261ff872a7691e",
+    "T.expr/8.4": "df93f64070bbafc4a96a18403da45fa6e34c8b2b2af1649d43d93b293f69d057",
+    "T.expr/9.1": "0783e9ebd230e24bea5323f859bc120d6d6b52351d3887a0ed9adf6afd47f04a",
+    "T.expr/9.2": "da0ac4a21ea49692edd17c2177d4df2a46bc1dd518d8786a9f0730bb7d8ebf58",
+    "T.expr/9.3": "055cee9d952c307c3042b926c45ab1cdc7812a5ed9b72693546b8e54c18fa011",
+    "T.expr/10.1": "4d606fb7ff53eb3d723b91f4f1a39efbf94d0b70c6001e831f19b259779ed4e5",
+    "T.expr/10.2": "d507f33d3a2a3be1b87355ec524f894c4666a0b24ca04b83a41f9733029fa305",
+    "T.expr/10.3": "ad65c895441bc49d33dbdd0bc784c1ce22b3edc5d54bd10800ddb3124d5a3e90",
+    "T.expr/10.4": "e9c3fd4b0f1cbb0c33ed83777f1dd52f1645af28350bda7163b03c4a38d88deb",
+    "T.expr/10.5": "d7e4390dfcd987482e168dd09a1e1dc0823898bf287aba8a3abfc28e34bb779e",
+    "T.expr/10.6": "39897c7fb8f41cc34f56e5f6bd9efab90e264d6b0981c01e807decba1a79f2c7",
+    "T.expr/10.7": "7b52fc999df2c46dd8e62cbf8ed31a89e738096ae9eb30e7648d34d2029dcfba",
+    "T.expr/10.8": "0b3e9a832c0899a031977b050c69fcc0276451aaedbdfe12f3212ee2a2371a60",
+    "T.expr/10.9": "abcfa559bde5fb80a41d1245af2c8a813de776ec0f4b0c2aafb44868ca08397a",
+    "T.expr/10.10": "835d22b0c9adbc31cde5cacfcf089b51699dea83da94fb7d9c2efb4839f6fc96",
+    "T.expr/10.11": "4881e356fe691f2107d567eef7e996700fdd014d5ea7383cd0d571a6994fd6eb",
+    "T.expr/10.12": "5331b74088c5edaafdf6338c6cecc6e6a7462f1ff47cb469c94e0da394ad249f",
+    "T.expr/10.13": "a9102632f60aab00fea9b27eba1359ba3598b31b0459db345bafc51a49a4d520",
+    "T.expr/10.14": "2ab1f46875ea42dfa81e99c68bc0a448c7fb308bc23c3240d38fb4f2ca346a80",
+    "T.expr/11.1": "e09a5dc9a9d86f4a08567478787003922eeaf25f1a8ac19f57f9a7ffbedb0b7a",
+    "T.expr/11.2": "ff4d65f0fd714180cb4bff56ca663b26772b3effd65f57097518c6a4d4f4d888",
+    "T.expr/11.3": "986957a3a21d747922d74e7921f113fc10cea93ea539ac464d836c7f4dc3fee2",
+    "T.expr/11.4": "98cce1e741b960e4f17b0259383c34a8dee546ebbf9c905a76e1c5b279f374e7",
+    "T.expr/12.1": "2ac7eae61c36d8f388c88eca2cef3213ede40b8ae97f794a1f9a7359f0e2083f",
+    "T.expr/12.2": "1b3bd9d6fa868f04cd7267dd6fec7d7706e037f2d00843e84f77d820062c7aa3",
+    "T.expr/12.3": "a48647a871eb2823062835c77a5cb1a566f329762d949c80040f5860f4094e56",
+    "T.expr/13.1": "af602fbe38853d26f57590e03f03d42deb61cb3d3c14ab616c85b3722b082b43",
+    "T.expr/13.2": "720164839bedf2874b7d7d16bcd53bcad3c9b685cb3fb383338f1b6029a813f4",
+    "T.expr/13.3": "cf415761815a22c105270461f108c5b864af345896960f2b4e589168ee1ff9a3",
+    "T.expr/14.1": "6d24fa182d9eb222b946d7d5d0fd541dddc474745b9e16e8e549cfa1fae2f3c1",
+    "T.expr/14.2": "75099feea6333930222dc738d1521d0af3cc725b67035c58a717fdaa2aa63122",
+    "T.expr/14.3": "f302bb7574a58b6bbbf0a27e2e6e5fdef2f8772e3eb15135c7a9097dcfc18ad1",
+    "T.expr/15.1": "cac4f29fdda7b02c89e30f13b1c91aecf16f65340006a43b6589534377d3d4a3",
+    "T.expr/15.2": "fa6234098b4d164d0cb384f6987220ca044bb99b8ed2ebaf8a1a2880a860713b",
+    "T.expr/15.3": "5ff564ef3630e4f96450864b49f358d02ce3c679857355d831d2fc499b4f9f18",
+    "T.expr/16.1": "513a7c07de85cef98c8fdec8435e06dc10ccce7b6b1fa54202763a8b87e723cc",
+    "T.expr/16.2": "263355f9b67261b7eeae90e5b3e718c386733519852c74762dd64246681604e8",
+    "T.expr/16.3": "12c6960d7e018e785525c536ac4b51f6a4e185ff48750575d4c0eb33124477c8",
+    "T.expr/17.1": "e96e4f98f7a682d2af391d03d0f7f4853561fec35baec6a1d4064c8d99870afc",
+    "T.expr/17.2": "0acc326abb3cb6b7c19a09fbe6a13f675ff717cdf8a10e9120ccbf9e0bc83eb5",
+    "T.expr/17.3": "8e00a167148b9316191b0c3c96ae73945ff78ded080acc0718f17a119b724ab8",
+    "T.expr/18.1": "39835fdcfb2ca98b13afa062e5beaa57c38de9d5c88b909ca1011031c2a87689",
+    "T.expr/18.2": "7e78c06d91ff0257fac5760e0ea4c53bb9a41b6e89aed97a29f0f35e1b9a3144",
+    "T.expr/18.3": "610fd76a1c58d986e81837d385c2f4ede46edee1c06f35b80f2203c23e8a43b6",
+    "T.expr/18.4": "caed157f679f0026df1d416e80adce103c810c5ed91c70e5dccf0bb8b005a959",
+    "T.expr/18.5": "6283140003e49ce440ff98b450d3103d323a70dbe6fdd09c6d9a10adb72379e0",
+    "T.expr/18.6": "81555db70ac83a1fdb87473aed39b0ed44b6f160a31426a038c88f995a034436",
+    "T.expr/18.7": "75be2f56b69d9e46feb899576742a15a02fbddbd7b68d7b5ac250f72d73465ec",
+    "T.expr/18.8": "bf4329207e9f5ddff27c21f667d15378582a826be6885f983f3b9535d48eb09b",
+    "T.expr/18.9": "9b373414353fdc951e73d8f81a5358fa40cd8e940ca511d16ce1a508b65d36cd",
+    "T.expr/18.10": "ba92a4d59819717239cc70d4111e8f45f89af7cd745d68ab6b63776ffa1a66c7",
+    "T.expr/19.1": "a06b8cad8430ca088b0ef88790748461c4732a44b24c16046132cd19a590f5ac",
+    "T.expr/19.2": "e04a24faffe5c6735758d524221cc62e49c83d3bfc6755280283f1e6fe04b80d",
+    "T.expr/19.3": "a610a575b4698c586635a0b1a5d004a434a7e87cfa1961d935d98a6bdb7fe8a9",
+    "T.expr/19.4": "ff9ae3c18715011f16e9e326e4d8ad88de582ea3cbddd7db714155030fd233a3",
+    "T.expr/19.5": "51b5315e9c484562e9fa1c79e68336a5ae09c2348a340eedc70732823b4d20ae",
+    "T.expr/19.6": "875f51281f2a1812a706dd81e42cb4ac3259471718cce49118a5135b6fae6ae3",
+    "T.expr/19.7": "3cb0e23021c371ead55b09952476dace44fb3262813a6fdd50fe2a1c9c3e81a5",
+    "T.expr/19.8": "644869de8b0b0e49bdde3ecb6ee91cdc9804e24a23b8093e402a49823ba541b7",
+    "T.expr/19.9": "cf26da729a0830aeabf62e9d3ef607abaec09ebc4b8125d919ace07312beb089",
+    "T.expr/19.10": "4f7d990342c791927c9f6b6a16d9925ecaf0604448a43d0219f81d3a8d8cdd83",
+    "T.expr/20.1": "c2981f38296bb269ce621f47e8a54d8aa36be4acbd8b78a7addf9943459e6cfa",
+    "T.expr/20.2": "890f54eb33bb1be516aa10c0562c6b7e9db53523998e856c833864ba2d7da52a",
+    "T.expr/20.3": "23b128741f159a7787f4ad744fffa29e5ff67a38c8ba56a5002037b8703fb5d6",
+    "T.expr/20.4": "53fda4192f767a314aa21a2d8c823bfedda7dfc379848b115a8e461c2e2fb3c1",
+    "T.expr/20.5": "bf54698649c378613c129bc3b412b70150da9bdb8ec1315cbf6b85ac97f253cd",
+    "T.expr/20.6": "b17903b18f819c4a7aa04d7af80d6cb1b18fae42ebab36218c855e8cde128bfc",
+    "T.expr/20.7": "1bb679b9b4f098bdb02b34560d87136896af6e99f731e5027fcf3fc04d46873e",
+    "T.expr/21.1": "65397c832ebfcdddee5981cc15b43305f64484708c393eeaa2e5fa3298a6a573",
+    "T.expr/21.2": "ff290224a8cd9d7757d31d90ae02b39b359a7cce695052b6ac5dbe8dbfaa49a6",
+    "T.expr/21.3": "0a973a53ce652599c25c41fb1b1c252a20945a88c1bb993ef5c4003fe1b18e5e",
+    "T.expr/21.4": "294f5e309e0b498dedf2b0478304f2a359770e6c3018f6e2573e08cbeb0f3930",
+    "T.expr/21.5": "e3312e595309406bf3d2e37a4ce1166c0c4d3f68a1f016cf961714932ba79078",
+    "T.expr/21.6": "c825cab897259fc5ccb52072f7ae85ef7108a81cdf9c695ef2c7156400a59d17",
+    "T.expr/21.7": "26c1333f89e7b8db75496435d55f28b908012d4bae0cabbc77ab7973e59a2179",
+    "T.expr/22.1": "62463a12d78d14f0fbb1798309958133d0e5552e0ec34305cf66e3ff70995a57",
+    "T.expr/22.2": "89c28c09e37985784f6f1fb66e609c314b42a93d48141e47672857b2daefad8e",
+    "T.expr/23.1": "7fb289541e8a20db5997e1e40bccd514512b626d40d4a7ae353d93c20ec3bd60",
+    "T.expr/24.1": "7bffcb03576e16532f5980f315c17fb657dfb04cdd9bb67230d057cba9460f0d",
+    "T.errmsg/1": "e0b05bc41f6aab6a2c2810e19548880c47f0ed5c2ea26b65fcbb5521500c04dc",
+    "T.errmsg/2": "cc4bf22f46b4c7344276fd4438e7cb72f9b92d9d65aa15d4188c5d062b4f38bd",
+    "T.errmsg/3": "e749d49e294e86d539fd32d01a380ecf46b6a0bbb96c3dd68300673ec5c1f669",
+    "T.errmsg/4": "d68fd18ce020aff85cdb57456ed3ce7f7fa49528a4ff563d814781ca6fb87ffd",
+    "T.errmsg/5": "4c6df53f14eb04290c065ce3322a9d8feace294445da96990d91114e7620e02f",
+    "T.errmsg/6": "e195f4abf0cf8a1f1421a7dd72339c885f996e012ad950078b0187f0e4ccd2ca",
+    "T.errmsg/7": "43c4b76bd22333c24af18392cf1635c6605250d6b76a38c199442ca033947411",
+    "T.errmsg/8": "aca73dceed44b0a5c289ad3083bfb4180e0f09dc7a0aba8af5432543347cfb55",
+    "T.errmsg/9": "c7979c6cd4d9252023d11da98a007b9b6391a9eb942ac7c5f0e8bcb2bc6120c5",
+    "T.errmsg/10": "20b7190476f40d001f3d6fa9bd3ea36f84e0489706fec313f3b070ef5ad41bc2",
+    "T.errmsg/11": "61a2e781ab4a4e87e6350c05010bd2c77b437bba2b77b1957e760f7f6042397f",
+    "T.errmsg/12": "68c7bc20e9d5894395da2adbccb938f918da5b0ed0bf42fbe2abf1ade049faf2",
+    "T.errmsg/13": "13bb66f1a1519839adf61cc115d9175e8a34cf310ed392230e5ed5973c0761fd",
+    "T.errmsg/14": "b3b7f72119fd73987decaa401077eefef526dcc6805c1ca411bc313efc141d77",
+    "T.errmsg/15": "28a6c1878bd03703a190591a13092bc1e00c785295191cff55ed08b972fda450",
+    "T.errmsg/16": "5a9ef456261483df2976cfaf6163295773c871f74e948ff4d59c803006b227b8",
+    "T.errmsg/17": "588fb00f68930dfb154b6d596f58e1be6ce95ef8be6aad2c9fe59b5ffe621e3e",
+    "T.errmsg/18": "92a430542141d6c8c757e051bb054ca580f41af112e6f94e60cf4079f88fc512",
+    "T.errmsg/19": "16f9ed30d80749ce7181ae68640d7adbb213f24b76dc1112b2dfa0f36faef943",
+    "T.errmsg/20": "4da02ba4118e319c86b587ea0123de910e1ceb9f8cdf9f2a4f4ae296564c8ba8",
+    "T.errmsg/21": "a3e7bc68164c390313e24f9a36adfae57a85834ba9a51bb59e8a35687cb424cf",
+    "T.errmsg/22": "a3e7bc68164c390313e24f9a36adfae57a85834ba9a51bb59e8a35687cb424cf",
+    "T.errmsg/23": "bbc6b9a31616e9626c2e8f0dfa1f6322250b564bcf6bfdafad212be12218a479",
+    "T.errmsg/24": "e433de6d0052085ddab024049aae8fa64d9ae677c17ac24e537f3fabe56c9aec",
+    "T.errmsg/25": "7dbe2d86c2263071d802b03aaef56928ff7d85a61a7061167d8e8db2b07d9f9e",
+    "T.errmsg/26": "454076773691caa6e258d176996cebe982c36f32f361322642b41d876afa9c50",
+    "T.errmsg/27": "03f40eb5035fd5e2f5254e147d105f82b66b40615e7f1e2c71d5984b02923c36",
+    "T.errmsg/28": "5d30f60d11d895f664b8ba9dc678529b41256302a9c415fc5d3867583c1315fe",
+    "T.errmsg/29": "cdcac63105013bcd345ebc9881076ed4b1a95f448e56c6c7e7d272f7105787f5",
+    "T.errmsg/30": "5d5a8e43b2f4ed90bd376b36f6ca4f81d035c748279a73b5e9c64f6ad91b9e76",
+    "T.errmsg/31": "3ce9cd8dff1819474e2685360524133dcd062cb1249f73388517e30eff3b3e3d",
+    "T.errmsg/32": "dfe354465984433048233d4612e1d3487fc894acc1e94f02da95a5d771d8e062",
+    "T.errmsg/33": "73af0e311f0aebcb6df697449fe9a18ad9308d3a74b724f6740714173289da55",
+    "T.errmsg/34": "ed42ec44772fd129d0e8fcd1e690ef9fad1676babddf63f46d17bb13fb42f241",
+    "T.errmsg/35": "fb29593cc7165892c252faea32e9565b80a21c1fa4f5baed7cd741afee0e9551",
+    "T.errmsg/36": "9c10d951e85b9820f30eeac9e31201aec223c69103ccc26c5a71250338626252",
+    "T.errmsg/37": "e1d9a6dd5a1cfe41694f19a234c99b56cf6afb7864f76326875315b525ea04a8",
+    "T.errmsg/38": "6ae618440093f2f9891661184dd52f77bef5f95a55d6248879ccc11995da68ca",
+    "T.errmsg/39": "8bf8b727431c045878fd91ed54bdab563528007feaf7086a6a6ce2d5ccbf7f12",
+    "T.errmsg/40": "113c1f7289a8ee3cdccc8a758d77261960c36c4fe7692e9056b71b8c3f0edcf9",
+    "T.errmsg/41": "f9f20caf07e9cd9196ed6120d5e0a577ebf8dee4ccbea9c23b947f4f09534b30",
+    "T.errmsg/42": "f8a778c57d5f4b145c3c6ac3a657161288f9279e94555c7288e34bf1df524305",
+    "T.errmsg/43": "281b74a53e6f386aa47c15ac24eefff3e3bef1623dd35b16c6ae2df0b97ac08f",
+    "T.errmsg/44": "093efd19b617e3a17dc7aac91e3d07057a4405c9fb097e0290fbbaa7ded15dbd",
+    "T.errmsg/45": "bc9f7c5e4ba71ae51405ddbaa107ef1d93dff5a6d1f610b72096f36f51899115",
+    "T.errmsg/46": "be90cc285bbecfc102c4075abc1d0cfb6bbc48730d4af0ef87ac436477005e23",
+    "T.errmsg/47": "51c132ad24b4f5ae341865548aeb34e889298a3dae72a1bca97b0acf1ac9664d",
+    "T.errmsg/48": "a6c4f9df563419cb7257d07549d898e6c854f1ec80c4387ad47627fe6ba29593",
+    "T.errmsg/49": "ff7f64020796456f9ea1324b0973675e60017ccd3993ebdafa446ed2805e7685",
+    "T.errmsg/50": "2cf42217e81b362df36e86d10994d5539ee915090547344c1fa7f9bf9280bdf9",
+    "T.errmsg/51": "1affd06d4dc84d94dae348a5e77880f3f864d45f0dddbd0fbd2160abf52dd430",
+    "T.errmsg/52": "45aca66b4c7f3e4d1183596690ed99f076c5bc623967d0562f83c5dd9370bed7",
+    "T.errmsg/53": "ddfef458dc8e421031a55a881a73cf5e476b6a9fc23d3154a4a81154644e3aad",
+    "T.errmsg/54": "875d2ee730a5d15002a2f960ac81854416caf659ff53a13cc2643ec41a031b91",
+    "T.flags/invocation-1": "c33e912d792762d91acb020f5790959ba1bbd1fd806c90f86c4dc68abc87c75b",
+    "T.flags/invocation-2": "ab9acba1f45a939a2db39b47a81739b4ea33eda11a6c7371e026483e05949307",
+    "T.flags/invocation-3": "50fdbe761c6d4f5824bb60d206dd2179ecc1a28c8e4e158a8f697361ae52e9e1",
+    "T.flags/invocation-4": "71b0d7dda59300b61c3123c2bb6541a02af24e1459d763f7cf3b47c76bf5b1d4",
+    "T.flags/invocation-5": "81b599673790c1304f62efd9302f5fad47df03987cefe4ab67ab9e70c37cf515",
+    "T.flags/invocation-6": "cc646fa4321f984309346aac7ce0d64b90d60b12cdd8d3e031e66662ad7a0d47",
+    "T.misc/invocation-1": "dbd76df6d803873752f9f026446c15b01b41f916466cf617cecdb1ba1b23a778",
+    "T.misc/invocation-2": "cd76429abae7db2b92b63f1b8f9c8c3b136d18ae9cd82191d5e55c1d0e7048c9",
+    "T.misc/invocation-3": "8a146b7c44e898697df1e0d8d3922e58312d0ebeedf6bcfa9011cd2f4c39875a",
+    "T.misc/invocation-4": "8f10996656453a0f9f313209eee3219473388bfe99892e87f986c0c9f48407d6",
+    "T.misc/invocation-5": "4b87bc7105ab5f6bad759b08f51cdc66bf1d1bdbaeff5bb1db3fd944c9175f59",
+    "T.misc/invocation-6": "cd38921ed71a03c9297f8d420f2128f59c5b7a6bf677856c5e6c38b18bf4dd46",
+    "T.misc/invocation-7": "c6e678978bc2605db750fc718a0d71a6d6166d596f573f00db3a53e979f8cac8",
+    "T.misc/invocation-8": "dbada99b752f6e03a41b11b27b084b752fdc82ba7fd2c02c0c9a1099c22971f2",
+    "T.misc/invocation-9": "15f74cd661ea8775625f3a00addfbbd691061a4b9af59240e258d0fe57b91c96",
+    "T.misc/invocation-10": "ea9efe5271ba1e4fe093f51215f85b49426edee2c0cddb035416d3a905c60770",
+    "T.misc/invocation-11": "9f5b84f27547e08c941e5f898ded73f82d02b924608acb051327666ffb90644b",
+    "T.misc/invocation-12": "05ea9e1769320c045e8a08df017ad702f7749c431c3b8fbc68c2abadb13ad902",
+    "T.misc/invocation-13": "29dbfe248906ec6fef36feab3fccea0645bd98d00083086f2f7e92bcd7157dc2",
+    "T.misc/invocation-14": "520319d3efbb9c7acc716a54a700b11a6f103bc76f0cf74b2fe9a72d25ac7e91",
+    "T.misc/invocation-15": "9f09d4ad2ab57679287ae059600f488ff5209da400e7efa9c92443ca7e2a38c2",
+    "T.misc/invocation-16": "758b0fecb03371d450d38e6d87885a751117c32a55e9f512fabaa02c0c19fe74",
+    "T.misc/invocation-17": "9824b7f93691442f5bb268be5e84dcb57522d72b7f3d9206ac51ae09414bafd3",
+    "T.misc/invocation-18": "e924d4380b5f315d86f43d60f54492daf5a2131c8421e3868bcb7c77014f217e",
+    "T.misc/invocation-19": "46b53767c6a8250e787621e86664d16eb7c8d1df942bd4f0074a8d2f28013dde",
+    "T.misc/invocation-20": "a791698ac2e17aec6bda48b18df10bbaa79473781edfafeb34175d02f7d41145",
+    "T.misc/invocation-21": "c2155696cb4cfc424ea0beed8f58d25a92deea8ba1d991d893c53c0726894301",
+    "T.misc/invocation-22": "c7734a5b38de54a7bf4609643231743f0e1f4ae7d43fd60960fcf1b805134282",
+    "T.misc/invocation-23": "7ab7ed0fd1ca19c66ceec34397ed207d5f817acb3a60ef2a990f073b688605f0",
+    "T.misc/invocation-24": "ef54aa446f8a208d0ca324e140b149963b8c7a0371c3a176c20b3cca4bd1544b",
+    "T.misc/invocation-25": "64f8742e313fe1e4a33ec5cadf83a158588b9847b038b3c39ce5a83fe1c4a87d",
+    "T.misc/invocation-26": "7164c88e4b4c610baf29e41ef0ee9d766c87534ac963bd3448042424626d07b5",
+    "T.misc/invocation-27": "c7d861f76644db22fd65cf94777d2fb6f17d085ca09fb60f16dccb1907fba5de",
+    "T.misc/invocation-28": "7962fc8a21ac46056ec248eba04d5910bc0681044e17a24fd27f1bafccbc4d3c",
+    "T.misc/invocation-29": "c74979daaa1cc5974faef243bc8df0bfb65c4c4071c49da7839d5b9f18079a2f",
+    "T.misc/invocation-30": "9f8f1d8d734794d80079cd91c0cacaf95ffb74e2a0b677699823ca4fe2bc809f",
+    "T.misc/invocation-31": "632df04c2ff32c0bea53dc4231fb766b0f66833038a5c2a38e9db09dfc35d1e7",
+    "T.misc/invocation-32": "900aa706c053bab55304cb8095e6632c2e150ced076a284059c12a67dc2429d9",
+    "T.misc/invocation-33": "716e1c4bad2c0af3b7223db3bc1c0538899ba6b4a7884286e133deb1eda7d7bc",
+    "T.misc/invocation-34": "0ce15421df8b5394be0a577869a005f0798b509085ab05cefd254a97726ebefa",
+    "T.misc/invocation-35": "1fca4f337dc1ef17d735c62093658ce2dc2452ae7278f11135b429093d0d0df9",
+    "T.misc/invocation-36": "abfa203ecf9f216d32e4dc6c2c3815a1e215d4be94439a67916cd453748eee34",
+    "T.misc/invocation-37": "37bb089209cc91fb5f81a6df380a004186fd971b33ad1e802e4400aba94dc511",
+    "T.misc/invocation-38": "926f5b297043f4c56dd56d1269cbfc51d889d750f8ec08abe58a63cad1e7f042",
+    "T.misc/invocation-39": "61d8f1f4dbfeeb86e3e226842455eaa57a945394e0a9f1564b1bb89433092e32",
+    "T.misc/invocation-40": "55ac94315eac096563f977b8e83b20901b2053c20399fd2c4f17083911f4fba2",
+    "T.misc/invocation-41": "a978dba3025ae9a4a14468a615e7507ef7fa1d9ed896489765cab6fa0c5a7b37",
+    "T.misc/invocation-42": "0bf686b6aee0eef569cd4fce6603f1dd6694865d2e83e001d5a8e41e37e762d5",
+    "T.misc/invocation-43": "ef8e978fec621637449449b7cd50e13e4bc4e89a7e6c4ab3dd463e79319e5d6a",
+    "T.misc/invocation-44": "2c83a29444cb1ab15a6011a397dd5f40f7d46b714241d21930e896b09237e25a",
+    "T.misc/invocation-45": "affc6418d880ad62a718f387d3195850c88e2be9394ea8d28597e40eeb4c157d",
+    "T.misc/invocation-46": "3b765d49be330f35d0b5a5da655429c3c79f0bfd47609ea1362c647c9d77dc81",
+    "T.misc/invocation-47": "71cbe724363ee09515e34b92bcf5c9a09960a694c55f9a53920f6fec2bbc40ff",
+    "T.misc/invocation-48": "e78bceb7abdb6fa459b84460791f53b80d3dab93fb5e25bb6c789ce0348c0c2c",
+    "T.misc/invocation-49": "f2a6ce50cfaaa6efac65256a1a484cdfd5f4687ce63950240506a7e73b79f0bb",
+    "T.misc/invocation-50": "54e1ba219e750fc6e746c6f0e99fba6c79d2c2fab551bc012204906d988a0a84",
+    "T.misc/invocation-51": "b0ab39e943fc1de1d697da7698f2ec063f7f4b8065f00d7009339e5bd26a98e7",
+    "T.misc/invocation-52": "cebb8593ad9e2dad739012ba8e9ac3b1541b7654b8f9cfe7fa5eec18d18c16b5",
+    "T.misc/invocation-53": "4eb3df9acc6f3cfe8491478d677688f21718433d5ed8d7466e7e087c95386ad3",
+    "T.misc/invocation-54": "33e91b701d33130d43935701fcc0a8cebc29a761b7bccbccd996aeea0cac86b3",
+    "T.misc/invocation-55": "10eb2e459d85467d902fc9d9cb78aaaa1055e1aff452511ae7b56394c0e62c2f",
+    "T.misc/invocation-56": "651026dd4a76fd297de6aac2ea3eca102a8fb7e66019dc251fabde5c762ed3b4",
+    "T.misc/invocation-57": "e262d5b685b79447d1049f170a7a6b5af70316b9a56a90c066c46b4fa5953f32",
+    "T.misc/invocation-58": "beaa74e08e52d2673e2b9652b0bc5fd38035409e0f08d5dccaab9d7abc7a2052",
+    "T.misc/invocation-59": "89bbfc840a23e1dd536a7584fb4edd4a29759a4b4c200e794ea6d570ac6e238b",
+    "T.misc/invocation-60": "08af510130a4167379bf644241fc9f30368909986ea69f3c1392ee01a714a7fa",
+    "T.misc/invocation-61": "a70332d82e30646a6e3a3ba33215bd6efc03ca9a56e7ed6cd1784466294b9231",
+    "T.misc/invocation-62": "29364bf4da065133106a0eb0b4817f95a139ff63c5a4629802ac6d0c783c4c72",
+    "T.misc/invocation-63": "7a89469eda499564efa4b8e79c60b550e1d3f863c0c817d9f8a5b7ef41144ded",
+    "T.misc/invocation-64": "4e75e0136718fe6efcdaaba2fc1cada6f54e3dd8a93b45f239d05e7f28be5047",
+    "T.misc/invocation-65": "589dcb7c98b2d6fe0c08df8912d76bf5fd3d5aac0118c95b29f04e74e0648e22",
+    "T.misc/invocation-66": "0dc20d6c7802bfaa7ca74e239ea6467ae52cd382f6cc46d35df381701a64f32d",
+    "T.misc/invocation-67": "242f97358b92c0ac212ffcabefb04268aa8b327c3a1d9f6c6bdfe7d6ddfb7a10",
+    "T.misc/invocation-68": "8adb7f621c676848d370bbc4a81da11f11e08fe124018c34abb07c0551abda14",
+    "T.misc/invocation-69": "ff147c43d0f6cca010a3f54a03acda3e0be982866164e2e34cd6cebc0f777e95",
+    "T.misc/invocation-70": "3a9d029c6b2aaf7e1fad4a2ee86c131a3287ea38e14e67ba659cf675d714dc1f",
+    "T.misc/invocation-71": "dc5dca4192ac192e570a3db6785801f268771d4a5184608f625592458b61b4fd",
+    "T.misc/invocation-72": "f299f0b34dfd851c379233038371e424b781da05210cef0789494c8432d9777a",
+    "T.misc/invocation-73": "7ed6c59d483f84eaf2a0b898f53e3645ec6d8df9380f1ae09aa3fb6bc19abb98",
+    "T.misc/invocation-74": "f60b592c1bab3f21d2be66fd1b08e48d59fe4fef60873bb98b5837df3b37114e",
+    "T.misc/invocation-75": "68e8814ac75688838fda316f669d194daea39f40816534c99cdaac79c1392607",
+    "T.misc/invocation-76": "53437926e49a66fbf281ac3df26ca66769feaae0f1a975f4ec8da2bbb2cfc3c0",
+    "T.misc/invocation-77": "0ea00cddd166d23f3219ca6f2b791c6715a54c71a1c9592e56f853495ee39445",
+    "T.misc/invocation-78": "7f4f96a2dd8a64024fdb1bd4768f643fd4cf55c3a89c1ce89343b22670edc083",
+    "T.misc/invocation-79": "2a81d8e947af61c424ab2ebb43acab1431709342c11208bce9fbde057e5ccd9f",
+    "T.misc/invocation-80": "ec33c43a98cc1ff0d170a6e336526674a26f00234ecd46b41db3e63e20d7c029",
+    "T.misc/invocation-81": "b5de7169e15242da3cdb4f0367dc551ce90743ee52e597703893570cbf623ad0",
+    "T.misc/invocation-82": "94bca36010423f57f80662f370dbc3164f4eaa54f232021d518d2800868124b3",
+    "T.misc/invocation-83": "4b592f3f3bd47168aef9e29a9a588a6d5bd95b5f73da50ee673479a1e3ffb302",
+    "T.builtin/invocation-1": "1ce5f75e90d0107a378dbff7288f085ddbba2e33be57f50b37cc1ab32ffb7766",
+    "T.builtin/invocation-2": "5753357beff9abbf9c5158f5ad81f2467c26baf21e842cea9dd6b859b4840e6f",
+    "T.builtin/invocation-3": "aae5aa864ec77d4946d15f7899c0dcce6c15bbc1f9ef01fcd3ec7a9e65e48fd8",
+    "T.builtin/invocation-4": "5d6b8346f6518a39ab46a5276a21a3afd9a10c29923fffb658ac153c69a5be26",
+    "T.builtin/invocation-5": "4fa2eed6fd19323f7a2ab70fd97fab4946b9e948f2da01934ec77007e2f26e86",
+    "T.builtin/invocation-6": "fced432f7ac83d03dd981af438d653c14750de7b2e69b9a3b646b57efb0a7a0f",
+    "T.builtin/invocation-7": "c13963249b9b7238a364a000174161dd50c502bddf54bb315053dae9720aaf28",
+    "T.builtin/invocation-8": "59e936ea4e164f03bd1e399956dd05e6ecee04757d9c97e3a18dd3d079324879",
+    "T.builtin/invocation-9": "46a042aeb7015d542a4eab543f2df3b2d845793af5b80b7a40e87f250e276f1e",
+    "T.builtin/invocation-10": "346f77836501528e8f18742871d41e04b7cb0064b4625e0f67ffaba91394f723",
+    "T.builtin/invocation-11": "72b51cd759ab48e3ee39288f72b56098e028e7a6d0f2169641383a416f5bd7a6",
+    "T.builtin/invocation-12": "d470890152054b18c2f804e144ac505670cfb200e228cb1eeb60f0e06ee82d59",
+    "T.errmsg/invocation-55": "437f79c88e04f69f444e1a5624ac33624358e8b24f2dbb0952d1af1627f3e36e",
+    "T.errmsg/invocation-56": "e9b6a71f3e496b49ce6154bd4369b8866ff4d964b01c329180c817a1e86abca2",
+    "T.errmsg/invocation-57": "38e0198168ea52d8f4d4dfbc7739c43c1c5652d02767f454a98a0ce395e53298",
+    "T.errmsg/invocation-58": "27cea14bcd1d96b75bd3b7176e3263574bf3ee1cfa98132333d34d988b95ba7d",
+    "T.errmsg/invocation-59": "06d948c14857d4604bc5ec7def1048461e537e6f353a48942c2bd1f3d471c166",
+    "T.errmsg/invocation-60": "af45d2453c6f93b07b9f3992df68ba0d9cd7912173506ecb0904049b7070e6d7"
+  },
+  "differences": {
+    "T.errmsg/1": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696c6c6567616c207072696d61727920696e20726567756c61722065787072657373696f6e2028206174200a20736f75726365206c696e65206e756d62657220320a20636f6e746578742069730a09203e3e3e202f282f203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207265676578207061727365206572726f723a0a20202020280a202020205e0a6572726f723a20756e636c6f7365642067726f75700a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/2": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696c6c6567616c20627265616b2c20636f6e74696e75652c206e657874206f72206e65787466696c652066726f6d20424547494e0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e65787466696c65206973206e6f7420616c6c6f77656420696e20424547494e2f454e440a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/3": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696c6c6567616c20627265616b2c20636f6e74696e75652c206e657874206f72206e65787466696c652066726f6d20454e440a20696e707574207265636f7264206e756d62657220312c2066696c65200a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e65787466696c65206973206e6f7420616c6c6f77656420696e20424547494e2f454e440a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/4": {
+      "reason": "Established extension: nextfile is supported inside user functions (XML 0085).",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e65787466696c6520697320696c6c6567616c20696e7369646520612066756e6374696f6e20617420736f75726365206c696e65203220696e2066756e6374696f6e20666f6f0a20636f6e746578742069730a0966756e6374696f6e20666f6f2829207b206e65787466696c65203e3e3e20207d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/5": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206475706c696361746520617267756d656e74206920617420736f75726365206c696e65203220696e2066756e6374696f6e20660a20636f6e746578742069730a0966756e6374696f6e203e3e3e20206628692c6a2c69203c3c3c2029207b2072657475726e2069207d0a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e65203220696e2066756e6374696f6e20660a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e65203220696e2066756e6374696f6e20660a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206475706c696361746520617267756d656e74206920696e2066756e6374696f6e20660a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/6": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f6e7465726d696e617465642063686172616374657220636c617373205b5b0a20736f75726365206c696e65206e756d62657220320a20636f6e746578742069730a09203e3e3e202f5b5b2f203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20756e7465726d696e617465642063686172616374657220636c6173730a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/7": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f6e7465726d696e617465642063686172616374657220636c617373205b5d0a20736f75726365206c696e65206e756d62657220320a20636f6e746578742069730a09203e3e3e202f5b5d2f203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20756e7465726d696e617465642063686172616374657220636c6173730a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/8": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f6e2d7465726d696e6174656420726567756c61722065787072657373696f6e205b5c2e2e2e20617420736f75726365206c696e6520320a20636f6e746578742069730a09203e3e3e202f5b5c203c3c3c200a3c41574b3e3a206e6f6e7465726d696e617465642063686172616374657220636c617373205b5c2e2e2e0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a310a20207c0a32207c202f5b5c0a20207c205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c206f72206b775f66756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/9": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f6e7465726d696e617465642063686172616374657220636c617373205b780a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20756e7465726d696e617465642063686172616374657220636c6173730a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/10": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220696e20726567756c61722065787072657373696f6e20245e206174200a20736f75726365206c696e65206e756d62657220320a20636f6e746578742069730a09424547494e207b2069662028227822207e203e3e3e20202f245e2f203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e76616c69642061646a6163656e7420726567657820616e63686f727320245e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/11": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220696e20726567756c61722065787072657373696f6e2028282e29206174200a20736f75726365206c696e65206e756d62657220320a20636f6e746578742069730a09203e3e3e202f28282e292f203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207265676578207061727365206572726f723a0a2020202028282e290a202020205e0a6572726f723a20756e636c6f7365642067726f75700a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/12": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206469766973696f6e206279207a65726f0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206469766973696f6e206279207a65726f0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/13": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206469766973696f6e206279207a65726f20696e202f3d0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206469766973696f6e206279207a65726f0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/14": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206469766973696f6e206279207a65726f20696e20253d0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206469766973696f6e206279207a65726f20696e206d6f640a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/15": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206469766973696f6e206279207a65726f20696e206d6f640a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206469766973696f6e206279207a65726f20696e206d6f640a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/16": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e277420726561642076616c7565206f6620783b206974277320616e206172726179206e616d652e0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207820697320616e2061727261790a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/17": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e277420726561642076616c7565206f6620663b206974277320612066756e6374696f6e2e0a20696e707574207265636f7264206e756d62657220312c2066696c65200a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e6e6f7420726561642066756e6374696f6e206620617320612076616c75650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/18": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e27742061737369676e20746f20663b206974277320612066756e6374696f6e2e0a20696e707574207265636f7264206e756d62657220312c2066696c65200a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e6e6f742061737369676e20746f2066756e6374696f6e20660a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/19": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e27742061737369676e20746f20783b206974277320616e206172726179206e616d652e0a20696e707574207265636f7264206e756d62657220312c2066696c65200a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207820697320616e2061727261790a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/20": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206620697320612066756e6374696f6e2c206e6f7420616e20617272617920617420736f75726365206c696e6520320a20636f6e746578742069730a0966756e6374696f6e206628297b7d3b207b73706c69742824302c203e3e3e20206629203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206620697320612066756e6374696f6e2c206e6f7420616e2061727261790a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/21": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2066756e6374696f6e20662063616c6c65642077697468203120617267732c2075736573206f6e6c7920300a20736f75726365206c696e65206e756d62657220320a3c41574b3e3a2063616e2774207573652066756e6374696f6e206620617320617267756d656e7420696e20660a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2066756e6374696f6e20662063616c6c65642077697468203120617267732c2075736573206f6e6c7920300a3c41574b3e3a2063616e6e6f7420726561642066756e6374696f6e206620617320612076616c75650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/22": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2066756e6374696f6e20662063616c6c65642077697468203120617267732c2075736573206f6e6c7920300a20736f75726365206c696e65206e756d62657220320a3c41574b3e3a2063616e2774207573652066756e6374696f6e206620617320617267756d656e7420696e20660a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2066756e6374696f6e20662063616c6c65642077697468203120617267732c2075736573206f6e6c7920300a3c41574b3e3a2063616e6e6f7420726561642066756e6374696f6e206620617320612076616c75650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/23": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207820697320616e2061727261792c206e6f7420612066756e6374696f6e20617420736f75726365206c696e6520320a20636f6e746578742069730a097b2073706c69742824302c207829207d3b2066756e6374696f6e203e3e3e202078203c3c3c202829207b7d0a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e65203220696e2066756e6374696f6e20780a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e65203220696e2066756e6374696f6e20780a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207820697320612066756e6374696f6e2c206e6f7420616e2061727261790a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/24": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696c6c6567616c206e65737465642066756e6374696f6e20617420736f75726365206c696e65203220696e2066756e6374696f6e20780a20636f6e746578742069730a0966756e6374696f6e20782829207b203e3e3e202066756e6374696f6e203c3c3c2020672829207b7d207d0a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e65203220696e2066756e6374696f6e20780a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e65203220696e2066756e6374696f6e20780a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a32390a20207c0a32207c2066756e6374696f6e20782829207b2066756e6374696f6e20672829207b7d207d0a20207c20202020202020202020202020202020202020202020202020202020205e2d2d2d0a20207c0a20203d2065787065637465642073746174656d656e742c20756e6172795f657870722c206f705f616e642c206f705f6f722c206f705f6d617463682c206f705f6e6f745f6d617463682c206f705f65712c206f705f6e65712c206f705f67652c206f705f6c652c206f705f67742c206f705f6c742c206f705f6164642c206f705f7375622c206f705f6d756c2c206f705f6469762c206f705f6d6f642c206f705f706f772c206f705f696e632c206f705f6465632c206f72206b775f696e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/25": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2072657475726e206e6f7420696e2066756e6374696f6e20617420736f75726365206c696e6520320a20636f6e746578742069730a097b203e3e3e202072657475726e203c3c3c20207d0a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2072657475726e206f75747369646520612066756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/26": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20627265616b20696c6c6567616c206f757473696465206f66206c6f6f707320617420736f75726365206c696e6520320a20636f6e746578742069730a097b20627265616b203e3e3e20207d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206c6f6f7020636f6e74726f6c206f7574736964652061206c6f6f700a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/27": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20636f6e74696e756520696c6c6567616c206f757473696465206f66206c6f6f707320617420736f75726365206c696e6520320a20636f6e746578742069730a097b20636f6e74696e7565203e3e3e20207d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206c6f6f7020636f6e74726f6c206f7574736964652061206c6f6f700a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/28": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f6e2d7465726d696e6174656420737472696e67206162632e2e2e20617420736f75726365206c696e6520320a20636f6e746578742069730a097b207072696e742022616263203e3e3e200a203c3c3c200a3c41574b3e3a206e6f6e2d7465726d696e6174656420737472696e67206162637d2e2e2e20617420736f75726365206c696e6520330a3c41574b3e3a20676976696e672075700a20736f75726365206c696e65206e756d62657220330a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a390a20207c0a32207c207b207072696e7420226162630a20207c2020202020202020205e2d2d2d0a20207c0a20203d2065787065637465642073746174656d656e742c2072656469726563742c207072696e745f61737369676e6d656e745f657870722c206f7220706172656e5f7072696e745f617267730a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/29": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e65787420697320696c6c6567616c20696e7369646520612066756e6374696f6e20617420736f75726365206c696e65203320696e2066756e6374696f6e20660a20636f6e746578742069730a0966756e6374696f6e20662829207b206e657874203e3e3e20207d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e657874206973206e6f7420616c6c6f77656420696e207468697320636f6e746578740a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/30": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f7420656e6f756768206172677320696e207072696e7466282573290a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206d697373696e67207072696e746620617267756d656e740a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/31": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "25666f6f",
+        "stderr_hex": "3c41574b3e3a207765697264207072696e746620636f6e76657273696f6e20250a20736f75726365206c696e65206e756d62657220320a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "25666f6f",
+        "stderr_hex": "3c41574b3e3a207765697264207072696e746620636f6e76657273696f6e20250a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/32": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2066756e6374696f6e20662068617320363120617267756d656e74732c206c696d69742035300a20736f75726365206c696e65206e756d62657220350a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2066756e6374696f6e20662068617320746f6f206d616e7920617267756d656e747320286c696d6974203530290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/33": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206578747261205d20617420736f75726365206c696e6520320a20636f6e746578742069730a09203e3e3e205d203c3c3c200a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a096578747261207d0a096578747261205d0a09657874726120290a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a310a20207c0a32207c205d297d0a20207c205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c206f72206b775f66756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/34": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206578747261207d20617420736f75726365206c696e6520320a20636f6e746578742069730a097b207072696e74203e3e3e20207d7d203c3c3c200a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a096578747261207d0a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a31300a20207c0a32207c207b207072696e74207d7d0a20207c202020202020202020205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c206f72206b775f66756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/35": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206578747261207d20617420736f75726365206c696e6520320a20636f6e746578742069730a097b207072696e74203e3e3e20207d7d203c3c3c200a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a0932206578747261207d27730a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a31300a20207c0a32207c207b207072696e74207d7d7d0a20207c202020202020202020205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c206f72206b775f66756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/36": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206578747261205d20617420736f75726365206c696e6520320a20636f6e746578742069730a09203e3e3e205d203c3c3c200a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a096578747261205d0a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a310a20207c0a32207c205d0a20207c205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c206f72206b775f66756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/37": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a20636f6e746578742069730a09203e3e3e205b203c3c3c200a096d697373696e67205d0a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a310a20207c0a32207c205b0a20207c205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c206f72206b775f66756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/38": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a20636f6e746578742069730a0961203e3e3e202026203c3c3c2020620a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a330a20207c0a32207c2061202620620a20207c2020205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c20616374696f6e5f626c6f636b2c2061737369676e5f6f702c20756e6172795f657870722c206f705f616e642c206f705f6f722c206f705f6d617463682c206f705f6e6f745f6d617463682c206f705f65712c206f705f6e65712c206f705f67652c206f705f6c652c206f705f67742c206f705f6c742c206f705f6164642c206f705f7375622c206f705f6d756c2c206f705f6469762c206f705f6d6f642c206f705f706f772c206f705f696e632c206f705f6465632c206b775f66756e6374696f6e2c206f72206b775f696e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/39": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206578747261202920617420736f75726365206c696e6520320a20636f6e746578742069730a097b2078203d203e3e3e20203129203c3c3c200a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520320a09657874726120290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a380a20207c0a32207c207b2078203d203129207d0a20207c20202020202020205e2d2d2d0a20207c0a20203d2065787065637465642073746174656d656e742c20756e6172795f657870722c206f705f616e642c206f705f6f722c206f705f6d617463682c206f705f6e6f745f6d617463682c206f705f65712c206f705f6e65712c206f705f67652c206f705f6c652c206f705f67742c206f705f6c742c206f705f6164642c206f705f7375622c206f705f6d756c2c206f705f6469762c206f705f6d6f642c206f705f706f772c206f705f696e632c206f705f6465632c206f72206b775f696e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/40": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206578747261202920617420736f75726365206c696e6520320a20636f6e746578742069730a097b207072696e74203e3e3e202029203c3c3c200a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520320a0932206578747261202927730a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a390a20207c0a32207c207b207072696e742029297d0a20207c2020202020202020205e2d2d2d0a20207c0a20203d2065787065637465642073746174656d656e742c2072656469726563742c207072696e745f61737369676e6d656e745f657870722c206f7220706172656e5f7072696e745f617267730a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/41": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a20636f6e746578742069730a097b7b207072696e74203e3e3e20207d203c3c3c200a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520320a096d697373696e67207d0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a320a20207c0a32207c207b7b207072696e74207d0a20207c20205e2d2d2d0a20207c0a20203d2065787065637465642073746174656d656e740a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/42": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a20636f6e746578742069730a097b7b7b207072696e74203e3e3e20207d203c3c3c200a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520320a0932206d697373696e67207d27730a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a320a20207c0a32207c207b7b7b207072696e74207d0a20207c20205e2d2d2d0a20207c0a20203d2065787065637465642073746174656d656e740a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/43": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696c6c6567616c20627265616b2c20636f6e74696e75652c206e657874206f72206e65787466696c652066726f6d20424547494e0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e657874206973206e6f7420616c6c6f77656420696e207468697320636f6e746578740a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/44": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696c6c6567616c20627265616b2c20636f6e74696e75652c206e657874206f72206e65787466696c652066726f6d20454e440a20696e707574207265636f7264206e756d62657220312c2066696c65200a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e657874206973206e6f7420616c6c6f77656420696e207468697320636f6e746578740a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/45": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202e2f6e6f6e6578697374656e746469722f666f6f0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2061706572747572612066696c65206f757470757420272e2f6e6f6e6578697374656e746469722f666f6f2720696e207363726974747572613a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/46": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20796f752063616e277420646566696e652066756e6374696f6e2066206d6f7265207468616e206f6e636520617420736f75726365206c696e6520330a20636f6e746578742069730a0966756e6374696f6e203e3e3e202066203c3c3c202829207b207072696e742032207d0a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e65203320696e2066756e6374696f6e20660a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e65203320696e2066756e6374696f6e20660a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2066756e6374696f6e206620646566696e6564206d6f7265207468616e206f6e63650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/47": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2066756e6374696f6e206d702063616c6c65642077697468203120617267732c2075736573206f6e6c7920300a20736f75726365206c696e65206e756d62657220330a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2066756e6374696f6e206d702063616c6c65642077697468203120617267732c2075736573206f6e6c7920300a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/48": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e646578282920646f65736e2774207065726d697420726567756c61722065787072657373696f6e7320617420736f75726365206c696e6520320a20636f6e746578742069730a09424547494e207b20696e6465782822616263222c203e3e3e20202f612f29203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e64657820646f6573206e6f74207065726d697420726567756c61722065787072657373696f6e730a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/51": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e756c6c2066696c65206e616d6520696e207072696e74206f72206765746c696e650a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2061706572747572612066696c65206f757470757420272720696e207363726974747572613a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/52": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207761726e696e673a2066756e6374696f6e2068617320746f6f206d616e7920617267756d656e74730a20736f75726365206c696e65206e756d62657220320a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207761726e696e673a2066756e6374696f6e2068617320746f6f206d616e7920617267756d656e74730a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/53": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616c6c696e6720756e646566696e65642066756e6374696f6e20666f6f0a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20756e6b6e6f776e2066756e6374696f6e2027666f6f270a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.flags/invocation-1": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "75736167653a203c41574b3e205b2d46206673207c202d2d6373765d205b2d76207661723d76616c75655d205b2d662070726f6766696c65207c202770726f67275d205b66696c65202e2e2e5d0a",
+        "code": 1,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "75736167653a207261776b205b2d46206673207c202d2d6373765d205b2d76207661723d76616c75655d205b2d662070726f6766696c65207c202770726f67275d205b66696c65202e2e2e5d0a",
+        "code": 1,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.flags/invocation-2": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f2070726f6772616d2066696c656e616d650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "6572726f723a20612076616c756520697320726571756972656420666f7220272d66203c50524f4752414d5f46494c45533e2720627574206e6f6e652077617320737570706c6965640a0a466f72206d6f726520696e666f726d6174696f6e2c2074727920272d2d68656c70272e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.flags/invocation-3": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c6520676c6f702f676c6f700a20736f75726365206c696e65206e756d626572203120736f757263652066696c6520676c6f702f676c6f700a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206c6574747572612070726f6772616d66696c652027676c6f702f676c6f70273a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.flags/invocation-4": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c6520676c6f702f676c6f700a20736f75726365206c696e65206e756d626572203120736f757263652066696c6520676c6f702f676c6f700a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206c6574747572612070726f6772616d66696c652027676c6f702f676c6f70273a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.flags/invocation-6": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f206669656c6420736570617261746f720a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "6572726f723a20612076616c756520697320726571756972656420666f7220272d46203c4649454c445f534550415241544f523e2720627574206e6f6e652077617320737570706c6965640a0a466f72206d6f726520696e666f726d6174696f6e2c2074727920272d2d68656c70272e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-11": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2060666f6f2720697320626f74682066756e6374696f6e206e616d6520616e6420617267756d656e74206e616d6520617420736f75726365206c696e6520340a20636f6e746578742069730a0920202020202020203e3e3e20207d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20666f6f20697320626f74682066756e6374696f6e206e616d6520616e6420617267756d656e74206e616d650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-14": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774207573652066756e6374696f6e20666f6f20617320617267756d656e7420696e20666f6f0a20736f75726365206c696e65206e756d62657220330a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e6e6f7420726561642066756e6374696f6e20666f6f20617320612076616c75650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-15": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616c6c696e6720756e646566696e65642066756e6374696f6e20666f6f0a20736f75726365206c696e65206e756d62657220310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20756e6b6e6f776e2066756e6374696f6e2027666f6f270a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-16": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e27742061737369676e20746f20666f6f3b206974277320616e206172726179206e616d652e0a20736f75726365206c696e65206e756d62657220380a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206920697320616e2061727261790a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-17": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a20636f6e746578742069730a092178203e3e3e20203d203c3c3c2020790a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a340a20207c0a32207c202178203d20790a20207c202020205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c20616374696f6e5f626c6f636b2c20756e6172795f657870722c206f705f616e642c206f705f6f722c206f705f6d617463682c206f705f6e6f745f6d617463682c206f705f65712c206f705f6e65712c206f705f67652c206f705f6c652c206f705f67742c206f705f6c742c206f705f6164642c206f705f7375622c206f705f6d756c2c206f705f6469762c206f705f6d6f642c206f705f706f772c206f705f696e632c206f705f6465632c206b775f66756e6374696f6e2c206f72206b775f696e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-21": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f6e7465726d696e617465642063686172616374657220636c617373205b0a20736f75726365206c696e65206e756d62657220310a20636f6e746578742069730a09203e3e3e202f5b2f203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a340a20207c0a31207c202f5b2f5d2f0a20207c202020205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c20616374696f6e5f626c6f636b2c20756e6172795f657870722c206f705f616e642c206f705f6f722c206f705f6d617463682c206f705f6e6f745f6d617463682c206f705f65712c206f705f6e65712c206f705f67652c206f705f6c652c206f705f67742c206f705f6c742c206f705f6164642c206f705f7375622c206f705f6d756c2c206f705f6469762c206f705f6d6f642c206f705f706f772c206f705f696e632c206f705f6465632c206b775f66756e6374696f6e2c206f72206b775f696e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-35": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520340a20636f6e746578742069730a09284e46293d3d33097b66697273743d317d284e46293d3d322026262066697273743d3d3020262620286162732824312d6f31293e3132307c7c6162732824322d6f32293e31323029097b7072696e742024307d284e46293d3d32203e3e3e20097b6f313d25203c3c3c20313b206f323d24323b2066697273743d307d0a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520340a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20343a31320a20207c0a34207c20244e463d3d32097b6f313d25313b206f323d24323b2066697273743d307d0a20207c2020202020202009202020205e2d2d2d0a20207c0a20203d2065787065637465642061737369676e6d656e745f657870720a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-36": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a097b206e203d2073706c69742824312c20616464726573732c203e3e3e20202129203c3c3c200a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a32370a20207c0a31207c207b206e203d2073706c69742824312c20616464726573732c2021293b207072696e7420616464726573735b315d207d0a20207c2020202020202020202020202020202020202020202020202020205e2d2d2d0a20207c0a20203d20657870656374656420756e6172795f657870720a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-37": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696c6c6567616c2073746174656d656e740a20736f75726365206c696e65206e756d62657220310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696c6c6567616c206c69746572616c2073746174656d656e740a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-38": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206070696c652720697320616e206172726179206e616d6520616e6420612066756e6374696f6e206e616d6520617420736f75726365206c696e6520340a20636f6e746578742069730a09203e3e3e207d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2070696c6520697320626f746820616e20617272617920616e6420612066756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-39": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206174616e322072657175697265732074776f20617267756d656e74733b2072657475726e696e6720312e300a20736f75726365206c696e65206e756d62657220310a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206174616e322072657175697265732074776f20617267756d656e74733b2072657475726e696e6720312e300a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-41": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e207b203e3e3e202067737562282f616e612f2c22616e6461222c2262616e616e6122203c3c3c200a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2065787072657373696f6e206973206e6f742061737369676e61626c650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-42": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e207b203e3e3e2020737562282f616e612f2c22616e6461222c2262616e616e6122203c3c3c200a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2065787072657373696f6e206973206e6f742061737369676e61626c650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-43": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e65776c696e6520696e20726567756c61722065787072657373696f6e20782e2e2e20617420736f75726365206c696e6520340a20636f6e746578742069730a092f78203e3e3e200a203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20343a310a20207c0a34207c202f780a20207c205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c206f72206b775f66756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-46": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377640a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e707574202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377643a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-47": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377640a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e707574202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377643a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-48": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377640a20736f75726365206c696e65206e756d62657220350a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e707574202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377643a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-49": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377640a20736f75726365206c696e65206e756d62657220360a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e707574202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377643a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-50": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377640a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e707574202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377643a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-51": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377640a20736f75726365206c696e65206e756d62657220350a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e707574202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377643a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-52": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377640a20736f75726365206c696e65206e756d62657220320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e707574202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377643a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-53": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377640a20736f75726365206c696e65206e756d62657220350a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e707574202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377643a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-55": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2063616e2774206f70656e2066696c65202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377640a20736f75726365206c696e65206e756d62657220310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20696e707574202f7661722f666f6c646572732f6e322f33796e7668687231323735633770326a38306b633171357230303030676e2f542f7261776b2d657874726163742d666f7872773863372f746573742e7061737377643a204e6f20737563682066696c65206f72206469726563746f727920286f73206572726f722032290a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-57": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206578747261207d20617420736f75726365206c696e6520350a20636f6e746578742069730a09203e3e3e207d203c3c3c200a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520350a0933206578747261207d27730a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520350a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20353a310a20207c0a35207c207d7d7d0a20207c205e2d2d2d0a20207c0a20203d20657870656374656420454f492c2072756c652c206f72206b775f66756e6374696f6e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-58": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a20636f6e746578742069730a09096966203e3e3e20202829203c3c3c200a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520320a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520320a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a360a20207c0a32207c20096966202829207b0a20207c2009202020205e2d2d2d0a20207c0a20203d2065787065637465642061737369676e6d656e745f657870720a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-60": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a09203e3e3e202e203c3c3c200a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a310a20207c0a31207c202e0a20207c205e2d2d2d0a20207c0a20203d2065787065637465642070726f6772616d0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-61": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a09203e3e3e202e2e203c3c3c200a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a310a20207c0a31207c202e2e0a20207c205e2d2d2d0a20207c0a20203d2065787065637465642070726f6772616d0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-62": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a09203e3e3e202e452e203c3c3c200a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a310a20207c0a31207c202e452e0a20207c205e2d2d2d0a20207c0a20203d2065787065637465642070726f6772616d0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-63": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a09203e3e3e202e2b2b2e203c3c3c200a3c41574b3e3a206261696c696e67206f757420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a310a20207c0a31207c202e2b2b2e0a20207c205e2d2d2d0a20207c0a20203d2065787065637465642070726f6772616d0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-64": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20756e657870656374656420656e64206f6620696e707574206166746572202420617420736f75726365206c696e6520310a20636f6e746578742069730a09203e3e3e2024203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a320a20207c0a31207c20240a20207c20205e2d2d2d0a20207c0a20203d206578706563746564206669656c645f696e6465780a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-65": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20756e657870656374656420656e64206f6620696e707574206166746572202420617420736f75726365206c696e6520310a20636f6e746578742069730a097b7072696e74203e3e3e202024203c3c3c200a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a096d697373696e67207d0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a390a20207c0a31207c207b7072696e7420240a20207c2020202020202020205e2d2d2d0a20207c0a20203d206578706563746564206669656c645f696e6465780a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-66": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f6e2d7465726d696e6174656420737472696e67202e2e2e20617420736f75726365206c696e6520310a20636f6e746578742069730a09203e3e3e2022203c3c3c200a3c41574b3e3a20676976696e672075700a20736f75726365206c696e65206e756d62657220310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a310a20207c0a31207c20220a20207c205e2d2d2d0a20207c0a20203d2065787065637465642070726f6772616d0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-69": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206e6f6e2d7465726d696e6174656420726567756c61722065787072657373696f6e2078797a2e2e2e20617420736f75726365206c696e6520310a20636f6e746578742069730a09203e3e3e202f78797a203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a310a20207c0a31207c202f78797a0a20207c205e2d2d2d0a20207c0a20203d2065787065637465642070726f6772616d0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-70": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520320a20636f6e746578742069730a09202020207377697463682028737562737472282278222c312c312929203e3e3e20207b203c3c3c200a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520320a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520330a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20323a33300a20207c0a32207c20202020207377697463682028737562737472282278222c312c312929207b0a20207c2020202020202020202020202020202020202020202020202020202020205e2d2d2d0a20207c0a20203d2065787065637465642073746174656d656e742c20756e6172795f657870722c206f705f616e642c206f705f6f722c206f705f6d617463682c206f705f6e6f745f6d617463682c206f705f65712c206f705f6e65712c206f705f67652c206f705f6c652c206f705f67742c206f705f6c742c206f705f6164642c206f705f7375622c206f705f6d756c2c206f705f6469762c206f705f6d6f642c206f705f706f772c206f705f696e632c206f705f6465632c206f72206b775f696e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-71": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e207b2073203e3e3e20207b203c3c3c200a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a31310a20207c0a31207c20424547494e207b2073207b2063202f2e2f207d207d0a20207c20202020202020202020205e2d2d2d0a20207c0a20203d2065787065637465642073746174656d656e742c2061737369676e5f6f702c20756e6172795f657870722c206f705f616e642c206f705f6f722c206f705f6d617463682c206f705f6e6f745f6d617463682c206f705f65712c206f705f6e65712c206f705f67652c206f705f6c652c206f705f67742c206f705f6c742c206f705f6164642c206f705f7375622c206f705f6d756c2c206f705f6469762c206f705f6d6f642c206f705f706f772c206f705f696e632c206f705f6465632c206f72206b775f696e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-72": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e207b2073203e3e3e20207b203c3c3c200a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a205061727365206572726f723a20202d2d3e20313a31310a20207c0a31207c20424547494e207b2073207b2063202f2e2e2f207d207d0a20207c20202020202020202020205e2d2d2d0a20207c0a20203d2065787065637465642073746174656d656e742c2061737369676e5f6f702c20756e6172795f657870722c206f705f616e642c206f705f6f722c206f705f6d617463682c206f705f6e6f745f6d617463682c206f705f65712c206f705f6e65712c206f705f67652c206f705f6c652c206f705f67742c206f705f6c742c206f705f6164642c206f705f7375622c206f705f6d756c2c206f705f6469762c206f705f6d6f642c206f705f706f772c206f705f696e632c206f705f6465632c206f72206b775f696e0a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-73": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20272427206e6f74207065726d697474656420696e2061776b20666f726d6174730a20736f75726365206c696e65206e756d62657220310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20756e737570706f72746564207072696e746620666f726d61740a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.misc/invocation-80": {
+      "reason": "Established byte-string extension: embedded NUL does not truncate the remainder (XML binary cases).",
+      "c": {
+        "stdout_hex": "68656c6c6f0a",
+        "stderr_hex": "",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "68656c6c6f0030410a",
+        "stderr_hex": "",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.builtin/invocation-3": {
+      "reason": "Established RNG contract: Rust RNG and initial seed 0; both explicit streams pinned, see corpus-contracts.json.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "code": 0,
+        "timeout": false,
+        "files": {
+          "foo1": "302e3834303138380a302e3339343338330a302e3738333039390a302e37393834340a302e3931313634370a302e3139373535310a302e3333353232330a302e37363832330a302e3237373737350a302e35353339370a",
+          "foo2": "302e3834303138380a302e3339343338330a302e3738333039390a302e37393834340a302e3931313634370a302e3139373535310a302e3333353232330a302e37363832330a302e3237373737350a302e35353339370a"
+        }
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "code": 0,
+        "timeout": false,
+        "files": {
+          "foo1": "302e3937343234350a302e3639313233360a302e3432373937350a302e3137353538360a302e3235343535320a302e3936323630330a302e3338383630380a302e3730383530380a302e3532303334340a302e333835350a",
+          "foo2": "302e3733313131330a302e37373334360a302e303235383434360a302e3538343135390a302e3236323137310a302e3737313938370a302e3231383639370a302e3739333731330a302e3734393333380a302e3936383933380a"
+        }
+      }
+    },
+    "T.builtin/invocation-10": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207761726e696e673a2066756e6374696f6e2068617320746f6f206d616e7920617267756d656e74730a20736f75726365206c696e65206e756d62657220320a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207761726e696e673a2066756e6374696f6e2068617320746f6f206d616e7920617267756d656e74730a",
+        "code": 0,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/invocation-55": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "61620a",
+        "stderr_hex": "3c41574b3e3a206e65776c696e6520696e20737472696e6720610a622e2e2e20617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "61620a",
+        "stderr_hex": "3c41574b3e3a206e65776c696e6520696e2061737369676e6d656e7420737472696e670a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/invocation-56": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20636d64207c206765746c696e6520697320756e7361666520617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e7b226461746522207c203e3e3e20206765746c696e657d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a20636f6d6d616e64207069706520697320756e7361666520696e2073616665206d6f64650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/invocation-57": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207072696e74203e20697320756e7361666520617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e7b7072696e74203e3e3e20203e22666f6f227d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206f7574707574207265646972656374696f6e20697320756e7361666520696e2073616665206d6f64650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/invocation-58": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207072696e74203e3e20697320756e7361666520617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e7b7072696e74203e3e203e3e3e202022666f6f227d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206f7574707574207265646972656374696f6e20697320756e7361666520696e2073616665206d6f64650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/invocation-59": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a207072696e74207c20697320756e7361666520617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e7b7072696e74207c203e3e3e202022666f6f227d203c3c3c200a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a206f7574707574207265646972656374696f6e20697320756e7361666520696e2073616665206d6f64650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    },
+    "T.errmsg/invocation-60": {
+      "reason": "Diagnostic wording/context differs; stdout, status and generated files agree. Both exact diagnostics are pinned.",
+      "c": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073797374656d20697320756e7361666520617420736f75726365206c696e6520310a20636f6e746578742069730a09424547494e203e3e3e20207b73797374656d203c3c3c2028226461746522297d0a3c41574b3e3a2073796e746178206572726f7220617420736f75726365206c696e6520310a3c41574b3e3a20696c6c6567616c2073746174656d656e7420617420736f75726365206c696e6520310a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      },
+      "rust": {
+        "stdout_hex": "",
+        "stderr_hex": "3c41574b3e3a2073797374656d20697320756e7361666520696e2073616665206d6f64650a",
+        "code": 2,
+        "timeout": false,
+        "files": {}
+      }
+    }
+  }
+}

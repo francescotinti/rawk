@@ -1,19 +1,25 @@
 //! Incremental record reader shared by the main input and redirected getline.
 use std::io::{self, Read};
 
+pub(crate) type SharedReader = std::rc::Rc<std::cell::RefCell<RecordReader>>;
+
 pub(crate) struct RecordReader {
     reader: Box<dyn Read>,
     buffer: Vec<u8>,
+    start: usize,
     eof: bool,
     separator: Option<(Vec<u8>, std::rc::Rc<crate::ere::Ere>)>,
 }
 
 impl RecordReader {
+    pub(crate) fn shared(self) -> SharedReader {
+        std::rc::Rc::new(std::cell::RefCell::new(self))
+    }
     pub(crate) fn next_csv(&mut self) -> io::Result<Option<(Vec<u8>, Vec<u8>)>> {
         loop {
             let mut quoted = false;
             let mut end = None;
-            for (i, b) in self.buffer.iter().enumerate() {
+            for (i, b) in self.remaining().iter().enumerate() {
                 if *b == b'"' {
                     quoted = !quoted;
                 }
@@ -23,12 +29,12 @@ impl RecordReader {
                 }
             }
             if end.is_some() || self.eof {
-                if self.buffer.is_empty() {
+                if self.remaining().is_empty() {
                     return Ok(None);
                 }
-                let len = end.unwrap_or(self.buffer.len());
+                let len = end.unwrap_or(self.remaining().len());
                 let mut record = Vec::new();
-                for &b in &self.buffer[..len] {
+                for &b in &self.remaining()[..len] {
                     if b == b'\n' && record.last() == Some(&b'\r') {
                         record.pop();
                     }
@@ -44,7 +50,7 @@ impl RecordReader {
                 } else {
                     Vec::new()
                 };
-                self.buffer.drain(..len + usize::from(end.is_some()));
+                self.start += len + usize::from(end.is_some());
                 return Ok(Some((record, rt)));
             }
             self.fill()?;
@@ -54,12 +60,23 @@ impl RecordReader {
         Self {
             reader: Box::new(reader),
             buffer: Vec::new(),
+            start: 0,
             eof: false,
             separator: None,
         }
     }
 
+    fn remaining(&self) -> &[u8] {
+        &self.buffer[self.start..]
+    }
+
     fn fill(&mut self) -> io::Result<()> {
+        // Compact only when more input is needed, not after every record.
+        if self.start > 1 {
+            // Retain one consumed byte so ^ cannot match again after compaction.
+            self.buffer.drain(..self.start - 1);
+            self.start = 1;
+        }
         let mut bytes = [0; 8192];
         let count = self.reader.read(&mut bytes)?;
         self.eof = count == 0;
@@ -80,47 +97,59 @@ impl RecordReader {
         };
         loop {
             if rs.is_empty() {
-                let leading = self.buffer.iter().take_while(|b| **b == b'\n').count();
-                self.buffer.drain(..leading);
+                let leading = self.remaining().iter().take_while(|b| **b == b'\n').count();
+                self.start += leading;
             }
+            let subject_end = if regex.is_some() && crate::text::utf8() && !self.eof {
+                crate::text::incomplete_tail(&self.buffer).unwrap_or(self.buffer.len())
+            } else {
+                self.buffer.len()
+            };
             let separator = if let Some(regex) = &regex {
                 {
-                    let mut offset = 0;
+                    let subject = regex.subject(&self.buffer[..subject_end]);
+                    let mut offset = self.start;
                     let mut found = None;
-                    while offset <= self.buffer.len() {
-                        let Some(m) = regex.find_at(&self.buffer, offset) else {
+                    while offset <= subject_end {
+                        let Some(m) = subject.find_at(offset) else {
                             break;
                         };
                         if !m.is_empty() {
-                            found = Some((m.start(), m.end(), m.can_extend));
+                            found =
+                                Some((m.start() - self.start, m.end() - self.start, m.can_extend));
                             break;
                         }
-                        offset = m.end() + 1;
+                        offset = crate::text::advance(&self.buffer, m.end());
                     }
                     found
                 }
             } else {
-                self.buffer
+                self.remaining()
                     .iter()
                     .position(|b| *b == rs[0])
                     .map(|p| (p, p + 1, false))
             };
             if let Some((start, end, can_extend)) = separator {
                 // A regex separator ending at the buffer boundary might extend.
-                if regex.is_some() && (can_extend || end == self.buffer.len()) && !self.eof {
+                if regex.is_some()
+                    && (can_extend || end == subject_end.saturating_sub(self.start))
+                    && !self.eof
+                {
                     self.fill()?;
                     continue;
                 }
-                let record = self.buffer[..start].to_vec();
-                let rt = self.buffer[start..end].to_vec();
-                self.buffer.drain(..end);
+                let record = self.remaining()[..start].to_vec();
+                let rt = self.remaining()[start..end].to_vec();
+                self.start += end;
                 return Ok(Some((record, rt)));
             }
             if self.eof {
-                if self.buffer.is_empty() {
+                if self.remaining().is_empty() {
                     return Ok(None);
                 }
-                let mut record = std::mem::take(&mut self.buffer);
+                let mut record = self.remaining().to_vec();
+                self.buffer.clear();
+                self.start = 0;
                 if rs.is_empty() {
                     while record.last() == Some(&b'\n') {
                         record.pop();
@@ -171,7 +200,7 @@ pub(crate) fn csv_fields(record: &[u8]) -> Vec<Vec<u8>> {
 }
 
 pub(crate) struct MainInput {
-    pub(crate) reader: Option<RecordReader>,
+    pub(crate) reader: Option<SharedReader>,
     pub(crate) next_arg: usize,
     pub(crate) opened: bool,
 }
@@ -202,6 +231,16 @@ mod tests {
     fn separators_are_independent_of_read_boundaries() {
         for size in [1, 2, 3, 7, 8192] {
             for (input, rs, expected) in [
+                (
+                    b"aaa1a2a\n".as_slice(),
+                    b"^a".as_slice(),
+                    vec![Vec::new(), b"aa1a2a\n".to_vec()],
+                ),
+                (
+                    b"aaab".as_slice(),
+                    b"^a+".as_slice(),
+                    vec![Vec::new(), b"b".to_vec()],
+                ),
                 (
                     b"xabzab".as_slice(),
                     b"a|ab".as_slice(),

@@ -1,0 +1,13 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.33s
+     Running tests/legacy_locale.rs (target/debug/deps/legacy_locale-8bcee91200be312f)
+
+running 5 tests
+test nul_preservation_remains_an_explicit_rust_extension ... ok
+test every_nonzero_byte_case_conversion_matches_c ... ok
+test required_single_byte_locales_are_active ... ok
+test byte_positions_ranges_splits_and_substitution_match_c ... ok
+test every_nonzero_byte_in_each_posix_class_matches_c ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.47s
+

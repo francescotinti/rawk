@@ -11,6 +11,7 @@ from pathlib import Path
 import shutil
 import tempfile
 from historical_audit import ROOT, run
+from corpus_contracts import accepts, load
 
 
 def audit(binary, names=None):
@@ -21,6 +22,7 @@ def audit(binary, names=None):
     if names is not None:
         sources = [p for p in sources if p.name in names]
     rows = []
+    contracts = load()
     for source in sources:
         row = {'case': source.name}
         for label, executable in [('c', reference), ('rust', binary)]:
@@ -45,6 +47,9 @@ def audit(binary, names=None):
                               if row['c'][key] != row['rust'][key]]
         row['status'] = ('reference-error' if row['c']['timeout'] or row['c']['code'] is None or (row['c']['code'] != 0 and row['c']['stderr_hex'])
                          else 'divergence' if row['differences'] else 'match')
+        if row["status"] == "divergence" and accepts(row, source_dir, contracts):
+            row["status"] = "expected"
+            row["contract"] = contracts[source.name]["rule"]
         rows.append(row)
     return rows
 
@@ -53,7 +58,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--rawk', type=Path, default=ROOT/'rawk/target/release/rawk')
     parser.add_argument('--output', type=Path, default=ROOT/'rawk/diary/corpus-results.json')
-    parser.add_argument('--check', action='store_true', help='Fail on any divergence or reference error')
+    parser.add_argument('--check', action='store_true', help='Fail on unexpected differences or reference errors')
     parser.add_argument('--full-output', action='store_true', help='Store complete streams as well as comparison results')
     args = parser.parse_args()
     rows = audit(args.rawk.resolve())
@@ -75,7 +80,7 @@ def main():
         if row['status'] != 'match':
             print(row['case'], row['status'], ','.join(row['differences']))
     print(dict(collections.Counter(row['status'] for row in rows)), 'total', len(rows))
-    if args.check and any(r['status'] != 'match' for r in rows):
+    if args.check and any(r['status'] not in ('match', 'expected') for r in rows):
         raise SystemExit(1)
 
 

@@ -1,0 +1,28 @@
+[
+  {
+    "name": "safe",
+    "c": {
+      "code": 2,
+      "stdout": "",
+      "stderr": "/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: system is unsafe at source line 1\n context is\n\tBEGIN >>>  {system <<< (\"printf SAFE_PROBE\")}\n/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: syntax error at source line 1\n/Volumes/Extreme Pro/Claude/testag-awk/c_awk/a.out: illegal statement at source line 1\n"
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "SAFE_PROBE",
+      "stderr": ""
+    }
+  },
+  {
+    "name": "csv",
+    "c": {
+      "code": 0,
+      "stdout": "3 b,c\n",
+      "stderr": ""
+    },
+    "rust": {
+      "code": 0,
+      "stdout": "4 \"b\n",
+      "stderr": ""
+    }
+  }
+]

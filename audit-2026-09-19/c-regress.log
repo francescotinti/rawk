@@ -1,0 +1,513 @@
+./REGRESS
+/Volumes/Extreme Pro/Claude/testag-awk/c_awk/testdir
+Darwin MinidiFrancesco.homenet.telecomitalia.it 25.6.0 Darwin Kernel Version 25.6.0: Fri Jul 31 19:11:03 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T8132 arm64
+echo compiled
+oldawk=awk, awk=../a.out
+oldawk=awk, awk=../a.out
+t.0:
+t.0a:
+t.1:
+t.1.x:
+t.2:
+t.2.x:
+t.3:
+t.3.x:
+t.4:
+t.4.x:
+t.5.x:
+t.6:
+t.6.x:
+t.6a:
+t.6b:
+t.8.x:
+t.8.y:
+t.NF:
+t.a:
+t.addops:
+t.aeiou:
+t.aeiouy:
+t.arith:
+t.array:
+t.array1:
+t.array2:
+t.assert:
+t.avg:
+t.b.x:
+t.be:
+t.beginexit:
+t.beginnext:
+t.break:
+t.break1:
+t.break2:
+t.break3:
+t.bug1:
+t.builtins:
+t.cat:
+t.cat1:
+t.cat2:
+t.cmp:
+t.coerce:
+t.coerce2:
+t.comment:
+t.comment1:
+t.concat:
+t.cond:
+t.contin:
+t.count:
+t.crlf:
+t.cum:
+t.d.x:
+t.delete0:
+t.delete1:
+t.delete2:
+t.delete3:
+t.do:
+t.e:
+t.else:
+t.exit:
+t.exit1:
+t.f:
+t.f.x:
+t.f0:
+t.f1:
+t.f2:
+t.f3:
+t.f4:
+t.for:
+t.for1:
+t.for2:
+t.for3:
+t.format4:
+t.fun:
+t.fun0:
+t.fun1:
+t.fun2:
+t.fun3:
+t.fun4:
+t.fun5:
+t.getline1:
+t.getval:
+t.gsub:
+t.gsub1:
+t.gsub3:
+t.gsub4:
+t.i.x:
+t.if:
+t.in:
+t.in1:
+t.in2:
+t.in3:
+t.incr:
+t.incr2:
+t.incr3:
+t.index:
+t.intest:
+t.intest2:
+t.j.x:
+t.longstr:
+t.makef:
+t.match:
+t.match1:
+t.max:
+t.mod:
+t.monotone:
+t.nameval:
+t.next:
+t.not:
+t.null0:
+t.ofmt:
+t.ofs:
+t.ors:
+t.pat:
+t.pipe:
+t.pp:
+t.pp1:
+t.pp2:
+t.printf:
+t.printf2:
+-n t.printf2:	BAD ...
+	3,93c3,93
+	< %: mel ... 17379 	   17379        mel 0 0 0 ã m
+	< %: bwk ... 16693 	   16693        bwk 0 0 0 5 b
+	< %: ken ... 16116 	   16116        ken 0 0 0 ô k
+	< %: srb ... 15713 	   15713        srb 0 0 0 a s
+	< %: lem ... 11895 	   11895        lem 0 0 0 w l
+	< %: scj ... 10409 	   10409        scj 0 0 0 © s
+	< %: rhm ... 10252 	   10252        rhm 0 0 0  r
+	< %: shen ... 9853 	    9853       shen 0 0 0 } s
+	< %: a68 ... 9748 	    9748        a68 0 0 0  a
+t.quote:
+t.randk:
+t.re1:
+t.re1a:
+t.re2:
+t.re3:
+t.re4:
+t.re5:
+t.re7:
+t.reFS:
+t.rec:
+t.redir1:
+t.reg:
+t.roff:
+t.sep:
+t.seqno:
+t.set0:
+t.set0a:
+t.set0b:
+t.set1:
+t.set2:
+t.set3:
+t.split1:
+t.split2:
+t.split2a:
+t.split3:
+t.split4:
+t.split8:
+t.split9:
+t.split9a:
+t.stately:
+t.strcmp:
+t.strcmp1:
+t.strnum:
+t.sub0:
+t.sub1:
+t.sub2:
+t.sub3:
+t.substr:
+t.substr1:
+t.time:
+t.vf:
+t.vf1:
+t.vf2:
+t.vf3:
+t.x:
+167 tests
+
+oldawk=awk, awk=../a.out
+p.1:
+p.2:
+p.3:
+p.4:
+p.5:
+p.6:
+p.7:
+p.8:
+p.9:
+p.10:
+p.11:
+p.12:
+p.13:
+p.14:
+p.15:
+p.16:
+p.17:
+p.18:
+p.19:
+p.20:
+p.21:
+p.21a:
+p.22:
+p.23:
+p.24:
+p.25:
+p.26:
+p.26a:
+p.27:
+p.28:
+p.29:
+p.30:
+p.31:
+p.32:
+p.33:
+p.34:
+p.35:
+p.36:
+p.37:
+p.38:
+p.39:
+p.40:
+p.41:
+p.42:
+p.43:
+p.44:
+p.45:
+p.46:
+p.47:
+p.48:
+p.48a:
+p.48b:
+p.49:
+p.50:
+p.51:
+p.52:
+p.5a:
+p.table:
+58 tests
+
+oldawk=awk, awk=../a.out
+T.-f-f: check multiple -f arguments
+T.argv: misc tests of argc and argv
+T.arnold: test fixes by Arnold Robbins 8/18
+/Volumes/Extreme Pro/Claude/testag-awk/c_awk/testdir/arnold-fixes
+-rwx------@ 1 francescotinti  staff  200264 Sep 19 00:45 ../../a.out
+3c3
+< death by signal with core dump status 518
+---
+> death by signal with core dump status 262
+BAD: T.arnold (system-status)
+T.beebe: tests from nelson beebe from gawk test suite
+T.builtin: test miscellaneous builtin functions
+T.chem: test chem.awk
+T.close: test close built-in
+T.clv: check command-line variables
+T.csconcat: test constant string concatenation
+T.csv: tests of csv field splitting, no embedded newlines
+  1   { for (i=1; i<=NF; i++) printf("[%s]", $i); printf("\n") }
+23 tests
+T.delete: misc tests of array deletion
+T.errmsg: check some error messages
+	running tests in foo.sh
+BAD: log argument out of domain failed
+BAD: exp result out of range failed
+BAD: this should print a BAD message failed
+T.expr: tests of miscellaneous expressions
+  1  { print ($1 == 1) ? "yes" : "no" }
+  2  $1 > 0
+  3  { print NF }
+  4  { print NF, $NF }
+  5  { i=1; print ($++$++i) }
+  6  { x = $1++++$2; print $1, x }
+  7  $1 !$2
+  8  { print ($1~/abc/ !$2) }
+  9  { print !$1 + $2 }
+ 10  { print ($1 == $2) }
+ 11  { print $1, +$1, -$1, - -$1 }
+ 12  { printf("a%*sb\n", $1, $2) }
+ 13  { printf("a%-*sb\n", $1, $2) }
+ 14  { printf("a%*.*sb\n", $1, $2, "hello") }
+ 15  { printf("a%-*.*sb\n", $1, $2, "hello") }
+ 16  { printf("%d %ld %lld %zd %jd %hd %hhd\n", $1, $1, $1, $1, $1, $1, $1) }
+ 17  { printf("%x %lx %llx %zx %jx %hx %hhx\n", $1, $1, $1, $1, $1, $1, $1) }
+ 18  { if ($1 ~ $2) print 1; else print 0 }
+ 19  { print $1 ~ $2 }
+ 20  { print $1 || $2 }
+ 21  { print $1 && $2 }
+ 22  { $1 = $2; $1 = $1; print $1 }
+ 23  { f = 1; $f++; print f, $f }
+ 24  { f[1]=1; f[2]=2; print $f[1], $f[1]++, $f[2], f[1], f[2] }
+114 tests
+T.exprconv: check conversion of expr to number
+T.flags: test some commandline flags
+T.func: test user-defined functions
+T.gawk: tests adapted from gawk test suite
+T.getline: test getline function
+T.int-expr: test interval expressions
+T.latin1: tests of 8-bit input
+T.lilly: miscellaneous RE tests from Bruce Lilly
+126 tests
+
+T.main: misc tests of arguments in main
+T.misc: miscellaneous buglets now watched for
+T.nextfile: tests of nextfile command
+T.overflow: test some overflow conditions
+T.re: tests of regular expression code
+	301 tests
+T.recache: test re cache in b.c
+T.redir: test redirections
+T.split: misc tests of field splitting and split command
+T.sub: tests of sub and gsub code
+140 tests
+T.system: test system built-in
+T.utf: tests of utf functions
+try   1 { print length($1) }
+try   2 { print index($1, $2) }
+try   3 { print substr($0, 2, 3) }
+try   4 { print $1 ~ $2 }
+try   5 { n = sub($2, $3, $1); print n, $1 }
+try   6 { n = gsub($2, $3, $1); print n, $1 }
+try   7 { print match($1, $2), RSTART, RLENGTH }
+try   8 BEGIN {FS=""} {print NF}
+try   9 {printf("[%5.2s][%-5.2s]\n"), $1, $1}
+try  10 {printf("[%5s][%-5s]\n"), $1, $1}
+try  11 {printf("[%.2s][%-.2s]\n"), $1, $1}
+try  12 {printf("%c %c\n", $1, substr($1,2,1))}
+106 tests
+T.utfre: tests of regular expression code for Unicode/utf-8
+	194 tests
+283 tests
+
+compiling time.c
+time command = ./time
+oldawk = awk, awk = ../a.out, time command = ./time
+   37801  817919 4456436 foo.td
+tt.01 (awk vs ../a.out):
+user  0.140
+sys   0.000
+user  0.110
+sys   0.000
+tt.02 (awk vs ../a.out):
+user  0.160
+sys   0.000
+user  0.140
+sys   0.000
+tt.02a (awk vs ../a.out):
+user  0.170
+sys   0.000
+user  0.160
+sys   0.000
+tt.03 (awk vs ../a.out):
+user  0.140
+sys   0.000
+user  0.120
+sys   0.000
+tt.03a (awk vs ../a.out):
+user  0.140
+sys   0.000
+user  0.120
+sys   0.000
+foo1 foo2 differ: char 1, line 1
+tt.04 (awk vs ../a.out):
+user  0.470
+sys   0.010
+user  0.420
+sys   0.010
+tt.05 (awk vs ../a.out):
+user  0.430
+sys   0.000
+user  0.400
+sys   0.000
+tt.06 (awk vs ../a.out):
+user  0.150
+sys   0.000
+user  0.130
+sys   0.000
+tt.07 (awk vs ../a.out):
+user  0.140
+sys   0.000
+user  0.120
+sys   0.000
+tt.08 (awk vs ../a.out):
+user  0.140
+sys   0.000
+user  0.110
+sys   0.000
+tt.09 (awk vs ../a.out):
+user  0.140
+sys   0.000
+user  0.100
+sys   0.000
+tt.10 (awk vs ../a.out):
+user  0.170
+sys   0.000
+user  0.270
+sys   0.000
+tt.10a (awk vs ../a.out):
+user  0.180
+sys   0.000
+user  0.270
+sys   0.000
+tt.11 (awk vs ../a.out):
+user  0.150
+sys   0.000
+user  0.110
+sys   0.000
+tt.12 (awk vs ../a.out):
+user  0.180
+sys   0.000
+user  0.160
+sys   0.000
+foo1 foo2 differ: char 4172221, line 34385
+tt.13 (awk vs ../a.out):
+user  0.750
+sys   0.000
+user  0.730
+sys   0.000
+tt.13a (awk vs ../a.out):
+user  1.040
+sys   0.000
+user  0.930
+sys   0.000
+tt.14 (awk vs ../a.out):
+user  0.020
+sys   0.000
+user  0.020
+sys   0.000
+tt.15 (awk vs ../a.out):
+user  1.650
+sys   0.010
+user  2.140
+sys   0.010
+tt.16 (awk vs ../a.out):
+user  0.360
+sys   0.050
+user  0.350
+sys   0.050
+tt.big (awk vs ../a.out):
+user  2.690
+sys   0.030
+user  2.720
+sys   0.020
+foo1 foo2 differ: char 53493612, line 1912412
+     new      old   new/old
+
+    0.11     0.14    0.786  tt.01:
+    0.14     0.16    0.875  tt.02:
+    0.16     0.17    0.941  tt.02a:
+    0.12     0.14    0.857  tt.03:
+    0.12     0.14    0.857  tt.03a:
+    0.43     0.48    0.896  tt.04:
+    0.40     0.43    0.930  tt.05:
+    0.13     0.15    0.867  tt.06:
+    0.12     0.14    0.857  tt.07:
+    0.11     0.14    0.786  tt.08:
+    0.10     0.14    0.714  tt.09:
+    0.27     0.17    1.588  tt.10:
+    0.27     0.18    1.500  tt.10a:
+    0.11     0.15    0.733  tt.11:
+    0.16     0.18    0.889  tt.12:
+    0.73     0.75    0.973  tt.13:
+    0.93     1.04    0.894  tt.13a:
+    0.02     0.02    1.000  tt.14:
+    2.15     1.66    1.295  tt.15:
+    0.40     0.41    0.976  tt.16:
+    2.74     2.72    1.007  tt.big:
+
+    9.72     9.51
+
+avg new/old   = 0.963
+total new/old = 1.022
+21 tests
+21 tests
+
+=== a-format.awk
+=== concat-assign-same.awk
+=== decr-NF.awk
+=== fmt-overflow.awk
+=== fs-overflow.awk
+=== getline-corruption.awk
+=== getline-numeric.awk
+=== inf-nan-torture.awk
+=== matchop-deref.awk
+=== missing-precision.awk
+=== negative-nf.awk
+=== nf-self-assign.awk
+=== numeric-fs.awk
+=== numeric-output-seps.awk
+=== numeric-rs.awk
+=== numeric-subsep.awk
+=== ofs-rebuild.awk
+=== pfile-overflow.awk
+=== repetition-no-atom.awk
+=== repetition-overflow.awk
+=== rs_underflow.awk
+=== rstart-rlength.awk
+=== space.awk
+=== split-fs-from-array.awk
+=== string-conv.awk
+=== subsep-overflow.awk
+=== system-status.awk
+=== unary-plus.awk
+=== unicode-fs-rs-1.awk
+=== unicode-fs-rs-2.awk
+=== unicode-null-match.awk

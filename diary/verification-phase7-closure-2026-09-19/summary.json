@@ -1,0 +1,50 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "c_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "c_version": "awk version 20260426",
+  "clean_export": "/var/folders/n2/3ynvhhr1275c7p2j80kc1q5r0000gn/T/rawk-phase7-clean-uko0zdso",
+  "source_snapshot_sha256": "3b25eae4773c9b0a07ba73e5f7e45500a194e32a5ece6921d3fc9969a660c64a",
+  "source_files": 187,
+  "debug_tests": 114,
+  "xml": {
+    "match": 97,
+    "expected": 12,
+    "unexpected": 0,
+    "skipped": 0
+  },
+  "individual_cases": {
+    "exact": 173,
+    "diagnostic_contracts": 99,
+    "extension_contracts": 3
+  },
+  "full_drivers": 27,
+  "audit_stdout_status_matches": 29,
+  "historical_stdout_status_matches": 31,
+  "remote_ci_executed": false,
+  "pushed": false,
+  "final_validation": "passed; Phase 7 closed for the agreed profile",
+  "clean_gate_exit_code": 0,
+  "main_gate_exit_code": 0,
+  "release_tests": 114,
+  "release_test_exit_code": 0,
+  "benchmark_exit_code": 0,
+  "clean_tests": 114,
+  "small_corpus": {
+    "exact": 219,
+    "contracts": 6
+  },
+  "evidence_sha256": {
+    "source-snapshot.json": "3b25eae4773c9b0a07ba73e5f7e45500a194e32a5ece6921d3fc9969a660c64a",
+    "gate.log": "3fc75b0f4610d53cc83ea1e3af896a189b15984a1bc2b2b0ddcdc98e425f852e",
+    "audit.log": "82b01dfc4f10a7e1527aec62847d99a14abf1bc40e89786c4a91f2955a1a0c2d",
+    "historical.log": "22d4d6ef62e019812f2cb47e74adedb47593ea744d8f4fd26dfe9e03327b5713",
+    "contracts-release.log": "30b61c77759b0666ffbf052f061ceeea3cbb3373168bd92910336dee43a0f5ee",
+    "full-drivers.log": "5b683b37e990984ad72228a131ef2f22507532768616a53b38e7015e9902c111",
+    "c-clean-build.log": "8da9efece99a66258eae84857a746e9195c5ac5b91fc9d98818f3aa5417bb8a0",
+    "clean-gate.log": "f3bf333b64dd49b988ecc1555f300b8373b6f7dc41f2cdd0e30931f041bc3efd",
+    "release-tests.log": "6964c587943be72b17404fa5531027cf4fa0ed2809bb309c00645558d5a95106",
+    "benchmark.log": "c65d8da3424d2a062edf7834a93e6fc950ab35dfccd4beafa5aa28a15083d2d7"
+  }
+}

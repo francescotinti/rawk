@@ -1,0 +1,24 @@
+{
+  "native_platform": "Darwin ARM64",
+  "full_gate_exit": 0,
+  "full_gate_debug_tests": 125,
+  "portability_gate_exit": 0,
+  "portability_debug_tests": 63,
+  "portability_release_tests": 63,
+  "cross_checks": {
+    "x86_64-unknown-linux-gnu": 0,
+    "aarch64-unknown-linux-gnu": 0,
+    "x86_64-apple-darwin": 0
+  },
+  "linux_execution": false,
+  "remote_ci": false,
+  "push": false,
+  "evidence_sha256": {
+    "native-gate.log": "f450bf8f6107c7e6ef7c301dea831327b27c49bfccc2daaa7cd1e7ba88bdc5c7",
+    "linux-x86-check.log": "98ec375f5f6372705467f90710fed908a760b2151092bf8ca4d37b2096cc85e4",
+    "linux-arm-check.log": "5f7e75ab0a17e0c6e6d75eef42891113d0b590a3483b89504a11cb44959e83f5",
+    "darwin-x86-check.log": "296ab505a40e0c97b2774653b1db3cb16ef5e691556ae8776434b6f033af0ecf",
+    "changed-files.json": "285aac633c22e048c1c18a72499cbc19503d447c833e798efcd9088dac4ba3df",
+    "full-gate.log": "96c39862f3ce11147f718a6545793caac1d156540b663c1acc31ab9baa6c6e91"
+  }
+}

@@ -42,9 +42,13 @@ pub fn run_with_fixtures(
     fs::write(&input_path, input)?;
     let stdout_path = io.path().join("stdout");
     let stderr_path = io.path().join("stderr");
+    // Default to the established byte profile, but preserve an explicitly set
+    // or removed LC_ALL so locale-precedence tests exercise the requested mode.
+    if !command.get_envs().any(|(key, _)| key == "LC_ALL") {
+        command.env("LC_ALL", "C");
+    }
     command
         .current_dir(work.path())
-        .env("LC_ALL", "C")
         .stdin(File::open(input_path)?)
         .stdout(File::create(&stdout_path)?)
         .stderr(File::create(&stderr_path)?);

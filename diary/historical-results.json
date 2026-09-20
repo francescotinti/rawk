@@ -191,9 +191,9 @@
     },
     "rust": {
       "stdout_hex": "",
-      "stderr_hex": "7261776b3a20756e737570706f72746564207072696e746620666f726d61740a",
+      "stderr_hex": "7261776b3a206d697373696e67207072696e74662077696474682f707265636973696f6e20617267756d656e740a",
       "stdout": "",
-      "stderr": "rawk: unsupported printf format\n",
+      "stderr": "rawk: missing printf width/precision argument\n",
       "code": 2,
       "timeout": false
     },
@@ -351,9 +351,9 @@
     },
     "rust": {
       "stdout_hex": "",
-      "stderr_hex": "7261776b3a205061727365206572726f723a20202d2d3e20313a310a20207c0a31207c205c0a20207c205e2d2d2d0a20207c0a20203d2065787065637465642070726f6772616d0a",
+      "stderr_hex": "7261776b3a2073796e746178206572726f7220696e2066696c65202f566f6c756d65732f45787472656d652050726f2f436c617564652f7465737461672d61776b2f635f61776b2f627567732d66697865642f7066696c652d6f766572666c6f772e61776b3a20202d2d3e20313a310a20207c0a31207c205c0a20207c205e2d2d2d0a20207c0a20203d2065787065637465642070726f6772616d0a",
       "stdout": "",
-      "stderr": "rawk: Parse error:  --> 1:1\n  |\n1 | \\\n  | ^---\n  |\n  = expected program\n",
+      "stderr": "rawk: syntax error in file /Volumes/Extreme Pro/Claude/testag-awk/c_awk/bugs-fixed/pfile-overflow.awk:  --> 1:1\n  |\n1 | \\\n  | ^---\n  |\n  = expected program\n",
       "code": 2,
       "timeout": false
     },

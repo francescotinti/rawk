@@ -16,8 +16,21 @@ use pest_derive::Parser;
 pub struct AwkParser;
 
 pub fn parse(input: &str) -> anyhow::Result<Program> {
-    let mut parsed = AwkParser::parse(Rule::program, input)
-        .map_err(|e| anyhow::anyhow!("Parse error: {}", e))?;
+    parse_with_sources(input, &[])
+}
+
+pub fn parse_with_sources(input: &str, sources: &[(usize, &str)]) -> anyhow::Result<Program> {
+    let mut parsed = AwkParser::parse(Rule::program, input).map_err(|e| {
+        let offset = match e.location {
+            pest::error::InputLocation::Pos(pos) => pos,
+            pest::error::InputLocation::Span((start, _)) => start,
+        };
+        if let Some((_, file)) = sources.iter().rev().find(|(start, _)| *start <= offset) {
+            anyhow::anyhow!("syntax error in file {file}: {e}")
+        } else {
+            anyhow::anyhow!("Parse error: {e}")
+        }
+    })?;
 
     let program_pair = parsed
         .next()
@@ -124,7 +137,7 @@ fn parse_pattern(pair: Pair<Rule>) -> Pattern {
             .next()
             .expect("pest: Rule::regex_pattern racchiude sempre un regex_body")
             .as_str();
-        Pattern::Expr(Expr::RegexLiteral(re.as_bytes().to_vec()))
+        Pattern::Expr(Expr::RegexLiteral(source_bytes(re)))
     } else {
         Pattern::Expr(parse_expr(inner))
     }
@@ -421,7 +434,7 @@ fn parse_assign_stmt(inner: Pair<Rule>) -> Statement {
                 .into_inner()
                 .next()
                 .expect("pest: Rule::field avvolge sempre un primary ($expr)");
-            Expr::Field(Box::new(parse_primary(p)))
+            Expr::Field(Box::new(parse_field_index(p)))
         }
         _ => Expr::Variable("err".to_string()),
     };
@@ -553,9 +566,39 @@ fn parse_match_expr(pair: Pair<Rule>) -> Expr {
             Rule::op_not_match => BinaryOperator::NotMatch,
             _ => unreachable!(),
         };
-        lhs = Expr::BinaryOp(Box::new(lhs), bop, Box::new(rhs));
+        lhs = bind_literal_match(lhs, bop, rhs);
     }
     lhs
+}
+
+fn starts_with_regex(expr: &Expr) -> bool {
+    match expr {
+        Expr::RegexLiteral(_) => true,
+        Expr::Concat(parts) => parts.first().is_some_and(starts_with_regex),
+        Expr::BinaryOp(left, _, _) => starts_with_regex(left),
+        _ => false,
+    }
+}
+
+fn bind_literal_match(lhs: Expr, op: BinaryOperator, rhs: Expr) -> Expr {
+    if starts_with_regex(&rhs) {
+        match rhs {
+            Expr::Concat(mut parts) => {
+                let first = parts.remove(0);
+                parts.insert(0, bind_literal_match(lhs, op, first));
+                return Expr::Concat(parts);
+            }
+            Expr::BinaryOp(left, outer_op, right) => {
+                return Expr::BinaryOp(
+                    Box::new(bind_literal_match(lhs, op, *left)),
+                    outer_op,
+                    right,
+                );
+            }
+            _ => {}
+        }
+    }
+    Expr::BinaryOp(Box::new(lhs), op, Box::new(rhs))
 }
 
 fn parse_rel_expr(pair: Pair<Rule>) -> Expr {
@@ -719,6 +762,10 @@ fn parse_term(term: Pair<Rule>) -> Expr {
 }
 
 pub fn decode_string_escapes(raw: &str) -> Vec<u8> {
+    decode_literal(raw, false)
+}
+
+fn decode_literal(raw: &str, source: bool) -> Vec<u8> {
     // POSIX AWK strings are byte sequences: `\xNN` must produce the raw
     // byte NN, not the UTF-8 encoding of codepoint U+00NN. We accumulate
     // raw bytes directly; non-escaped source characters are emitted as
@@ -728,10 +775,17 @@ pub fn decode_string_escapes(raw: &str) -> Vec<u8> {
     let mut buf = [0u8; 4];
     while let Some(c) = chars.next() {
         if c != '\\' {
-            out.extend_from_slice(c.encode_utf8(&mut buf).as_bytes());
+            if source && (0xe080..=0xe0ff).contains(&(c as u32)) {
+                out.push((c as u32 - 0xe000) as u8);
+            } else {
+                out.extend_from_slice(c.encode_utf8(&mut buf).as_bytes());
+            }
             continue;
         }
         match chars.peek().copied() {
+            Some('\n') => {
+                chars.next();
+            }
             Some('n') => {
                 chars.next();
                 out.push(b'\n');
@@ -776,6 +830,18 @@ pub fn decode_string_escapes(raw: &str) -> Vec<u8> {
                 chars.next();
                 out.push(0x0b);
             }
+            Some('u') => {
+                chars.next();
+                let mut value = 0u32;
+                for _ in 0..8 {
+                    let Some(d) = chars.peek().and_then(|c| c.to_digit(16)) else {
+                        break;
+                    };
+                    value = (value << 4) | d;
+                    chars.next();
+                }
+                out.extend(crate::text::encode_rune(value));
+            }
             Some('x') => {
                 chars.next();
                 let mut hex = String::new();
@@ -793,9 +859,12 @@ pub fn decode_string_escapes(raw: &str) -> Vec<u8> {
                     let val = u32::from_str_radix(&hex, 16).unwrap_or(0) & 0xFF;
                     out.push(val as u8);
                 } else {
-                    out.push(b'\\');
                     out.push(b'x');
                 }
+            }
+            Some(d @ ('8' | '9')) => {
+                chars.next();
+                out.push(d as u8);
             }
             Some(d) if d.is_digit(8) => {
                 let mut oct = String::new();
@@ -815,7 +884,11 @@ pub fn decode_string_escapes(raw: &str) -> Vec<u8> {
             Some(other) => {
                 chars.next();
                 out.push(b'\\');
-                out.extend_from_slice(other.encode_utf8(&mut buf).as_bytes());
+                if source && (0xe080..=0xe0ff).contains(&(other as u32)) {
+                    out.push((other as u32 - 0xe000) as u8);
+                } else {
+                    out.extend_from_slice(other.encode_utf8(&mut buf).as_bytes());
+                }
             }
             None => out.push(b'\\'),
         }
@@ -838,13 +911,16 @@ fn parse_primary(primary_pair: Pair<Rule>) -> Expr {
 
 fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
     match inner.as_rule() {
-        Rule::number => Expr::NumberLiteral(inner.as_str().parse::<f64>().unwrap_or(0.0)),
-        Rule::string_literal => Expr::StringLiteral(decode_string_escapes(
+        Rule::number => {
+            Expr::NumberLiteral(crate::types::parse_number(inner.as_str()).unwrap_or(0.0))
+        }
+        Rule::string_literal => Expr::StringLiteral(decode_literal(
             inner
                 .into_inner()
                 .next()
                 .expect("pest: Rule::string_literal racchiude sempre il body string")
                 .as_str(),
+            true,
         )),
         Rule::regex_pattern => {
             let re = inner
@@ -852,7 +928,7 @@ fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
                 .next()
                 .expect("pest: Rule::regex_pattern racchiude sempre un regex_body")
                 .as_str();
-            Expr::RegexLiteral(re.as_bytes().to_vec())
+            Expr::RegexLiteral(source_bytes(re))
         }
         Rule::bare_length => Expr::FunctionCall("length".into(), vec![]),
         Rule::ident => Expr::Variable(inner.as_str().to_string()),
@@ -868,8 +944,8 @@ fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
                 for p in inners {
                     if p.as_rule() == Rule::ident {
                         var_name = Some(p.as_str().to_string());
-                    } else if p.as_rule() == Rule::expr {
-                        file_expr = Some(Box::new(parse_expr(p)));
+                    } else if p.as_rule() == Rule::concat_expr {
+                        file_expr = Some(Box::new(parse_concat_expr(p)));
                     }
                 }
                 let source = if let Some(fe) = file_expr {
@@ -906,7 +982,7 @@ fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
                 .into_inner()
                 .next()
                 .expect("pest: Rule::field avvolge sempre un primary ($expr)");
-            Expr::Field(Box::new(parse_primary(p)))
+            Expr::Field(Box::new(parse_field_index(p)))
         }
         Rule::array_access => {
             let mut inners = inner.into_inner();
@@ -944,5 +1020,52 @@ fn parse_primary_inner(inner: Pair<Rule>) -> Expr {
         }
         Rule::expr => parse_expr(inner),
         _ => unreachable!("Unexpected primary inner: {:?}", inner.as_rule()),
+    }
+}
+
+/// Represent non-ASCII source bytes by private-use characters for the UTF-8
+/// PEG parser. Unlike inserting backslashes, this cannot change escape parity.
+pub fn source_text(bytes: &[u8]) -> String {
+    bytes
+        .iter()
+        .map(|&b| {
+            if b.is_ascii() {
+                b as char
+            } else {
+                char::from_u32(0xe000 + u32::from(b)).unwrap()
+            }
+        })
+        .collect()
+}
+
+fn source_bytes(text: &str) -> Vec<u8> {
+    let mut out = Vec::new();
+    for c in text.chars() {
+        if (0xe080..=0xe0ff).contains(&(c as u32)) {
+            out.push((c as u32 - 0xe000) as u8);
+        } else {
+            let mut bytes = [0; 4];
+            out.extend_from_slice(c.encode_utf8(&mut bytes).as_bytes());
+        }
+    }
+    out
+}
+
+fn parse_field_index(pair: Pair<Rule>) -> Expr {
+    let mut parts = pair.into_inner();
+    let first = parts.next().unwrap();
+    match first.as_rule() {
+        Rule::op_inc => Expr::PreInc(Box::new(parse_field_index(parts.next().unwrap()))),
+        Rule::op_dec => Expr::PreDec(Box::new(parse_field_index(parts.next().unwrap()))),
+        Rule::array_access => {
+            let value = parse_primary_inner(first);
+            match parts.next().map(|p| p.as_rule()) {
+                Some(Rule::op_inc) => Expr::PostInc(Box::new(value)),
+                Some(Rule::op_dec) => Expr::PostDec(Box::new(value)),
+                _ => value,
+            }
+        }
+        Rule::primary => parse_primary(first),
+        _ => unreachable!(),
     }
 }

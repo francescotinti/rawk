@@ -1,0 +1,7 @@
+p.43 expected stdout_hex
+p.48b expected stdout_hex
+t.in2 expected stdout_hex
+t.intest2 expected stdout_hex
+t.printf2 expected stdout_hex
+t.randk expected stdout_hex
+{'match': 219, 'expected': 6} total 225
