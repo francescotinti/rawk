@@ -20,9 +20,14 @@ fn compare(program: &str, input: &[u8]) {
         assert_eq!(rust.stderr, c.stderr);
     } else {
         // Diagnostics include executable names and record/source context in C.
+        let c_stderr = String::from_utf8_lossy(&c.stderr);
+        let diagnostic = ["illegal byte sequence", "illegal wide character"]
+            .into_iter()
+            .find(|message| c_stderr.contains(message))
+            .expect("C must report a recognized conversion error");
         for out in [&c, &rust] {
             assert_eq!(out.code, Some(2));
-            assert!(String::from_utf8_lossy(&out.stderr).contains("illegal byte sequence"));
+            assert!(String::from_utf8_lossy(&out.stderr).contains(diagnostic));
         }
     }
 }
@@ -241,4 +246,14 @@ fn streaming_rs_keeps_binary_data_distinct_from_eof() {
     assert_eq!(out.code, Some(0));
     assert!(out.stderr.is_empty());
     assert_eq!(out.stdout, b"[a][\xffz]");
+}
+
+#[test]
+fn decoded_character_with_unencodable_case_mapping_matches_c() {
+    // glibc decodes 81 f0 as U+212B (angstrom sign), then maps lowercase
+    // to U+00E5, which SHIFT_JIS cannot encode. Darwin's locale differs.
+    // Compare both operations with the native oracle, including error kind.
+    for program in ["{print toupper($0)}", "{print tolower($0)}"] {
+        compare(program, b"a\x81\xf0Z\n");
+    }
 }
