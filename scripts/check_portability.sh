@@ -10,7 +10,7 @@ cargo fmt --check
 cargo clippy --locked --all-targets -- -D warnings
 cargo build --locked --release --bins
 suites=(--lib --bins
-  --test unicode_contract --test legacy_locale --test dynamic_format --test driver_regressions
+  --test shift_jis --test unicode_contract --test legacy_locale --test dynamic_format --test driver_regressions
   --test input_contract --test runtime_contract --test data_contract
   --test language_contract --test bytes_array_keys --test bytes_printf
   --test bytes_regex_match --test harness)

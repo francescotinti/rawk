@@ -77,7 +77,11 @@ jobs:
           sudo localedef -i tr_TR -f UTF-8 tr_TR.UTF-8
           sudo localedef -i en_US -f ISO-8859-1 en_US.ISO8859-1
           sudo localedef -i tr_TR -f ISO-8859-9 tr_TR.ISO8859-9
+          sudo localedef --no-warnings=ascii -i ja_JP -f SHIFT_JIS ja_JP.SJIS
           locale -a
+          cc -std=c11 -Wall -Wextra -Werror scripts/shift_jis_locale_probe.c -o /tmp/rawk-sjis-locale-probe
+          set -o pipefail
+          /tmp/rawk-sjis-locale-probe 2>&1 | tee diary/shift-jis-locale-ci.log
       - name: Build pinned original C oracle
         run: |
           git init ../c_awk
@@ -101,6 +105,7 @@ jobs:
         with:
           name: portability-${{ matrix.os }}
           path: |
+            rawk/diary/shift-jis-locale-ci.log
             rawk/diary/format-platform-ci.json
             rawk/diary/portability-ci.log
             rawk/diary/linux-driver-results-ci.json
