@@ -2,6 +2,9 @@
 
 Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 
+Home GitHub aggiornata ai risultati delle priorità 1–4 e alla CI nativa;
+[consegna documentale](diary/2026-09-20-readme-refresh.md).
+
 ## Base e ambito verificato
 
 - Repository: `francescotinti/rawk`, branch di coordinamento `master`.
