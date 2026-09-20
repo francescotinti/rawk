@@ -63,3 +63,43 @@ fn integer_flags_precision_and_signs() {
         }
     }
 }
+
+#[test]
+fn negative_dynamic_precision_preserves_flags_and_argument_consumption() {
+    for flags in ["", "0", "+#0", " #", "-0"] {
+        for width in [-9, 0, 9] {
+            for conv in "diuoxXfgeEaAsc".chars() {
+                let value = if conv == 's' { "\"abcd\"" } else { "1.25" };
+                compare(
+                    &format!(
+                        "BEGIN{{printf \"[%{flags}*.*{conv}] %d\\n\",{width},-3,{value},73;print sprintf(\"[%{flags}*.*{conv}]\",{width},-3,{value})}}"
+                    ),
+                    b"",
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn unsigned_conversion_matches_native_oracle() {
+    // Negative inputs expose the native C conversion difference between
+    // x86-64 and ARM64. Positive cases exercise both halves of uint64_t.
+    for value in [
+        "-0.5",
+        "-1",
+        "-3.75",
+        "-2147483649",
+        "-9007199254740991",
+        "0",
+        "1",
+        "9007199254740991",
+        "9223372036854775808",
+        "18446744073709549568",
+    ] {
+        compare(
+            &format!("BEGIN{{printf \"%u %o %x\\n\",{value},{value},{value}}}"),
+            b"",
+        );
+    }
+}

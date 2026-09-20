@@ -60,7 +60,10 @@ pub(super) fn awk_sprintf(
                     ));
                 }
                 let value = value as i32;
-                if value < 0 && spec_bytes.last() == Some(&b'.') {
+                if value < 0
+                    && spec_bytes.last() == Some(&b'.')
+                    && !cfg!(all(target_os = "linux", target_env = "gnu"))
+                {
                     // BWK substitutes the star textually. Darwin interprets
                     // %width.-Ns as left-aligned width N with zero precision.
                     let flags: Vec<u8> = spec_bytes
@@ -115,6 +118,12 @@ pub(super) fn awk_sprintf(
 }
 
 fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: &mut Vec<u8>) {
+    if cfg!(all(target_os = "linux", target_env = "gnu"))
+        && let Some(literal) = glibc_negative_precision(spec_bytes, conv)
+    {
+        out.extend(literal);
+        return;
+    }
     // Lo spec è ASCII puro per costruzione (% + flags `-+ #0` + digit + `.` +
     // conversion byte). `from_utf8` è O(spec.len) ma piccolo (raramente >10B).
     let spec = std::str::from_utf8(spec_bytes).expect("awk_sprintf: format spec must be ASCII");
@@ -209,6 +218,40 @@ fn format_one(spec_bytes: &[u8], conv: u8, arg: &AwkValue, convfmt: &[u8], out: 
             out.extend_from_slice(spec_bytes);
         }
     }
+}
+
+// BWK textually substitutes a negative precision, then adds `j` for integers.
+// In glibc the minus after the dot is an unknown conversion: printf renders
+// the parsed flags/width and zero precision, followed by the unparsed suffix.
+// Keep this byte-based so formats containing NUL outside this spec stay intact.
+fn glibc_negative_precision(spec: &[u8], conv: u8) -> Option<Vec<u8>> {
+    let dot = spec.windows(2).position(|pair| pair == b".-")?;
+    let prefix = &spec[..dot];
+    let (width, _, left, zero) = parse_s_flags(prefix);
+    let mut literal = vec![b'%'];
+    if prefix.contains(&b'#') {
+        literal.push(b'#');
+    }
+    if prefix.contains(&b'+') {
+        literal.push(b'+');
+    } else if prefix.contains(&b' ') {
+        literal.push(b' ');
+    }
+    if left {
+        literal.push(b'-');
+    } else if zero {
+        literal.push(b'0');
+    }
+    if width != 0 {
+        literal.extend(width.to_string().bytes());
+    }
+    literal.extend_from_slice(b".0");
+    literal.extend_from_slice(&spec[dot + 1..spec.len() - 1]);
+    if b"diouxX".contains(&conv) {
+        literal.push(b'j');
+    }
+    literal.push(conv);
+    Some(literal)
 }
 
 /// Parser dei flag dello spec `%s`: ritorna (width, precision, left_align, zero_pad).
@@ -340,6 +383,16 @@ fn integer_format(spec: &[u8], conv: u8, value: f64) -> Vec<u8> {
     let integer = value as i64;
     let magnitude = if signed {
         integer.unsigned_abs()
+    } else if cfg!(all(
+        target_os = "linux",
+        target_env = "gnu",
+        target_arch = "x86_64"
+    )) && (-9_223_372_036_854_775_808.0..0.0).contains(&value)
+    {
+        // The pinned C oracle on Linux x86-64 converts negative doubles
+        // through a signed 64-bit result. ARM64 saturates to zero instead.
+        // This is native compatibility, not a portable C unsigned rule.
+        integer as u64
     } else {
         value as u64
     };
