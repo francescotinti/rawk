@@ -1,0 +1,33 @@
+{
+  "toolchain": "1.96.0",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)\nbinary: rustc\ncommit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96\ncommit-date: 2026-05-25\nhost: x86_64-apple-darwin\nrelease: 1.96.0\nLLVM version: 22.1.2",
+  "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+  "cc": "Apple clang version 17.0.0 (clang-1700.0.13.5)\nTarget: x86_64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+  "platform": "macOS-15.7.9-x86_64-i386-64bit-Mach-O",
+  "machine": "x86_64",
+  "build_env": {
+    "RUSTUP_TOOLCHAIN": "1.96.0",
+    "CARGO_INCREMENTAL": "0",
+    "RUSTFLAGS": "",
+    "CARGO_ENCODED_RUSTFLAGS": ""
+  },
+  "runner": {
+    "RUNNER_OS": "macOS",
+    "RUNNER_ARCH": "X64",
+    "ImageOS": "macos15",
+    "ImageVersion": "20260824.0482.1",
+    "GITHUB_RUN_ID": "35533894243"
+  },
+  "revisions": {
+    "before": "36492979de6a222c54d4110f9c06b14b53fa85ac",
+    "after": "36492979de6a222c54d4110f9c06b14b53fa85ac"
+  },
+  "command": "cargo build --locked --release --bin rawk",
+  "hardware": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz\n15032385536",
+  "oracle": {
+    "revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+    "status": "",
+    "build": "make CC=cc CFLAGS=-O2",
+    "version": "awk version 20260426"
+  }
+}

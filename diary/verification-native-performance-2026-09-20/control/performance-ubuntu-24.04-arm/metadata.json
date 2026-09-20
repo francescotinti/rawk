@@ -1,0 +1,33 @@
+{
+  "toolchain": "1.96.0",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)\nbinary: rustc\ncommit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96\ncommit-date: 2026-05-25\nhost: aarch64-unknown-linux-gnu\nrelease: 1.96.0\nLLVM version: 22.1.2",
+  "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+  "cc": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+  "platform": "Linux-6.17.0-1022-azure-aarch64-with-glibc2.39",
+  "machine": "aarch64",
+  "build_env": {
+    "RUSTUP_TOOLCHAIN": "1.96.0",
+    "CARGO_INCREMENTAL": "0",
+    "RUSTFLAGS": "",
+    "CARGO_ENCODED_RUSTFLAGS": ""
+  },
+  "runner": {
+    "RUNNER_OS": "Linux",
+    "RUNNER_ARCH": "ARM64",
+    "ImageOS": "ubuntu24-arm64",
+    "ImageVersion": "20260907.118.1",
+    "GITHUB_RUN_ID": "35533894243"
+  },
+  "revisions": {
+    "before": "36492979de6a222c54d4110f9c06b14b53fa85ac",
+    "after": "36492979de6a222c54d4110f9c06b14b53fa85ac"
+  },
+  "command": "cargo build --locked --release --bin rawk",
+  "hardware": "processor\t: 0\nBogoMIPS\t: 2000.00\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16\nCPU implementer\t: 0x41\nCPU architecture: 8\nCPU variant\t: 0x0\nCPU part\t: 0xd49\nCPU revision\t: 0\n\nprocessor\t: 1\nBogoMIPS\t: 2000.00\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16\nCPU implementer\t: 0x41\nCPU architecture: 8\nCPU variant\t: 0x0\nCPU part\t: 0xd49\nCPU revision\t: 0\n\nprocessor\t: 2\nBogoMIPS\t: 2000.00\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16\nCPU implementer\t: 0x41\nCPU architecture: 8\nCPU variant\t: 0x0\nCPU part\t: 0xd49\nCPU revision\t: 0\n\nprocessor\t: 3\nBogoMIPS\t: 2000.00\nFeatures\t: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16\nCPU implementer\t: 0x41\nCPU architecture: 8\nCPU variant\t: 0x0\nCPU part\t: 0xd49\nCPU revision\t: 0\n\nMemTotal:       16330124 kB\nMemFree:        12514428 kB\nMemAvailable:   14580588 kB\nBuffers:           76408 kB\nCached:          2190344 kB\nSwapCached:            0 kB\nActive:           984448 kB\nInactive:        1815348 kB\nActive(anon):     584840 kB\nInactive(anon):        0 kB\nActive(file):     399608 kB\nInactive(file):  1815348 kB\nUnevictable:       44992 kB\nMlocked:           41920 kB\nSwapTotal:       3145724 kB\nSwapFree:        3145724 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:            909280 kB\nWriteback:             0 kB\nAnonPages:        578236 kB\nMapped:           320232 kB\nShmem:             45156 kB\nKReclaimable:     100716 kB\nSlab:             178212 kB\nSReclaimable:     100716 kB\nSUnreclaim:        77496 kB\nKernelStack:        4436 kB\nShadowCallStack:    1112 kB\nPageTables:         7424 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    11310784 kB\nCommitted_AS:    2423128 kB\nVmallocTotal:   135288315904 kB\nVmallocUsed:       38632 kB\nVmallocChunk:          0 kB\nPercpu:             1952 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:    667648 kB\nFilePmdMapped:         0 kB\nCmaTotal:          32768 kB\nCmaFree:           26624 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\n",
+  "oracle": {
+    "revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+    "status": "",
+    "build": "make CC=cc CFLAGS=-O2",
+    "version": "awk version 20260426"
+  }
+}

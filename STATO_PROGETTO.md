@@ -114,7 +114,7 @@ Benefici misurati solo sul Mac ARM64 locale, non sulle altre piattaforme.
 
 Priorità ordinate: (1) campi/valori/aggregazione, completata;
 (2) regex e sostituzioni UTF-8, completata; (3) I/O e memoria su input grandi, completata;
-(4) misure prestazionali multipiattaforma e monitoraggio. Le successive
+(4) misure prestazionali multipiattaforma e monitoraggio, completata. Le successive
 priorità non sono avviate automaticamente. La correttezza sulle quattro
 piattaforme rimane requisito della prima.
 
@@ -128,7 +128,7 @@ Sul Mac ARM64 locale: -38,4% booleano breve, -35,9% senza match, -28,7%
 booleano lungo, -16,3% match e -19,7% gsub. Carichi byte circa invariati;
 RSS vicino alla baseline, con +16 KiB di mediana in due controlli. Nessuna
 attribuzione di questi benefici alle piattaforme non misurate. [Rapporto](diary/2026-09-20-regex-search.md).
-La priorità 3 è descritta sotto; la priorità 4 resta successiva.
+Le priorità 3 e 4 sono descritte sotto.
 
 ## Prestazioni: terza priorità completata
 
@@ -146,7 +146,29 @@ Intel/ARM64 160+160 test, Linux x86-64/ARM64 98+98; driver, stream e codifiche
 verdi. Nessuna misura di velocità su Intel/Linux. La CI conserva il pin di correttezza Rust 1.96.0.
 [Consegna, distribuzioni e limiti](diary/2026-09-20-io-memory.md).
 
+## Prestazioni: quarta priorità completata
+
+Misure native Linux x86-64/ARM64 e macOS Intel/ARM64: 26 carichi, due sessioni
+di nove ripetizioni intercalate prima/dopo/C, più controllo della stessa revisione.
+11.232 campioni con output verificato, distribuzioni wall/RSS, hash, ambiente,
+flag e build isolate Rust 1.96.0. Runtime invariato; confronto `61009df` → `3649297`.
+Record da 8 MiB: −97,4%–−98,9%; CSV lungo: −86,7%–−94,2%, secondo piattaforma/sessione.
+Conservato il costo osservato delle righe corte da 128 MiB su Linux x86-64
+(+4,1%–+5,5%); RSS e piccoli segnali non generalizzabili. Il controllo M1 mostra
+un falso segnale con binari identici: niente soglie percentuali o gate automatici.
+Workflow manuale riproducibile, nessuna automazione periodica.
+[Misure native verdi](https://github.com/francescotinti/rawk/actions/runs/35533876766),
+[controlli verdi](https://github.com/francescotinti/rawk/actions/runs/35533894243),
+[5 test harness per piattaforma](https://github.com/francescotinti/rawk/actions/runs/35534715831).
+[CI correttezza verde](https://github.com/francescotinti/rawk/actions/runs/35533876697):
+macOS 160+160 e Linux 98+98 per runner, zero ignorati; runtime invariato.
+[Consegna e limiti](diary/2026-09-20-native-performance.md),
+[guida di riproduzione](docs/PERFORMANCE.md).
+
 ## Attività aperte
+
+- Conferma indipendente e diagnosi del costo delle righe corte su Linux x86-64,
+  separata dalle misure della priorità 4.
 
 - Differenza preesistente con RS regex a EOF e `$0` in END: controesempio
   conservato nella consegna I/O; richiede diagnosi separata, non classificata

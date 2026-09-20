@@ -356,7 +356,7 @@ Sequenza autorizzata; questa tranche esegue soltanto la prima priorità.
    preservare il vantaggio del percorso booleano su righe lunghe.
 3. **I/O e memoria su input grandi — completata**: copie, allocazioni, buffering e picco RSS,
    preservando pipe, getline, RS e stream condivisi.
-4. **Misure multipiattaforma e regressioni**: Linux e macOS Intel/ARM64,
+4. **Misure multipiattaforma e regressioni — completata**: Linux e macOS Intel/ARM64,
    corpus più rappresentativo e monitoraggio riproducibile. La correttezza
    multipiattaforma resta obbligatoria già nella prima priorità.
 
@@ -414,3 +414,28 @@ stream e codifiche verdi su tutte le piattaforme. La CI conserva Rust 1.96.0
 per correttezza; non è un confronto di velocità con la 1.98.1 locale. Una differenza EOF/$0 preesistente con RS regex
 è registrata separatamente, senza modificarne gli expected o il runtime.
 La priorità 4 resta non avviata. [Consegna e prove](../diary/2026-09-20-io-memory.md).
+
+
+### Quarta priorità: misure native e monitoraggio — completata
+
+Tranche autorizzata sulla consegna `6068e1f`, runtime invariato. Workflow manuale
+su Linux x86-64/ARM64 e macOS Intel/ARM64, 26 carichi deterministici più vari,
+due sessioni di nove ripetizioni intercalate con warmup/output controllato e RSS.
+Build isolate `61009df`/`3649297` con la stessa Rust 1.96.0 su ogni runner;
+controllo aggiuntivo `3649297`/`3649297` con binari identici. Tutti gli otto
+report completi, 11.232 campioni conservati, hash di input/output coerenti.
+
+Record da 8 MiB: −97,4%–−98,9%; CSV: −86,7%–−94,2% nei profili misurati.
+Costo delle righe corte da 128 MiB Linux x86-64 +4,1%–+5,5%, da confermare e
+diagnosticare separatamente. RSS non universalmente inferiore; piccoli segnali
+richiedono conferma. Il controllo M1 produce un falso segnale su getline con
+binari identici: intervalli esplorativi, nessuna soglia rigida o gate automatico.
+Guida e renderer rendono riproducibile il monitoraggio senza automazioni periodiche.
+
+CI di correttezza verde su quattro piattaforme (runtime invariato): macOS
+160+160 test e Linux 98+98 per runner; harness finale 5 test per piattaforma.
+Preservati README/autori, oracolo locale, contratti e differenza RS regex EOF/`$0`
+ancora aperta. Tutte le priorità 1–4 sono concluse nel perimetro documentato;
+nuove ottimizzazioni e diagnosi restano task separati.
+[Consegna ed evidenze](../diary/2026-09-20-native-performance.md),
+[procedura operativa](../docs/PERFORMANCE.md).

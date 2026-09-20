@@ -1,0 +1,129 @@
+{
+  "reports": [
+    {
+      "path": "control/performance-macos-15/results.json",
+      "platform": "macOS-15.7.9-arm64-arm-64bit-Mach-O",
+      "measured_samples": 1404,
+      "same_binary_control": true,
+      "repeatable_wall_signals": {
+        "long_getline": "repeatable_faster"
+      },
+      "repeatable_rss_signals": {}
+    },
+    {
+      "path": "control/performance-macos-15-intel/results.json",
+      "platform": "macOS-15.7.9-x86_64-i386-64bit-Mach-O",
+      "measured_samples": 1404,
+      "same_binary_control": true,
+      "repeatable_wall_signals": {},
+      "repeatable_rss_signals": {}
+    },
+    {
+      "path": "control/performance-ubuntu-24.04/results.json",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "measured_samples": 1404,
+      "same_binary_control": true,
+      "repeatable_wall_signals": {},
+      "repeatable_rss_signals": {}
+    },
+    {
+      "path": "control/performance-ubuntu-24.04-arm/results.json",
+      "platform": "Linux-6.17.0-1022-azure-aarch64-with-glibc2.39",
+      "measured_samples": 1404,
+      "same_binary_control": true,
+      "repeatable_wall_signals": {},
+      "repeatable_rss_signals": {}
+    },
+    {
+      "path": "main/performance-macos-15/results.json",
+      "platform": "macOS-15.7.9-arm64-arm-64bit-Mach-O",
+      "measured_samples": 1404,
+      "same_binary_control": false,
+      "repeatable_wall_signals": {
+        "long_1048576_file": "repeatable_faster",
+        "long_4194304_file": "repeatable_faster",
+        "long_8388608_file": "repeatable_faster",
+        "long_pipe": "repeatable_faster",
+        "long_getline": "repeatable_faster",
+        "unterminated": "repeatable_faster",
+        "csv_long": "repeatable_faster",
+        "volume_64k_128m": "repeatable_faster"
+      },
+      "repeatable_rss_signals": {
+        "long_1048576_file": "repeatable_faster",
+        "csv_long": "repeatable_faster",
+        "paragraph_control": "repeatable_slower",
+        "output_format": "repeatable_slower"
+      }
+    },
+    {
+      "path": "main/performance-macos-15-intel/results.json",
+      "platform": "macOS-15.7.9-x86_64-i386-64bit-Mach-O",
+      "measured_samples": 1404,
+      "same_binary_control": false,
+      "repeatable_wall_signals": {
+        "long_1048576_file": "repeatable_faster",
+        "long_4194304_file": "repeatable_faster",
+        "long_8388608_file": "repeatable_faster",
+        "long_pipe": "repeatable_faster",
+        "long_getline": "repeatable_faster",
+        "unterminated": "repeatable_faster",
+        "csv_long": "repeatable_faster",
+        "volume_64k_128m": "repeatable_faster"
+      },
+      "repeatable_rss_signals": {
+        "utf8_dynamic_boolean": "repeatable_slower",
+        "utf8_match_mixed": "repeatable_slower",
+        "utf8_match_long": "repeatable_slower",
+        "long_8388608_file": "repeatable_faster",
+        "long_getline": "repeatable_faster",
+        "paragraph_control": "repeatable_slower",
+        "regex_control": "repeatable_slower",
+        "output_format": "repeatable_faster"
+      }
+    },
+    {
+      "path": "main/performance-ubuntu-24.04/results.json",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "measured_samples": 1404,
+      "same_binary_control": false,
+      "repeatable_wall_signals": {
+        "regex_fields": "repeatable_slower",
+        "utf8_dynamic_boolean": "repeatable_slower",
+        "short_file": "repeatable_slower",
+        "long_1048576_file": "repeatable_faster",
+        "long_4194304_file": "repeatable_faster",
+        "long_8388608_file": "repeatable_faster",
+        "long_pipe": "repeatable_faster",
+        "long_getline": "repeatable_faster",
+        "unterminated": "repeatable_faster",
+        "csv_long": "repeatable_faster",
+        "volume_short_128m": "repeatable_slower",
+        "volume_64k_128m": "repeatable_faster"
+      },
+      "repeatable_rss_signals": {}
+    },
+    {
+      "path": "main/performance-ubuntu-24.04-arm/results.json",
+      "platform": "Linux-6.17.0-1022-azure-aarch64-with-glibc2.39",
+      "measured_samples": 1404,
+      "same_binary_control": false,
+      "repeatable_wall_signals": {
+        "short_file": "repeatable_faster",
+        "long_1048576_file": "repeatable_faster",
+        "long_4194304_file": "repeatable_faster",
+        "long_8388608_file": "repeatable_faster",
+        "long_pipe": "repeatable_faster",
+        "long_getline": "repeatable_faster",
+        "unterminated": "repeatable_faster",
+        "csv_long": "repeatable_faster",
+        "volume_short_128m": "repeatable_faster",
+        "volume_64k_128m": "repeatable_faster",
+        "csv_mixed": "repeatable_faster"
+      },
+      "repeatable_rss_signals": {}
+    }
+  ],
+  "measured_samples_total": 11232,
+  "input_and_output_hashes_identical_across_all_reports": true
+}

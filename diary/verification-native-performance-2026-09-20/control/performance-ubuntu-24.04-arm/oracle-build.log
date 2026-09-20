@@ -1,0 +1,18 @@
+make: Entering directory '/home/runner/work/_temp/performance/oracle'
+bison -d  awkgram.y
+awkgram.y: warning: 44 shift/reduce conflicts [-Wconflicts-sr]
+awkgram.y: warning: 85 reduce/reduce conflicts [-Wconflicts-rr]
+awkgram.y: note: rerun with option '-Wcounterexamples' to generate conflict counterexamples
+cc -O2   -c -o awkgram.tab.o awkgram.tab.c
+cc -O2   -c -o b.o b.c
+cc -O2   -c -o main.o main.c
+cc -O2   -c -o parse.o parse.c
+cc -g -Wall -pedantic -Wcast-qual -O2 maketab.c -o maketab
+./maketab awkgram.tab.h >proctab.c
+cc -O2   -c -o proctab.o proctab.c
+cc -O2   -c -o tran.o tran.c
+cc -O2   -c -o lib.o lib.c
+cc -O2   -c -o run.o run.c
+cc -O2   -c -o lex.o lex.c
+cc -O2 awkgram.tab.o b.o main.o parse.o proctab.o tran.o lib.o run.o lex.o   -lm
+make: Leaving directory '/home/runner/work/_temp/performance/oracle'

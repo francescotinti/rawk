@@ -1,0 +1,12 @@
+test_comparison (test_benchmark_native.NativeBenchmarkTests) ... ok
+test_corpus (test_benchmark_native.NativeBenchmarkTests) ... ok
+test_exact_output_failure_report (test_benchmark_native.NativeBenchmarkTests) ... tiny 0 {'seconds': {'median_paired_ratio': 1.0137340376668316, 'bootstrap_95_interval': [0.9601696852107293, 1.071855359830044], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 1.0, 'bootstrap_95_interval': [1.0, 1.0], 'signal': 'inconclusive'}}
+tiny 1 {'seconds': {'median_paired_ratio': 1.019218697044256, 'bootstrap_95_interval': [0.9841976957232271, 1.1138992953970475], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 1.0, 'bootstrap_95_interval': [1.0, 1.0], 'signal': 'inconclusive'}}
+ok
+test_locale (test_benchmark_native.NativeBenchmarkTests) ... ok
+test_native_process (test_benchmark_native.NativeBenchmarkTests) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.671s
+
+OK

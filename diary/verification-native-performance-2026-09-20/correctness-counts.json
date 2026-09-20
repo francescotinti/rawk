@@ -1,0 +1,32 @@
+{
+  "compatibility (macos-15-intel, x86_64) / Complete correctness gate (debug)": {
+    "passed": 160,
+    "failed": 0,
+    "ignored": 0
+  },
+  "compatibility (macos-15-intel, x86_64) / Complete release test suite": {
+    "passed": 160,
+    "failed": 0,
+    "ignored": 0
+  },
+  "linux-portability (ubuntu-24.04-arm) / Native portability gate (debug and release)": {
+    "passed": 196,
+    "failed": 0,
+    "ignored": 0
+  },
+  "compatibility (macos-15, arm64) / Complete correctness gate (debug)": {
+    "passed": 160,
+    "failed": 0,
+    "ignored": 0
+  },
+  "compatibility (macos-15, arm64) / Complete release test suite": {
+    "passed": 160,
+    "failed": 0,
+    "ignored": 0
+  },
+  "linux-portability (ubuntu-24.04) / Native portability gate (debug and release)": {
+    "passed": 196,
+    "failed": 0,
+    "ignored": 0
+  }
+}

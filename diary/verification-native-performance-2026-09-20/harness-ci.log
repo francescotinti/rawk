@@ -1,0 +1,1057 @@
+benchmark (macos-15, arm64)	Set up job	﻿2026-09-20T20:11:14.3184360Z Current runner version: '2.337.0'
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3200810Z ##[group]Runner Image Provisioner
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3201370Z Hosted Compute Agent
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3201740Z Version: 20260828.587
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3202140Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3202600Z Build Date: 2026-08-28T16:44:25Z
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3203030Z Worker ID: {bc0da819-afbf-4e2d-b6ee-0a051b995c0f}
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3203490Z Azure Region: westus
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3203850Z ##[endgroup]
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3204700Z ##[group]Operating System
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3205080Z macOS
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3205390Z 15.7.9
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3205710Z 24G830
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3206040Z ##[endgroup]
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3206380Z ##[group]Runner Image
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3206740Z Image: macos-15-arm64
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3207100Z Version: 20260907.0337.1
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3207830Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260907.0337/images/macos/macos-15-arm64-Readme.md
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3208940Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260907.0337
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3209580Z ##[endgroup]
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3210370Z ##[group]GITHUB_TOKEN Permissions
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3211510Z Contents: read
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3211880Z Metadata: read
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3212230Z ##[endgroup]
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3213570Z Secret source: Actions
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3214140Z Cache mode: write
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3214600Z Prepare workflow directory
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3613280Z Prepare all required actions
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.3649820Z Getting action download info
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:14.7802500Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:15.1763340Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+benchmark (macos-15, arm64)	Set up job	2026-09-20T20:11:15.4221760Z Complete job name: benchmark (macos-15, arm64)
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	﻿2026-09-20T20:11:15.4651540Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4658380Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4659100Z with:
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4659420Z   fetch-depth: 0
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4659780Z   repository: francescotinti/rawk
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4662460Z   token: ***
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4662770Z   ssh-strict: true
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4663090Z   ssh-user: git
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4663410Z   persist-credentials: true
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4663840Z   clean: true
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4664170Z   sparse-checkout-cone-mode: true
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4665030Z   fetch-tags: false
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4665470Z   show-progress: true
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4665880Z   lfs: false
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4666220Z   submodules: false
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4666560Z   set-safe-directory: true
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4667430Z env:
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4667790Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4668260Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4668730Z   RUNS: 9
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4669070Z   EXPECTED_ARCH: arm64
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4669410Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.4669760Z ##[endgroup]
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.7662340Z Syncing repository: francescotinti/rawk
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.7664160Z ##[group]Getting Git version info
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.7664650Z Working directory is '/Users/runner/work/rawk/rawk'
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.7665380Z [command]/opt/homebrew/bin/git version
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8130390Z git version 2.55.0
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8141960Z ##[endgroup]
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8148220Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/9289ecf5-209a-4475-8a38-cec88f6d5e88/.gitconfig'
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8154690Z Temporarily overriding HOME='/Users/runner/work/_temp/9289ecf5-209a-4475-8a38-cec88f6d5e88' before making global git config changes
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8155760Z Adding repository directory to the temporary git global config as a safe directory
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8158150Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/rawk/rawk
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8273040Z Deleting the contents of '/Users/runner/work/rawk/rawk'
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8275360Z ##[group]Initializing the repository
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8277830Z [command]/opt/homebrew/bin/git init /Users/runner/work/rawk/rawk
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8493620Z hint: Using 'master' as the name for the initial branch. This default branch name
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8494510Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8495320Z hint: to use in all of your new repositories, which will suppress this warning,
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8495890Z hint: call:
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8496250Z hint:
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8512490Z hint: 	git config --global init.defaultBranch <name>
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8513060Z hint:
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8513480Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8514130Z hint: 'development'. The just-created branch can be renamed via this command:
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8514770Z hint:
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8515080Z hint: 	git branch -m <name>
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8515430Z hint:
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8515890Z hint: Disable this message with "git config set advice.defaultBranchName false"
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8516600Z Initialized empty Git repository in /Users/runner/work/rawk/rawk/.git/
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8517890Z [command]/opt/homebrew/bin/git remote add origin https://github.com/francescotinti/rawk
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8576400Z ##[endgroup]
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8577650Z ##[group]Disabling automatic garbage collection
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8578500Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8638240Z ##[endgroup]
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8639610Z ##[group]Setting up auth
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8641440Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.8698740Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.9545510Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:15.9601830Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.0369100Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.0434810Z ##[endgroup]
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.0435740Z ##[group]Fetching the repository
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.0439660Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7799680Z From https://github.com/francescotinti/rawk
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7800470Z  * [new branch]      master     -> origin/master
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7809960Z [command]/opt/homebrew/bin/git branch --list --remote origin/master
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7878980Z   origin/master
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7885290Z [command]/opt/homebrew/bin/git rev-parse refs/remotes/origin/master
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7942310Z a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7944210Z ##[endgroup]
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7944720Z ##[group]Determining the checkout info
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7945380Z ##[endgroup]
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.7948560Z [command]/opt/homebrew/bin/git sparse-checkout disable
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.8020460Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.8082040Z ##[group]Checking out the ref
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:16.8088390Z [command]/opt/homebrew/bin/git checkout --progress --force -B master refs/remotes/origin/master
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:17.1620620Z Reset branch 'master'
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:17.1635680Z branch 'master' set up to track 'origin/master'.
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:17.1638460Z ##[endgroup]
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:17.1722720Z [command]/opt/homebrew/bin/git log -1 --format=%H
+benchmark (macos-15, arm64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:17.1793740Z a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15, arm64)	Prepare native tools	﻿2026-09-20T20:11:17.2055480Z ##[group]Run test "$(uname -m)" = "$EXPECTED_ARCH"
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2056240Z [36;1mtest "$(uname -m)" = "$EXPECTED_ARCH"[0m
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2056750Z [36;1mrustup toolchain install 1.96.0 --profile minimal[0m
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2057310Z [36;1mif [ "$(uname -s)" = Linux ]; then[0m
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2057730Z [36;1m  sudo apt-get update[0m
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2058160Z [36;1m  sudo apt-get install -y build-essential bison locales time[0m
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2058730Z [36;1m  sudo localedef -i en_US -f UTF-8 en_US.UTF-8[0m
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2059160Z [36;1mfi[0m
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2148810Z shell: /bin/bash -e {0}
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2149370Z env:
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2149730Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2150300Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2150690Z   RUNS: 9
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2150980Z   EXPECTED_ARCH: arm64
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2151280Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.2151650Z ##[endgroup]
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.3269410Z info: syncing channel updates for 1.96.0-aarch64-apple-darwin
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.4341410Z info: latest update on 2026-05-28 for version 1.96.0 (ac68faa20 2026-05-25)
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:17.4346560Z info: downloading 3 components
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:25.6387410Z 
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:25.8107150Z   1.96.0-aarch64-apple-darwin installed - rustc 1.96.0 (ac68faa20 2026-05-25)
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:25.8142930Z info: self-update is disabled for this build of rustup
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:25.8144480Z 
+benchmark (macos-15, arm64)	Prepare native tools	2026-09-20T20:11:25.8145500Z info: any updates to rustup will need to be fetched with your system package manager
+benchmark (macos-15, arm64)	Test harness	﻿2026-09-20T20:11:25.8492690Z ##[group]Run python3 -m unittest discover -s scripts -p test_benchmark_native.py -v
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:25.8493460Z [36;1mpython3 -m unittest discover -s scripts -p test_benchmark_native.py -v[0m
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:25.8662400Z shell: /bin/bash -e {0}
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:25.8662980Z env:
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:25.8663760Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:25.8665960Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:25.8667900Z   RUNS: 9
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:25.8669520Z   EXPECTED_ARCH: arm64
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:25.8671040Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:25.8672380Z ##[endgroup]
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:26.6620180Z test_comparison (test_benchmark_native.NativeBenchmarkTests.test_comparison) ... ok
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:26.8496180Z test_corpus (test_benchmark_native.NativeBenchmarkTests.test_corpus) ... ok
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.1188490Z tiny 0 {'seconds': {'median_paired_ratio': 1.0169726797675995, 'bootstrap_95_interval': [0.9895286703532694, 1.3056111573616414], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 1.0, 'bootstrap_95_interval': [1.0, 1.0], 'signal': 'inconclusive'}}
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.3123780Z tiny 1 {'seconds': {'median_paired_ratio': 1.0499875538837031, 'bootstrap_95_interval': [0.684166930425349, 1.159841086696108], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 1.0, 'bootstrap_95_interval': [0.9805825242718447, 1.0198019801980198], 'signal': 'inconclusive'}}
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.3264890Z test_exact_output_failure_report (test_benchmark_native.NativeBenchmarkTests.test_exact_output_failure_report) ... ok
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.3268890Z test_locale (test_benchmark_native.NativeBenchmarkTests.test_locale) ... ok
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.4477880Z test_native_process (test_benchmark_native.NativeBenchmarkTests.test_native_process) ... ok
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.4479210Z 
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.4486340Z ----------------------------------------------------------------------
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.4487270Z Ran 5 tests in 0.804s
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.4487680Z 
+benchmark (macos-15, arm64)	Test harness	2026-09-20T20:11:27.4487980Z OK
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	﻿2026-09-20T20:11:27.4877770Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.4879160Z Post job cleanup.
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.6273000Z [command]/opt/homebrew/bin/git version
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.6354720Z git version 2.55.0
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.6378480Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/40b4c3bb-5f3f-40d9-8cc4-a54436e10067/.gitconfig'
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.6387150Z Temporarily overriding HOME='/Users/runner/work/_temp/40b4c3bb-5f3f-40d9-8cc4-a54436e10067' before making global git config changes
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.6389370Z Adding repository directory to the temporary git global config as a safe directory
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.6391080Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/rawk/rawk
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.6482310Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.6567710Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.7448930Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.7533680Z http.https://github.com/.extraheader
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.7541930Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+benchmark (macos-15, arm64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:27.7622860Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+benchmark (macos-15, arm64)	Complete job	﻿2026-09-20T20:11:27.8546960Z Cleaning up orphan processes
+benchmark (macos-15, arm64)	Complete job	2026-09-20T20:11:28.5068590Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (macos-15-intel, x86_64)	Set up job	﻿2026-09-20T20:11:36.9623710Z Current runner version: '2.337.0'
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9676620Z ##[group]Runner Image Provisioner
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9677970Z Hosted Compute Agent
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9678790Z Version: 20260819.586
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9679660Z Commit: 3cc4a88dfa507ef76119ad1bb3eccc6378bb2b76
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9680730Z Build Date: 2026-08-18T23:20:18Z
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9681680Z Worker ID: {f3d48679-bdb2-4919-8a5a-e7be91cbf114}
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9682710Z Azure Region: westus
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9683480Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9686590Z ##[group]Operating System
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9687480Z macOS
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9688150Z 15.7.9
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9688820Z 24G830
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9689510Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9690240Z ##[group]Runner Image
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9691050Z Image: macos-15
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9691820Z Version: 20260824.0482.1
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9693520Z Included Software: https://github.com/actions/runner-images/blob/macos-15/20260824.0482/images/macos/macos-15-Readme.md
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9696170Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15%2F20260824.0482
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9697730Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9699350Z ##[group]GITHUB_TOKEN Permissions
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9702400Z Contents: read
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9703220Z Metadata: read
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9703980Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9706870Z Secret source: Actions
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9708150Z Cache mode: write
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:36.9709670Z Prepare workflow directory
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:37.0741510Z Prepare all required actions
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:37.0824100Z Getting action download info
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:37.5801780Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:38.2428660Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+benchmark (macos-15-intel, x86_64)	Set up job	2026-09-20T20:11:39.1155270Z Complete job name: benchmark (macos-15-intel, x86_64)
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	﻿2026-09-20T20:11:39.2734520Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2755660Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2757540Z with:
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2758370Z   fetch-depth: 0
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2759340Z   repository: francescotinti/rawk
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2768090Z   token: ***
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2769030Z   ssh-strict: true
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2769880Z   ssh-user: git
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2770690Z   persist-credentials: true
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2771790Z   clean: true
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2772660Z   sparse-checkout-cone-mode: true
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2773620Z   fetch-tags: false
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2774430Z   show-progress: true
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2775450Z   lfs: false
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2776620Z   submodules: false
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2777640Z   set-safe-directory: true
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2779220Z env:
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2780140Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2781340Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2782480Z   RUNS: 9
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2783240Z   EXPECTED_ARCH: x86_64
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2784100Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:39.2784960Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1122130Z Syncing repository: francescotinti/rawk
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1126210Z ##[group]Getting Git version info
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1127860Z Working directory is '/Users/runner/work/rawk/rawk'
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1132290Z [command]/usr/local/bin/git version
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1436790Z git version 2.55.0
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1763020Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1779190Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/1c497328-3158-4eaa-9bfa-d5ec1e112302/.gitconfig'
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1795170Z Temporarily overriding HOME='/Users/runner/work/_temp/1c497328-3158-4eaa-9bfa-d5ec1e112302' before making global git config changes
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1804570Z Adding repository directory to the temporary git global config as a safe directory
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1812320Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/rawk/rawk
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1953640Z Deleting the contents of '/Users/runner/work/rawk/rawk'
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1982960Z ##[group]Initializing the repository
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.1988820Z [command]/usr/local/bin/git init /Users/runner/work/rawk/rawk
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2750600Z hint: Using 'master' as the name for the initial branch. This default branch name
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2770860Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2780950Z hint: to use in all of your new repositories, which will suppress this warning,
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2787230Z hint: call:
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2793950Z hint:
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2797650Z hint: 	git config --global init.defaultBranch <name>
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2800570Z hint:
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2804280Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2809820Z hint: 'development'. The just-created branch can be renamed via this command:
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2815210Z hint:
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2819020Z hint: 	git branch -m <name>
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2827650Z hint:
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2832710Z hint: Disable this message with "git config set advice.defaultBranchName false"
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2839130Z Initialized empty Git repository in /Users/runner/work/rawk/rawk/.git/
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.2853250Z [command]/usr/local/bin/git remote add origin https://github.com/francescotinti/rawk
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.3153700Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.3160230Z ##[group]Disabling automatic garbage collection
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.3164400Z [command]/usr/local/bin/git config --local gc.auto 0
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.3444240Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.3447510Z ##[group]Setting up auth
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.3467790Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.3730940Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.8632110Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:40.8651020Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:41.3227340Z [command]/usr/local/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:41.3501730Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:41.3505190Z ##[group]Fetching the repository
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:41.3520990Z [command]/usr/local/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7216600Z From https://github.com/francescotinti/rawk
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7312980Z  * [new branch]      master     -> origin/master
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7459160Z [command]/usr/local/bin/git branch --list --remote origin/master
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7502960Z   origin/master
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7529610Z [command]/usr/local/bin/git rev-parse refs/remotes/origin/master
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7785280Z a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7800640Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7804570Z ##[group]Determining the checkout info
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7808910Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.7827740Z [command]/usr/local/bin/git sparse-checkout disable
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.8165220Z [command]/usr/local/bin/git config --local --unset-all extensions.worktreeConfig
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.8434190Z ##[group]Checking out the ref
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:42.8443470Z [command]/usr/local/bin/git checkout --progress --force -B master refs/remotes/origin/master
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:43.7484640Z Reset branch 'master'
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:43.7501500Z branch 'master' set up to track 'origin/master'.
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:43.7544460Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:43.7958280Z [command]/usr/local/bin/git log -1 --format=%H
+benchmark (macos-15-intel, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:43.8175730Z a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15-intel, x86_64)	Prepare native tools	﻿2026-09-20T20:11:43.8840740Z ##[group]Run test "$(uname -m)" = "$EXPECTED_ARCH"
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.8844610Z [36;1mtest "$(uname -m)" = "$EXPECTED_ARCH"[0m
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.8849300Z [36;1mrustup toolchain install 1.96.0 --profile minimal[0m
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.8853490Z [36;1mif [ "$(uname -s)" = Linux ]; then[0m
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.8856720Z [36;1m  sudo apt-get update[0m
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.8860480Z [36;1m  sudo apt-get install -y build-essential bison locales time[0m
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.8865130Z [36;1m  sudo localedef -i en_US -f UTF-8 en_US.UTF-8[0m
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.8868660Z [36;1mfi[0m
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.9012500Z shell: /bin/bash -e {0}
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.9015070Z env:
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.9018060Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.9022660Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.9026140Z   RUNS: 9
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.9028620Z   EXPECTED_ARCH: x86_64
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.9031970Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:43.9034700Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:44.0947890Z info: syncing channel updates for 1.96.0-x86_64-apple-darwin
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:44.5991830Z info: latest update on 2026-05-28 for version 1.96.0 (ac68faa20 2026-05-25)
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:11:44.7000690Z info: downloading 3 components
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:12:04.6872040Z 
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:12:04.7207210Z info: self-update is disabled for this build of rustup
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:12:04.7209780Z info: any updates to rustup will need to be fetched with your system package manager
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:12:04.7211880Z   1.96.0-x86_64-apple-darwin installed - rustc 1.96.0 (ac68faa20 2026-05-25)
+benchmark (macos-15-intel, x86_64)	Prepare native tools	2026-09-20T20:12:04.7213500Z 
+benchmark (macos-15-intel, x86_64)	Test harness	﻿2026-09-20T20:12:04.7460830Z ##[group]Run python3 -m unittest discover -s scripts -p test_benchmark_native.py -v
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:04.7462670Z [36;1mpython3 -m unittest discover -s scripts -p test_benchmark_native.py -v[0m
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:04.7570090Z shell: /bin/bash -e {0}
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:04.7571170Z env:
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:04.7572130Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:04.7610020Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:04.7611240Z   RUNS: 9
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:04.7612010Z   EXPECTED_ARCH: x86_64
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:04.7612650Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:04.7613240Z ##[endgroup]
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:05.8353350Z test_comparison (test_benchmark_native.NativeBenchmarkTests.test_comparison) ... ok
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:06.4028800Z test_corpus (test_benchmark_native.NativeBenchmarkTests.test_corpus) ... ok
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.0447160Z tiny 0 {'seconds': {'median_paired_ratio': 1.0002506331976708, 'bootstrap_95_interval': [0.9718637038724255, 1.0125565830364], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 1.0, 'bootstrap_95_interval': [0.986046511627907, 1.0], 'signal': 'inconclusive'}}
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.5326760Z tiny 1 {'seconds': {'median_paired_ratio': 1.1044463792954042, 'bootstrap_95_interval': [0.9881757503364524, 1.1381712534850825], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 1.0, 'bootstrap_95_interval': [0.986046511627907, 1.0], 'signal': 'inconclusive'}}
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.5357230Z test_exact_output_failure_report (test_benchmark_native.NativeBenchmarkTests.test_exact_output_failure_report) ... ok
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.5377620Z test_locale (test_benchmark_native.NativeBenchmarkTests.test_locale) ... ok
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.8455180Z test_native_process (test_benchmark_native.NativeBenchmarkTests.test_native_process) ... ok
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.8457020Z 
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.8457630Z ----------------------------------------------------------------------
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.8460380Z Ran 5 tests in 2.083s
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.8460910Z 
+benchmark (macos-15-intel, x86_64)	Test harness	2026-09-20T20:12:07.8461260Z OK
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	﻿2026-09-20T20:12:07.9431960Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:07.9436170Z Post job cleanup.
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.1545880Z [command]/usr/local/bin/git version
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.1683490Z git version 2.55.0
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.1834370Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/4a951615-3c8d-4e19-b8aa-4f4d3c6f7742/.gitconfig'
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.1838480Z Temporarily overriding HOME='/Users/runner/work/_temp/4a951615-3c8d-4e19-b8aa-4f4d3c6f7742' before making global git config changes
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.1841200Z Adding repository directory to the temporary git global config as a safe directory
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.1843490Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/rawk/rawk
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.1950650Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.2100470Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.4131400Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.4245230Z http.https://github.com/.extraheader
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.4264930Z [command]/usr/local/bin/git config --local --unset-all http.https://github.com/.extraheader
+benchmark (macos-15-intel, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:12:08.4428460Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+benchmark (macos-15-intel, x86_64)	Complete job	﻿2026-09-20T20:12:08.6897950Z Cleaning up orphan processes
+benchmark (macos-15-intel, x86_64)	Complete job	2026-09-20T20:12:08.9935710Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (ubuntu-24.04, x86_64)	Set up job	﻿2026-09-20T20:11:07.0986935Z Current runner version: '2.337.0'
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1027027Z ##[group]Runner Image Provisioner
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1028505Z Hosted Compute Agent
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1029505Z Version: 20260828.587
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1030743Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1032023Z Build Date: 2026-08-28T16:44:25Z
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1033582Z Worker ID: {41dd8440-7e03-435b-8e96-ff2350fa9ba8}
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1034926Z Azure Region: eastus2
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1035949Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1038618Z ##[group]Operating System
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1039757Z Ubuntu
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1040884Z 24.04.5
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1041869Z LTS
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1043173Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1044126Z ##[group]Runner Image
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1045075Z Image: ubuntu-24.04
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1046840Z Version: 20260907.300.1
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1048653Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1051673Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1053806Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1055573Z ##[group]GITHUB_TOKEN Permissions
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1058521Z Contents: read
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1059496Z Metadata: read
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1060485Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1063729Z Secret source: Actions
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1065468Z Cache mode: write
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1066895Z Prepare workflow directory
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1747506Z Prepare all required actions
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.1796128Z Getting action download info
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.3310905Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.4530196Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+benchmark (ubuntu-24.04, x86_64)	Set up job	2026-09-20T20:11:07.6578651Z Complete job name: benchmark (ubuntu-24.04, x86_64)
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	﻿2026-09-20T20:11:07.7284416Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7293607Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7294560Z with:
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7294992Z   fetch-depth: 0
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7295465Z   repository: francescotinti/rawk
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7299361Z   token: ***
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7299809Z   ssh-strict: true
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7300257Z   ssh-user: git
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7300704Z   persist-credentials: true
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7301207Z   clean: true
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7301657Z   sparse-checkout-cone-mode: true
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7302395Z   fetch-tags: false
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7302866Z   show-progress: true
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7303346Z   lfs: false
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7303789Z   submodules: false
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7304238Z   set-safe-directory: true
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7304969Z env:
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7305450Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7306104Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7306685Z   RUNS: 9
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7307095Z   EXPECTED_ARCH: x86_64
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7307578Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.7308053Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8305437Z Syncing repository: francescotinti/rawk
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8308315Z ##[group]Getting Git version info
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8309443Z Working directory is '/home/runner/work/rawk/rawk'
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8310978Z [command]/usr/bin/git version
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8385581Z git version 2.55.0
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8417996Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8432883Z Temporarily overriding HOME='/home/runner/work/_temp/71c7f835-9d1b-4ed2-ab6f-9c2b1c11650c' before making global git config changes
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8440529Z Adding repository directory to the temporary git global config as a safe directory
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8442436Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/rawk/rawk
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8497927Z Deleting the contents of '/home/runner/work/rawk/rawk'
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8506891Z ##[group]Initializing the repository
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8511916Z [command]/usr/bin/git init /home/runner/work/rawk/rawk
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8645246Z hint: Using 'master' as the name for the initial branch. This default branch name
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8646429Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8647990Z hint: to use in all of your new repositories, which will suppress this warning,
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8648874Z hint: call:
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8649415Z hint:
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8650311Z hint: 	git config --global init.defaultBranch <name>
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8651051Z hint:
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8651641Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8652787Z hint: 'development'. The just-created branch can be renamed via this command:
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8653551Z hint:
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8653973Z hint: 	git branch -m <name>
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8654455Z hint:
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8655499Z hint: Disable this message with "git config set advice.defaultBranchName false"
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8656783Z Initialized empty Git repository in /home/runner/work/rawk/rawk/.git/
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8662616Z [command]/usr/bin/git remote add origin https://github.com/francescotinti/rawk
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8712736Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8713567Z ##[group]Disabling automatic garbage collection
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8717346Z [command]/usr/bin/git config --local gc.auto 0
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8748788Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8749582Z ##[group]Setting up auth
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8757331Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.8790620Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.9191235Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.9231389Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.9463087Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.9504118Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.9505589Z ##[group]Fetching the repository
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:07.9515514Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4613186Z From https://github.com/francescotinti/rawk
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4634049Z  * [new branch]      master     -> origin/master
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4666332Z [command]/usr/bin/git branch --list --remote origin/master
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4668257Z   origin/master
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4676105Z [command]/usr/bin/git rev-parse refs/remotes/origin/master
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4703967Z a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4709633Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4711210Z ##[group]Determining the checkout info
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4713467Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4715958Z [command]/usr/bin/git sparse-checkout disable
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4783326Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4818411Z ##[group]Checking out the ref
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.4826404Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.5640372Z Reset branch 'master'
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.5646308Z branch 'master' set up to track 'origin/master'.
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.5666109Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.5713460Z [command]/usr/bin/git log -1 --format=%H
+benchmark (ubuntu-24.04, x86_64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:08.5742027Z a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	﻿2026-09-20T20:11:08.5969533Z ##[group]Run test "$(uname -m)" = "$EXPECTED_ARCH"
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.5970733Z [36;1mtest "$(uname -m)" = "$EXPECTED_ARCH"[0m
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.5971912Z [36;1mrustup toolchain install 1.96.0 --profile minimal[0m
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.5973440Z [36;1mif [ "$(uname -s)" = Linux ]; then[0m
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.5974351Z [36;1m  sudo apt-get update[0m
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.5975414Z [36;1m  sudo apt-get install -y build-essential bison locales time[0m
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.5976751Z [36;1m  sudo localedef -i en_US -f UTF-8 en_US.UTF-8[0m
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.5977690Z [36;1mfi[0m
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.6018283Z shell: /usr/bin/bash -e {0}
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.6019004Z env:
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.6019606Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.6020725Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.6021638Z   RUNS: 9
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.6022120Z   EXPECTED_ARCH: x86_64
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.6022957Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.6023600Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.6650838Z info: syncing channel updates for 1.96.0-x86_64-unknown-linux-gnu
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.8345777Z info: latest update on 2026-05-28 for version 1.96.0 (ac68faa20 2026-05-25)
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:08.8348002Z info: downloading 3 components
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.2237574Z 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.2311559Z   1.96.0-x86_64-unknown-linux-gnu installed - rustc 1.96.0 (ac68faa20 2026-05-25)
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.2313396Z 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.3273471Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.3615500Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.3617317Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.3663350Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.3675023Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.3703289Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.3806384Z Get:7 https://dl.google.com/linux/chrome-stable/deb stable InRelease [2548 B]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.4908784Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [478 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5063505Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [429 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5398863Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1275 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5474500Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [294 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5502939Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [180 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5543496Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1689 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5616810Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [338 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5636260Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5663230Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1580 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5753418Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [359 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5756776Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [45.7 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.5769114Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [13.1 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6257944Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6265084Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [65.9 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6273547Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5768 B]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6283279Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [34.6 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6290576Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe Translation-en [18.7 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6295312Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6511513Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1009 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6562653Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [214 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6576859Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.4 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6586282Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1208 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6642012Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [243 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6658187Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.2 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6668913Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1449 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.6742025Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [336 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.7173588Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [11.3 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:16.7262834Z Get:35 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1408 B]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:22.0056916Z Fetched 12.2 MB in 1s (9138 kB/s)
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:22.8227902Z Reading package lists...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:22.8545279Z Reading package lists...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.0434702Z Building dependency tree...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.0442568Z Reading state information...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.1965786Z time is already the newest version (1.9-0.2build1).
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.1967240Z The following additional packages will be installed:
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.1971774Z   libc-bin libc-dev-bin libc6 libc6-dev libc6-i386
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.1978118Z Suggested packages:
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.1978764Z   bison-doc glibc-doc libnss-nis libnss-nisplus manpages-dev
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.1979159Z Recommended packages:
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.1979414Z   manpages-dev libc-devtools
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2258294Z The following NEW packages will be installed:
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2265957Z   build-essential
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2269114Z The following packages will be upgraded:
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2275760Z   bison libc-bin libc-dev-bin libc6 libc6-dev libc6-i386 locales
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2459269Z 7 upgraded, 1 newly installed, 0 to remove and 66 not upgraded.
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2459726Z Need to get 13.9 MB of archives.
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2460082Z After this operation, 27.6 kB of additional disk space will be used.
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2460825Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2623968Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libc6-dev amd64 2.39-0ubuntu8.9 [2126 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2786964Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libc-dev-bin amd64 2.39-0ubuntu8.9 [20.4 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2799518Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libc6-i386 amd64 2.39-0ubuntu8.9 [2787 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.2990728Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libc6 amd64 2.39-0ubuntu8.9 [3264 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.3240837Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libc-bin amd64 2.39-0ubuntu8.9 [682 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.3300033Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 locales all 2.39-0ubuntu8.9 [4232 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.3823365Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 bison amd64 2:3.8.2+dfsg-1ubuntu0.24.04.1 [749 kB]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.3996893Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 build-essential amd64 12.10ubuntu1 [4928 B]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.6298211Z Preconfiguring packages ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7179265Z Fetched 13.9 MB in 0s (84.4 MB/s)
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7742255Z (Reading database ... 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7742777Z (Reading database ... 5%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7743023Z (Reading database ... 10%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7743256Z (Reading database ... 15%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7824456Z (Reading database ... 20%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7824924Z (Reading database ... 25%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7825292Z (Reading database ... 30%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7825645Z (Reading database ... 35%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7826094Z (Reading database ... 40%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7826574Z (Reading database ... 45%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7827033Z (Reading database ... 50%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.7827460Z (Reading database ... 55%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:23.9183316Z (Reading database ... 60%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:24.0923254Z (Reading database ... 65%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:24.2922579Z (Reading database ... 70%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:24.4528345Z (Reading database ... 75%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:24.6537737Z (Reading database ... 80%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:24.8442078Z (Reading database ... 85%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.0490836Z (Reading database ... 90%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.2017175Z (Reading database ... 95%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.2017608Z (Reading database ... 100%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.2018106Z (Reading database ... 201818 files and directories currently installed.)
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.2057269Z Preparing to unpack .../libc6-dev_2.39-0ubuntu8.9_amd64.deb ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.2108744Z Unpacking libc6-dev:amd64 (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.4143550Z Preparing to unpack .../libc-dev-bin_2.39-0ubuntu8.9_amd64.deb ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.4174019Z Unpacking libc-dev-bin (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.4582717Z Preparing to unpack .../libc6-i386_2.39-0ubuntu8.9_amd64.deb ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.4876040Z Unpacking libc6-i386 (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.6224589Z Preparing to unpack .../libc6_2.39-0ubuntu8.9_amd64.deb ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.7706277Z Unpacking libc6:amd64 (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:25.9026078Z Setting up libc6:amd64 (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3372399Z (Reading database ... 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3373156Z (Reading database ... 5%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3373591Z (Reading database ... 10%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3374018Z (Reading database ... 15%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3374438Z (Reading database ... 20%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3374847Z (Reading database ... 25%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3375268Z (Reading database ... 30%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3375681Z (Reading database ... 35%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3376086Z (Reading database ... 40%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3376491Z (Reading database ... 45%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3376897Z (Reading database ... 50%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3399413Z (Reading database ... 55%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3514334Z (Reading database ... 60%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3537669Z (Reading database ... 65%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3571246Z (Reading database ... 70%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3597283Z (Reading database ... 75%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3740327Z (Reading database ... 80%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3762617Z (Reading database ... 85%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.3854166Z (Reading database ... 90%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.4076906Z (Reading database ... 95%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.4077336Z (Reading database ... 100%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.4077894Z (Reading database ... 201818 files and directories currently installed.)
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.4117028Z Preparing to unpack .../libc-bin_2.39-0ubuntu8.9_amd64.deb ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.4152540Z Unpacking libc-bin (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.4736750Z Setting up libc-bin (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5443684Z (Reading database ... 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5444404Z (Reading database ... 5%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5444976Z (Reading database ... 10%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5445515Z (Reading database ... 15%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5446472Z (Reading database ... 20%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5446959Z (Reading database ... 25%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5447575Z (Reading database ... 30%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5447969Z (Reading database ... 35%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5448700Z (Reading database ... 40%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5449103Z (Reading database ... 45%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5449541Z (Reading database ... 50%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5457874Z (Reading database ... 55%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5562508Z (Reading database ... 60%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5585001Z (Reading database ... 65%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5615543Z (Reading database ... 70%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5638862Z (Reading database ... 75%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5771461Z (Reading database ... 80%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5792289Z (Reading database ... 85%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.5866314Z (Reading database ... 90%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.6076794Z (Reading database ... 95%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.6077252Z (Reading database ... 100%
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.6077802Z (Reading database ... 201818 files and directories currently installed.)
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.6116199Z Preparing to unpack .../locales_2.39-0ubuntu8.9_all.deb ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.6177711Z Unpacking locales (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.8290839Z Preparing to unpack .../bison_2%3a3.8.2+dfsg-1ubuntu0.24.04.1_amd64.deb ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.8370933Z Unpacking bison (2:3.8.2+dfsg-1ubuntu0.24.04.1) over (2:3.8.2+dfsg-1build2) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.9111101Z Selecting previously unselected package build-essential.
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.9234917Z Preparing to unpack .../build-essential_12.10ubuntu1_amd64.deb ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.9244694Z Unpacking build-essential (12.10ubuntu1) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:26.9600569Z Setting up locales (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:27.4452671Z Generating locales (this might take a while)...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5495864Z   en_US.UTF-8... done
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5497473Z Generation complete.
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5703867Z Setting up bison (2:3.8.2+dfsg-1ubuntu0.24.04.1) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5781716Z Setting up libc6-i386 (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5827487Z Setting up libc-dev-bin (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5852771Z Setting up libc6-dev:amd64 (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5875036Z Setting up build-essential (12.10ubuntu1) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5900707Z Processing triggers for man-db (2.12.0-4build2) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5921811Z Not building database; man-db/auto-update is not 'true'.
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.5939166Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.9928608Z 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.9929160Z Running kernel seems to be up-to-date.
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.9929627Z 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:28.9930098Z Restarting services...
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.1510074Z  systemctl restart chrony.service containerd.service cron.service haveged.service hv-kvp-daemon.service multipathd.service packagekit.service php8.3-fpm.service polkit.service rsyslog.service systemd-journald.service systemd-networkd.service systemd-resolved.service systemd-udevd.service udisks2.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5747508Z 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5748478Z Service restarts being deferred:
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5749066Z  systemctl restart ModemManager.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5756616Z  /etc/needrestart/restart.d/dbus.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5767805Z  systemctl restart docker.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5768628Z  systemctl restart getty@tty1.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5769498Z  systemctl restart hosted-compute-agent.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5770459Z  systemctl restart networkd-dispatcher.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5771216Z  systemctl restart serial-getty@ttyS0.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5771982Z  systemctl restart systemd-logind.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5773010Z  systemctl restart walinuxagent.service
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5774649Z 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5775101Z No containers need to be restarted.
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5777815Z 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5778446Z User sessions running outdated binaries:
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5779206Z  runner @ user manager service: systemd[1233]
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5858096Z 
+benchmark (ubuntu-24.04, x86_64)	Prepare native tools	2026-09-20T20:11:29.5875476Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+benchmark (ubuntu-24.04, x86_64)	Test harness	﻿2026-09-20T20:11:31.4876519Z ##[group]Run python3 -m unittest discover -s scripts -p test_benchmark_native.py -v
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.4877130Z [36;1mpython3 -m unittest discover -s scripts -p test_benchmark_native.py -v[0m
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.4914929Z shell: /usr/bin/bash -e {0}
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.4915173Z env:
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.4915397Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.4915736Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.4916016Z   RUNS: 9
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.4916204Z   EXPECTED_ARCH: x86_64
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.4916425Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.4916646Z ##[endgroup]
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.6952956Z test_comparison (test_benchmark_native.NativeBenchmarkTests.test_comparison) ... ok
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.8058697Z test_corpus (test_benchmark_native.NativeBenchmarkTests.test_corpus) ... ok
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.8599344Z tiny 0 {'seconds': {'median_paired_ratio': 0.9997468491120644, 'bootstrap_95_interval': [0.9934317861525145, 1.0471116254794377], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 1.0023866348448687, 'bootstrap_95_interval': [1.0, 1.0380952380952382], 'signal': 'inconclusive'}}
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.8956638Z tiny 1 {'seconds': {'median_paired_ratio': 0.9729299937528192, 'bootstrap_95_interval': [0.9713060549351281, 1.0022086116635873], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 1.0, 'bootstrap_95_interval': [1.0, 1.0380952380952382], 'signal': 'inconclusive'}}
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.8967037Z test_exact_output_failure_report (test_benchmark_native.NativeBenchmarkTests.test_exact_output_failure_report) ... ok
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.8968372Z test_locale (test_benchmark_native.NativeBenchmarkTests.test_locale) ... ok
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.9568461Z test_native_process (test_benchmark_native.NativeBenchmarkTests.test_native_process) ... ok
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.9569336Z 
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.9569807Z ----------------------------------------------------------------------
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.9570375Z Ran 5 tests in 0.279s
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.9570693Z 
+benchmark (ubuntu-24.04, x86_64)	Test harness	2026-09-20T20:11:31.9570959Z OK
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	﻿2026-09-20T20:11:31.9863002Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:31.9864620Z Post job cleanup.
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.0694228Z [command]/usr/bin/git version
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.0734794Z git version 2.55.0
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.0774148Z Temporarily overriding HOME='/home/runner/work/_temp/cd070033-3878-45b8-a9ff-e6fe902f9371' before making global git config changes
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.0775701Z Adding repository directory to the temporary git global config as a safe directory
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.0779962Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/rawk/rawk
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.0820630Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.0855527Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.1107770Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.1138361Z http.https://github.com/.extraheader
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.1149841Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+benchmark (ubuntu-24.04, x86_64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:32.1184179Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+benchmark (ubuntu-24.04, x86_64)	Complete job	﻿2026-09-20T20:11:32.1621540Z Cleaning up orphan processes
+benchmark (ubuntu-24.04, x86_64)	Complete job	2026-09-20T20:11:32.2186518Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	﻿2026-09-20T20:11:09.9702879Z Current runner version: '2.337.0'
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9729267Z ##[group]Runner Image Provisioner
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9730550Z Hosted Compute Agent
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9731156Z Version: 20260828.587
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9732037Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9732744Z Build Date: 2026-08-28T16:44:25Z
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9733482Z Worker ID: {34e74ee6-10cb-4e30-8aaf-e2bfbf4569ce}
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9734201Z Azure Region: westus2
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9734764Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9737178Z ##[group]Operating System
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9737868Z Ubuntu
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9738521Z 24.04.5
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9739073Z LTS
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9739967Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9740663Z ##[group]Runner Image
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9741318Z Image: ubuntu-24.04-arm
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9741982Z Version: 20260907.118.1
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9743097Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24-arm64/20260907.118/images/ubuntu/Ubuntu2404-Arm64-Readme.md
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9745115Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24-arm64%2F20260907.118
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9746138Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9747359Z ##[group]GITHUB_TOKEN Permissions
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9750479Z Contents: read
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9751283Z Metadata: read
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9751859Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9754455Z Secret source: Actions
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9756000Z Cache mode: write
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:09.9756955Z Prepare workflow directory
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:10.0323297Z Prepare all required actions
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:10.0372863Z Getting action download info
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:10.3648936Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:10.6142846Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+benchmark (ubuntu-24.04-arm, aarch64)	Set up job	2026-09-20T20:11:10.8018396Z Complete job name: benchmark (ubuntu-24.04-arm, aarch64)
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	﻿2026-09-20T20:11:10.8745865Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8755413Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8756791Z with:
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8757384Z   fetch-depth: 0
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8757976Z   repository: francescotinti/rawk
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8762089Z   token: ***
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8762691Z   ssh-strict: true
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8763322Z   ssh-user: git
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8763939Z   persist-credentials: true
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8764532Z   clean: true
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8765248Z   sparse-checkout-cone-mode: true
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8765937Z   fetch-tags: false
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8766542Z   show-progress: true
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8767122Z   lfs: false
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8767817Z   submodules: false
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8768432Z   set-safe-directory: true
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8770083Z env:
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8770836Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8771627Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8772370Z   RUNS: 9
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8772951Z   EXPECTED_ARCH: aarch64
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8773555Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.8774204Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9611955Z Syncing repository: francescotinti/rawk
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9614624Z ##[group]Getting Git version info
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9615469Z Working directory is '/home/runner/work/rawk/rawk'
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9616712Z [command]/usr/bin/git version
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9687738Z git version 2.55.0
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9704904Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9716900Z Temporarily overriding HOME='/home/runner/work/_temp/a6b7dda4-5c4b-4c1b-9184-4a30a46eb288' before making global git config changes
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9718911Z Adding repository directory to the temporary git global config as a safe directory
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9725284Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/rawk/rawk
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9755318Z Deleting the contents of '/home/runner/work/rawk/rawk'
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9760222Z ##[group]Initializing the repository
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9764082Z [command]/usr/bin/git init /home/runner/work/rawk/rawk
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9878362Z hint: Using 'master' as the name for the initial branch. This default branch name
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9880044Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9881350Z hint: to use in all of your new repositories, which will suppress this warning,
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9882898Z hint: call:
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9883701Z hint:
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9884528Z hint: 	git config --global init.defaultBranch <name>
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9885533Z hint:
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9886505Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9887815Z hint: 'development'. The just-created branch can be renamed via this command:
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9888941Z hint:
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9889810Z hint: 	git branch -m <name>
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9890769Z hint:
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9891741Z hint: Disable this message with "git config set advice.defaultBranchName false"
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9893202Z Initialized empty Git repository in /home/runner/work/rawk/rawk/.git/
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9895775Z [command]/usr/bin/git remote add origin https://github.com/francescotinti/rawk
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9925054Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9926234Z ##[group]Disabling automatic garbage collection
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9927963Z [command]/usr/bin/git config --local gc.auto 0
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9954720Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9955862Z ##[group]Setting up auth
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9960996Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:10.9990005Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.0301996Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.0329263Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.0498000Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.0531415Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.0532679Z ##[group]Fetching the repository
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.0539428Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7768566Z From https://github.com/francescotinti/rawk
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7770372Z  * [new branch]      master     -> origin/master
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7780592Z [command]/usr/bin/git branch --list --remote origin/master
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7801555Z   origin/master
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7809073Z [command]/usr/bin/git rev-parse refs/remotes/origin/master
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7829120Z a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7833294Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7834935Z ##[group]Determining the checkout info
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7836769Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7837819Z [command]/usr/bin/git sparse-checkout disable
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7875334Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7902912Z ##[group]Checking out the ref
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.7905793Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.8397145Z Reset branch 'master'
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.8399071Z branch 'master' set up to track 'origin/master'.
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.8412589Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.8449084Z [command]/usr/bin/git log -1 --format=%H
+benchmark (ubuntu-24.04-arm, aarch64)	Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:11.8470211Z a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	﻿2026-09-20T20:11:11.8698245Z ##[group]Run test "$(uname -m)" = "$EXPECTED_ARCH"
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8699942Z [36;1mtest "$(uname -m)" = "$EXPECTED_ARCH"[0m
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8701316Z [36;1mrustup toolchain install 1.96.0 --profile minimal[0m
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8702829Z [36;1mif [ "$(uname -s)" = Linux ]; then[0m
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8704029Z [36;1m  sudo apt-get update[0m
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8705293Z [36;1m  sudo apt-get install -y build-essential bison locales time[0m
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8706895Z [36;1m  sudo localedef -i en_US -f UTF-8 en_US.UTF-8[0m
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8708062Z [36;1mfi[0m
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8817907Z shell: /usr/bin/bash -e {0}
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8819139Z env:
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8820413Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8821750Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8822983Z   RUNS: 9
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8823777Z   EXPECTED_ARCH: aarch64
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8824682Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:11.8825689Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:12.3296512Z info: syncing channel updates for 1.96.0-aarch64-unknown-linux-gnu
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:12.5585280Z info: latest update on 2026-05-28 for version 1.96.0 (ac68faa20 2026-05-25)
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:12.5585948Z info: downloading 3 components
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:17.4557632Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:17.4615824Z   1.96.0-aarch64-unknown-linux-gnu installed - rustc 1.96.0 (ac68faa20 2026-05-25)
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:17.4616459Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:17.5543210Z Get:1 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:17.6051976Z Get:2 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [429 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:17.6221567Z Get:3 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [478 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:17.9546390Z Hit:4 http://ports.ubuntu.com/ubuntu-ports noble InRelease
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:18.0247488Z Get:5 http://ports.ubuntu.com/ubuntu-ports noble-updates InRelease [126 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:18.3262956Z Get:6 http://ports.ubuntu.com/ubuntu-ports noble-backports InRelease [126 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:18.4702734Z Get:7 http://ports.ubuntu.com/ubuntu-ports noble-security InRelease [126 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:18.5678802Z Get:8 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 Packages [1323 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:18.8830048Z Get:9 http://ports.ubuntu.com/ubuntu-ports noble-updates/main Translation-en [294 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:18.9663192Z Get:10 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 Components [178 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:19.0440597Z Get:11 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe arm64 Packages [1734 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:19.2223464Z Get:12 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe Translation-en [338 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:19.3006044Z Get:13 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe arm64 Components [387 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:19.3801019Z Get:14 http://ports.ubuntu.com/ubuntu-ports noble-updates/restricted arm64 Packages [2347 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:19.5332886Z Get:15 http://ports.ubuntu.com/ubuntu-ports noble-updates/restricted Translation-en [359 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:19.6073824Z Get:16 http://ports.ubuntu.com/ubuntu-ports noble-updates/multiverse arm64 Packages [78.0 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:19.6780213Z Get:17 http://ports.ubuntu.com/ubuntu-ports noble-updates/multiverse Translation-en [13.1 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:19.8618956Z Get:18 http://ports.ubuntu.com/ubuntu-ports noble-backports/main arm64 Packages [65.8 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:19.9323709Z Get:19 http://ports.ubuntu.com/ubuntu-ports noble-backports/main arm64 Components [3556 B]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.0027698Z Get:20 http://ports.ubuntu.com/ubuntu-ports noble-backports/universe arm64 Packages [34.9 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.0731834Z Get:21 http://ports.ubuntu.com/ubuntu-ports noble-backports/universe Translation-en [18.7 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.1434391Z Get:22 http://ports.ubuntu.com/ubuntu-ports noble-backports/universe arm64 Components [12.6 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.2138822Z Get:23 http://ports.ubuntu.com/ubuntu-ports noble-security/main arm64 Packages [1074 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.2975333Z Get:24 http://ports.ubuntu.com/ubuntu-ports noble-security/main Translation-en [214 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.3697229Z Get:25 http://ports.ubuntu.com/ubuntu-ports noble-security/main arm64 Components [43.3 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.4402429Z Get:26 http://ports.ubuntu.com/ubuntu-ports noble-security/universe arm64 Packages [1289 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.5270935Z Get:27 http://ports.ubuntu.com/ubuntu-ports noble-security/universe Translation-en [243 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.5997613Z Get:28 http://ports.ubuntu.com/ubuntu-ports noble-security/universe arm64 Components [76.3 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.6705963Z Get:29 http://ports.ubuntu.com/ubuntu-ports noble-security/restricted arm64 Packages [2230 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.7697453Z Get:30 http://ports.ubuntu.com/ubuntu-ports noble-security/restricted Translation-en [336 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.8436223Z Get:31 http://ports.ubuntu.com/ubuntu-ports noble-security/multiverse arm64 Packages [73.7 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:20.9144340Z Get:32 http://ports.ubuntu.com/ubuntu-ports noble-security/multiverse Translation-en [11.3 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:24.1198868Z Fetched 14.1 MB in 3s (4136 kB/s)
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:24.9605993Z Reading package lists...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:24.9894229Z Reading package lists...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.1628378Z Building dependency tree...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.1634266Z Reading state information...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.3681119Z time is already the newest version (1.9-0.2build1).
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.3681797Z The following additional packages will be installed:
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.3685895Z   libc-bin libc-dev-bin libc6 libc6-dev
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.3694119Z Suggested packages:
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.3694941Z   bison-doc glibc-doc libnss-nis libnss-nisplus manpages-dev
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.3695418Z Recommended packages:
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.3695672Z   manpages-dev libc-devtools
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.4130025Z The following NEW packages will be installed:
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.4135809Z   build-essential
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.4139356Z The following packages will be upgraded:
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.4146797Z   bison libc-bin libc-dev-bin libc6 libc6-dev locales
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.7246915Z 6 upgraded, 1 newly installed, 0 to remove and 64 not upgraded.
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.7248146Z Need to get 9961 kB of archives.
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.7248509Z After this operation, 19.5 kB of additional disk space will be used.
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:25.7249154Z Get:1 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc6-dev arm64 2.39-0ubuntu8.9 [1596 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:26.5025521Z Get:2 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc-dev-bin arm64 2.39-0ubuntu8.9 [19.7 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:26.5792235Z Get:3 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc6 arm64 2.39-0ubuntu8.9 [2776 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:26.8358056Z Get:4 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc-bin arm64 2.39-0ubuntu8.9 [591 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:26.9221578Z Get:5 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 locales all 2.39-0ubuntu8.9 [4232 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.1564223Z Get:6 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 bison arm64 2:3.8.2+dfsg-1ubuntu0.24.04.1 [740 kB]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.2413195Z Get:7 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 build-essential arm64 12.10ubuntu1 [4932 B]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.4519462Z Preconfiguring packages ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.5232176Z Fetched 9961 kB in 2s (5478 kB/s)
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6085486Z (Reading database ... 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6085913Z (Reading database ... 5%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6086284Z (Reading database ... 10%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6086538Z (Reading database ... 15%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6086777Z (Reading database ... 20%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6087373Z (Reading database ... 25%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6087623Z (Reading database ... 30%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6088699Z (Reading database ... 35%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6089120Z (Reading database ... 40%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6089370Z (Reading database ... 45%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.6090433Z (Reading database ... 50%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:27.7017648Z (Reading database ... 55%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:28.0657794Z (Reading database ... 60%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:28.3195765Z (Reading database ... 65%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:28.4125799Z (Reading database ... 70%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:28.5231323Z (Reading database ... 75%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:29.0055132Z (Reading database ... 80%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:29.5564961Z (Reading database ... 85%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:29.9979977Z (Reading database ... 90%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:30.5745283Z (Reading database ... 95%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:30.5745730Z (Reading database ... 100%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:30.5746302Z (Reading database ... 201140 files and directories currently installed.)
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:30.5788967Z Preparing to unpack .../libc6-dev_2.39-0ubuntu8.9_arm64.deb ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:30.5839417Z Unpacking libc6-dev:arm64 (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:30.7701985Z Preparing to unpack .../libc-dev-bin_2.39-0ubuntu8.9_arm64.deb ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:30.7737251Z Unpacking libc-dev-bin (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:30.8271348Z Preparing to unpack .../libc6_2.39-0ubuntu8.9_arm64.deb ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:30.9249042Z Unpacking libc6:arm64 (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.0997487Z Setting up libc6:arm64 (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4081808Z (Reading database ... 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4082682Z (Reading database ... 5%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4083009Z (Reading database ... 10%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4083393Z (Reading database ... 15%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4083639Z (Reading database ... 20%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4083871Z (Reading database ... 25%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4084191Z (Reading database ... 30%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4084427Z (Reading database ... 35%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4084714Z (Reading database ... 40%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4084961Z (Reading database ... 45%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4085197Z (Reading database ... 50%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4098657Z (Reading database ... 55%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4182315Z (Reading database ... 60%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4205863Z (Reading database ... 65%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4217595Z (Reading database ... 70%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4234650Z (Reading database ... 75%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4262359Z (Reading database ... 80%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4366583Z (Reading database ... 85%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4423371Z (Reading database ... 90%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4570061Z (Reading database ... 95%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4570365Z (Reading database ... 100%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4570856Z (Reading database ... 201140 files and directories currently installed.)
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4597934Z Preparing to unpack .../libc-bin_2.39-0ubuntu8.9_arm64.deb ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.4679696Z Unpacking libc-bin (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.5261838Z Setting up libc-bin (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6338795Z (Reading database ... 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6339409Z (Reading database ... 5%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6340069Z (Reading database ... 10%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6340410Z (Reading database ... 15%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6340763Z (Reading database ... 20%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6341155Z (Reading database ... 25%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6341619Z (Reading database ... 30%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6341945Z (Reading database ... 35%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6342186Z (Reading database ... 40%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6342537Z (Reading database ... 45%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6342911Z (Reading database ... 50%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6356394Z (Reading database ... 55%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6441709Z (Reading database ... 60%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6464718Z (Reading database ... 65%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6477180Z (Reading database ... 70%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6494646Z (Reading database ... 75%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6522678Z (Reading database ... 80%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6626134Z (Reading database ... 85%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6683771Z (Reading database ... 90%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6830631Z (Reading database ... 95%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6831069Z (Reading database ... 100%
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6831417Z (Reading database ... 201140 files and directories currently installed.)
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6858713Z Preparing to unpack .../locales_2.39-0ubuntu8.9_all.deb ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.6929169Z Unpacking locales (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.8900915Z Preparing to unpack .../bison_2%3a3.8.2+dfsg-1ubuntu0.24.04.1_arm64.deb ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:31.9373153Z Unpacking bison (2:3.8.2+dfsg-1ubuntu0.24.04.1) over (2:3.8.2+dfsg-1build2) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:32.0090652Z Selecting previously unselected package build-essential.
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:32.0276443Z Preparing to unpack .../build-essential_12.10ubuntu1_arm64.deb ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:32.0291600Z Unpacking build-essential (12.10ubuntu1) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:32.0650345Z Setting up locales (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:32.4655087Z Generating locales (this might take a while)...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:33.6029184Z   en_US.UTF-8... done
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:33.6029965Z Generation complete.
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:33.6197921Z Setting up bison (2:3.8.2+dfsg-1ubuntu0.24.04.1) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:33.6272276Z Setting up libc-dev-bin (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:33.6304684Z Setting up libc6-dev:arm64 (2.39-0ubuntu8.9) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:33.6335535Z Setting up build-essential (12.10ubuntu1) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:33.6372884Z Processing triggers for man-db (2.12.0-4build2) ...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:33.6448658Z Not building database; man-db/auto-update is not 'true'.
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:35.8515766Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:35.8516518Z Running kernel seems to be up-to-date.
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:35.8516812Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:35.8516907Z Restarting services...
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:35.9726682Z  systemctl restart chrony.service containerd.service cron.service haveged.service hv-kvp-daemon.service multipathd.service packagekit.service php8.3-fpm.service polkit.service rsyslog.service systemd-journald.service systemd-networkd.service systemd-resolved.service systemd-udevd.service udisks2.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2258556Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2259669Z Service restarts being deferred:
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2261159Z  systemctl restart ModemManager.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2268428Z  /etc/needrestart/restart.d/dbus.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2268976Z  systemctl restart docker.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2269807Z  systemctl restart getty@tty1.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2270313Z  systemctl restart hosted-compute-agent.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2270908Z  systemctl restart networkd-dispatcher.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2271376Z  systemctl restart serial-getty@ttyAMA0.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2271876Z  systemctl restart systemd-logind.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2272340Z  systemctl restart walinuxagent.service
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2272667Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2272881Z No containers need to be restarted.
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2273235Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2273469Z User sessions running outdated binaries:
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2273909Z  runner @ user manager service: systemd[1151]
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2370147Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Prepare native tools	2026-09-20T20:11:36.2391323Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	﻿2026-09-20T20:11:38.2618982Z ##[group]Run python3 -m unittest discover -s scripts -p test_benchmark_native.py -v
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.2620149Z [36;1mpython3 -m unittest discover -s scripts -p test_benchmark_native.py -v[0m
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.2657911Z shell: /usr/bin/bash -e {0}
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.2658236Z env:
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.2658553Z   BEFORE: 61009dff859b06e85088dd7c3548a82fad0845c7
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.2658916Z   AFTER: a9659e1355d07abf9fe07c0991d0135cb3a33ed2
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.2659223Z   RUNS: 9
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.2659467Z   EXPECTED_ARCH: aarch64
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.2659988Z   RUSTUP_TOOLCHAIN: 1.96.0
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.2660522Z ##[endgroup]
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.4498163Z test_comparison (test_benchmark_native.NativeBenchmarkTests.test_comparison) ... ok
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.6182547Z test_corpus (test_benchmark_native.NativeBenchmarkTests.test_corpus) ... ok
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.6657211Z tiny 0 {'seconds': {'median_paired_ratio': 1.0030766257641748, 'bootstrap_95_interval': [0.947657741697781, 1.0126903020527274], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 1.0028169014084507, 'bootstrap_95_interval': [1.0, 1.0112994350282485], 'signal': 'inconclusive'}}
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.6950568Z tiny 1 {'seconds': {'median_paired_ratio': 0.991748676556378, 'bootstrap_95_interval': [0.9704587610411524, 1.0335132761265002], 'signal': 'inconclusive'}, 'rss_bytes': {'median_paired_ratio': 0.994413407821229, 'bootstrap_95_interval': [0.9943977591036415, 1.0056497175141244], 'signal': 'inconclusive'}}
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.6960360Z test_exact_output_failure_report (test_benchmark_native.NativeBenchmarkTests.test_exact_output_failure_report) ... ok
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.6961398Z test_locale (test_benchmark_native.NativeBenchmarkTests.test_locale) ... ok
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.7543346Z test_native_process (test_benchmark_native.NativeBenchmarkTests.test_native_process) ... ok
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.7543808Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.7544147Z ----------------------------------------------------------------------
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.7544584Z Ran 5 tests in 0.319s
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.7544743Z 
+benchmark (ubuntu-24.04-arm, aarch64)	Test harness	2026-09-20T20:11:38.7544815Z OK
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	﻿2026-09-20T20:11:38.7864843Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.7866558Z Post job cleanup.
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8541728Z [command]/usr/bin/git version
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8574204Z git version 2.55.0
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8607117Z Temporarily overriding HOME='/home/runner/work/_temp/a3ab7b00-f70d-4576-8a93-9c7718fb9f1c' before making global git config changes
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8607923Z Adding repository directory to the temporary git global config as a safe directory
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8612493Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/rawk/rawk
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8642528Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8674009Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8852000Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8864390Z http.https://github.com/.extraheader
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8874899Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+benchmark (ubuntu-24.04-arm, aarch64)	Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683	2026-09-20T20:11:38.8910975Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+benchmark (ubuntu-24.04-arm, aarch64)	Complete job	﻿2026-09-20T20:11:38.9217859Z Cleaning up orphan processes
+benchmark (ubuntu-24.04-arm, aarch64)	Complete job	2026-09-20T20:11:38.9717590Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

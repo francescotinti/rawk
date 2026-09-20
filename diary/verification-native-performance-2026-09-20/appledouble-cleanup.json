@@ -1,0 +1,11 @@
+[
+  "docs/._PERFORMANCE.md",
+  ".github/workflows/._performance.yml",
+  "scripts/._benchmark_native.py",
+  "scripts/._prepare_native_benchmark.py",
+  "scripts/._record_benchmark_oracle.py",
+  "scripts/._test_benchmark_native.py",
+  "scripts/._summarize_native_benchmark.py",
+  "diary/._2026-09-20-native-performance.md",
+  "diary/verification-io-memory-2026-09-20/._appledouble-final.json"
+]
