@@ -1,0 +1,12 @@
+{
+  "removed_appledouble_files": [
+    "._STATO_PROGETTO.md",
+    "audit-2026-09-19/._PIANO_DI_LAVORO.md",
+    "diary/._2026-09-20-shift-jis-rs.md",
+    "diary/verification-shift-jis-rs-2026-09-20/._linux-x86-check.log",
+    "diary/verification-shift-jis-rs-2026-09-20/._summary.json",
+    "diary/verification-shift-jis-rs-2026-09-20/._linux-arm-check.log"
+  ],
+  "command": "bash scripts/checks.sh check_no_macos_forks",
+  "exit": 0
+}

@@ -9,6 +9,7 @@ pub(crate) struct RecordReader {
     start: usize,
     eof: bool,
     separator: Option<(Vec<u8>, std::rc::Rc<crate::ere::Ere>)>,
+    stream_separator: Option<(Vec<u8>, std::rc::Rc<crate::ere::stream::StreamEre>)>,
 }
 
 impl RecordReader {
@@ -63,6 +64,7 @@ impl RecordReader {
             start: 0,
             eof: false,
             separator: None,
+            stream_separator: None,
         }
     }
 
@@ -85,6 +87,9 @@ impl RecordReader {
     }
 
     pub(crate) fn next(&mut self, rs: &[u8]) -> io::Result<Option<(Vec<u8>, Vec<u8>)>> {
+        if rs.len() > 1 && crate::text::shift_jis() {
+            return self.next_shift_jis(rs);
+        }
         let regex = if rs.len() != 1 {
             if self.separator.as_ref().is_none_or(|(key, _)| key != rs) {
                 let re = crate::ere::Ere::new(if rs.is_empty() { b"\n\n+" } else { rs })
@@ -158,6 +163,40 @@ impl RecordReader {
                 return Ok(Some((record, Vec::new())));
             }
             self.fill()?;
+        }
+    }
+
+    fn next_shift_jis(&mut self, rs: &[u8]) -> io::Result<Option<(Vec<u8>, Vec<u8>)>> {
+        use crate::ere::stream::{Progress, StreamEre};
+        if self
+            .stream_separator
+            .as_ref()
+            .is_none_or(|(key, _)| key != rs)
+        {
+            let re =
+                StreamEre::new(rs).map_err(|e| io::Error::new(io::ErrorKind::InvalidInput, e))?;
+            self.stream_separator = Some((rs.to_vec(), std::rc::Rc::new(re)));
+        }
+        let re = self.stream_separator.as_ref().unwrap().1.clone();
+        let mut search = re.search(self.start == 0);
+        loop {
+            match search.resume(self.remaining(), self.eof) {
+                Progress::NeedMore => self.fill()?,
+                Progress::Found { start, end } => {
+                    let record = self.remaining()[..start].to_vec();
+                    let rt = self.remaining()[start..end].to_vec();
+                    self.start += end;
+                    return Ok(Some((record, rt)));
+                }
+                Progress::Done => {
+                    if self.remaining().is_empty() {
+                        return Ok(None);
+                    }
+                    let record = self.remaining().to_vec();
+                    self.start = self.buffer.len();
+                    return Ok(Some((record, Vec::new())));
+                }
+            }
         }
     }
 }

@@ -1,0 +1,2048 @@
+{
+  "exact_matches": 2440,
+  "known_c_ungetc_errors": 408,
+  "auxiliary_matches": 408,
+  "unexpected": 0,
+  "cases": [
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9e18082a0617ae982a0ffe180807af0908080e180e1800a7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e978e18080e96182a00aff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "fff0908080f0908080f090808061ff610a0ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080e1808082a0e180ff78f0908080e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ae18080e18080e9c3a9f0908080c3a9e961ffc3a978610ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ac3a982a0ff0ae90af0908080c3a90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180807ae180e180ff0ac3a9e982a0f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b615d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e9ffc3a9e180ffc3a9e180e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080ffe9e1807a82a07a82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "7a0aff78780a82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ac3a9f0908080e18080e1808082a0ffc3a97a0a82a0f090808061e180e90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0f0908080ffe97878e18082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a97ac3a9c3a9e18080e18080e9f0908080fffff09080807878",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5b5d5b5d5b615d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a978c3a9e1800af0908080e9ff7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e97ac3a978f0908080787ae9e9c3a9ff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5ba05d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5ba05d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe9f090808061787a0ac3a9e982a061e18080ff82a0e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18080f0908080c3a9e1808082a0e180800ac3a9ffe978f09080806182a0e9f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "6182a00affc3a9e18080e180ff6178e9e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a9c3a982a00ae18080e18080ffc3a9e1800ae1800af0908080e180e180e1807a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"..\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9e18082a0617ae982a0ffe180807af0908080e180e1800a7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b0a7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "e978e18080e96182a00aff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b0afe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5be1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "fff0908080f0908080f090808061ff610a0ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5be1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080e1808082a0e180ff78f0908080e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5be1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180807ae180e180ff0ac3a9e982a0f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b80615d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e9ffc3a9e180ffc3a9e180e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080ffe9e1807a82a07a82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ac3a9f0908080e18080e1808082a0ffc3a97a0a82a0f090808061e180e90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5be90a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b0ae95d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0f0908080ffe97878e18082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a97ac3a9c3a9e18080e18080e9f0908080fffff09080807878",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a978c3a9e1800af0908080e9ff7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5bfe7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5bc3a95d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e97ac3a978f0908080787ae9e9c3a9ff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5ba05d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18080f0908080c3a9e1808082a0e180800ac3a9ffe978f09080806182a0e9f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b80615d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b80805d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "6182a00affc3a9e18080e180ff6178e9e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b615d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a9c3a982a00ae18080e18080ffc3a9e1800ae1800af0908080e180e180e1807a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"...\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9e18082a0617ae982a0ffe180807af0908080e180e1800a7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e978e18080e96182a00aff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "fff0908080f0908080f090808061ff610a0ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080e1808082a0e180ff78f0908080e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ae18080e18080e9c3a9f0908080c3a9e961ffc3a978610ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ac3a982a0ff0ae90af0908080c3a90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180807ae180e180ff0ac3a9e982a0f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e9ffc3a9e180ffc3a9e180e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080ffe9e1807a82a07a82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7a0aff78780a82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ac3a9f0908080e18080e1808082a0ffc3a97a0a82a0f090808061e180e90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0f0908080ffe97878e18082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a97ac3a9c3a9e18080e18080e9f0908080fffff09080807878",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a978c3a9e1800af0908080e9ff7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e97ac3a978f0908080787ae9e9c3a9ff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a9ff617a0a61e180e180e18080e90ae1800a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe9f090808061787a0ac3a9e982a061e18080ff82a0e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18080f0908080c3a9e1808082a0e180800ac3a9ffe978f09080806182a0e9f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "6182a00affc3a9e18080e180ff6178e9e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a9ffc3a9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a9c3a982a00ae18080e18080ffc3a9e1800ae1800af0908080e180e180e1807a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9e18082a0617ae982a0ffe180807af0908080e180e1800a7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e978e18080e96182a00aff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "fff0908080f0908080f090808061ff610a0ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080e1808082a0e180ff78f0908080e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180807ae180e180ff0ac3a9e982a0f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e9ffc3a9e180ffc3a9e180e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080ffe9e1807a82a07a82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ac3a9f0908080e18080e1808082a0ffc3a97a0a82a0f090808061e180e90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0f0908080ffe97878e18082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a97ac3a9c3a9e18080e18080e9f0908080fffff09080807878",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a978c3a9e1800af0908080e9ff7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e97ac3a978f0908080787ae9e9c3a9ff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18080f0908080c3a9e1808082a0e180800ac3a9ffe978f09080806182a0e9f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "6182a00affc3a9e18080e180ff6178e9e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a9c3a982a00ae18080e18080ffc3a9e1800ae1800af0908080e180e180e1807a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{1,3}\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ac3a982a0ff0ae90af0908080c3a90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180807ae180e180ff0ac3a9e982a0f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080ffe9e1807a82a07a82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ac3a9f0908080e18080e1808082a0ffc3a97a0a82a0f090808061e180e90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a97ac3a9c3a9e18080e18080e9f0908080fffff09080807878",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe9f090808061787a0ac3a9e982a061e18080ff82a0e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18080f0908080c3a9e1808082a0e180800ac3a9ffe978f09080806182a0e9f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "6182a00affc3a9e18080e180ff6178e9e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a9c3a982a00ae18080e18080ffc3a9e1800ae1800af0908080e180e180e1807a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\".{2,4}\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefee180805d5be9e9fe5d5b6182a05d5bc3a9610ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5bfe6182a00ae180805d5b61e9c3a9e180c3a9e1808082a05d5bfe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7a0aff78780a82a0",
+      "substituted_c_stdout_hex": "5b5d5b0afe5d5b0a82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5be9fee95d5b0afe5d5be95d5bc3a90a0ae95d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5be1805d5b6161fefec3a9fef09080800a82a0f09080800a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5bfee95d5bfe5d5b615d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5bfefe5d5be180e1805d5bfe5d5bf090808082a05d5be180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5bc3a95d5bfe61615d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5bfe5d5bfe82a082a05d5b82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5bf0908080fee9c3a9e18080615d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a05d5b82a0615d5bfe82a082a05d5be1806161e18080e1808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5be18082a05d5be180fe0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5bfe0ae1808082a082a05d5bfe0afe82a0c3a9fee18082a05d5be180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5bfec3a90ae180805d5bf0908080c3a9e1805d5b0afefe82a00a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"[xz]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5be1805d5bfee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^x]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^x]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5b5d5b78785d5b785d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^x]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^x]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^x]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^x]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b5d5b785d5b785d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^x]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefee180805d5be9e9fe5d5b82a05d5bc3a95d5b0ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "fff0908080f0908080f090808061ff610a0ae180",
+      "substituted_c_stdout_hex": "5bfef0908080f0908080f09080805d5bfe5d5b0a0ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ae18080e18080e9c3a9f0908080c3a9e961ffc3a978610ae180",
+      "substituted_c_stdout_hex": "5b0a0ae18080e18080e9c3a9f0908080c3a9e95d5bfec3a95d5b0ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5bfe5d5b82a00ae180805d5be9c3a9e180c3a9e1808082a05d5bfe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5bfee1800a5d5be18080e982a05d5bc3a95d5be95d5be9fee180e1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "7a0aff78780a82a0",
+      "substituted_c_stdout_hex": "5b5d5b0afe5d5b0a82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5be9fee95d5b0afe5d5be95d5bc3a90a0ae95d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5be1805d5bfefec3a9fef09080800a82a0f09080800a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5bfee95d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5bfefe5d5be180e1805d5bfe5d5bf090808082a05d5be180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5bc3a95d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b82a0e9fe5d5b0ae982a0f0908080e9fee9e180800a5d5bfefec3a95d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5bfe5d5bfe82a082a05d5b82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5bf0908080fee9c3a9e180805d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a05d5b82a05d5bfe82a082a05d5be1805d5be18080e1808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5be18082a05d5be180fe0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5bfe0ae1808082a082a05d5bfe0afe82a0c3a9fee18082a05d5be180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5bfec3a90ae180805d5bf0908080c3a9e1805d5b0afefe82a00a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z]*\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5be1805d5bfee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "e978e18080e96182a00aff",
+      "substituted_c_stdout_hex": "5be95d5b8080e95d5ba00afe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefee180805d5be9fe5d5b82a05d5b5d5be1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5be180e180fe82a05d5b5d5b805d5b8080fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5bfee1800a5d5be982a05d5b5d5b5d5bfee180e180785d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b82a0c3a95d5b80e9c3a95d5bfee90a5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5bfe5d5b5d5b82a0fe5d5b8080fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "7a0aff78780a82a0",
+      "substituted_c_stdout_hex": "5b5d5bfe5d5b0a82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5be9fee95d5b0afe5d5b5d5b0a0ae95d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5be1805d5b5d5bfec3a9fef09080800a82a0f09080800a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b82a0e9fe5d5be982a0f0908080e9fee9e180800a5d5bfec3a95d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5b908080fee9c3a9e180805d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a05d5ba05d5bfe82a082a05d5b805d5be18080e1808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5be18082a05d5b80fe0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe9f090808061787a0ac3a9e982a061e18080ff82a0e180",
+      "substituted_c_stdout_hex": "5bfee9f09080805d5b5d5bc3a9e982a05d5b8080fe82a0e1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5bfe0ae1808082a082a05d5b0afe82a0c3a9fee18082a05d5b80805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[a-z].\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5bfec3a90ae180805d5b908080c3a9e1805d5bfefe82a00a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"x.*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5bfe5d5be18080fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"x.*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e97ac3a978f0908080787ae9e9c3a9ff82a0",
+      "substituted_c_stdout_hex": "5bf0908080c3a9e97ac3a95d5be9e9c3a9fe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"x.*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe9f090808061787a0ac3a9e982a061e18080ff82a0e180",
+      "substituted_c_stdout_hex": "5bfee9f0908080615d5b0ac3a9e982a061e18080fe82a0e1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"x.+z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5bfe5d5be18080fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"x.+z\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e97ac3a978f0908080787ae9e9c3a9ff82a0",
+      "substituted_c_stdout_hex": "5bf0908080c3a9e97ac3a95d5be9e9c3a9fe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.|x)z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5bfe6182a00a5d5b61e9c3a9e180c3a9e18080825d5bfe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.|x)z\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5be15d5b6161fefec3a9fef09080800a82a0f09080800a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.|x)z\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5be180825d5be180fe0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.|x)z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5bfe0ae1808082a0825d5bfe0afe82a0c3a9fee18082a078e180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.|x)z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5bfec3a90ae180807af0908080c3a9e15d5b0afefe82a00a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefee180805d5be9e9fe5d5b615d5bc3a9610ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5bfe6182a05d5b61e9c3a9e180c3a9e180805d5bfe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5b5d5b6161fefec3a9fef09080800a82a0f09080800a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5bfefe5d5b5d5be180e1805d5bfe5d5bf09080805d5be180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5bc3a95d5bfe61615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5bfe5d5bfe82a05d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b7af0908080fee9c3a9e18080615d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a05d5b82a0615d5bfe82a082a05d5be1806161e18080e1808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5bfe0ae1808082a05d5bfe0afe82a0c3a9fee18082a05d5be180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5bfec3a90ae180807af0908080c3a95d5b0afefe82a00a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b7ae1805d5bfee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|x..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefee180805d5be9e9fe5d5b6182a07ac3a9610ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|x..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5bfee1800a61e18080e982a07ac3a95d5be961e9fee180e1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|x..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5bfee95d5bfe7a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|x..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5bfefe5d5b5d5be180e1805d5bfe5d5bf090808082a07ae180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|x..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5bc3a95d5bfe61615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|x..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5bfe5d5bfe82a082a07a82a07a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|x..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b7af0908080fee9c3a9e18080615d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|x..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a05d5b82a0615d5bfe82a082a05d5be1806161e18080e1808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|x..z)\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b7ae1805d5bfee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"x?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefee180805d5be9e9fe5d5b6182a07ac3a9610ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"x?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5bfee95d5bfe7a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"x?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5bfefe5d5b5d5be180e1805d5bfe5d5bf090808082a07ae180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"x?\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5bc3a95d5bfe61615d"
+    },
+    {
+      "program": "BEGIN{RS=\"x?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5bfe5d5bfe82a082a07a82a07a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"x?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b7af0908080fee9c3a9e18080615d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"x?\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a05d5b82a0615d5bfe82a082a05d5be1806161e18080e1808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"x?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b7ae1805d5bfee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"x*\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefee180805d5be9e9fe5d5b6182a07ac3a9610ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"x*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5bfee95d5bfe7a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"x*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5bfefe5d5be180e1805d5bfe5d5bf090808082a07ae180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"x*\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5bc3a95d5bfe61615d"
+    },
+    {
+      "program": "BEGIN{RS=\"x*\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5bfe5d5bfe82a082a07a82a07a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"x*\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b7af0908080fee9c3a9e18080615d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"x*\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a05d5b82a0615d5bfe82a082a05d5be1806161e18080e1808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"x*\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b7ae1805d5bfee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"^..\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5b5d5bfee1808078e9e9fe786182a07ac3a9610ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"^..\"}{printf \"[%s]\",$0}",
+      "input_hex": "7a0aff78780a82a0",
+      "substituted_c_stdout_hex": "5b5d5bfe78780a82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"^..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5b5d5b78fe7a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"^..\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5b5d5bfe61615d"
+    },
+    {
+      "program": "BEGIN{RS=\"^..\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b5d5be9fe7a0ae982a0f0908080e9fee9e180800a61fefec3a95d"
+    },
+    {
+      "program": "BEGIN{RS=\"^..\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5b5d5bfe82a082a07a82a07a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|$)\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefee180805d5be9e9fe5d5b6182a07ac3a9610ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|$)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5bfee95d5bfe7a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|$)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5bfefe5d5b5d5be180e1805d5bfe5d5bf090808082a07ae180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|$)\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5bc3a95d5bfe61615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|$)\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5bfe5d5bfe82a082a07a82a07a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|$)\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b7af0908080fee9c3a9e18080615d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|$)\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a05d5b82a0615d5bfe82a082a05d5be1806161e18080e1808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|$)\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b7ae1805d5bfee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9e18082a0617ae982a0ffe180807af0908080e180e1800a7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e978e18080e96182a00aff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "fff0908080f0908080f090808061ff610a0ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080e1808082a0e180ff78f0908080e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ae18080e18080e9c3a9f0908080c3a9e961ffc3a978610ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ac3a982a0ff0ae90af0908080c3a90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180807ae180e180ff0ac3a9e982a0f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e9ffc3a9e180ffc3a9e180e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080ffe9e1807a82a07a82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7a0aff78780a82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ac3a9f0908080e18080e1808082a0ffc3a97a0a82a0f090808061e180e90a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0f0908080ffe97878e18082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a97ac3a9c3a9e18080e18080e9f0908080fffff09080807878",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5b5d5b5d5b615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a978c3a9e1800af0908080e9ff7a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e97ac3a978f0908080787ae9e9c3a9ff82a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5ba05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5ba05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe9f090808061787a0ac3a9e982a061e18080ff82a0e180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18080f0908080c3a9e1808082a0e180800ac3a9ffe978f09080806182a0e9f090808061",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "6182a00affc3a9e18080e180ff6178e9e18080",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a9c3a982a00ae18080e18080ffc3a9e1800ae1800af0908080e180e180e1807a",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(..)?\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5b5d5b5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9e18082a0617ae982a0ffe180807af0908080e180e1800a7a",
+      "substituted_c_stdout_hex": "5be9e180825d5be982a0fee180807af0908080e180e15d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefe5d5be9e95d5b615d5bc3a9610ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5bfe6182a05d5b61e9c3a9e180c3a9e180805d5bfe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5be180e180fe5d5be97a5d5be18080fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5bfee1800a61e18080e982a07a5d5be961e9fee180e15d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b82a0c3a961e1805d5be18080fe5d5be1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b7ae18080825d5be18080fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5be95d5b7a0a5d5bc3a90a0ae95d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5b5d5b6161fefec3a9fef09080800a82a0f09080800a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5bfe5d5bfe7a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5b5d5bfe61615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5b5d5bfe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b7af0908080fee9c3a9e180805d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b825d5b82a05d5bfe82a0825d5be1806161e18080e1808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5bfe0ae1808082a05d5bfe0afe82a0c3a9fee180825d5be180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5bfec3a90ae180807af0908080c3a95d5b0afefe82a00a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(.x|..z)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b7ae15d5bfee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e978e18080e96182a00aff",
+      "substituted_c_stdout_hex": "5b5d5b78e180805d5b615d5b0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "fff0908080f0908080f090808061ff610a0ae180",
+      "substituted_c_stdout_hex": "5b5d5b615d5b610a0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ae18080e18080e9c3a9f0908080c3a9e961ffc3a978610ae180",
+      "substituted_c_stdout_hex": "5b0a0a5d5b5d5b615d5b78610a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5b5d5b615d5b0ae180807a615d5b5d5b7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5b5d5b785d5b7a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5b5d5b78785d5b785d5b785d5b7ae180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5b5d5b785d5b61615d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b5d5b7a0a5d5b0a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5b5d5b785d5b7a5d5b7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b7a5d5b5d5b61785d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b5d5b785d5b61785d5b785d5b61615d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5b5d5b0ae180805d5b7a5d5b0a5d5b5d5b78e180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "6182a00affc3a9e18080e180ff6178e9e18080",
+      "substituted_c_stdout_hex": "5b615d5b0a5d5b61785d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5b5d5b0ae180807a5d5b7a0a5d5b0a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"[\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b7a5d5b785d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u1000+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5be180e180fe82a07ae97ae1807a5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u1000+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b82a0c3a961e180e9c3a97a5d5bfee90a7ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u1000+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5bfe787a7ae1808082a0fe7a5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080e1808082a0e180ff78f0908080e180",
+      "substituted_c_stdout_hex": "5bf09080805d5b8082a05d5bfe78f09080805d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5b5d5bfe82a07ae97a5d5b7ae18080fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180807ae180e180ff0ac3a9e982a0f090808061",
+      "substituted_c_stdout_hex": "5b5d5b807a5d5b5d5bfe0ac3a9e982a0f0908080615d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e9ffc3a9e180ffc3a9e180e180",
+      "substituted_c_stdout_hex": "5bf0908080c3a9e9fec3a95d5bfec3a95d5b5d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b82a0c3a9615d5be9c3a97a5d5b80fee90a7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5bfefe78785d5b5d5b78fe78f090808082a07a5d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5b5d5b82a07a5d5bfe0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe9f090808061787a0ac3a9e982a061e18080ff82a0e180",
+      "substituted_c_stdout_hex": "5bfee9f090808061787a0ac3a9e982a0615d5b80fe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "6182a00affc3a9e18080e180ff6178e9e18080",
+      "substituted_c_stdout_hex": "5b6182a00afec3a9e180805d5bfe6178e95d5b805d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a9c3a982a00ae18080e18080ffc3a9e1800ae1800af0908080e180e180e1807a",
+      "substituted_c_stdout_hex": "5bc3a9c3a982a00ae180805d5b80fec3a95d5b0a5d5b0af09080805d5b5d5b5d5b7a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"\\\\u00e1.\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b7a5d5b78fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9e18082a0617ae982a0ffe180807af0908080e180e1800a7a",
+      "substituted_c_stdout_hex": "5be95d5ba05d5bfe5d5bf0908080e180e1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e978e18080e96182a00aff",
+      "substituted_c_stdout_hex": "5be95d5be18080e95d5b82a05d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffffe1808078e9e9ff786182a07ac3a9610ae180",
+      "substituted_c_stdout_hex": "5be9fefe5d5be9e9fe5d5b82a05d5bc3a95d5be1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "fff0908080f0908080f090808061ff610a0ae180",
+      "substituted_c_stdout_hex": "5bfef0908080f0908080f09080805d5bfe5d5be1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ae18080e18080e9c3a9f0908080c3a9e961ffc3a978610ae180",
+      "substituted_c_stdout_hex": "5b5d5be180805d5be9c3a9f0908080c3a9e95d5bfec3a95d5be1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5bfe5d5b82a05d5be9c3a9e180c3a95d5b82a05d5bfe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5be180e180fe82a05d5be95d5be1805d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5bfee1805d5be982a05d5bc3a95d5be95d5be9fee180e1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5bfe5d5be1808082a0fe5d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7a0aff78780a82a0",
+      "substituted_c_stdout_hex": "5b5d5bfe5d5b82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5be9fee95d5bfe5d5be95d5bc3a95d5be95d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5be1805d5bfefec3a9fef09080805d5b82a0f09080805d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe978ff7a61",
+      "substituted_c_stdout_hex": "5bfee95d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffff7878e180e18078ff78f090808082a07ae18080",
+      "substituted_c_stdout_hex": "5bfefe5d5be180e1805d5bfe5d5bf090808082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a978ff6161",
+      "substituted_c_stdout_hex": "5bc3a95d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b82a0e9fe5d5be982a0f0908080e9fee9e180805d5bfefec3a95d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff78ff82a082a07a82a07a",
+      "substituted_c_stdout_hex": "5bfe5d5bfe82a082a05d5b82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5bf0908080fee9c3a9e180805d5bfe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a05d5b82a05d5bfe82a082a05d5be1805d5be180805d5b82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5be18082a05d5be180fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5bfe5d5be1808082a082a05d5bfe5d5bfe82a0c3a9fee18082a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "6182a00affc3a9e18080e180ff6178e9e18080",
+      "substituted_c_stdout_hex": "5b5d5b82a05d5bfec3a95d5be180fe5d5be95d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5bfec3a95d5be180805d5bf0908080c3a9e1805d5bfefe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"[^\\\\200-\\\\377]+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5be1805d5bfee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff6182a00ae180807a61e9c3a9e180c3a9e1808082a07aff82a0",
+      "substituted_c_stdout_hex": "5b5d5bfe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180e180ff82a07ae97ae1807ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5be18080fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "e180807ae180e180ff0ac3a9e982a0f090808061",
+      "substituted_c_stdout_hex": "5be180805d5be180e180fe0ac3a9e982a0f0908080615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5bfe5d5bc3a978e961e9fee180e180785d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0c3a961e180e9c3a97ae18080ffe90a7ae180",
+      "substituted_c_stdout_hex": "5b5d5b5d5be1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff787a7ae1808082a0ff7ae18080ff",
+      "substituted_c_stdout_hex": "5b5d5be18080fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "7a0aff78780a82a0",
+      "substituted_c_stdout_hex": "5b5d5b0afe78780a82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "e9ffe97a7a0aff78e978c3a90a0ae9",
+      "substituted_c_stdout_hex": "5b5d5b0afe78e978c3a90a0ae95d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5b5d5b6161fefec3a9fef09080800a82a0f09080800a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "c3a97ac3a9c3a9e18080e18080e9f0908080fffff09080807878",
+      "substituted_c_stdout_hex": "5bc3a95d5bc3a9c3a9e18080e18080e9f0908080fefef090808078785d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b5d5b0ae982a0f0908080e9fee9e180800a61fefec3a95d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "f0908080c3a9e97ac3a978f0908080787ae9e9c3a9ff82a0",
+      "substituted_c_stdout_hex": "5b5d5be9e9c3a9fe82a05d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b5d5bf0908080fee9c3a9e180806178fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "e18082a07ae180ff0a",
+      "substituted_c_stdout_hex": "5b5d5be180fe0a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe9f090808061787a0ac3a9e982a061e18080ff82a0e180",
+      "substituted_c_stdout_hex": "5b5d5b0ac3a9e982a061e18080fe82a0e1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ff0ae1808082a082a07aff0aff82a0c3a9ffe18082a078e18080",
+      "substituted_c_stdout_hex": "5bfe5d5bfe0afe82a0c3a9fee18082a078e180805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffc3a90ae180807af0908080c3a9e1807a0affff82a00a61",
+      "substituted_c_stdout_hex": "5b5d5b0afefe82a00a615d"
+    },
+    {
+      "program": "BEGIN{RS=\"(x|..)*z\"}{printf \"[%s]\",$0}",
+      "input_hex": "7ae18078ffe180",
+      "substituted_c_stdout_hex": "5b5d5be18078fee1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(a|aa)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "fff0908080f0908080f090808061ff610a0ae180",
+      "substituted_c_stdout_hex": "5bfef0908080f0908080f09080805d5bfe5d5b0a0ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(a|aa)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "0a0ae18080e18080e9c3a9f0908080c3a9e961ffc3a978610ae180",
+      "substituted_c_stdout_hex": "5b0a0ae18080e18080e9c3a9f0908080c3a9e95d5bfec3a9785d5b0ae1805d"
+    },
+    {
+      "program": "BEGIN{RS=\"(a|aa)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "ffe1800a61e18080e982a07ac3a978e961e9ffe180e18078",
+      "substituted_c_stdout_hex": "5bfee1800a5d5be18080e982a07ac3a978e95d5be9fee180e180785d"
+    },
+    {
+      "program": "BEGIN{RS=\"(a|aa)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "e1807a6161ffffc3a9fff09080800a82a0f09080800a",
+      "substituted_c_stdout_hex": "5be1807a5d5bfefec3a9fef09080800a82a0f09080800a5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(a|aa)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a0e9ff7a0ae982a0f0908080e9ffe9e180800a61ffffc3a9",
+      "substituted_c_stdout_hex": "5b82a0e9fe7a0ae982a0f0908080e9fee9e180800a5d5bfefec3a95d"
+    },
+    {
+      "program": "BEGIN{RS=\"(a|aa)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "7af0908080ffe9c3a9e180806178ff",
+      "substituted_c_stdout_hex": "5b7af0908080fee9c3a9e180805d5b78fe5d"
+    },
+    {
+      "program": "BEGIN{RS=\"(a|aa)+\"}{printf \"[%s]\",$0}",
+      "input_hex": "82a07882a06178ff82a082a078e1806161e18080e1808082a0",
+      "substituted_c_stdout_hex": "5b82a07882a05d5b78fe82a082a078e1805d5be18080e1808082a05d"
+    }
+  ]
+}

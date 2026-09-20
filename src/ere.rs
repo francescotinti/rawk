@@ -8,6 +8,8 @@ use regex_automata::{
     util::syntax,
 };
 
+pub(crate) mod stream;
+
 #[derive(Clone)]
 pub(crate) struct Ere {
     locator: regex::bytes::Regex,

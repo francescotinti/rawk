@@ -141,7 +141,6 @@ fn record_separators_and_locale_precedence_match_c() {
 }
 
 #[test]
-#[ignore = "Open C fnematch lookahead discrepancy; see diary/2026-09-20-shift-jis.md"]
 fn regex_rs_with_three_or_four_byte_structural_units_matches_c() {
     // Keep the exact differential regression; do not replace C's expectation
     // with Rust's result. C refills in MB_CUR_MAX=2 chunks in ja_JP.SJIS.
@@ -180,4 +179,66 @@ fn embedded_nul_preserves_the_rust_binary_extension() {
         b"a\0\xe9",
     );
     assert_eq!(out.code, Some(2));
+}
+
+#[test]
+fn regex_rs_refill_restart_longest_and_anchors_match_c() {
+    for separator in [
+        "..", ".+", "...", "z+", ".z", "x.*z", "(x|..z)", "(x|x..z)", "x?", "^..", "..$", "^..$",
+        "[xz]+", "[^x]+", "(x|$)",
+    ] {
+        let program = format!(r#"BEGIN{{RS="{separator}"}}{{printf "[%s]",$0}}"#);
+        for seq in [
+            &b"\xc3\xa9"[..],
+            &b"\xe1\x80\x80"[..],
+            &b"\xf0\x90\x80\x80"[..],
+        ] {
+            for prefix in [b"".as_slice(), b"a", b"aa", b"x"] {
+                let input = [prefix, seq, b"z", seq, b"xy\n"].concat();
+                compare(&program, &input);
+            }
+        }
+    }
+}
+
+#[test]
+fn regex_rs_sjis_refill_across_input_buffers_and_getline_matches_c() {
+    for padding in [8190, 8191, 8192, 8193] {
+        let input = [
+            vec![b'a'; padding],
+            b"\xe1\x80\x80z\xf0\x90\x80\x80z".to_vec(),
+        ]
+        .concat();
+        for program in [
+            r#"BEGIN{RS="z+"}{print NR,length($0)}"#,
+            r#"BEGIN{RS="..";while((getline x)>0)print length(x),x}"#,
+        ] {
+            compare(program, &input);
+        }
+    }
+    for input in [b"\xe1\x80".as_slice(), b"\xf0\x90\x80", b"a\xe1\x80\x80z"] {
+        compare(r#"BEGIN{RS=".."}{printf "[%s]",$0;RS=".+"}"#, input);
+    }
+}
+
+#[test]
+fn streaming_rs_keeps_binary_data_distinct_from_eof() {
+    let out = run(
+        Path::new(env!("CARGO_BIN_EXE_rawk")),
+        r#"BEGIN{RS="z+"}{printf "[%s]",$0}"#,
+        b"a\0bzzc\0d",
+    );
+    assert_eq!(out.code, Some(0));
+    assert!(out.stderr.is_empty());
+    assert_eq!(out.stdout, b"[a\0b][c\0d]");
+    // C's ungetc(*char, ...) can mistake signed FF for EOF on Darwin.
+    // Keep rawk's existing byte-preservation contract instead of that error.
+    let out = run(
+        Path::new(env!("CARGO_BIN_EXE_rawk")),
+        r#"BEGIN{RS="x+"}{printf "[%s]",$0}"#,
+        b"ax\xffz",
+    );
+    assert_eq!(out.code, Some(0));
+    assert!(out.stderr.is_empty());
+    assert_eq!(out.stdout, b"[a][\xffz]");
 }

@@ -2,12 +2,12 @@
 
 ## Avanzamento — 20 settembre 2026
 
-Implementazione e convalida Darwin del profilo delimitato descritte nel
-[rapporto](../../diary/2026-09-20-shift-jis.md). Conversioni e unità BWK
-implementate; rimane aperta la divergenza di `fnematch`/RS su sequenze
-strutturali di 3/4 byte. Il test differenziale è conservato con `ignore`
-esplicito: non dichiarare compatibilità completa o test interamente verdi
-senza citare questa esclusione. Linux nativo resta sospeso.
+Conversioni, unità BWK e residuo `fnematch`/RS implementati e verificati su
+Darwin ARM64. La regressione sulle sequenze strutturali di 3/4 byte è stata
+riattivata senza modificarne l'oracolo. Leggere la [consegna RS](../../diary/2026-09-20-shift-jis-rs.md)
+e il [rapporto iniziale](../../diary/2026-09-20-shift-jis.md) per contratti ed
+evidenze. Linux nativo resta sospeso; nessuna dichiarazione di supporto
+universale di codifiche o piattaforme.
 
 ## Obiettivo
 

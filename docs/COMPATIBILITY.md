@@ -88,10 +88,12 @@ UTF-8 anche qui. NUL interni e stampa atomica su errore rimangono estensioni
 deliberate Rust. Verificato su Darwin ARM64, incluse 11.280 coppie valide per
 entrambe le conversioni.
 
-Rimane una divergenza nei separatori RS regex con sequenze strutturali di
-tre/quattro byte: il C le decodifica in funzione del riempimento del buffer.
-Il test differenziale corrispondente è esplicitamente ignorato, non passato.
-Linux nativo resta sospeso; non si dichiara supporto Shift-JIS completo.
-[Contratto, controesempio e verifiche](../diary/2026-09-20-shift-jis.md).
+Il residuo nei separatori RS regex con sequenze strutturali di tre/quattro
+byte è corretto: un automa dedicato riproduce i gruppi di lettura e i riavvii
+di `fnematch`, senza cambiare le regex in memoria. La regressione è attiva;
+non rimangono ignore per Shift-JIS. Rust conserva i byte FF anche nei casi
+in cui l'oracolo Darwin fallisce passando un `char` negativo a `ungetc`.
+Linux nativo resta sospeso; la convalida non si estende automaticamente ad
+altre piattaforme. [Correzione RS e verifiche](../diary/2026-09-20-shift-jis-rs.md).
 
 Audit iniziale e piano di lavoro: [valutazione](../audit-2026-09-19/VALUTAZIONE.md) e [piano aggiornato](../audit-2026-09-19/PIANO_DI_LAVORO.md).

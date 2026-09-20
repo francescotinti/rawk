@@ -155,6 +155,9 @@ pub(crate) fn init() {
 pub(crate) fn multibyte() -> bool {
     LOCALE.get().is_some_and(|l| l.utf8 || l.shift_jis)
 }
+pub(crate) fn shift_jis() -> bool {
+    LOCALE.get().is_some_and(|l| l.shift_jis)
+}
 pub(crate) fn legacy_byte_locale() -> bool {
     LOCALE.get().is_some_and(|l| l.legacy_byte)
 }

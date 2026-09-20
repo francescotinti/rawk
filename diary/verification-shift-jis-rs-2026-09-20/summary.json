@@ -1,0 +1,52 @@
+{
+  "status": "completed within verified Darwin ARM64 scope; original RS regression active",
+  "base_commit": "6bd0c0fe259d8a34aefe1f76c40c14392cf5cd8e",
+  "debug": {
+    "passed": 144,
+    "failed": 0,
+    "ignored": 0
+  },
+  "release": {
+    "passed": 144,
+    "failed": 0,
+    "ignored": 0
+  },
+  "release_exit": 0,
+  "gate_exit": 1,
+  "gate_note": "Runtime, XML, fmt, Clippy passed. Only AppleDouble metadata hygiene failed; removed and isolated check passed.",
+  "xml": {
+    "match": 97,
+    "expected": 12,
+    "unexpected": 0,
+    "skipped": 0
+  },
+  "probe": {
+    "total": 2848,
+    "exact_matches": 2440,
+    "c_ungetc_errors": 408,
+    "auxiliary_matches": 408,
+    "unexpected": 0,
+    "raw_probe_exit": 1,
+    "auxiliary_audit_exit": 0
+  },
+  "linux_cross_checks": {
+    "x86_64": 0,
+    "aarch64": 0,
+    "native": "suspended"
+  },
+  "sources_sha256": {
+    "src/ere.rs": "57f2292322e79d9e48d153400f09938a5c60b5a19577af8c043a844730773c4e",
+    "src/ere/stream.rs": "cbe0d9814d675b6d44b21e9e315acbdb39826683163597be12fe8205d189c8f1",
+    "src/input.rs": "c4342ae189f9be4373b1cf706273d8b9cb5701483a43bf0e52ea8897d7e6b862",
+    "src/text.rs": "f4713d178e9324b9abf61bed694871088694a86af31e289f77d946f8ff1f37df",
+    "src/unicode_ere.rs": "17fcb9aba5f3f759d72645b9c898f6de370317f20ff92886344243ca51713270",
+    "tests/shift_jis.rs": "d5afe1002b6ab35c418a902f072d66d12bda9ba25f4753bccd98c361ad9ac569"
+  },
+  "binary_sha256": {
+    "c": "5d77fdd60aa5b3f6a9d888490b82d8870aff7c2b4813a12dcaa7d0195f94c780",
+    "debug": "db4b001c754d039573325f38bbf3084c241a29b3c7eba4b24f34ea0873342cdd",
+    "release": "1b03c060b7b8a1b87527bd1c1bd9db85c5377742e5308ea957b5a6b880a98651"
+  },
+  "publication": "commit and push authorized; final hash and remote verification reported after publication",
+  "ci": "not checked"
+}

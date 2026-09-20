@@ -207,6 +207,17 @@ fn class(bytes: &[u8], i: &mut usize) -> Result<String, String> {
     ))
 }
 pub(crate) fn compile(bytes: &[u8]) -> Result<String, String> {
+    compile_mode(bytes, false)
+}
+
+// Outside BWK's structural rune range, so EOF never collides with input,
+// including the Rust extension for embedded NUL.
+pub(crate) const STREAM_EOF: u32 = MAX_RUNE + 1;
+pub(crate) fn compile_stream(bytes: &[u8]) -> Result<String, String> {
+    compile_mode(bytes, true)
+}
+
+fn compile_mode(bytes: &[u8], stream: bool) -> Result<String, String> {
     let (mut i, mut depth) = (0, 0usize);
     let mut out = String::new();
     while i < bytes.len() {
@@ -215,6 +226,7 @@ pub(crate) fn compile(bytes: &[u8]) -> Result<String, String> {
         match b {
             b'\\' => out.push_str(&atom(quoted(bytes, &mut i)?)),
             b'[' => out.push_str(&class(bytes, &mut i)?),
+            b'.' if stream => out.push_str(&format!("(?:{})", interval(0, MAX_RUNE))),
             b'.' => out.push_str("(?:[\\x00-\\xff]{4})"),
             b'(' => {
                 depth += 1;
@@ -238,6 +250,7 @@ pub(crate) fn compile(bytes: &[u8]) -> Result<String, String> {
             b'$' if bytes.get(i) == Some(&b'^') => {
                 return Err("invalid adjacent regex anchors $^".into());
             }
+            b'$' if stream => out.push_str(&atom(STREAM_EOF)),
             b'^' | b'$' | b'*' | b'+' | b'?' | b'|' => out.push(b as char),
             _ => {
                 i -= 1;

@@ -242,3 +242,19 @@ target passati; igiene AppleDouble ripristinata dopo il gate.
 Su istruzione dell’utente, `AGENTS.md` richiede ora commit e push su GitHub
 al termine di ogni attività, dopo le verifiche pertinenti e con verifica
 del commit remoto, salvo diversa istruzione esplicita.
+
+
+## Chiusura del residuo RS Shift-JIS — 20 settembre 2026
+
+Ricostruito `fnematch` con visibilità incrementale di due byte e riavvio dei
+candidati sul buffer già letto. Percorso separato dalle regex in memoria;
+regressione RS riattivata, senza cambiare gli expected. Verificati anche
+ancore, alternative, match più lungo, EOF, `getline`, cambi di RS, buffer e
+letture corte. NUL e byte FF restano preservati. La sonda estesa distingue
+2.440 confronti esatti da 408 errori C `ungetc(0xff)`, verificati separatamente
+senza introdurre l'errore nel runtime Rust. [Consegna](../diary/2026-09-20-shift-jis-rs.md).
+Linux nativo e altre piattaforme restano attività distinte e sospese.
+
+Verifica finale RS: 144 test debug e release, nessun ignorato; XML invariato,
+fmt/Clippy e controlli Rust Linux dei due target passati. Solo l'igiene dei
+metadati AppleDouble ha richiesto pulizia e riverifica; Linux nativo sospeso.
