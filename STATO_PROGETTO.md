@@ -5,12 +5,21 @@ Aggiornato: 20 settembre 2026. Punto di ingresso per nuove attività.
 ## Base e ambito verificato
 
 - Repository: `francescotinti/rawk`, branch di coordinamento `master`.
-- Commit runtime pubblicato verificato: `a118616` (correzione CI Linux, tutti i job verdi).
-  Eseguire `git status` e `git log` per lo stato corrente; questo non è un puntatore dinamico.
-- Ultima convalida pubblicata: `3b9facf` (infrastruttura/test Shift-JIS, runtime
-  invariato da `a118616`). [CI tutta verde](https://github.com/francescotinti/rawk/actions/runs/35508846617):
-  Linux **87 debug + 87 release per runner**; macOS **149 debug** nel gate completo,
-  XML 97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED, audit originali/UTF-8 verdi.
+- Runtime pubblicato verificato: `b1adc82` (alias degli stream standard e gestione errori
+  matematici glibc; audit driver Linux). Eseguire `git status` e `git log` per
+  lo stato corrente; questo non è un puntatore dinamico.
+- Ultima convalida Linux: **89 debug + 89 release per runner** x86-64/ARM64,
+  zero ignorati; **27/27 driver ammessi**, **275/275 contratti individuali** e
+  **20/20 sonde stream** in entrambi i profili. Gli errori runtime sono corretti,
+  le differenze deliberate e diagnostiche hanno contratti espliciti.
+  Darwin locale **151 debug + 151 release**; macOS CI **151 debug**, XML
+  97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED e audit verdi.
+  La CI macOS non esegue l'intera suite release.
+  [CI tutta verde](https://github.com/francescotinti/rawk/actions/runs/35510218505),
+  [consegna e classificazione](diary/2026-09-20-linux-drivers.md).
+- Convalida precedente: `3b9facf` (infrastruttura/test Shift-JIS, runtime
+  allora invariato da `a118616`). Linux 87 debug + 87 release per runner;
+  macOS 149 debug, XML 97 MATCH / 12 EXPECTED / 0 UNEXPECTED / 0 SKIPPED.
 - Fasi 1–7 chiuse nel profilo C su Darwin ARM64; successivamente aggiunti UTF-8,
   conversioni/classi ISO-8859-1/9 e ottimizzazione delle regex booleane UTF-8.
 - Il residuo RS Shift-JIS è corretto nella consegna successiva a `6bd0c0f`;
@@ -53,10 +62,16 @@ verificate contro il C: upper 6.879 successi, lower 6.878 successi e un errore
 atteso di ricodifica (`81 f0`), identico nei due interpreti. Nessuna modifica
 runtime necessaria. [Consegna Linux Shift-JIS](diary/2026-09-20-shift-jis-linux.md).
 
+## Driver originali Linux
+
+- L'inventario grezzo dei 33 driver Linux conserva 27 pass, tre open e tre
+  reference-failure. Il gate ora verifica 27 driver e tutti i 275 sottocasi
+  con contratti espliciti (171 esatti, 101 diagnostiche, tre deliberate),
+  oltre ai 300 casi originali UTF-8. Non è equivalenza byte per byte delle
+  diagnostiche né certificazione generale di tutti i programmi AWK.
+
 ## Attività aperte
 
-- L'inventario completo dei driver Linux resta diagnostico, senza `--check`;
-  il gate non ne certifica l'equivalenza integrale.
 - Altre codifiche, macOS Intel nativo, nomi di file non UTF-8 e ulteriori
   ottimizzazioni: attività distinte da delimitare, non parte implicita di Shift-JIS.
 

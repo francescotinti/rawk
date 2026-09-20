@@ -1,0 +1,15 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.03s
+     Running tests/driver_regressions.rs (target/debug/deps/driver_regressions-5f1e2d53ab8fb804)
+
+running 7 tests
+test field_index_beyond_reference_integer_range_is_an_error ... ok
+test multifile_syntax_error_names_offending_source ... ok
+test getline_comparison_is_not_part_of_filename ... ok
+test invalid_function_parameters_are_errors_before_execution ... ok
+test redirected_stdin_shares_buffer_with_main_input ... ok
+test stdin_program_and_empty_statements ... ok
+test standard_output_aliases_share_streams_and_lifecycle ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.77s
+

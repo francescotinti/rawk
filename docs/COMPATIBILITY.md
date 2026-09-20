@@ -68,8 +68,9 @@ mappa degli offset e il calcolo del match più lungo. Nei tre carichi misurati
 riduce i tempi del 12–41%; il profilo byte mostra variazioni di +1–3%.
 Verifica: 126 test debug e release, gate completo verde. Misure, comandi e limiti
 nel [rapporto prestazioni](../diary/2026-09-20-regex-performance.md).
-Le altre codifiche legacy rimangono aperte; la verifica nativa Linux è sospesa in
-assenza di runtime locale.
+Le altre codifiche legacy rimangono attività distinte. La verifica Linux,
+sospesa all’epoca della misura, è stata poi eseguita sui runner nativi;
+vedere gli aggiornamenti di piattaforma qui sotto.
 
 ## Locale ISO-8859-1 e ISO-8859-9
 
@@ -101,3 +102,26 @@ questo esito; non scarta il caso. [Consegna Linux](../diary/2026-09-20-shift-jis
 La convalida non si estende automaticamente ad altre piattaforme. [Correzione RS e verifiche](../diary/2026-09-20-shift-jis-rs.md).
 
 Audit iniziale e piano di lavoro: [valutazione](../audit-2026-09-19/VALUTAZIONE.md) e [piano aggiornato](../audit-2026-09-19/PIANO_DI_LAVORO.md).
+
+
+## Driver originali — Linux glibc x86-64 e ARM64
+
+L'audit nativo ha individuato e corretto la riapertura di `/dev/stdout` e
+`/dev/stderr` come file ordinari e la mancata gestione di EDOM/ERANGE per
+`log`, `exp`, `sqrt` su glibc. Gli alias condividono ora lo stream originale,
+compresi ordine delle scritture, `close` e `fflush`. La gestione matematica
+Darwin rimane invariata.
+
+Il workflow impone in debug e release i 27 driver del manifest e tutti i
+275 sottocasi: 171 confronti esatti, 101 differenze della sola diagnostica
+fissate con output/status/file precisi e tre contratti deliberati per RNG,
+NUL e `nextfile`. Due contratti diagnostici sono specifici di Linux glibc;
+non trasformano NaN/infinito errati in risultati attesi. Le prove negative
+rifiutano nuove differenze e modifiche all'inventario.
+
+L'inventario grezzo dei 33 driver conserva 27 pass, tre open e tre
+reference-failure: grep storici, controlli negativi e aspettative Unicode
+sotto `LC_ALL=C` restano visibili. T.utf/T.utfre sono verificati separatamente
+in UTF-8. Il gate certifica questi contratti espliciti, non l'identità di
+ogni diagnostica o una conformità AWK generale.
+[Diagnosi, verifiche e limiti](../diary/2026-09-20-linux-drivers.md).

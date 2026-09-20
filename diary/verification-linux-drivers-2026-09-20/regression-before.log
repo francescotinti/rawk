@@ -1,0 +1,24 @@
+   Compiling rawk v0.1.0 (/Volumes/Extreme Pro/Claude/testag-awk/rawk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.20s
+     Running tests/driver_regressions.rs (target/debug/deps/driver_regressions-5f1e2d53ab8fb804)
+
+running 1 test
+test standard_output_aliases_share_streams_and_lifecycle ... FAILED
+
+failures:
+
+---- standard_output_aliases_share_streams_and_lifecycle stdout ----
+
+thread 'standard_output_aliases_share_streams_and_lifecycle' (10092972) panicked at tests/driver_regressions.rs:139:9:
+assertion `left == right` failed: BEGIN { printf "normal"; printf "redirect" > "/dev/stdout"; print "after" }
+  left: (Outcome { stdout: [114, 101, 100, 105, 114, 101, 99, 116, 110, 111, 114, 109, 97, 108, 97, 102, 116, 101, 114, 10], stderr: [], code: Some(0), timed_out: false }, {})
+ right: (Outcome { stdout: [110, 111, 114, 109, 97, 108, 114, 101, 100, 105, 114, 101, 99, 116, 97, 102, 116, 101, 114, 10], stderr: [], code: Some(0), timed_out: false }, {})
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    standard_output_aliases_share_streams_and_lifecycle
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.53s
+
+error: test failed, to rerun pass `--test driver_regressions`

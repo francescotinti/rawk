@@ -1,0 +1,1681 @@
+[
+  {
+    "platform": "x86_64",
+    "case": "T.-f-f",
+    "source_sha256": "f0970606a344578fe89ed5c02aea5c89f625049e2f83eb1ec5928f525acff69e",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.argv",
+    "source_sha256": "e6f473d910a1419d9d30f914b9e44649fde6d19feb440fb06c371d445b5d9b5f",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.arnold",
+    "source_sha256": "ce5ecf0d538878ddea88623bb3bc99098981b36e91db075e9bf1ebb62c1a67c7",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.beebe",
+    "source_sha256": "464850aa5932a163f6eb8a98fe930dafc972395a80da397c3cd25f2922ba1f47",
+    "historical_status": "open",
+    "classification": [
+      "runtime-standard-streams"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.builtin",
+    "source_sha256": "5a22fbd225a55ffad9e01b9f665867eadd14e21c89d2c2ea24043e025500f540",
+    "historical_status": "open",
+    "classification": [
+      "deliberate-rng",
+      "conditional-locale-in-historical-driver"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.chem",
+    "source_sha256": "34137b8e269e04842454fc0463286b763ab1f61dfc3e0cdb9dd1058591bf91b0",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.close",
+    "source_sha256": "fd83f81c723e9d91e4cc6f06613c682035e8b9ae81bbba0e25a958dde898c2ff",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.clv",
+    "source_sha256": "90955c6ed23d3d55d22a94dd3321da8606f6dfec703d75e2ba4283036be28ffd",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.csconcat",
+    "source_sha256": "82eafc2044f91a6fcd2cb09af402de1a8cc2fdb94b873e2fd0fe57ff7af309cc",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.csv",
+    "source_sha256": "d80ca1cf5ec9eed7096659c92b8a2391e1bc494993212845e6258374ff39d536",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.delete",
+    "source_sha256": "6a4c8913d554e0d5e5d4bfcc1bbe1b7a8fb296f6e11764fa96ee8062a45c70aa",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.errmsg",
+    "source_sha256": "a100a68d3566518d351cf87bddbeb96a08bb4600609fe9deec222235d660d233",
+    "historical_status": "reference-failure",
+    "classification": [
+      "diagnostic-wording",
+      "deliberate-nextfile",
+      "intentional-negative-driver-control",
+      "runtime-glibc-math"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.expr",
+    "source_sha256": "e890e25a67697f7dfac74df7d4f93bd8bbde5217d38c9909acfb4aa2240e744d",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.exprconv",
+    "source_sha256": "444131c48c0e8e81682b3697bdf7f88ff95f75c7cff211976d3c0d5723854920",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.flags",
+    "source_sha256": "764e9eb848402a85e5295eb9f9492f06f9524afa7e53cae44f5ae8fdc48eac32",
+    "historical_status": "open",
+    "classification": [
+      "diagnostic-wording"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.func",
+    "source_sha256": "bee4e1a226508e1b4856be199a991833714bcc6087652471499e8120cca3db34",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.gawk",
+    "source_sha256": "f3dd8c811b2ad06c865fb1ad59ac0098fef57bdbb89377ac96ddb4e845f6bfba",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.getline",
+    "source_sha256": "f6d647af8bed8842633380aa594aaec6c7ae7c8f8711b1b79f39d67f97fca462",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.int-expr",
+    "source_sha256": "e49a188ccbd4eb541f7495cc2e90a923506b047483e215ece8013a510758b9f7",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.latin1",
+    "source_sha256": "ec6ae79e678e01af79af6a8421083af75567bf6a157f4fd6e383b1f913aeedaa",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.lilly",
+    "source_sha256": "bd5d2dd441cbadd8b3edcb5d148b6cb58b4fd4c2a42d18005f6f922d19abc930",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.main",
+    "source_sha256": "b91264e5fbc95543c812a8558234e7d228567cf288afd7a3cd7ffb5d4d92f1d9",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.misc",
+    "source_sha256": "d239d6185edf87a44e0b95a4bc53a518451003fbf30349d9f4054436c006912d",
+    "historical_status": "open",
+    "classification": [
+      "diagnostic-wording",
+      "deliberate-nul",
+      "undefined-shell-error-function"
+    ],
+    "c_rust_equal_fields": [
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.nextfile",
+    "source_sha256": "13e8219fae01b908a7911c1ee3202eb4e84a52d670714c48019440f1ceb86e63",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.overflow",
+    "source_sha256": "965e6abae8cf956fe53602695b83a25f98de94f3f7e1aebc1539dce264e59445",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.re",
+    "source_sha256": "1a5341d0a66142b56e9540928e4eb98d96351472255a91f772888491754abce9",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.recache",
+    "source_sha256": "e478ce97160ab560f1d8b36c55a446bd4566a85aaf93dd04eeeb7367a3d5caff",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.redir",
+    "source_sha256": "845c14651832f26e064ac86379ae46e65221689c38d80294dff845d237899f19",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.split",
+    "source_sha256": "6cf0af7a12b571b50e9a8249fd8245302872a04c40af804b3bd7251621795ac6",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.sub",
+    "source_sha256": "130cb880bf39372338b0070305ba6d3b337408aaa510184ee4cb1c92a22fe3bc",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.system",
+    "source_sha256": "7f8039b2510f0dc8cfe6de38122cf6316b47e166a7b1c9da4ae258bdc4ab1393",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.utf",
+    "source_sha256": "f0544cc5c3752b432f78d54b7ad7be47bf851163700999a6d90e12dacdb360ae",
+    "historical_status": "reference-failure",
+    "classification": [
+      "unicode-expectations-in-byte-profile"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "x86_64",
+    "case": "T.utfre",
+    "source_sha256": "f1b4feac9c9b3cd994bdf59bc87e8cb2ba5b19879e7c55d924a9eb0d6097fcb4",
+    "historical_status": "reference-failure",
+    "classification": [
+      "unicode-expectations-in-byte-profile"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-x86_64/linux-driver-results-ci.json",
+    "evidence_sha256": "a077c325945fdad7b1f2c11a145e083539ccc308fa56f58ef25ada0a17063a78"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.-f-f",
+    "source_sha256": "f0970606a344578fe89ed5c02aea5c89f625049e2f83eb1ec5928f525acff69e",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.argv",
+    "source_sha256": "e6f473d910a1419d9d30f914b9e44649fde6d19feb440fb06c371d445b5d9b5f",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.arnold",
+    "source_sha256": "ce5ecf0d538878ddea88623bb3bc99098981b36e91db075e9bf1ebb62c1a67c7",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.beebe",
+    "source_sha256": "464850aa5932a163f6eb8a98fe930dafc972395a80da397c3cd25f2922ba1f47",
+    "historical_status": "open",
+    "classification": [
+      "runtime-standard-streams"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.builtin",
+    "source_sha256": "5a22fbd225a55ffad9e01b9f665867eadd14e21c89d2c2ea24043e025500f540",
+    "historical_status": "open",
+    "classification": [
+      "deliberate-rng",
+      "conditional-locale-in-historical-driver"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.chem",
+    "source_sha256": "34137b8e269e04842454fc0463286b763ab1f61dfc3e0cdb9dd1058591bf91b0",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.close",
+    "source_sha256": "fd83f81c723e9d91e4cc6f06613c682035e8b9ae81bbba0e25a958dde898c2ff",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.clv",
+    "source_sha256": "90955c6ed23d3d55d22a94dd3321da8606f6dfec703d75e2ba4283036be28ffd",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.csconcat",
+    "source_sha256": "82eafc2044f91a6fcd2cb09af402de1a8cc2fdb94b873e2fd0fe57ff7af309cc",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.csv",
+    "source_sha256": "d80ca1cf5ec9eed7096659c92b8a2391e1bc494993212845e6258374ff39d536",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.delete",
+    "source_sha256": "6a4c8913d554e0d5e5d4bfcc1bbe1b7a8fb296f6e11764fa96ee8062a45c70aa",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.errmsg",
+    "source_sha256": "a100a68d3566518d351cf87bddbeb96a08bb4600609fe9deec222235d660d233",
+    "historical_status": "reference-failure",
+    "classification": [
+      "diagnostic-wording",
+      "deliberate-nextfile",
+      "intentional-negative-driver-control",
+      "runtime-glibc-math"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.expr",
+    "source_sha256": "e890e25a67697f7dfac74df7d4f93bd8bbde5217d38c9909acfb4aa2240e744d",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.exprconv",
+    "source_sha256": "444131c48c0e8e81682b3697bdf7f88ff95f75c7cff211976d3c0d5723854920",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.flags",
+    "source_sha256": "764e9eb848402a85e5295eb9f9492f06f9524afa7e53cae44f5ae8fdc48eac32",
+    "historical_status": "open",
+    "classification": [
+      "diagnostic-wording"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.func",
+    "source_sha256": "bee4e1a226508e1b4856be199a991833714bcc6087652471499e8120cca3db34",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.gawk",
+    "source_sha256": "f3dd8c811b2ad06c865fb1ad59ac0098fef57bdbb89377ac96ddb4e845f6bfba",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.getline",
+    "source_sha256": "f6d647af8bed8842633380aa594aaec6c7ae7c8f8711b1b79f39d67f97fca462",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.int-expr",
+    "source_sha256": "e49a188ccbd4eb541f7495cc2e90a923506b047483e215ece8013a510758b9f7",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.latin1",
+    "source_sha256": "ec6ae79e678e01af79af6a8421083af75567bf6a157f4fd6e383b1f913aeedaa",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.lilly",
+    "source_sha256": "bd5d2dd441cbadd8b3edcb5d148b6cb58b4fd4c2a42d18005f6f922d19abc930",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.main",
+    "source_sha256": "b91264e5fbc95543c812a8558234e7d228567cf288afd7a3cd7ffb5d4d92f1d9",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.misc",
+    "source_sha256": "d239d6185edf87a44e0b95a4bc53a518451003fbf30349d9f4054436c006912d",
+    "historical_status": "open",
+    "classification": [
+      "diagnostic-wording",
+      "deliberate-nul",
+      "undefined-shell-error-function"
+    ],
+    "c_rust_equal_fields": [
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.nextfile",
+    "source_sha256": "13e8219fae01b908a7911c1ee3202eb4e84a52d670714c48019440f1ceb86e63",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.overflow",
+    "source_sha256": "965e6abae8cf956fe53602695b83a25f98de94f3f7e1aebc1539dce264e59445",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.re",
+    "source_sha256": "1a5341d0a66142b56e9540928e4eb98d96351472255a91f772888491754abce9",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.recache",
+    "source_sha256": "e478ce97160ab560f1d8b36c55a446bd4566a85aaf93dd04eeeb7367a3d5caff",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.redir",
+    "source_sha256": "845c14651832f26e064ac86379ae46e65221689c38d80294dff845d237899f19",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.split",
+    "source_sha256": "6cf0af7a12b571b50e9a8249fd8245302872a04c40af804b3bd7251621795ac6",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.sub",
+    "source_sha256": "130cb880bf39372338b0070305ba6d3b337408aaa510184ee4cb1c92a22fe3bc",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.system",
+    "source_sha256": "7f8039b2510f0dc8cfe6de38122cf6316b47e166a7b1c9da4ae258bdc4ab1393",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.utf",
+    "source_sha256": "f0544cc5c3752b432f78d54b7ad7be47bf851163700999a6d90e12dacdb360ae",
+    "historical_status": "reference-failure",
+    "classification": [
+      "unicode-expectations-in-byte-profile"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "arm64",
+    "case": "T.utfre",
+    "source_sha256": "f1b4feac9c9b3cd994bdf59bc87e8cb2ba5b19879e7c55d924a9eb0d6097fcb4",
+    "historical_status": "reference-failure",
+    "classification": [
+      "unicode-expectations-in-byte-profile"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-arm64/linux-driver-results-ci.json",
+    "evidence_sha256": "3616616dc7a9ee3eb3b46b2c3bccbda2937215ebaf129b020070f50822703d55"
+  },
+  {
+    "platform": "macos",
+    "case": "T.-f-f",
+    "source_sha256": "f0970606a344578fe89ed5c02aea5c89f625049e2f83eb1ec5928f525acff69e",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.argv",
+    "source_sha256": "e6f473d910a1419d9d30f914b9e44649fde6d19feb440fb06c371d445b5d9b5f",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.arnold",
+    "source_sha256": "ce5ecf0d538878ddea88623bb3bc99098981b36e91db075e9bf1ebb62c1a67c7",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.beebe",
+    "source_sha256": "464850aa5932a163f6eb8a98fe930dafc972395a80da397c3cd25f2922ba1f47",
+    "historical_status": "pass",
+    "classification": [
+      "runtime-standard-streams"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.builtin",
+    "source_sha256": "5a22fbd225a55ffad9e01b9f665867eadd14e21c89d2c2ea24043e025500f540",
+    "historical_status": "reference-failure",
+    "classification": [
+      "deliberate-rng",
+      "conditional-locale-in-historical-driver"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.chem",
+    "source_sha256": "34137b8e269e04842454fc0463286b763ab1f61dfc3e0cdb9dd1058591bf91b0",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.close",
+    "source_sha256": "fd83f81c723e9d91e4cc6f06613c682035e8b9ae81bbba0e25a958dde898c2ff",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.clv",
+    "source_sha256": "90955c6ed23d3d55d22a94dd3321da8606f6dfec703d75e2ba4283036be28ffd",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.csconcat",
+    "source_sha256": "82eafc2044f91a6fcd2cb09af402de1a8cc2fdb94b873e2fd0fe57ff7af309cc",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.csv",
+    "source_sha256": "d80ca1cf5ec9eed7096659c92b8a2391e1bc494993212845e6258374ff39d536",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.delete",
+    "source_sha256": "6a4c8913d554e0d5e5d4bfcc1bbe1b7a8fb296f6e11764fa96ee8062a45c70aa",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.errmsg",
+    "source_sha256": "a100a68d3566518d351cf87bddbeb96a08bb4600609fe9deec222235d660d233",
+    "historical_status": "reference-failure",
+    "classification": [
+      "diagnostic-wording",
+      "deliberate-nextfile",
+      "intentional-negative-driver-control",
+      "runtime-glibc-math"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.expr",
+    "source_sha256": "e890e25a67697f7dfac74df7d4f93bd8bbde5217d38c9909acfb4aa2240e744d",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.exprconv",
+    "source_sha256": "444131c48c0e8e81682b3697bdf7f88ff95f75c7cff211976d3c0d5723854920",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.flags",
+    "source_sha256": "764e9eb848402a85e5295eb9f9492f06f9524afa7e53cae44f5ae8fdc48eac32",
+    "historical_status": "open",
+    "classification": [
+      "diagnostic-wording"
+    ],
+    "c_rust_equal_fields": [
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.func",
+    "source_sha256": "bee4e1a226508e1b4856be199a991833714bcc6087652471499e8120cca3db34",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.gawk",
+    "source_sha256": "f3dd8c811b2ad06c865fb1ad59ac0098fef57bdbb89377ac96ddb4e845f6bfba",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.getline",
+    "source_sha256": "f6d647af8bed8842633380aa594aaec6c7ae7c8f8711b1b79f39d67f97fca462",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.int-expr",
+    "source_sha256": "e49a188ccbd4eb541f7495cc2e90a923506b047483e215ece8013a510758b9f7",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.latin1",
+    "source_sha256": "ec6ae79e678e01af79af6a8421083af75567bf6a157f4fd6e383b1f913aeedaa",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.lilly",
+    "source_sha256": "bd5d2dd441cbadd8b3edcb5d148b6cb58b4fd4c2a42d18005f6f922d19abc930",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.main",
+    "source_sha256": "b91264e5fbc95543c812a8558234e7d228567cf288afd7a3cd7ffb5d4d92f1d9",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.misc",
+    "source_sha256": "d239d6185edf87a44e0b95a4bc53a518451003fbf30349d9f4054436c006912d",
+    "historical_status": "open",
+    "classification": [
+      "diagnostic-wording",
+      "deliberate-nul",
+      "undefined-shell-error-function"
+    ],
+    "c_rust_equal_fields": [
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.nextfile",
+    "source_sha256": "13e8219fae01b908a7911c1ee3202eb4e84a52d670714c48019440f1ceb86e63",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.overflow",
+    "source_sha256": "965e6abae8cf956fe53602695b83a25f98de94f3f7e1aebc1539dce264e59445",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.re",
+    "source_sha256": "1a5341d0a66142b56e9540928e4eb98d96351472255a91f772888491754abce9",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.recache",
+    "source_sha256": "e478ce97160ab560f1d8b36c55a446bd4566a85aaf93dd04eeeb7367a3d5caff",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.redir",
+    "source_sha256": "845c14651832f26e064ac86379ae46e65221689c38d80294dff845d237899f19",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.split",
+    "source_sha256": "6cf0af7a12b571b50e9a8249fd8245302872a04c40af804b3bd7251621795ac6",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.sub",
+    "source_sha256": "130cb880bf39372338b0070305ba6d3b337408aaa510184ee4cb1c92a22fe3bc",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.system",
+    "source_sha256": "7f8039b2510f0dc8cfe6de38122cf6316b47e166a7b1c9da4ae258bdc4ab1393",
+    "historical_status": "pass",
+    "classification": [
+      "admitted-driver-passed"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.utf",
+    "source_sha256": "f0544cc5c3752b432f78d54b7ad7be47bf851163700999a6d90e12dacdb360ae",
+    "historical_status": "reference-failure",
+    "classification": [
+      "unicode-expectations-in-byte-profile"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  },
+  {
+    "platform": "macos",
+    "case": "T.utfre",
+    "source_sha256": "f1b4feac9c9b3cd994bdf59bc87e8cb2ba5b19879e7c55d924a9eb0d6097fcb4",
+    "historical_status": "reference-failure",
+    "classification": [
+      "unicode-expectations-in-byte-profile"
+    ],
+    "c_rust_equal_fields": [
+      "stdout_hex",
+      "stderr_hex",
+      "code",
+      "timeout"
+    ],
+    "evidence": "diary/verification-shift-jis-linux-2026-09-20/final-macos/full-driver-results-ci.json",
+    "evidence_sha256": "937110b0d3f173135188c6e222984995e98c984ab96e5da9aa7c195d297128fa"
+  }
+]

@@ -297,3 +297,28 @@ conversioni libc, RS e correzioni precedenti. Altre codifiche e macOS Intel
 rimangono attività separate; inventario driver Linux ancora diagnostico.
 CI finale `3b9facf` tutta verde, compreso macOS: 149 test debug, XML invariato,
 audit originali/UTF-8 passati. [Consegna ed evidenze](../diary/2026-09-20-shift-jis-linux.md).
+
+
+## Audit dei driver Linux nativi — 20 settembre 2026
+
+Esaminati tutti i 33 driver e i 275 sottocasi sui runner glibc x86-64/ARM64.
+Corretti gli alias stdout/stderr (anche ciclo close/fflush e ordine senza
+newline) e gli errori libm di log/exp/sqrt su Linux. T.beebe passa ora su
+entrambe le architetture; i fallimenti storici restanti sono classificati
+come diagnostiche, contratti deliberati o problemi del profilo/driver.
+
+Il workflow controlla in debug e release 27 driver ammessi e 275 sottocasi
+(171 esatti, 101 diagnostiche fissate, tre differenze deliberate), oltre a
+20 sonde degli stream. Due nuovi contratti Linux accettano soltanto il
+contesto diagnostico differente dopo la correzione matematica; le prove
+negative respingono mutazioni dei risultati, input e inventario.
+L'inventario grezzo dei 33 driver resta disponibile senza nasconderne i
+fallimenti. Nessuna modifica all'oracolo, ai suoi expected o alla home.
+
+I gate nativi Linux passano 89 test debug e 89 release per runner.
+Darwin locale: 151 debug e 151 release; macOS CI: 151 debug, XML invariato
+e audit verdi. CI `b1adc82` tutta verde; la suite release macOS è locale.
+Dettagli Git, evidenze e limiti nella
+[consegna del task](../diary/2026-09-20-linux-drivers.md).
+Altre codifiche, macOS Intel, ottimizzazioni e operatori/cast numerici fuori
+dal perimetro verificato rimangono separati.

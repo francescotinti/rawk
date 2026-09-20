@@ -1,0 +1,704 @@
+[
+  {
+    "case": "T.-f-f",
+    "locale": "C",
+    "source_sha256": "f0970606a344578fe89ed5c02aea5c89f625049e2f83eb1ec5928f525acff69e",
+    "c": {
+      "stdout_hex": "542e2d662d663a20636865636b206d756c7469706c65202d6620617267756d656e74730a",
+      "stderr_hex": "",
+      "stdout": "T.-f-f: check multiple -f arguments\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e2d662d663a20636865636b206d756c7469706c65202d6620617267756d656e74730a",
+      "stderr_hex": "",
+      "stdout": "T.-f-f: check multiple -f arguments\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.argv",
+    "locale": "C",
+    "source_sha256": "e6f473d910a1419d9d30f914b9e44649fde6d19feb440fb06c371d445b5d9b5f",
+    "c": {
+      "stdout_hex": "542e617267763a206d697363207465737473206f66206172676320616e6420617267760a",
+      "stderr_hex": "",
+      "stdout": "T.argv: misc tests of argc and argv\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e617267763a206d697363207465737473206f66206172676320616e6420617267760a",
+      "stderr_hex": "",
+      "stdout": "T.argv: misc tests of argc and argv\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.arnold",
+    "locale": "C",
+    "source_sha256": "ce5ecf0d538878ddea88623bb3bc99098981b36e91db075e9bf1ebb62c1a67c7",
+    "c": {
+      "stdout_hex": "542e61726e6f6c643a20746573742066697865732062792041726e6f6c6420526f6262696e7320382f31380a2f746d702f7261776b2d66756c6c2d6472697665722d5f355f66613135382f746573746469722f61726e6f6c642d66697865730a2d7277782d2d2d2d2d2d20312072756e6e65722072756e6e657220343639373736205365702032302031323a3230202e2e2f2e2e2f612e6f75740a",
+      "stderr_hex": "",
+      "stdout": "T.arnold: test fixes by Arnold Robbins 8/18\n/tmp/rawk-full-driver-_5_fa158/testdir/arnold-fixes\n-rwx------ 1 runner runner 469776 Sep 20 12:20 ../../a.out\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e61726e6f6c643a20746573742066697865732062792041726e6f6c6420526f6262696e7320382f31380a2f746d702f7261776b2d66756c6c2d6472697665722d75727365703830782f746573746469722f61726e6f6c642d66697865730a2d7277782d2d2d2d2d2d20312072756e6e65722072756e6e6572203435393735353630205365702032302031323a3230202e2e2f2e2e2f612e6f75740a",
+      "stderr_hex": "",
+      "stdout": "T.arnold: test fixes by Arnold Robbins 8/18\n/tmp/rawk-full-driver-ursep80x/testdir/arnold-fixes\n-rwx------ 1 runner runner 45975560 Sep 20 12:20 ../../a.out\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.beebe",
+    "locale": "C",
+    "source_sha256": "464850aa5932a163f6eb8a98fe930dafc972395a80da397c3cd25f2922ba1f47",
+    "c": {
+      "stdout_hex": "542e62656562653a2074657374732066726f6d206e656c736f6e2062656562652066726f6d206761776b20746573742073756974650a",
+      "stderr_hex": "",
+      "stdout": "T.beebe: tests from nelson beebe from gawk test suite\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e62656562653a2074657374732066726f6d206e656c736f6e2062656562652066726f6d206761776b20746573742073756974650a",
+      "stderr_hex": "",
+      "stdout": "T.beebe: tests from nelson beebe from gawk test suite\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.chem",
+    "locale": "C",
+    "source_sha256": "34137b8e269e04842454fc0463286b763ab1f61dfc3e0cdb9dd1058591bf91b0",
+    "c": {
+      "stdout_hex": "542e6368656d3a2074657374206368656d2e61776b0a",
+      "stderr_hex": "",
+      "stdout": "T.chem: test chem.awk\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6368656d3a2074657374206368656d2e61776b0a",
+      "stderr_hex": "",
+      "stdout": "T.chem: test chem.awk\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.close",
+    "locale": "C",
+    "source_sha256": "fd83f81c723e9d91e4cc6f06613c682035e8b9ae81bbba0e25a958dde898c2ff",
+    "c": {
+      "stdout_hex": "542e636c6f73653a207465737420636c6f7365206275696c742d696e0a",
+      "stderr_hex": "",
+      "stdout": "T.close: test close built-in\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e636c6f73653a207465737420636c6f7365206275696c742d696e0a",
+      "stderr_hex": "",
+      "stdout": "T.close: test close built-in\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.clv",
+    "locale": "C",
+    "source_sha256": "90955c6ed23d3d55d22a94dd3321da8606f6dfec703d75e2ba4283036be28ffd",
+    "c": {
+      "stdout_hex": "542e636c763a20636865636b20636f6d6d616e642d6c696e65207661726961626c65730a",
+      "stderr_hex": "",
+      "stdout": "T.clv: check command-line variables\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e636c763a20636865636b20636f6d6d616e642d6c696e65207661726961626c65730a",
+      "stderr_hex": "",
+      "stdout": "T.clv: check command-line variables\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.csconcat",
+    "locale": "C",
+    "source_sha256": "82eafc2044f91a6fcd2cb09af402de1a8cc2fdb94b873e2fd0fe57ff7af309cc",
+    "c": {
+      "stdout_hex": "542e6373636f6e6361743a207465737420636f6e7374616e7420737472696e6720636f6e636174656e6174696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.csconcat: test constant string concatenation\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6373636f6e6361743a207465737420636f6e7374616e7420737472696e6720636f6e636174656e6174696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.csconcat: test constant string concatenation\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.csv",
+    "locale": "C",
+    "source_sha256": "d80ca1cf5ec9eed7096659c92b8a2391e1bc494993212845e6258374ff39d536",
+    "c": {
+      "stdout_hex": "542e6373763a207465737473206f6620637376206669656c642073706c697474696e672c206e6f20656d626564646564206e65776c696e65730a2020312020207b20666f722028693d313b20693c3d4e463b20692b2b29207072696e746628225b25735d222c202469293b207072696e746628225c6e2229207d0a32332074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.csv: tests of csv field splitting, no embedded newlines\n  1   { for (i=1; i<=NF; i++) printf(\"[%s]\", $i); printf(\"\\n\") }\n23 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6373763a207465737473206f6620637376206669656c642073706c697474696e672c206e6f20656d626564646564206e65776c696e65730a2020312020207b20666f722028693d313b20693c3d4e463b20692b2b29207072696e746628225b25735d222c202469293b207072696e746628225c6e2229207d0a32332074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.csv: tests of csv field splitting, no embedded newlines\n  1   { for (i=1; i<=NF; i++) printf(\"[%s]\", $i); printf(\"\\n\") }\n23 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.delete",
+    "locale": "C",
+    "source_sha256": "6a4c8913d554e0d5e5d4bfcc1bbe1b7a8fb296f6e11764fa96ee8062a45c70aa",
+    "c": {
+      "stdout_hex": "542e64656c6574653a206d697363207465737473206f662061727261792064656c6574696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.delete: misc tests of array deletion\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e64656c6574653a206d697363207465737473206f662061727261792064656c6574696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.delete: misc tests of array deletion\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.expr",
+    "locale": "C",
+    "source_sha256": "e890e25a67697f7dfac74df7d4f93bd8bbde5217d38c9909acfb4aa2240e744d",
+    "c": {
+      "stdout_hex": "542e657870723a207465737473206f66206d697363656c6c616e656f75732065787072657373696f6e730a20203120207b207072696e7420282431203d3d203129203f202279657322203a20226e6f22207d0a20203220202431203e20300a20203320207b207072696e74204e46207d0a20203420207b207072696e74204e462c20244e46207d0a20203520207b20693d313b207072696e742028242b2b242b2b6929207d0a20203620207b2078203d2024312b2b2b2b24323b207072696e742024312c2078207d0a20203720202431202124320a20203820207b207072696e74202824317e2f6162632f2021243229207d0a20203920207b207072696e7420212431202b202432207d0a20313020207b207072696e7420282431203d3d20243229207d0a20313120207b207072696e742024312c202b24312c202d24312c202d202d2431207d0a20313220207b207072696e7466282261252a73625c6e222c2024312c20243229207d0a20313320207b207072696e7466282261252d2a73625c6e222c2024312c20243229207d0a20313420207b207072696e7466282261252a2e2a73625c6e222c2024312c2024322c202268656c6c6f2229207d0a20313520207b207072696e7466282261252d2a2e2a73625c6e222c2024312c2024322c202268656c6c6f2229207d0a20313620207b207072696e74662822256420256c6420256c6c6420257a6420256a642025686420256868645c6e222c2024312c2024312c2024312c2024312c2024312c2024312c20243129207d0a20313720207b207072696e74662822257820256c7820256c6c7820257a7820256a782025687820256868785c6e222c2024312c2024312c2024312c2024312c2024312c2024312c20243129207d0a20313820207b20696620282431207e20243229207072696e7420313b20656c7365207072696e742030207d0a20313920207b207072696e74202431207e202432207d0a20323020207b207072696e74202431207c7c202432207d0a20323120207b207072696e74202431202626202432207d0a20323220207b202431203d2024323b202431203d2024313b207072696e74202431207d0a20323320207b2066203d20313b2024662b2b3b207072696e7420662c202466207d0a20323420207b20665b315d3d313b20665b325d3d323b207072696e742024665b315d2c2024665b315d2b2b2c2024665b325d2c20665b315d2c20665b325d207d0a3131342074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.expr: tests of miscellaneous expressions\n  1  { print ($1 == 1) ? \"yes\" : \"no\" }\n  2  $1 > 0\n  3  { print NF }\n  4  { print NF, $NF }\n  5  { i=1; print ($++$++i) }\n  6  { x = $1++++$2; print $1, x }\n  7  $1 !$2\n  8  { print ($1~/abc/ !$2) }\n  9  { print !$1 + $2 }\n 10  { print ($1 == $2) }\n 11  { print $1, +$1, -$1, - -$1 }\n 12  { printf(\"a%*sb\\n\", $1, $2) }\n 13  { printf(\"a%-*sb\\n\", $1, $2) }\n 14  { printf(\"a%*.*sb\\n\", $1, $2, \"hello\") }\n 15  { printf(\"a%-*.*sb\\n\", $1, $2, \"hello\") }\n 16  { printf(\"%d %ld %lld %zd %jd %hd %hhd\\n\", $1, $1, $1, $1, $1, $1, $1) }\n 17  { printf(\"%x %lx %llx %zx %jx %hx %hhx\\n\", $1, $1, $1, $1, $1, $1, $1) }\n 18  { if ($1 ~ $2) print 1; else print 0 }\n 19  { print $1 ~ $2 }\n 20  { print $1 || $2 }\n 21  { print $1 && $2 }\n 22  { $1 = $2; $1 = $1; print $1 }\n 23  { f = 1; $f++; print f, $f }\n 24  { f[1]=1; f[2]=2; print $f[1], $f[1]++, $f[2], f[1], f[2] }\n114 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e657870723a207465737473206f66206d697363656c6c616e656f75732065787072657373696f6e730a20203120207b207072696e7420282431203d3d203129203f202279657322203a20226e6f22207d0a20203220202431203e20300a20203320207b207072696e74204e46207d0a20203420207b207072696e74204e462c20244e46207d0a20203520207b20693d313b207072696e742028242b2b242b2b6929207d0a20203620207b2078203d2024312b2b2b2b24323b207072696e742024312c2078207d0a20203720202431202124320a20203820207b207072696e74202824317e2f6162632f2021243229207d0a20203920207b207072696e7420212431202b202432207d0a20313020207b207072696e7420282431203d3d20243229207d0a20313120207b207072696e742024312c202b24312c202d24312c202d202d2431207d0a20313220207b207072696e7466282261252a73625c6e222c2024312c20243229207d0a20313320207b207072696e7466282261252d2a73625c6e222c2024312c20243229207d0a20313420207b207072696e7466282261252a2e2a73625c6e222c2024312c2024322c202268656c6c6f2229207d0a20313520207b207072696e7466282261252d2a2e2a73625c6e222c2024312c2024322c202268656c6c6f2229207d0a20313620207b207072696e74662822256420256c6420256c6c6420257a6420256a642025686420256868645c6e222c2024312c2024312c2024312c2024312c2024312c2024312c20243129207d0a20313720207b207072696e74662822257820256c7820256c6c7820257a7820256a782025687820256868785c6e222c2024312c2024312c2024312c2024312c2024312c2024312c20243129207d0a20313820207b20696620282431207e20243229207072696e7420313b20656c7365207072696e742030207d0a20313920207b207072696e74202431207e202432207d0a20323020207b207072696e74202431207c7c202432207d0a20323120207b207072696e74202431202626202432207d0a20323220207b202431203d2024323b202431203d2024313b207072696e74202431207d0a20323320207b2066203d20313b2024662b2b3b207072696e7420662c202466207d0a20323420207b20665b315d3d313b20665b325d3d323b207072696e742024665b315d2c2024665b315d2b2b2c2024665b325d2c20665b315d2c20665b325d207d0a3131342074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.expr: tests of miscellaneous expressions\n  1  { print ($1 == 1) ? \"yes\" : \"no\" }\n  2  $1 > 0\n  3  { print NF }\n  4  { print NF, $NF }\n  5  { i=1; print ($++$++i) }\n  6  { x = $1++++$2; print $1, x }\n  7  $1 !$2\n  8  { print ($1~/abc/ !$2) }\n  9  { print !$1 + $2 }\n 10  { print ($1 == $2) }\n 11  { print $1, +$1, -$1, - -$1 }\n 12  { printf(\"a%*sb\\n\", $1, $2) }\n 13  { printf(\"a%-*sb\\n\", $1, $2) }\n 14  { printf(\"a%*.*sb\\n\", $1, $2, \"hello\") }\n 15  { printf(\"a%-*.*sb\\n\", $1, $2, \"hello\") }\n 16  { printf(\"%d %ld %lld %zd %jd %hd %hhd\\n\", $1, $1, $1, $1, $1, $1, $1) }\n 17  { printf(\"%x %lx %llx %zx %jx %hx %hhx\\n\", $1, $1, $1, $1, $1, $1, $1) }\n 18  { if ($1 ~ $2) print 1; else print 0 }\n 19  { print $1 ~ $2 }\n 20  { print $1 || $2 }\n 21  { print $1 && $2 }\n 22  { $1 = $2; $1 = $1; print $1 }\n 23  { f = 1; $f++; print f, $f }\n 24  { f[1]=1; f[2]=2; print $f[1], $f[1]++, $f[2], f[1], f[2] }\n114 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.exprconv",
+    "locale": "C",
+    "source_sha256": "444131c48c0e8e81682b3697bdf7f88ff95f75c7cff211976d3c0d5723854920",
+    "c": {
+      "stdout_hex": "542e65787072636f6e763a20636865636b20636f6e76657273696f6e206f66206578707220746f206e756d6265720a",
+      "stderr_hex": "",
+      "stdout": "T.exprconv: check conversion of expr to number\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e65787072636f6e763a20636865636b20636f6e76657273696f6e206f66206578707220746f206e756d6265720a",
+      "stderr_hex": "",
+      "stdout": "T.exprconv: check conversion of expr to number\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.func",
+    "locale": "C",
+    "source_sha256": "bee4e1a226508e1b4856be199a991833714bcc6087652471499e8120cca3db34",
+    "c": {
+      "stdout_hex": "542e66756e633a207465737420757365722d646566696e65642066756e6374696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.func: test user-defined functions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e66756e633a207465737420757365722d646566696e65642066756e6374696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.func: test user-defined functions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.gawk",
+    "locale": "C",
+    "source_sha256": "f3dd8c811b2ad06c865fb1ad59ac0098fef57bdbb89377ac96ddb4e845f6bfba",
+    "c": {
+      "stdout_hex": "542e6761776b3a20746573747320616461707465642066726f6d206761776b20746573742073756974650a",
+      "stderr_hex": "",
+      "stdout": "T.gawk: tests adapted from gawk test suite\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6761776b3a20746573747320616461707465642066726f6d206761776b20746573742073756974650a",
+      "stderr_hex": "",
+      "stdout": "T.gawk: tests adapted from gawk test suite\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.getline",
+    "locale": "C",
+    "source_sha256": "f6d647af8bed8842633380aa594aaec6c7ae7c8f8711b1b79f39d67f97fca462",
+    "c": {
+      "stdout_hex": "542e6765746c696e653a2074657374206765746c696e652066756e6374696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.getline: test getline function\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6765746c696e653a2074657374206765746c696e652066756e6374696f6e0a",
+      "stderr_hex": "",
+      "stdout": "T.getline: test getline function\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.int-expr",
+    "locale": "C",
+    "source_sha256": "e49a188ccbd4eb541f7495cc2e90a923506b047483e215ece8013a510758b9f7",
+    "c": {
+      "stdout_hex": "542e696e742d657870723a207465737420696e74657276616c2065787072657373696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.int-expr: test interval expressions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e696e742d657870723a207465737420696e74657276616c2065787072657373696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.int-expr: test interval expressions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.latin1",
+    "locale": "C",
+    "source_sha256": "ec6ae79e678e01af79af6a8421083af75567bf6a157f4fd6e383b1f913aeedaa",
+    "c": {
+      "stdout_hex": "542e6c6174696e313a207465737473206f6620382d62697420696e7075740a",
+      "stderr_hex": "",
+      "stdout": "T.latin1: tests of 8-bit input\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6c6174696e313a207465737473206f6620382d62697420696e7075740a",
+      "stderr_hex": "",
+      "stdout": "T.latin1: tests of 8-bit input\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.lilly",
+    "locale": "C",
+    "source_sha256": "bd5d2dd441cbadd8b3edcb5d148b6cb58b4fd4c2a42d18005f6f922d19abc930",
+    "c": {
+      "stdout_hex": "542e6c696c6c793a206d697363656c6c616e656f75732052452074657374732066726f6d204272756365204c696c6c790a3132362074657374730a0a",
+      "stderr_hex": "",
+      "stdout": "T.lilly: miscellaneous RE tests from Bruce Lilly\n126 tests\n\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6c696c6c793a206d697363656c6c616e656f75732052452074657374732066726f6d204272756365204c696c6c790a3132362074657374730a0a",
+      "stderr_hex": "",
+      "stdout": "T.lilly: miscellaneous RE tests from Bruce Lilly\n126 tests\n\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.main",
+    "locale": "C",
+    "source_sha256": "b91264e5fbc95543c812a8558234e7d228567cf288afd7a3cd7ffb5d4d92f1d9",
+    "c": {
+      "stdout_hex": "542e6d61696e3a206d697363207465737473206f6620617267756d656e747320696e206d61696e0a",
+      "stderr_hex": "",
+      "stdout": "T.main: misc tests of arguments in main\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6d61696e3a206d697363207465737473206f6620617267756d656e747320696e206d61696e0a",
+      "stderr_hex": "",
+      "stdout": "T.main: misc tests of arguments in main\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.nextfile",
+    "locale": "C",
+    "source_sha256": "13e8219fae01b908a7911c1ee3202eb4e84a52d670714c48019440f1ceb86e63",
+    "c": {
+      "stdout_hex": "542e6e65787466696c653a207465737473206f66206e65787466696c6520636f6d6d616e640a",
+      "stderr_hex": "",
+      "stdout": "T.nextfile: tests of nextfile command\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6e65787466696c653a207465737473206f66206e65787466696c6520636f6d6d616e640a",
+      "stderr_hex": "",
+      "stdout": "T.nextfile: tests of nextfile command\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.overflow",
+    "locale": "C",
+    "source_sha256": "965e6abae8cf956fe53602695b83a25f98de94f3f7e1aebc1539dce264e59445",
+    "c": {
+      "stdout_hex": "542e6f766572666c6f773a207465737420736f6d65206f766572666c6f7720636f6e646974696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.overflow: test some overflow conditions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e6f766572666c6f773a207465737420736f6d65206f766572666c6f7720636f6e646974696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.overflow: test some overflow conditions\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.re",
+    "locale": "C",
+    "source_sha256": "1a5341d0a66142b56e9540928e4eb98d96351472255a91f772888491754abce9",
+    "c": {
+      "stdout_hex": "542e72653a207465737473206f6620726567756c61722065787072657373696f6e20636f64650a093330312074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.re: tests of regular expression code\n\t301 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e72653a207465737473206f6620726567756c61722065787072657373696f6e20636f64650a093330312074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.re: tests of regular expression code\n\t301 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.recache",
+    "locale": "C",
+    "source_sha256": "e478ce97160ab560f1d8b36c55a446bd4566a85aaf93dd04eeeb7367a3d5caff",
+    "c": {
+      "stdout_hex": "542e726563616368653a207465737420726520636163686520696e20622e630a",
+      "stderr_hex": "",
+      "stdout": "T.recache: test re cache in b.c\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e726563616368653a207465737420726520636163686520696e20622e630a",
+      "stderr_hex": "",
+      "stdout": "T.recache: test re cache in b.c\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.redir",
+    "locale": "C",
+    "source_sha256": "845c14651832f26e064ac86379ae46e65221689c38d80294dff845d237899f19",
+    "c": {
+      "stdout_hex": "542e72656469723a2074657374207265646972656374696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.redir: test redirections\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e72656469723a2074657374207265646972656374696f6e730a",
+      "stderr_hex": "",
+      "stdout": "T.redir: test redirections\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.split",
+    "locale": "C",
+    "source_sha256": "6cf0af7a12b571b50e9a8249fd8245302872a04c40af804b3bd7251621795ac6",
+    "c": {
+      "stdout_hex": "542e73706c69743a206d697363207465737473206f66206669656c642073706c697474696e6720616e642073706c697420636f6d6d616e640a",
+      "stderr_hex": "",
+      "stdout": "T.split: misc tests of field splitting and split command\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e73706c69743a206d697363207465737473206f66206669656c642073706c697474696e6720616e642073706c697420636f6d6d616e640a",
+      "stderr_hex": "",
+      "stdout": "T.split: misc tests of field splitting and split command\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.sub",
+    "locale": "C",
+    "source_sha256": "130cb880bf39372338b0070305ba6d3b337408aaa510184ee4cb1c92a22fe3bc",
+    "c": {
+      "stdout_hex": "542e7375623a207465737473206f662073756220616e64206773756220636f64650a3134302074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.sub: tests of sub and gsub code\n140 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e7375623a207465737473206f662073756220616e64206773756220636f64650a3134302074657374730a",
+      "stderr_hex": "",
+      "stdout": "T.sub: tests of sub and gsub code\n140 tests\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  },
+  {
+    "case": "T.system",
+    "locale": "C",
+    "source_sha256": "7f8039b2510f0dc8cfe6de38122cf6316b47e166a7b1c9da4ae258bdc4ab1393",
+    "c": {
+      "stdout_hex": "542e73797374656d3a20746573742073797374656d206275696c742d696e0a",
+      "stderr_hex": "",
+      "stdout": "T.system: test system built-in\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "rust": {
+      "stdout_hex": "542e73797374656d3a20746573742073797374656d206275696c742d696e0a",
+      "stderr_hex": "",
+      "stdout": "T.system: test system built-in\n",
+      "stderr": "",
+      "code": 0,
+      "timeout": false,
+      "failure_markers": [],
+      "passed": true
+    },
+    "status": "pass"
+  }
+]

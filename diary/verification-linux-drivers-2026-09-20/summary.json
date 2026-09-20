@@ -1,0 +1,179 @@
+{
+  "base_revision": "8e1c2afbde15a89202e27f38b6bbf4a31c246696",
+  "diagnostic_revision": "78bd646668714bd92348591d8d63224225d7990b",
+  "runtime_revision": "b1adc821e768a2d16567fc1f4b36a94aced17c8c",
+  "oracle_revision": "5739fd79bcfc75ba7526773d0cf634521f8aca3c",
+  "ci_url": "https://github.com/francescotinti/rawk/actions/runs/35510218505",
+  "ci_conclusion": "success",
+  "native": {
+    "x86_64": {
+      "debug": {
+        "driver_passes": 27,
+        "subcases": 275,
+        "exact": 171,
+        "diagnostic_only": 101,
+        "deliberate": 3,
+        "stream_pairs": 20,
+        "native_contract_mismatches": [],
+        "binary_sha256": {
+          "c": "8fc1b1ed35ed1d1cc8357f4b14c0cb7fbcf3a9362b4232bddd40872f9da82d22",
+          "rust": "c24d39797aa1b2d6e25d0769af71cb0c4a9b7e4044af48e9e0986d57e9e42268"
+        }
+      },
+      "release": {
+        "driver_passes": 27,
+        "subcases": 275,
+        "exact": 171,
+        "diagnostic_only": 101,
+        "deliberate": 3,
+        "stream_pairs": 20,
+        "native_contract_mismatches": [],
+        "binary_sha256": {
+          "c": "8fc1b1ed35ed1d1cc8357f4b14c0cb7fbcf3a9362b4232bddd40872f9da82d22",
+          "rust": "e70b62683e24e8d494607e9bb54a38178366863a3f16b6b9d8f8bcfdadcd0471"
+        }
+      },
+      "rust_tests": {
+        "debug": 89,
+        "release": 89,
+        "failed": 0,
+        "ignored": 0
+      },
+      "raw_inventory": {
+        "pass": 27,
+        "open": 3,
+        "reference-failure": 3
+      }
+    },
+    "arm64": {
+      "debug": {
+        "driver_passes": 27,
+        "subcases": 275,
+        "exact": 171,
+        "diagnostic_only": 101,
+        "deliberate": 3,
+        "stream_pairs": 20,
+        "native_contract_mismatches": [],
+        "binary_sha256": {
+          "c": "1d7352ab5699a5c91e8e11772257c053e1739e9ffd0e56172365d03e43ad10a2",
+          "rust": "8d8059047cb1f3e63777eb0a2c1dbc486f35f313f48eed2fa61e3faa2ee7f21b"
+        }
+      },
+      "release": {
+        "driver_passes": 27,
+        "subcases": 275,
+        "exact": 171,
+        "diagnostic_only": 101,
+        "deliberate": 3,
+        "stream_pairs": 20,
+        "native_contract_mismatches": [],
+        "binary_sha256": {
+          "c": "1d7352ab5699a5c91e8e11772257c053e1739e9ffd0e56172365d03e43ad10a2",
+          "rust": "12358a9f554e40decd9337373989211ecd97c9eab4f46c23be0c1e2de417c45d"
+        }
+      },
+      "rust_tests": {
+        "debug": 89,
+        "release": 89,
+        "failed": 0,
+        "ignored": 0
+      },
+      "raw_inventory": {
+        "pass": 27,
+        "open": 3,
+        "reference-failure": 3
+      }
+    }
+  },
+  "local": {
+    "debug": {
+      "passed": 151,
+      "failed": 0,
+      "ignored": 0
+    },
+    "release": {
+      "passed": 151,
+      "failed": 0,
+      "ignored": 0
+    },
+    "aggregate_gate_exit": 1,
+    "aggregate_gate_failure": "AppleDouble metadata only; separate hygiene recheck recorded in hygiene-final.log",
+    "release_exit": 0,
+    "hygiene_recheck_exit": 0
+  },
+  "macos_ci": {
+    "debug": 151,
+    "release_suite_executed": false,
+    "xml": {
+      "match": 97,
+      "expected": 12,
+      "unexpected": 0,
+      "skipped": 0
+    }
+  },
+  "scope": "27 admitted drivers, 275 individual explicit contracts, 20 standard-stream probes per native Linux profile; 300 original UTF-8 cases remain enforced separately.",
+  "limits": [
+    "Raw 33-driver inventory retains historical failures; no blanket expected acceptance.",
+    "Other encodings, macOS Intel, generic numeric casts and untested mathematical operations are outside this audit."
+  ],
+  "evidence_sha256": {
+    "appledouble-final-removed.json": "53cda9fbf90946b4a729901f3c478b4767e6cb2656384e42bdc9d9c69cf6fbf0",
+    "appledouble-removed.json": "89e8fa6d8b7a4d3f7678d565088bcece0d518786ab1eaba57d32456afc18c93e",
+    "build-release.log": "1fd10a0047b0f7fd85fabbf69daf4557165315b6efb5a6daaa603804e199f309",
+    "ci-final.json": "76219ee0a8493b9cc9ca268b2f850c8ab6e44e961152ffd9e4080b95c0c4d7dd",
+    "ci-final.log": "4e1f5ca72c02f1f5629396bca76eafc3a6c0c4869aa1493d18692704353573f0",
+    "ci-initial.json": "c24260a5c8cd7a805a49ad4517bde47b7305d1569601daa222d857d8b1d2efd0",
+    "ci-initial.log": "928c3c872f569496c7b972bd4fbeb08250e95df6725be468812a93946df38d4b",
+    "classification.json": "396088d08278e40b4e5449cc381ba072c068c8f8fc38a42dcdc54a1d55fd19d3",
+    "clippy.log": "8289a68d763a3a5d896e3b85e405a69f21937def4367d22411b74ab8f37261bb",
+    "final-arm64/format-platform-ci.json": "0239b2b75a220b92d9b8dacd2ad9d2c28599e3d88a587f4c6da725a029e58eb7",
+    "final-arm64/linux-driver-probe-debug-ci.json": "1a915f2b081e535a2e937d76af5241823e2ebebc631f7656513bc9df59e1a783",
+    "final-arm64/linux-driver-probe-release-ci.json": "67704a5b6541c0e5c5f30d2866605a9db9751763a011bdba469dac8a39c477fb",
+    "final-arm64/linux-driver-results-ci.json": "afb4e75ea1dbb77a5eb175aad294613b1cd930ad6cd502b69bc6afce08fc32cc",
+    "final-arm64/linux-drivers-verified-debug-ci.json": "ebd5c4326171f096900bd5f19553a48c81861a3265313d3c65b0dc4f943d9f68",
+    "final-arm64/linux-drivers-verified-release-ci.json": "58dcd75f83d13a0d256acf37cb3e0afd6786139d28a06dca666baa4c24e43ff2",
+    "final-arm64/portability-ci.log": "8f142499afb1f77c62d5f1d06b72030ecaa1b5b7be16aec18fb7b9dcf008528a",
+    "final-arm64/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "final-arm64/shift-jis-platform-ci.json": "9eaa1830157831d470ff7313a02fabed6f30bed67a6e4205d51931b925f9140d",
+    "final-darwin.json": "4919ea6ca318a1d5685bbdfbc81503804a66a8115a00a342feb76c214835feab",
+    "final-darwin.log": "aae5186804de173f451ea1bc34a10ef86d96dc9cfb475e820aed527c8391c113",
+    "final-macos/full-driver-results-ci.json": "a8b6eb489f4fe5be57ece9c49f859914d62c291296e9dd09a68e7ee39f2be843",
+    "final-macos/unicode-driver-results-ci.json": "319ba794bac6208a112e23a1a690e0943b65e50201c5b261f89b65bdd2c92c8a",
+    "final-x86_64/format-platform-ci.json": "0009a5a282c4e997889feada3379c3c584b69f4048e832a8c4ae22a369072cfd",
+    "final-x86_64/linux-driver-probe-debug-ci.json": "1b3fd26868c7f407f4f88ef8bfb9265e8d675034213e33c7914f0bc2a3fc96b6",
+    "final-x86_64/linux-driver-probe-release-ci.json": "e6187803b746e926e20a3cfcce282197e623acb81c04db8f979716ebfe8bd7a6",
+    "final-x86_64/linux-driver-results-ci.json": "32b6a22172e1bfa388866991b22366caca9616daaaeb82ca6e0344cd72306e12",
+    "final-x86_64/linux-drivers-verified-debug-ci.json": "528b4ceb56d8d38abaa4e21e3fd615db270825d7609e37b9bba7c8485817276a",
+    "final-x86_64/linux-drivers-verified-release-ci.json": "11351d6f18d4e42be27e51460d76eabd789c71c5c1b932ff4a60f51eef736502",
+    "final-x86_64/portability-ci.log": "2b7cbcc41e4de239d080cef46d15f6b226331254ba056f608ecc0081c2c051ec",
+    "final-x86_64/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "final-x86_64/shift-jis-platform-ci.json": "809901260270ac364f4dc93d474d946d8be25c8aa5035c971f78b9b747464110",
+    "fixed-darwin.json": "d579492d7103845181c534264b17bb59e0d6db60ab175c6f3e45b5ecd9b773c1",
+    "fixed-darwin.log": "a604be8246dcf998f05740e8bacbe5381891a9ac2b38e7d32d494ed099b7f092",
+    "gate-final.log": "48306af7a613b19edbd0da865d195446dc5a53f79a9414038920a935d93f594a",
+    "gate-local.log": "99729d543733e4e5b644918d57428ff149e5bbf4246a83f7f341e9dc738034b1",
+    "hygiene-final.log": "6d19e76ef6bf58354bf5ea650f906331cf72adf1865e8e9533a473d4b412a8f6",
+    "initial-arm64/format-platform-ci.json": "0239b2b75a220b92d9b8dacd2ad9d2c28599e3d88a587f4c6da725a029e58eb7",
+    "initial-arm64/linux-driver-probe-ci.json": "038949e540d99ba3ecae986c11d171015e06b6bdda8fd38e6a9681510973f85d",
+    "initial-arm64/linux-driver-results-ci.json": "186c45372685d6e062112d14d4112589106c63f6b9ce624a2a7467f9e61bdbd0",
+    "initial-arm64/portability-ci.log": "3aaf1101bf970372f4fd0dd30222f746ce43f881fc5b474e3ff1a0b9a23ca7bd",
+    "initial-arm64/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "initial-arm64/shift-jis-platform-ci.json": "7e42bfb310b1e7d69061bbd5edafb6001895b19076ea1d8715bc229495cb735d",
+    "initial-darwin.json": "4ab90aaf2bd413f19dadda7d708dd7ac267917f162ddacd36c49a75172247b43",
+    "initial-macos/full-driver-results-ci.json": "0177acf59fb9a2bd5559762f4c23fbd11bc4440a90ee1eadf156545d7168e3d0",
+    "initial-macos/unicode-driver-results-ci.json": "319ba794bac6208a112e23a1a690e0943b65e50201c5b261f89b65bdd2c92c8a",
+    "initial-x86_64/format-platform-ci.json": "0009a5a282c4e997889feada3379c3c584b69f4048e832a8c4ae22a369072cfd",
+    "initial-x86_64/linux-driver-probe-ci.json": "df54d25a81d989f693f309fd3a69e0ec0643c892d9c68b3d21bee0b61ebf03ea",
+    "initial-x86_64/linux-driver-results-ci.json": "65a79714d77573a6aca36d30d05b775b9a095fde8b18e5d44ef5abe9e3817f3b",
+    "initial-x86_64/portability-ci.log": "128b29b672eeaff1a74efe48d7946f9756b173c371aed89fe5ecf1973e6d5329",
+    "initial-x86_64/shift-jis-locale-ci.log": "2b51bb6c3eaf27304721f673341546feebb44a3017f9e95d0be5993027e2d8c2",
+    "initial-x86_64/shift-jis-platform-ci.json": "b634445b2a73ebb44f93bc068d308b478d0ef046344313f7819b377aad7b8f46",
+    "oracle-build.log": "9b5dea592949f0135606ea3cc2d0e5ddab5c85f490cdc9ff8a284e53616f9ded",
+    "regression-after.log": "2d0c3dbe68ec38ed138e20ff29366a08c47d72e59b9d49acf8de752fb5669d44",
+    "regression-before.log": "221fecef661f0e36cac1a8d1a9a8209d7eb0e91b6819b7cd3b706f8fb3aa9224",
+    "regression-release.log": "08ebe717639a6b442881d276a63a278d7db030b0ec607c3d4e2a46a3be956c83",
+    "regressions-final-debug.log": "455407531580d7ec225533410877680173d69f40b08c8bd0dd12a23592137b5a",
+    "regressions-final-release.log": "ca359bff6bc590f25b07e23de11347f12b51eab6c2000fbc329904fe156aeedd",
+    "release-final.log": "1af65ec4ee3b73bc29a120a1d57df3b259a8a8d1434494f9c2568231fe302f1f"
+  }
+}
