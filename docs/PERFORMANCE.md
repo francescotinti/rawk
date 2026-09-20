@@ -45,7 +45,7 @@ input from Python. File measurements use an inherited regular-file descriptor.
 Each case establishes expected bytes from C, then runs one excluded warmup per
 binary and nine interleaved blocks with rotating C/before/after order. Every
 invocation checks status, empty stderr and exact stdout. A mismatch, missing RSS,
-nonzero status or timeout fails the job and preserves a partial report marked
+nonzero status, unavailable locale or timeout fails the job and preserves a partial report marked
 `complete: false`; no normalization is applied. Wall time includes process and
 time-wrapper startup plus output capture. Linux GNU time reports peak RSS in
 KiB, converted to bytes; Darwin time reports bytes. These are per-process peaks,
@@ -67,3 +67,19 @@ Keep negative and inconclusive results, and never average architectures together
 The documented regex RS EOF/`$0` discrepancy remains open. `regex_control` sums
 record lengths during actions, where C and rawk agree; it does not normalize the
 divergent END value. The runtime and compatibility expectations are unchanged.
+
+Render downloaded results without pooling machines:
+
+```sh
+python3 scripts/summarize_native_benchmark.py /tmp/artifacts/performance-*/results.json --output /tmp/native-summary.md
+```
+
+The renderer refuses incomplete reports. The original JSON and build logs remain
+the source of evidence; generated tables do not replace them. For continuing
+regression monitoring, dispatch this workflow with the last accepted runtime
+commit and the proposed candidate, then archive the artifact and review the
+signals. Re-run suspicious cases locally with `--workload` or dispatch a
+same-revision control before concluding that code caused a slowdown.
+
+Use the `test_only` dispatch option to verify the harness on all four native
+platforms without rebuilding interpreters or running performance measurements.

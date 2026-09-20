@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import locale as locale_api
 import os
 from pathlib import Path
 import platform
@@ -46,6 +47,14 @@ def compare(before, after):
     lo, hi = boot[100], boot[3899]
     return {'median_paired_ratio': statistics.median(ratios), 'bootstrap_95_interval': [lo, hi],
             'signal': 'slower' if lo > 1 else 'faster' if hi < 1 else 'inconclusive'}
+
+
+def validate_locale(name):
+    previous = locale_api.setlocale(locale_api.LC_CTYPE)
+    try:
+        locale_api.setlocale(locale_api.LC_CTYPE, name)
+    finally:
+        locale_api.setlocale(locale_api.LC_CTYPE, previous)
 
 
 def measure(binary, flags, program, path, data, mode, locale, timeout):
@@ -107,6 +116,7 @@ def main():
                 if selected and name not in selected:
                     continue
                 seen.add(name)
+                validate_locale(locale)
                 path.write_bytes(data)
                 expected, _, _ = measure(binaries['oracle'], flags, program, path, data, mode, locale, 120)
                 row = {'name': name, 'flags': flags, 'program': program, 'mode': mode, 'locale': locale,

@@ -2,6 +2,10 @@ name: Native performance comparison
 on:
   workflow_dispatch:
     inputs:
+      test_only:
+        description: Validate the harness without builds or measurements
+        type: boolean
+        default: false
       before:
         description: Immutable baseline revision (rebuilt on every runner)
         required: true
@@ -52,14 +56,17 @@ jobs:
       - name: Test harness
         run: python3 -m unittest discover -s scripts -p test_benchmark_native.py -v
       - name: Build paired revisions before measuring
+        if: ${{ !inputs.test_only }}
         run: python3 scripts/prepare_native_benchmark.py --before "$BEFORE" --after "$AFTER" --work "$RUNNER_TEMP/performance"
       - name: Build clean pinned C oracle
+        if: ${{ !inputs.test_only }}
         run: |
           git clone https://github.com/onetrueawk/awk.git "$RUNNER_TEMP/performance/oracle"
           git -C "$RUNNER_TEMP/performance/oracle" checkout --detach 5739fd79bcfc75ba7526773d0cf634521f8aca3c
           make -C "$RUNNER_TEMP/performance/oracle" CC=cc 'CFLAGS=-O2' > "$RUNNER_TEMP/performance/oracle-build.log" 2>&1
           python3 scripts/record_benchmark_oracle.py "$RUNNER_TEMP/performance"
       - name: Measure sequentially (no builds, tests or profiling in this step)
+        if: ${{ !inputs.test_only }}
         run: |
           python3 scripts/benchmark_native.py \
             --before "$RUNNER_TEMP/performance/before/target/release/rawk" \
@@ -69,7 +76,7 @@ jobs:
             --runs "$RUNS" --sessions 2 \
             --output "$RUNNER_TEMP/performance/results.json" > "$RUNNER_TEMP/performance/measure.log" 2>&1
       - name: Retain results and failures
-        if: always()
+        if: ${{ always() && !inputs.test_only }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: performance-${{ matrix.os }}
