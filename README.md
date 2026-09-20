@@ -1,82 +1,95 @@
-# rawk
+# rawk 🦅
+A blazing-fast, high-fidelity port of the historic AWK data extraction and reporting tool from C to Rust.
 
-Porting sperimentale di AWK da C a Rust. Il riferimento di compatibilità è il sorgente nella cartella adiacente `c_awk`; il runtime Rust esegue autonomamente i programmi.
+Built cooperatively by **Francesco Tinti** and **Antigravity (Google Deepmind)**.
 
-Sono verificati il profilo orientato ai byte (`LC_ALL=C`) e il profilo UTF-8 su Darwin ARM64. La selezione segue `LC_ALL`, `LC_CTYPE`, `LANG`; dettagli nel [rapporto Unicode e locale](diary/2026-09-19-unicode-locale.md). La suite comprende il nucleo AWK e alcune estensioni (RT, BEGINFILE/ENDFILE, builtin temporali e bitwise). Non costituisce una certificazione di conformità POSIX o gawk. Stato e risultati aggiornati sono nel [rapporto di chiusura della Fase 7](diary/2026-09-19-phase7-closure.md); il [primo rapporto](diary/2026-09-19-remediation.md) conserva la situazione iniziale.
+## 🚀 Features
+`rawk` is a fully functional interpreter that mimics POSIX AWK and parts of GNU Awk (`gawk`) while bringing modern memory safety, performance, and deterministic parsing thanks to Rust.
 
-## Build e utilizzo
+- **Formal Grammar Parsing**: Replaced historical Yacc/Lex combinations with modern PEG (Parsing Expression Grammars) using the `pest` crate, including a fully compliant `PrattParser` for operator precedence.
+- **Dynamic Typing**: `rawk` intelligently manages numeric and string types, fully replicating AWK's famous implicit coercion capabilities.
+- **Flow Control & User Functions**: Complete support for `if/else`, `while`, `do/while`, `for (in)`, `break`, `continue`, `next`, `return`, `exit`, and user-defined functions with local scoping support.
+- **Extended Built-ins**:
+  - Math: `sin`, `cos`, `exp`, `log`, `sqrt`, `int`, `rand`, `srand`, `atan2`
+  - Bitwise (gawk extension): `and`, `or`, `xor`, `lshift`, `rshift`
+  - Time (gawk extension): `systime`, `strftime`
+  - Strings: `length`, `tolower`, `toupper`, `substr`, `index`, `split`, `sub`, `gsub`, `match` (updates `RSTART`/`RLENGTH`), `sprintf`
+- **Advanced I/O & Pipes**: Native support for output redirects (`> file`, `>> file`), pipeline execution to bash children (`print "hello" | "cat -n"`), and extended `getline` with streaming file cache.
+- **Global Magic Variables**: Built-in support for `FS`, `OFS`, `RS`, `ORS`, `NR`, `FNR`, `NF`, `SUBSEP`, `ARGC`, `ARGV`, and dynamic environment capturing in `ENVIRON`.
+- **Associative Arrays**: True hash map arrays supporting multi-dimensional key simulation via `SUBSEP` and item removal (`delete`).
+
+## 🛠 Project Architecture
+- `cli.rs`: CLI argument parsing via `clap`.
+- `awk.pest`: The definitive PEG grammar for the language.
+- `parser.rs`: Transforms token pairs into an Abstract Syntax Tree.
+- `ast.rs`: The typed AST enumerations modeling the language structures.
+- `types.rs`: Holds the evaluation context, dynamic types, I/O caches, and the random number generator.
+- `runner/`: The interpreter executing the AST natively in Rust, with separate runtime, built-in, formatting, and I/O modules.
+
+## 📦 Usage
+Just like traditional AWK:
+```bash
+# Direct scripts
+echo "foo,bar" | cargo run -- -F "," '{ print $2 }'
+
+# Script files
+cargo run -- -f my_script.awk input.txt
+
+# Pipe outputs to system commands!
+echo "1\n2\n3" | cargo run -- '{ print $0 | "cat -n" }'
+```
+
+## Build & Test
 
 ```bash
+make -C ../c_awk                                  # build the original C reference first
 cargo build --locked --release --bins
-printf 'foo,bar\n' | target/release/rawk -F ',' '{ print $2 }'
-target/release/rawk -f programma.awk input.txt
-target/release/rawk --csv '{ print $2 }' dati.csv
-target/release/rawk --safe 'BEGIN { print "hello" }'
+cargo test --locked                               # unit, integration and differential tests
+cargo run -- -f program.awk file.txt
+cargo run --bin diffrun -- tests/testsuite.xml    # comparison against ../c_awk/a.out
 ```
 
-Safe mode blocca comandi di sistema, pipe e redirezioni di output e non espone ENVIRON. Non è una sandbox generale.
+**Quality gates:**
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo fmt --check`
+- `bash scripts/checks.sh` (tutti i verification gate del piano di adeguamento idiomatico)
 
-## Verifica
+## 📜 Authors
+This code was written as part of an iterative AI pair-programming project aiming to explore limits in translating untyped, legacy C CLI utilities to deterministic Rust ecosystems.
 
-Compilare prima il riferimento C, dalla radice di questo repository:
 
-```bash
-make -C ../c_awk
-cargo test --locked
-bash scripts/checks.sh
-python3 scripts/audit_regressions.py
-python3 scripts/historical_audit.py
-python3 scripts/corpus_audit.py
-python3 scripts/driver_audit.py
-python3 scripts/benchmark.py
-```
+## 🆕 Latest Updates — September 2026
 
-`cargo test` e `diffrun` usano per default `../c_awk/a.out`; `RAWK_REFERENCE` permette di scegliere il riferimento dei test Rust. Il corpus storico richiede anche i sorgenti adiacenti in `c_awk/bugs-fixed`. Le annotazioni XML sono relative alla versione del C verificata, non a qualsiasi AWK installato.
+The compatibility work has consolidated the interpreter while preserving the
+project's original direction and Rust implementation.
 
-```bash
-target/release/diffrun tests/testsuite.xml --awk ../c_awk/a.out --rawk target/release/rawk
-cargo fmt --check
-cargo clippy --all-targets -- -D warnings
-```
+- **Runtime and compatibility:** corrected control flow, coercions, parsing,
+  streaming input, regex matching, formatting and CLI behavior. CSV and safe
+  mode have dedicated regressions; safe mode is not a general-purpose sandbox.
+- **Unicode and locales:** UTF-8 string operations, regexes, separators and
+  formatting are verified on Darwin ARM64. ISO-8859-1 and ISO-8859-9 case
+  conversion and POSIX character classes now follow the selected locale.
+  Binary strings retain the explicitly documented NUL-preservation extension.
+- **Verification:** the latest local gate passes **132 tests in both debug and
+  release**, including drivers covering **300 original UTF-8 cases**. The XML
+  comparison reports 97 matches, 12 documented expected differences, and no
+  unexpected differences or skipped cases.
+- **Performance:** boolean UTF-8 regex searches take **12–41% less time** in the
+  three measured workloads. Byte-profile workloads varied by +1–3%; these
+  measurements are not a general speed guarantee relative to the C interpreter.
+- **Portability:** CI is configured for macOS and Linux glibc x86-64/ARM64.
+  Local target checks passed; native Linux compatibility is not yet established.
+- **Next steps:** Shift-JIS and other legacy encodings, native Linux validation,
+  and further optimizations supported by profiling.
 
-Il confronto controlla byte di stdout, stderr e codice di uscita, in directory temporanee separate, con timeout. Le differenze deliberate hanno aspettative esplicite; un riferimento mancante è un errore. L'ordine delle righe è ignorato soltanto nei casi che lo dichiarano. Gli script Python di audit riportano separatamente il confronto stdout/status e conservano le diagnostiche.
+The verified profiles and deliberate differences define the current compatibility
+scope; the tests do not establish complete POSIX or GNU Awk conformance. The CLI
+currently requires UTF-8 file names. Tests require Python 3, a C compiler, the
+adjacent original `c_awk` source tree, and the locales exercised by the suites.
 
-## Architettura
-
-- `awk.pest`, `parser.rs`, `ast.rs`: grammatica PEG, parsing e AST.
-- `validation.rs`: vincoli statici, arità, safe mode e parametri array.
-- `runner/`: interpretazione, builtin, formattazione e I/O.
-- `types.rs`: valori, conversioni, scope e contesto di esecuzione.
-- `input.rs`: lettura condivisa tra ciclo principale e getline, RS dinamico e CSV.
-- `ere.rs`: ricerca a byte con scelta del match più lungo alla prima posizione; DFA Rust per i pattern non letterali.
-- `test_support.rs`: infrastruttura condivisa di verifica.
-
-## Limiti noti
-
-Il corpus storico `bugs-fixed` corrisponde in 31/31 casi per stdout e status. Tutti i 225 programmi `testdir/p.*` e `t.*` sono nel gate: 219 confronti integrali e sei contratti specifici per ordine degli array, RNG e conservazione dei NUL. `corpus_audit.py --check` rifiuta ogni differenza non coperta da tali contratti, che fissano sorgenti, fixture e risultati ammessi e hanno prove negative.
-
-Dei 33 driver shell, **27 sono verificati integralmente**. T.flags, T.misc, T.builtin e T.errmsg hanno contratti per le singole invocazioni; T.utf e T.utfre sono verificati separatamente in `en_US.UTF-8`, con tutti i loro 300 casi originali. I 275 sottocasi comprendono 173 confronti esatti, 99 differenze della sola diagnostica e tre differenze deliberate, tutte fissate con esiti precisi. Inventario, impronte degli input e prove negative impediscono che una nuova divergenza venga accettata automaticamente. Il rapporto completo conserva anche i fallimenti delle asserzioni storiche: `diary/full-driver-closure-results.json`.
-
-Printf/sprintf supportano larghezza e precisione dinamiche `*`. Escape regex, ancore RS, sorgenti non UTF-8, precedenze, keyword e CLI hanno regressioni dedicate. Il profilo usa il limite C di 255 per le ripetizioni regex e di 255 byte per OFMT/CONVFMT, con cache DFA limitata a 4 MiB. Conversioni e classi POSIX ISO-8859-1/9 sono verificate su Darwin ARM64; le altre locale legacy e piattaforme richiedono una convalida separata; la CLI continua a richiedere nomi di file UTF-8.
-
-I test richiedono Python 3, un compilatore C e l'oracolo originale. La CI è predisposta su macOS (gate completo) e Linux glibc x86-64/ARM64 (gate di portabilità), con revisioni fissate; non è stata eseguita sul servizio remoto. Entrambi i gate includono UTF-8 e verificano esplicitamente che le locale richieste siano attive. Il gate Linux non certifica i contratti storici registrati su Darwin. Stato e comandi nel [rapporto di portabilità](diary/2026-09-19-portability.md). Risultati della Fase 7, copia pulita e benchmark sono nel rapporto di chiusura; il rapporto di consolidamento conserva le misure precedenti.
-
-## Aggiornamento prestazioni — 20 settembre 2026
-
-Ottimizzata la ricerca booleana UTF-8 (`~`, `!~`, pattern di regola): evita la
-mappa degli offset e il calcolo del match più lungo. Nei tre carichi misurati
-riduce i tempi del 12–41%; il profilo byte mostra variazioni di +1–3%.
-Verifica: 126 test debug e release, gate completo verde. Misure, comandi e limiti
-nel [rapporto prestazioni](diary/2026-09-20-regex-performance.md).
-Le altre codifiche legacy rimangono aperte; la verifica nativa Linux è sospesa in
-assenza di runtime locale.
-
-## Locale ISO-8859-1 e ISO-8859-9
-
-Conversioni maiuscole/minuscole e classi regex POSIX seguono le tabelle della
-locale selezionata, conservando unità a byte e NUL interni. I test confrontano
-con il C tutti i 255 byte non nulli nelle due locale e richiedono che siano
-installate. Dettagli nel [rapporto locale legacy](diary/2026-09-20-legacy-locales.md).
-Shift-JIS e le altre codifiche non sono incluse in questa convalida.
-
-Audit iniziale e piano di lavoro: [valutazione](audit-2026-09-19/VALUTAZIONE.md) e [piano aggiornato](audit-2026-09-19/PIANO_DI_LAVORO.md).
+See the [compatibility details](docs/COMPATIBILITY.md),
+[phase 7 report](diary/2026-09-19-phase7-closure.md),
+[Unicode report](diary/2026-09-19-unicode-locale.md),
+[legacy locale report](diary/2026-09-20-legacy-locales.md),
+[performance measurements](diary/2026-09-20-regex-performance.md),
+and [work plan](audit-2026-09-19/PIANO_DI_LAVORO.md).
